@@ -26,8 +26,18 @@ public class MainViewController {
      *
      * @return 랜딩페이지 html명
      */
-    @GetMapping("menu")
+    @GetMapping("store")
     public String menuGetMapping() {
+        return "store";
+    }
+
+    /**
+     * 랜딩페이지.
+     *
+     * @return 랜딩페이지 html명
+     */
+    @GetMapping("menu")
+    public String bookGetMapping() {
         return "menu";
     }
 
@@ -36,19 +46,9 @@ public class MainViewController {
      *
      * @return 랜딩페이지 html명
      */
-    @GetMapping("book")
-    public String bookGetMapping() {
-        return "book";
-    }
-
-    /**
-     * 랜딩페이지.
-     *
-     * @return 랜딩페이지 html명
-     */
-    @GetMapping("about")
+    @GetMapping("template")
     public String aboutGetMapping() {
-        return "about";
+        return "template";
     }
 
     /**
