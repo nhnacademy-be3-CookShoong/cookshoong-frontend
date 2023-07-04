@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 각 랜딩페이지를 연결하는 컨트롤러
+ * 각 랜딩페이지를 연결하는 컨트롤러.
  *
  * @author koesnam
  * @since 2023 /07/04
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainViewController {
     /**
-     * 랜딩페이지
+     * 랜딩페이지.
      *
      * @return 랜딩페이지 html명
      */
@@ -22,7 +22,7 @@ public class MainViewController {
     }
 
     /**
-     * admin 랜딩페이지
+     * admin 랜딩페이지.
      *
      * @return 랜딩페이지 html명
      */
