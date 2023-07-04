@@ -4,17 +4,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 각 랜딩페이지를 연결하는 컨트롤러.
+ * 각 메인 뷰 페이지를 연결하는 컨트롤러.
  *
  * @author koesnam
- * @since 2023 /07/04
+ * @since 2023.07.04
  */
 @Controller
 public class MainViewController {
+
     /**
-     * 랜딩페이지.
+     * 메인 뷰 페이지를 맵핑.
      *
-     * @return 랜딩페이지 html명
+     * @author dendroh
+     * @since 2023.07.04
      */
     @GetMapping("index")
     public String indexGetMapping() {
@@ -22,39 +24,43 @@ public class MainViewController {
     }
 
     /**
-     * 랜딩페이지.
+     * 상점 뷰 페이지를 맵핑.
      *
-     * @return 랜딩페이지 html명
+     * @author dendroh
+     * @since 2023.07.04
+     */
+    @GetMapping("store")
+    public String menuGetMapping() {
+        return "store";
+    }
+
+    /**
+     * 메뉴 뷰 페이지를 맵핑.
+     *
+     * @author dendroh
+     * @since 2023.07.04
      */
     @GetMapping("menu")
-    public String menuGetMapping() {
+    public String bookGetMapping() {
         return "menu";
     }
 
     /**
-     * 랜딩페이지.
+     * 이후 작성될 페이지에 대한 템플릿 페이지를 맵핑.
      *
-     * @return 랜딩페이지 html명
+     * @author dendroh
+     * @since 2023.07.04
      */
-    @GetMapping("book")
-    public String bookGetMapping() {
-        return "book";
-    }
-
-    /**
-     * 랜딩페이지.
-     *
-     * @return 랜딩페이지 html명
-     */
-    @GetMapping("about")
+    @GetMapping("template")
     public String aboutGetMapping() {
-        return "about";
+        return "template";
     }
 
     /**
-     * admin 랜딩페이지.
+     * 시스템 관리자를 위한 뷰 페이지를 맵핑.
      *
-     * @return 랜딩페이지 html명
+     * @author koesnam
+     * @since 2023.07.04
      */
     @GetMapping("admin")
     public String adminMain() {
