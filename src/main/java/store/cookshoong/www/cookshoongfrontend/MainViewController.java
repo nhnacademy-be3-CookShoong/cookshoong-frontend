@@ -16,9 +16,39 @@ public class MainViewController {
      *
      * @return 랜딩페이지 html명
      */
-    @GetMapping
-    public String index() {
+    @GetMapping("index")
+    public String indexGetMapping() {
         return "index";
+    }
+
+    /**
+     * 랜딩페이지.
+     *
+     * @return 랜딩페이지 html명
+     */
+    @GetMapping("menu")
+    public String menuGetMapping() {
+        return "menu";
+    }
+
+    /**
+     * 랜딩페이지.
+     *
+     * @return 랜딩페이지 html명
+     */
+    @GetMapping("book")
+    public String bookGetMapping() {
+        return "book";
+    }
+
+    /**
+     * 랜딩페이지.
+     *
+     * @return 랜딩페이지 html명
+     */
+    @GetMapping("about")
+    public String aboutGetMapping() {
+        return "about";
     }
 
     /**
