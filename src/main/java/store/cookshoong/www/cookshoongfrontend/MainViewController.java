@@ -46,6 +46,28 @@ public class MainViewController {
     }
 
     /**
+     * 상점 정보 페이지를 맵핑.
+     *
+     * @author dendroh
+     * @since 2023.07.04
+     */
+    @GetMapping("storeinfo")
+    public String storeInfoGetMapping() {
+        return "store/storeinfo";
+    }
+
+    /**
+     * 상점 등록 페이지를 맵핑.
+     *
+     * @author dendroh
+     * @since 2023.07.04
+     */
+    @GetMapping("storeregistry")
+    public String storeRegistryGetMapping() {
+        return "store/storeregistry";
+    }
+
+    /**
      * 이후 작성될 페이지에 대한 템플릿 페이지를 맵핑.
      *
      * @author dendroh

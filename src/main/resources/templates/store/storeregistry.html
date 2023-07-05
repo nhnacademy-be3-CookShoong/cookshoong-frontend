@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Site Metas -->
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="shortcut icon" href="images/favicon.png" type="">
+
+    <title> CookShoong </title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+    <!-- nice select  -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
+          integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+          crossorigin="anonymous"/>
+    <!-- font awesome style -->
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet"/>
+    <!-- toast ui style -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+</head>
+
+<body class="sub_page">
+
+<div class="hero_area">
+    <div class="bg-box">
+        <img src="images/hero-bg.jpg" alt="">
+    </div>
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="index">
+            <span>
+              CookShoong
+            </span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class=""> </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav  mx-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Store</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="menu">Menu</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="template">Template <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <div class="user_option">
+                        <a href="" class="order_online">
+                            LOGIN
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+</div>
+
+<section class="food_section layout_padding">
+    <div class="container">
+
+
+        <!-- Template content -->
+
+
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 mb-5 ftco-animate fadeInUp ftco-animated">
+                        <a href="images/o2.jpg" class="image-popup"><img src="images/o2.jpg" class="img-fluid"
+                                                                         alt="Colorlib Template"></a>
+                    </div>
+                    <div class="col-lg-6 product-details pl-md-5 ftco-animate fadeInUp ftco-animated">
+                        <h2>쿡슝 예시 게살버거집 조선대점</h2>
+                        <div class="rating d-flex">
+                            <p class="text-left mr-5">
+                                별점 5.0
+                            </p>
+                            <p class="text-left">
+                                리뷰 80개
+                            </p>
+                        </div>
+                        <p> 영업시간 : 09:00 ~ 22:00
+                        </p>
+                        <p> 주소 : 조선대 IT 융합대학 NHN 실습실 첫번째열
+                        </p>
+                        <p> 최소주문금액 : 20000 원
+                        </p>
+                        <p> 결제가능수단 : 현금
+                        </p>
+                        <p> 상호명 : (주) 쿡슝 게살버거
+                        </p>
+                        <p> 사업자등록번호 : 000-828253
+                        </p>
+                    </div>
+                </div>
+                <div id="contents"></div>
+            </div>
+        </section>
+        <!-- toast ui editor -->
+        <!-- TOAST UI Editor가 들어갈 div태그 -->
+        <div id="editor"></div>
+        <!-- TOAST UI Editor CDN URL(JS) -->
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+        <!-- TOAST UI Editor 생성 JavaScript 코드 -->
+        <script>
+            const editor = new toastui.Editor({
+                el: document.querySelector('#editor'),
+                previewStyle: 'vertical',
+                height: '500px',
+                initialValue: '⭐️사장님이 미쳤어요. 7월 5일 이후 모든 메뉴 값 30프로 상승~⭐️'
+            });
+
+            // !!여기!! editor.getHtml()을 사용해서 에디터 내용 받아오기
+            document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
+
+        </script>
+        <!-- toast ui editor -->
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">게살버거</h6>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">무지개 게살버거</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">12000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">민트초코 게살버거</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">7000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">타바스코 게살버거</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">14000원</span>
+                </div>
+            </div>
+            <small class="d-block text-end mt-3">
+                <a href="#">더 많은 메뉴를 보시려면?</a>
+            </small>
+        </div>
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">게살피자</h6>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">파인애플 게살피자</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">24000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">오징어 게살피자</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">25000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">플랑크톤 게살피자</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">17000원</span>
+                </div>
+            </div>
+            <small class="d-block text-end mt-3">
+                <a href="#">더 많은 메뉴를 보시려면?</a>
+            </small>
+        </div>
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">주류</h6>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">칭따오</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">4000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">테라</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">4000원</span>
+                </div>
+            </div>
+            <div class="d-flex text-muted pt-3">
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">연태 고량주</strong>
+                        <a href="#">주문하기</a>
+                    </div>
+                    <span class="d-block">9000원</span>
+                </div>
+            </div>
+            <small class="d-block text-end mt-3">
+                <a href="#">더 많은 메뉴를 보시려면?</a>
+            </small>
+        </div>
+
+        <!-- Template content -->
+
+    </div>
+</section>
+
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        Contact Us
+                    </h4>
+                    <div class="contact_link_box">
+                        <a href="">
+                <span>
+                  (주)쿡슝
+                </span>
+                        </a>
+                        <a href="">
+                <span>
+                  +82 10-1234-5678
+                </span>
+                        </a>
+                        <a href="">
+                <span>
+                  cookshoong@gmail.com
+                </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <div class="footer_detail">
+                    <a href="" class="footer-logo">
+                        CookShoong
+                    </a>
+                    <p>
+                        쿡슝 소개 구문
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <h4>
+                    Location
+                </h4>
+                <p>
+                    찾아오시는 길
+                </p>
+                <p>
+                    그대가 진정으로 원한다면 길이 너를 찾아갈 것이다.
+                </p>
+            </div>
+        </div>
+        <div class="footer-info">
+            <p>
+                &copy; 2023 All Rights Reserved By
+                <a href="https://nhnacademy.github.io/">CookShoong</a><br><br>
+                &copy; Distributed By
+                <a href="https://nhnacademy.github.io/" target="_blank">NHN Academy</a>
+            </p>
+        </div>
+    </div>
+</footer>
+<!-- footer section -->
+
+<!-- jQery -->
+<script src="js/jquery-3.4.1.min.js"></script>
+<!-- popper js -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<!-- bootstrap js -->
+<script src="js/bootstrap.js"></script>
+<!-- owl slider -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+</script>
+<!-- isotope js -->
+<script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+<!-- nice select -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+<!-- custom js -->
+<script src="js/custom.js"></script>
+</body>
+
+</html>
