@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
 </head>
 
-<body>
+<body class="sub_page">
     <div class="hero_area">
         <div class="bg-box"><img src="assets/img/hero-bg.jpg" alt=""></div>
         <header class="header_section">
@@ -26,10 +26,10 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container"><a class="navbar-brand" href="template.html"><span>Cookshoong</span></a><button class="navbar-toggler" data-bs-toggle="collapse" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav mx-auto">
-                            <li class="nav-item active"><a class="nav-link" href="template.html">Home <span class="sr-only">(current)</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="template.html">Home </a></li>
                             <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">Menu</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.html">Template</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="login.html">Template<span class="sr-only">(current)</span></a></li>
                         </ul>
                         <div class="user_option"><a href="" class="user_link"><i class="fas fa-user" aria-hidden="true"></i></a><a class="cart_link" href="#"><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewbox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"><path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
                    c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"></path><path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
@@ -43,59 +43,25 @@
                 </nav>
             </div>
         </header>
-        <section class="slider_section">
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1>쿠폰 이름을 적어주세요</h1>
-                                        <p>쿠폰의 적용 범위와 쿠폰을 사용했을 때 어떤 혜택을 받을 수 있는지 멋지게 적어주세요</p>
-                                        <div class="btn-box"><a href="" class="btn1">쿠폰 받기</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <ol class="carousel-indicators">
-                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-                        <li data-target="#customCarousel1" data-slide-to="1"></li>
-                        <li data-target="#customCarousel1" data-slide-to="2"></li>
-                    </ol>
-                </div>
-            </div>
-        </section>
     </div>
+    <section class="book_section layout_padding" style="padding-top: 20px;padding-bottom: 20px;">
+        <div class="container">
+            <div class="heading_container">
+                <h2 style="font-size: 25px;">영업점 메뉴 관리 페이지 - 사업자용</h2>
+            </div>
+            <div class="row" style="font-size: 20px;padding: 5px;">
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 상호명<input type="text" placeholder="영업점 상호명"></span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 주소</span><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">주소찾기</button><input type="text" placeholder="메인주소"><input type="text" placeholder="상세주소"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 전화번호</span><input type="text" placeholder="영업점 전화번호"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업 시작일</span><input type="date"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">계좌번호</span><input type="text" placeholder="은행선택"><input type="text" placeholder="계좌번호"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">배달정보 : 40~50분 배달<br>배달요금 : 4000원<br>최소주문 : 12000원<br>매장 소개 부분 (editor 를 사용하여 해당 부분에 추가)</span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">매장 대표 이미지</span><input type="file"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">개인정보 수집 및 이용 동의</span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">정보 수정</button></div>
+            </div>
+        </div>
+    </section>
     <footer class="footer_section">
         <div class="container">
             <div class="row">

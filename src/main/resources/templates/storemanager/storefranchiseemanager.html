@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Feane</title>
+    <title>CookShoong</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/FontAwesome.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/style.compiled.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
 </head>
 
 <body class="sub_page">
@@ -47,54 +44,23 @@
             </div>
         </header>
     </div>
-    <section class="book_section layout_padding">
+    <section class="book_section layout_padding" style="padding-top: 20px;padding-bottom: 20px;">
         <div class="container">
             <div class="heading_container">
-                <h2>영업점 신규 등록</h2>
+                <h2 style="font-size: 25px;">영업점 정보 관리 페이지 - 사업자용</h2>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-xxl-6">
-                    <div class="form_container">
-                        <form action="">
-                            <div><strong style="font-size: 30px;">영업점 상호명</strong><input class="form-control form-control-sm form-control" type="text" placeholder="영업점 이름을 입력해주세요"></div><strong style="font-size: 30px;">사업자 등록 번호</strong>
-                            <div><input class="form-control form-control-sm form-control" type="text" placeholder="사업자 등록 번호를 입력해주세요"></div><strong style="font-size: 30px;">영업점 주소</strong>
-                            <div><input class="form-control form-control-sm form-control" type="text" style="margin: 0px;" placeholder="메인 주소를 입력해주세요"><input class="form-control form-control-sm form-control" type="text" placeholder="상세 주소를 입력해주세요."></div><strong style="font-size: 30px;">사업자 등록증</strong>
-                            <div><input class="form-control form-control nice-select wide" type="file" style="margin: 0px;margin-bottom: 25px;"></div>
-                            <div></div><strong style="font-size: 30px;">영업 시작일</strong><input class="form-control form-control-sm form-control" type="date"><strong style="font-size: 30px;">개인정보 수집 및 이용 동의</strong><input class="form-control form-control-sm form-control" type="text" placeholder="사업자 등록 번호를 입력해주세요">
-                            <div class="btn_box"><button>영업점 등록</button></div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xxl-6">
-                    <div><strong style="font-size: 30px;">영업점 소개</strong></div>
-                    <!-- TOAST UI Editor가 들어갈 div태그 -->
-                    <div id="editor"></div>
-                    <!-- !!여기!! 에디터 내용을 받을 div태그-->
-                    <div id="contents"></div>
-                    <!-- TOAST UI Editor CDN URL(JS) -->
-                    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
-                    <!-- TOAST UI Editor 생성 JavaScript 코드 -->
-                    <script>
-                        const editor = new toastui.Editor({
-                            el: document.querySelector('#editor'),
-                            previewStyle: 'vertical',
-                            height: '700px',
-                            initialValue: '안녕하세요. 쿡슝치킨입니다..'
-                        });
-
-                        // !!여기!! editor.getHtml()을 사용해서 에디터 내용 받아오기
-                        document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
-                        console.log(editor.getHTML());
-
-                    </script>
-                    <!-- toast ui editor -->
-
-                    <!-- Template content -->
-                </div>
+            <div class="row" style="font-size: 20px;padding: 5px;">
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 상호명<input type="text" placeholder="영업점 상호명"></span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 주소</span><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">주소찾기</button><input type="text" placeholder="메인주소"><input type="text" placeholder="상세주소"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 전화번호</span><input type="text" placeholder="영업점 전화번호"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업 시작일</span><input type="date"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">계좌번호</span><input type="text" placeholder="은행선택"><input type="text" placeholder="계좌번호"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">배달정보 : 40~50분 배달<br>배달요금 : 4000원<br>최소주문 : 12000원<br>매장 소개 부분 (editor 를 사용하여 해당 부분에 추가)</span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">매장 대표 이미지</span><input type="file"></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">개인정보 수집 및 이용 동의</span></div>
+                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">정보 수정</button></div>
             </div>
         </div>
-
     </section>
     <footer class="footer_section">
         <div class="container">
@@ -119,20 +85,18 @@
                 </div>
             </div>
             <div class="footer-info">
-                <p> © <span id="displayYear-1"></span> All Rights Reserved By NHN Academy<br><br> © <span id="displayYear-2"></span> Distributed By Cookshoong</p>
+                <p> © 2023 All Rights Reserved By NHN Academy<br><br> © 2023 Distributed By Cookshoong</p>
             </div>
         </div>
     </footer>
-    <script src="assets/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
-    <script src="assets/js/custom.js"></script>
 </body>
 
 </html>
