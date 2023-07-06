@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="assets/css/style.compiled.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 
-<body>
+<body class="sub_page">
     <div class="hero_area">
         <div class="bg-box"><img src="assets/img/hero-bg.jpg" alt=""></div>
         <header class="header_section">
@@ -28,10 +29,10 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container"><a class="navbar-brand" href="template.html"><span>Cookshoong</span></a><button class="navbar-toggler" data-bs-toggle="collapse" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav mx-auto">
-                            <li class="nav-item active"><a class="nav-link" href="template.html">Home <span class="sr-only">(current)</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="template.html">Home </a></li>
                             <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">Menu</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.html">Template</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="login.html">Template<span class="sr-only">(current)</span></a></li>
                         </ul>
                         <div class="user_option"><a href="" class="user_link"><i class="fas fa-user" aria-hidden="true"></i></a><a class="cart_link" href="#"><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewbox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"><path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
                    c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"></path><path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
@@ -45,59 +46,56 @@
                 </nav>
             </div>
         </header>
-        <section class="slider_section">
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1>쿠폰 이름을 적어주세요</h1>
-                                        <p>쿠폰의 적용 범위와 쿠폰을 사용했을 때 어떤 혜택을 받을 수 있는지 멋지게 적어주세요</p>
-                                        <div class="btn-box"><a href="" class="btn1">쿠폰 받기</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    </div>
+    <section class="book_section layout_padding">
+        <div class="container">
+            <div class="heading_container">
+                <h2>영업점 신규 등록</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xxl-6">
+                    <div class="form_container">
+                        <form action="">
+                            <div><strong style="font-size: 30px;">영업점 상호명</strong><input class="form-control form-control-sm form-control" type="text" placeholder="영업점 이름을 입력해주세요"></div><strong style="font-size: 30px;">사업자 등록 번호</strong>
+                            <div><input class="form-control form-control-sm form-control" type="text" placeholder="사업자 등록 번호를 입력해주세요"></div><strong style="font-size: 30px;">영업점 주소</strong>
+                            <div><input class="form-control form-control-sm form-control" type="text" style="margin: 0px;" placeholder="메인 주소를 입력해주세요"><input class="form-control form-control-sm form-control" type="text" placeholder="상세 주소를 입력해주세요."></div><strong style="font-size: 30px;">사업자 등록증</strong>
+                            <div><input class="form-control form-control nice-select wide" type="file" style="margin: 0px;margin-bottom: 25px;"></div>
+                            <div></div><strong style="font-size: 30px;">영업 시작일</strong><input class="form-control form-control-sm form-control" type="date"><strong style="font-size: 30px;">개인정보 수집 및 이용 동의</strong><input class="form-control form-control-sm form-control" type="text" placeholder="사업자 등록 번호를 입력해주세요">
+                            <div class="btn_box"><button>영업점 등록</button></div>
+                        </form>
                     </div>
                 </div>
-                <div class="container">
-                    <ol class="carousel-indicators">
-                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-                        <li data-target="#customCarousel1" data-slide-to="1"></li>
-                        <li data-target="#customCarousel1" data-slide-to="2"></li>
-                    </ol>
+                <div class="col-md-6 col-xxl-6">
+                    <div><strong style="font-size: 30px;">영업점 소개</strong></div>
+                    <!-- TOAST UI Editor가 들어갈 div태그 -->
+                    <div id="editor"></div>
+                    <!-- !!여기!! 에디터 내용을 받을 div태그-->
+                    <div id="contents"></div>
+                    <!-- TOAST UI Editor CDN URL(JS) -->
+                    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+                    <!-- TOAST UI Editor 생성 JavaScript 코드 -->
+                    <script>
+                        const editor = new toastui.Editor({
+                            el: document.querySelector('#editor'),
+                            previewStyle: 'vertical',
+                            height: '700px',
+                            initialValue: '안녕하세요. 쿡슝치킨입니다..'
+                        });
+
+                        // !!여기!! editor.getHtml()을 사용해서 에디터 내용 받아오기
+                        document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
+                        console.log(editor.getHTML());
+
+                    </script>
+                    <!-- toast ui editor -->
+
+                    <!-- Template content -->
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+
+    </section>
     <footer class="footer_section">
         <div class="container">
             <div class="row">
@@ -121,7 +119,7 @@
                 </div>
             </div>
             <div class="footer-info">
-                <p> © <span id="displayYear"></span> All Rights Reserved By NHN Academy<br><br> © <span id="displayYear"></span> Distributed By Cookshoong</p>
+                <p> © <span id="displayYear-1"></span> All Rights Reserved By NHN Academy<br><br> © <span id="displayYear-2"></span> Distributed By Cookshoong</p>
             </div>
         </div>
     </footer>
