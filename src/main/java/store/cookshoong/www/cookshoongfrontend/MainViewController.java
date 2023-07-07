@@ -40,9 +40,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.05
      */
-    @GetMapping("/storeinfo")
+    @GetMapping("/store-info")
     public String getStoreInfo() {
-        return "storeinfo";
+        return "store-info";
     }
 
     /**
@@ -51,9 +51,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.05
      */
-    @GetMapping("/storeregister")
+    @GetMapping("/store-register")
     public String getStoreRegistry() {
-        return "storeregister";
+        return "store-register";
     }
 
     /**
@@ -62,9 +62,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storeinfomanager")
+    @GetMapping("/store-info-manager")
     public String getStoreInfoManager() {
-        return "storemanager/storeinfomanager";
+        return "storemanager/store-info-manager";
     }
 
     /**
@@ -73,9 +73,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storetimemanager")
+    @GetMapping("/store-time-manager")
     public String getStoreTimeManager() {
-        return "storemanager/storetimemanager";
+        return "storemanager/store-time-manager";
     }
 
     /**
@@ -84,9 +84,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storemenumunager")
+    @GetMapping("/store-menu-manager")
     public String getStoreMenuManager() {
-        return "storemanager/storemenumanager";
+        return "storemanager/store-menu-manager";
     }
 
     /**
@@ -95,9 +95,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storeordermanager")
+    @GetMapping("/store-order-manager")
     public String getStoreOrderManager() {
-        return "storemanager/storeordermanager";
+        return "storemanager/store-order-manager";
     }
 
     /**
@@ -106,9 +106,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storereviewmanager")
+    @GetMapping("/store-review-manager")
     public String getStoreReviewManager() {
-        return "storemanager/storereviewmanager";
+        return "storemanager/store-review-manager";
     }
 
     /**
@@ -117,9 +117,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storefranchiseemanager")
+    @GetMapping("/store-merchant-manager")
     public String getStoreFranchiseeManager() {
-        return "storemanager/storefranchiseemanager";
+        return "storemanager/store-merchant-manager";
     }
 
     /**
@@ -128,9 +128,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storecouponmanager")
+    @GetMapping("/store-coupon-manager")
     public String getStoreCouponManager() {
-        return "storemanager/storecouponmanager";
+        return "storemanager/store-coupon-manager";
     }
 
     /**
@@ -139,9 +139,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storepointmanager")
+    @GetMapping("/store-point-manager")
     public String getStorePointManager() {
-        return "storemanager/storepointmanager";
+        return "storemanager/store-point-manager";
     }
 
     /**
@@ -150,9 +150,9 @@ public class MainViewController {
      * @author dendroh
      * @since 2023.07.06
      */
-    @GetMapping("/storesalesmanager")
+    @GetMapping("/store-sales-manager")
     public String getStoreSalesManager() {
-        return "storemanager/storesalesmanager";
+        return "storemanager/store-sales-manager";
     }
 
 
