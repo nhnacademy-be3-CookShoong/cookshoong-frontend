@@ -40,6 +40,8 @@ jobs:
       # 이미지 생성
       - name: Build Docker Image
         run: docker build -t jeongjewan/cookshoong-front .
+      - name: Run Sonarqube
+        run: mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 
       # 도커 허브 푸시
       - name: Docker Image Push
