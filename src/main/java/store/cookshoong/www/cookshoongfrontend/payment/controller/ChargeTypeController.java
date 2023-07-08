@@ -45,6 +45,7 @@ public class ChargeTypeController {
         List<TypeResponseDto> chargeTypes = chargeTypeService.selectChargeTypeAll();
 
         model.addAttribute("chargeTypes", chargeTypes);
+
         model.addAttribute("url", "charge-type");
 
         return "payment/charge-type-form";
