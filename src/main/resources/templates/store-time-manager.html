@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
 <div class="container-fluid page-body-wrapper">
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
@@ -26,7 +25,7 @@
                                     aria-controls="form-elements"><i class="typcn typcn-th-small-outline menu-icon"></i><span
                     class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
+                    <ul class="flex-column nav sub-menu">
                         <li><a class="nav-link" href="store-register">매장 등록</a></li>
                         <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
                         <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
@@ -38,7 +37,7 @@
                                     aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
-                    <ul class="nav flex-column sub-menu">
+                    <ul class="flex-column nav sub-menu">
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
                     </ul>
                 </div>
@@ -47,7 +46,7 @@
                                     aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
                     class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="tables">
-                    <ul class="nav flex-column sub-menu">
+                    <ul class="flex-column nav sub-menu">
                         <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
                         <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
                         <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
@@ -58,7 +57,7 @@
                                     aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
                     class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="auth">
-                    <ul class="nav flex-column sub-menu">
+                    <ul class="flex-column nav sub-menu">
                         <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
                         <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
                     </ul>
@@ -68,7 +67,7 @@
                                     aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
                     class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="error">
-                    <ul class="nav flex-column sub-menu">
+                    <ul class="flex-column nav sub-menu">
                         <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
                     </ul>
                 </div>
@@ -85,99 +84,198 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card">
+                <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">영업점 정보</h4>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">영업점 상호명</label>
-                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputName2">영업점 전화번호</label>
-                                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Name">
-                                </div>
-                                <div class="form-group">
-                                    <label>영업점 주소</label>
-                                    <input type="file" name="img[]" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               placeholder="메인 주소">
-                                        <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">주소 찾기</button>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="exampleInputName3" placeholder="서브 주소">
-                                </div>
-                                <div class="form-group">
-                                    <label>영업점 대표 이미지</label>
-                                    <input type="file" name="img[]" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               placeholder="영업점 이미지">
-                                        <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">이미지 찾기</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputName4">영업점 소개</label>
-                                    <input type="text" class="form-control" id="exampleInputName4" placeholder="이후 editor 적용">
-                                </div>
-                            </form>
+                            <h4 class="card-title">영업시간 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>요일</th>
+                                        <th>영업시작시</th>
+                                        <th>영업종료시</th>
+                                        <th>영업시간 삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>월요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>화요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>수요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>목요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>금요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>토요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>일요일</td>
+                                        <td>09:00 시</td>
+                                        <td>21:00 시</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card">
+                <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">사업자 정보</h4>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="exampleInputName5">사업자 등록 번호</label>
-                                    <input type="text" class="form-control" id="exampleInputName5" placeholder="사업자 등록 번호">
-                                </div>
-                                <div class="form-group">
-                                    <label>사업자 등록증 사본</label>
-                                    <input type="file" name="img[]" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               placeholder="사업자 등록증">
-                                        <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">이미지 찾기</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>사업자 계좌 번호</label>
-                                    <input type="file" name="img[]" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               placeholder="계좌 번호">
-                                        <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">은행 선택</button>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="exampleInputName6" placeholder="계좌 번호">
-                                </div>
-                            </form>
+                            <h4 class="card-title">영업시간 추가</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>요일</th>
+                                        <th>영업시작시</th>
+                                        <th>영업종료시</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="py-1"><select>
+                                            <optgroup label="요일 선택">
+                                                <option value="1">월요일</option>
+                                                <option value="2">화요일</option>
+                                                <option value="3">수요일</option>
+                                                <option value="4">목요일</option>
+                                                <option value="5">금요일</option>
+                                                <option value="6">토요일</option>
+                                                <option value="7">일요일</option>
+                                            </optgroup>
+                                        </select></td>
+                                        <td><input type="time"></td>
+                                        <td><input type="time"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <button class="btn btn-info mr-2" type="submit">영업시간 추가</button>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">휴무일 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>상태</th>
+                                        <th>휴무시작일</th>
+                                        <th>휴무종료일</th>
+                                        <th>휴무일 취소</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>완료</td>
+                                        <td>2023 년 2 월 10 일</td>
+                                        <td>2023 년 2 월 11 일</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>완료</td>
+                                        <td>2023 년 3 월 10 일</td>
+                                        <td>2023 년 3 월 11 일</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>완료</td>
+                                        <td>2023 년 3 월 10 일</td>
+                                        <td>2023 년 3 월 11 일</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>예정</td>
+                                        <td>2023 년 4 월 10 일</td>
+                                        <td>2023 년 4 월 11 일</td>
+                                        <td>
+                                            <button class="btn btn-info mr-2" type="submit">휴무일 취소</button>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card">
+                <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <h4 class="card-title">휴무일 추가</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>휴무시작일</th>
+                                        <th>휴무종료일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="date"></td>
+                                        <td><input type="date"></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
+                        <button class="btn btn-info mr-2" type="submit">휴무일 추가</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/ace.js"></script>
 <script src="assets/js/alerts.js"></script>
