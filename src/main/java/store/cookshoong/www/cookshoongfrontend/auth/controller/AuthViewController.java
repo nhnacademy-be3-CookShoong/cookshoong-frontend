@@ -22,20 +22,8 @@ public class AuthViewController {
         return "auth/registerForm";
     }
 
-    /**
-     * 회원가입 처리 메서드.
-     *
-     * @param signUpRequestDto 회원가입 요청데이터
-     * @param bindingResult    각 입력값에 대한 검증결과
-     * @param model            View 로 보낼 데이터
-     * @return 랜딩페이지
-     */
-    @PostMapping("sign-up")
-    public String signUp(@Valid SignUpRequestDto signUpRequestDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("signUpRequestDto", signUpRequestDto);
-            return "auth/registerForm";
-        }
+    @PostMapping("login")
+    public String login() {
         return "redirect:/";
     }
 }
