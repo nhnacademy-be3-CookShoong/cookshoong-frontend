@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 타입 목록</title>
+</head>
+<body>
+
+<h1>결제 타입 목록</h1>
+
+<a th:href="@{|/payments/charges/charge-type/create|}">결제 타입 등록 </a>
+<br />
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>조회</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c, i : ${chargeTypes}">
+        <td th:text="${i.index +1}">번호</td>
+        <td th:text="${c.name}">이름</td>
+        <td>
+            <button th:onclick="'location.href=\'' + @{|/payments/charges/charge-type/${c.id}|} + '\''">조회</button>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>

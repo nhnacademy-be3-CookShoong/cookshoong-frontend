@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 타입</title>
+</head>
+<body>
+
+<a th:href="@{|/payments/charges/charge-type|}">TO TAG LIST</a>
+
+<h1 th:text="${chargeType.name}">태그 이름</h1>
+
+<div>
+    <button th:onclick="'location.href=\'' + @{|${chargeType.id}/modify|} + '\''">수정</button>
+    &nbsp;
+    <button th:onclick="'location.href=\'' + @{|${chargeType.id}/delete|} + '\''">삭제</button>
+</div>
+</body>
+</html>
