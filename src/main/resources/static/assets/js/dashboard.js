@@ -1,10 +1,6 @@
 (function($) {
   'use strict';
   $(function() {
-    // Remove pro banner on close
-    document.querySelector('#bannerClose').addEventListener('click',function() {
-      document.querySelector('#proBanner').classList.add('d-none');
-    });
     if ($('#circleProgress6').length) {
       var bar = new ProgressBar.Circle(circleProgress6, {
         color: '#001737',
@@ -95,9 +91,6 @@
             ],
             borderColor: [
                 'rgba(	255, 131, 0)'
-            ],
-            backgroundColor: [
-              'rgba(	255, 131, 0,.1)',
             ],
             borderWidth: 1,
             fill: true,

@@ -31,10 +31,11 @@ public class ChargeTypeController {
 
     private final ChargeTypeService chargeTypeService;
 
-//    @GetMapping("/index")
-//    public String chargeIndex() {
-//        return "payment/charge-index";
-//    }
+    @GetMapping("/index")
+    public String chargeIndex() {
+        return "payment/store-charge-manager";
+    }
+
 
     /**
      * 결제 타입 등록 화면 메서드.
