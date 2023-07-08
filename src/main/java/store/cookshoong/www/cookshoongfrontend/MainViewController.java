@@ -1,7 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 
 /**
  * 각 메인 뷰 페이지를 연결하는 컨트롤러.
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @since 2023.07.04
  */
 @Controller
+@RequiredArgsConstructor
 public class MainViewController {
+    private final ApiProperties apiProperties;
 
     /**
      * 매장 랜딩 페이지를 맵핑.
@@ -18,7 +22,7 @@ public class MainViewController {
      * @author papel
      * @since 2023.07.05
      */
-    @GetMapping("/index")
+    @GetMapping({"/index", ""})
     public String getIndex() {
         return "index";
     }
