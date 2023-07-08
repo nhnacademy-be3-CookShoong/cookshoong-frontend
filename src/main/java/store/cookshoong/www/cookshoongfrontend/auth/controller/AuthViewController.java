@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class AuthViewController {
+    @GetMapping("login")
+    public String loginPage() {
+        return "auth/login";
     }
 
     @PostMapping("login")
     public String login() {
         return "redirect:/";
     }
+
 }
