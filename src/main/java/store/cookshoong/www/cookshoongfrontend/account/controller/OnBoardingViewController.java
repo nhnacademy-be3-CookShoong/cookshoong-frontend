@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
+import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,12 +38,10 @@ public class OnBoardingViewController {
      * @return 회원가입 폼 뷰
      */
     @GetMapping("sign-up")
-    public String getCustomerSignUpForm(@RequestParam String userType,
+    public String getCustomerSignUpForm(@RequestParam(required = false) String userType,
                                         Model model, SignUpRequestDto signUpRequestDto) {
-        if (userType.equals("cus")) {
-            model.addAttribute("userType", "cus");
-        } else if (userType.equals("biz")) {
-            model.addAttribute("userType", "biz");
+        if (Objects.nonNull(userType) && (userType.equals("cus") || userType.equals("biz"))) {
+            model.addAttribute("userType", userType);
         } else {
             return "redirect:/sign-up-choice";
         }
@@ -63,17 +62,19 @@ public class OnBoardingViewController {
     public String postSignUpForm(@RequestParam String userType, @Valid SignUpRequestDto signUpRequestDto,
                                  BindingResult bindingResult, Model model) {
         // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
+
+        // ISSUE: 잦은 회원가입 실패(검증오류)로 userType 값이 없어지는 경우가 있음. 현재는 다시 선택창으로 돌아가게 하고 있음.
+        if (!userType.equals("cus") && !userType.equals("biz")) {
+            return "redirect:/sign-up-choice";
+        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             return REGISTER_FORM_VIEW;
         }
 
-        if (!userType.equals("cus") && !userType.equals("biz")) {
-            return "redirect:/sign-up-choice";
-        }
 
         accountService.requestAccountRegistration(userType, signUpRequestDto);
         return "redirect:/";
     }
 }
-
