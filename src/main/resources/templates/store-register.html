@@ -4,102 +4,259 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>CookShoong</title>
+    <title>Untitled</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/style.compiled.css">
+    <link rel="stylesheet" href="assets/css/Roboto.css">
+    <link rel="stylesheet" href="assets/fonts/typicons.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
+    <link rel="stylesheet" href="assets/css/typicons.css">
+    <link rel="stylesheet" href="assets/css/vendor.bundle.base.css">
 </head>
 
-<body class="sub_page">
-    <div class="hero_area">
-        <div class="bg-box"><img src="assets/img/hero-bg.jpg" alt=""></div>
-        <header class="header_section">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg custom_nav-container"><a class="navbar-brand" href="template.html"><span>Cookshoong</span></a><button class="navbar-toggler" data-bs-toggle="collapse" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav mx-auto">
-                            <li class="nav-item"><a class="nav-link" href="template.html">Home </a></li>
-                            <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">Menu</a></li>
-                            <li class="nav-item active"><a class="nav-link" href="login.html">Template<span class="sr-only">(current)</span></a></li>
-                        </ul>
-                        <div class="user_option"><a href="" class="user_link"><i class="fas fa-user" aria-hidden="true"></i></a><a class="cart_link" href="#"><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewbox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"><path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                   c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"></path><path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                   C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                   c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                   C457.728,97.71,450.56,86.958,439.296,84.91z"></path><path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                   c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"></path></svg></a>
-                            <form class="form-inline"><button class="btn my-2 my-sm-0 nav_search-btn" type="submit"><i class="fas fa-search" aria-hidden="true"></i></button></form><a href="" class="order_online">LOGIN</a>
+<body>
+<div class="container-fluid page-body-wrapper">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                                    aria-controls="form-elements"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="form-elements">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-register">매장 등록</a></li>
+                        <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
+                        <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
+                        <li><a class="nav-link" href="store-merchant-manager">가맹점 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                                    aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
+                    class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="charts">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                                    aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="tables">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
+                        <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
+                        <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                                    aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+                    class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="auth">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
+                        <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                                    aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
+                    class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="error">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">영업점 등록 페이지</h4>
                         </div>
                     </div>
-                </nav>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">영업점 정보</h4>
+                            <form class="forms-sample">
+                                <div class="form-group"><label class="form-label" for="exampleInputName1">영업점
+                                    상호명</label><input class="form-control form-control" type="text"
+                                                      id="exampleInputName1" placeholder="Name"></div>
+                                <div class="form-group"><label class="form-label" for="exampleInputName2">영업점
+                                    전화번호</label><input class="form-control form-control" type="text"
+                                                       id="exampleInputName2" placeholder="Name"></div>
+                                <div class="form-group"><label class="form-label">영업점 주소</label><input type="file"
+                                                                                                       name="img[]"
+                                                                                                       class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="메인 주소">
+                                        <button class="btn btn-info file-upload-browse" type="button">주소 찾기</button>
+                                    </div>
+                                    <input class="form-control form-control" type="text" id="exampleInputName3"
+                                           placeholder="서브 주소">
+                                </div>
+                                <div class="form-group"><label class="form-label">영업점 대표 이미지</label><input type="file"
+                                                                                                           name="img[]"
+                                                                                                           class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="영업점 이미지">
+                                        <button class="btn btn-info file-upload-browse" type="button">이미지 찾기</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"><label class="form-label">영업점 가맹점</label><input type="file"
+                                                                                                           name="img[]"
+                                                                                                           class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="가맹점 이름">
+                                        <button class="btn btn-info file-upload-browse" type="button">가맹점 찾기</button>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="form-label" for="exampleInputName4">영업점 소개</label><input
+                                        class="form-control form-control" type="text" id="exampleInputName4"
+                                        placeholder="이후 editor 적용"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">사업자 정보</h4>
+                            <form class="forms-sample">
+                                <div class="form-group"><label class="form-label">사업자 등록 번호</label><input type="file"
+                                                                                                          name="img[]"
+                                                                                                          class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="사업자 등록 번호">
+                                        <button class="btn btn-info file-upload-browse" type="button">등록 번호 검증
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="form-label">사업자 등록증 사본</label><input type="file"
+                                                                                                           name="img[]"
+                                                                                                           class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="사업자 등록증">
+                                        <button class="btn btn-info file-upload-browse" type="button">이미지 찾기</button>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="form-label">사업자 계좌 번호</label><input type="file"
+                                                                                                          name="img[]"
+                                                                                                          class="file-upload-default">
+                                    <div class="input-group col-xs-12"><input
+                                            class="form-control form-control file-upload-info" type="text" disabled=""
+                                            placeholder="계좌 번호">
+                                        <button class="btn btn-info file-upload-browse" type="button">은행 선택</button>
+                                    </div>
+                                    <input class="form-control form-control" type="text" id="exampleInputName6"
+                                           placeholder="계좌 번호">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <button class="btn btn-info mr-2" type="submit">영업점 신규 등록</button>
+                            <button class="btn btn-light">취소</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </header>
+        </div>
     </div>
-    <section class="book_section layout_padding" style="padding-top: 20px;padding-bottom: 20px;">
-        <div class="container">
-            <div class="heading_container">
-                <h2 style="font-size: 25px;">영업점 등록 페이지 - 사업자용</h2>
-            </div>
-            <div class="row" style="font-size: 20px;padding: 5px;">
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 상호명</span><input type="text" placeholder="영업점 상호명"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">사업자 등록 번호</span><input type="text" placeholder="사업자 등록 번호"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 주소</span><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">주소찾기</button><input type="text" placeholder="메인주소"><input type="text" placeholder="상세주소"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업점 전화번호</span><input type="text" placeholder="영업점 전화번호"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업 시작일</span><input type="date"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">계좌번호</span><input type="text" placeholder="은행선택"><input type="text" placeholder="계좌번호"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">배달정보 : 40~50분 배달<br>배달요금 : 4000원<br>최소주문 : 12000원<br>매장 소개 부분 (editor 를 사용하여 해당 부분에 추가)</span></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">매장 대표 이미지</span><input type="file"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">사업자 등록증 사본</span><input type="file"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">영업 신고증 사본</span><input type="file"></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><span style="border-style: solid;border-color: #e6e6e6;">개인정보 수집 및 이용 동의</span></div>
-                <div class="col-md-12" style="font-size: 20px;padding: 5px;border-style: solid;border-color: #e6e6e6;"><button class="btn btn-primary" type="button" style="border-style: solid;border-color: #e6e6e6;">영업점 등록</button></div>
-            </div>
-        </div>
-    </section>
-    <footer class="footer_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 footer-col">
-                    <div class="footer_contact">
-                        <h4> Contact Us </h4>
-                        <div class="contact_link_box"><a href=""></a><a href=""><i class="fas fa-phone" aria-hidden="true"></i><span> Call +01 1234567890 </span></a><a href=""><i class="fas fa-envelope" aria-hidden="true"></i><span> demo@gmail.com </span></a></div>
-                    </div>
-                </div>
-                <div class="col-md-4 footer-col">
-                    <div class="footer_detail"><a href="" class="footer-logo">Cookshoong</a>
-                        <p>쿡슝 프로젝트는 NHN Academy 의 과제로 제작되는<br>배달 어플리케이션 개발 프로젝트입니다.</p>
-                        <div class="footer_social"><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a><a href=""><i class="fa fa-pinterest" aria-hidden="true"></i></a></div>
-                    </div>
-                </div>
-                <div class="col-md-4 footer-col">
-                    <div class="footer_contact">
-                        <h4>Location</h4>
-                        <div class="contact_link_box"><a href=""></a><a href=""><span>찾아오시는 길</span></a><a href=""><span>조선대학교 IT 융합대학 실습실</span></a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-info">
-                <p> © 2023 All Rights Reserved By NHN Academy<br><br> © 2023 Distributed By Cookshoong</p>
-            </div>
-        </div>
-    </footer>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+</div>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/ace.js"></script>
+<script src="assets/js/alerts.js"></script>
+<script src="assets/js/avgrund.js"></script>
+<script src="assets/js/bootstrap-table.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/bt-maxLength.js"></script>
+<script src="assets/js/c3.js"></script>
+<script src="assets/js/calendar.js"></script>
+<script src="assets/js/chart.js"></script>
+<script src="assets/js/Chart.min.js"></script>
+<script src="assets/js/chartist.js"></script>
+<script src="assets/js/circle-progress.js"></script>
+<script src="assets/js/clipboard.js"></script>
+<script src="assets/js/codeEditor.js"></script>
+<script src="assets/js/codemirror.js"></script>
+<script src="assets/js/context-menu.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/data-table.js"></script>
+<script src="assets/js/db.js"></script>
+<script src="assets/js/demo.js"></script>
+<script src="assets/js/desktop-notification.js"></script>
+<script src="assets/js/dragula.js"></script>
+<script src="assets/js/dropify.js"></script>
+<script src="assets/js/dropzone.js"></script>
+<script src="assets/js/editorDemo.js"></script>
+<script src="assets/js/file-upload.js"></script>
+<script src="assets/js/flot-chart.js"></script>
+<script src="assets/js/form-addons.js"></script>
+<script src="assets/js/form-repeater.js"></script>
+<script src="assets/js/form-validation.js"></script>
+<script src="assets/js/formpickers.js"></script>
+<script src="assets/js/google-charts.js"></script>
+<script src="assets/js/google-maps.js"></script>
+<script src="assets/js/hoverable-collapse.js"></script>
+<script src="assets/js/inputmask.js"></script>
+<script src="assets/js/ion-range-slider.js"></script>
+<script src="assets/js/jq.tablesort.js"></script>
+<script src="assets/js/jquery-file-upload.js"></script>
+<script src="assets/js/js-grid.js"></script>
+<script src="assets/js/js-tree.js"></script>
+<script src="assets/js/just-gage.js"></script>
+<script src="assets/js/light-gallery.js"></script>
+<script src="assets/js/listify.js"></script>
+<script src="assets/js/mapael_example_1.js"></script>
+<script src="assets/js/mapael_example_2.js"></script>
+<script src="assets/js/mapael.js"></script>
+<script src="assets/js/maps.js"></script>
+<script src="assets/js/modal-demo.js"></script>
+<script src="assets/js/morris.js"></script>
+<script src="assets/js/multi-step-login.js"></script>
+<script src="assets/js/no-ui-slider.js"></script>
+<script src="assets/js/off-canvas.js"></script>
+<script src="assets/js/owl-carousel.js"></script>
+<script src="assets/js/paginate.js"></script>
+<script src="assets/js/popover.js"></script>
+<script src="assets/js/profile-demo.js"></script>
+<script src="assets/js/progress-bar.js"></script>
+<script src="assets/js/progressbar.min.js"></script>
+<script src="assets/js/rickshaw.js"></script>
+<script src="assets/js/select2.js"></script>
+<script src="assets/js/settings.js"></script>
+<script src="assets/js/sparkline.js"></script>
+<script src="assets/js/tablesorter.js"></script>
+<script src="assets/js/tabs.js"></script>
+<script src="assets/js/template.js"></script>
+<script src="assets/js/tight-grid.js"></script>
+<script src="assets/js/toastDemo.js"></script>
+<script src="assets/js/todolist.js"></script>
+<script src="assets/js/tooltips.js"></script>
+<script src="assets/js/typeahead.js"></script>
+<script src="assets/js/vendor.bundle.base.js"></script>
+<script src="assets/js/wizard.js"></script>
+<script src="assets/js/x-editable.js"></script>
 </body>
 
 </html>
