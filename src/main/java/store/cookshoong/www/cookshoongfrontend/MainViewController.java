@@ -28,39 +28,6 @@ public class MainViewController {
     }
 
     /**
-     * 매장 등록 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-register")
-    public String getStoreRegister() {
-        return "store-register";
-    }
-
-    /**
-     * 매장 정보 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-info-manager")
-    public String getStoreInfoManger() {
-        return "store-info-manager";
-    }
-
-    /**
-     * 매장 영업시간 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-time-manager")
-    public String getStoreTimeManager() {
-        return "store-time-manager";
-    }
-
-    /**
      * 매장 가맹점 관리 페이지를 맵핑.
      *
      * @author papel
