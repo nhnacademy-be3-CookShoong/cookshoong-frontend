@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
     <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 </head>
 
 <body>
@@ -173,19 +175,34 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="py-1"><select>
-                                            <optgroup label="요일 선택">
-                                                <option value="1">월요일</option>
-                                                <option value="2">화요일</option>
-                                                <option value="3">수요일</option>
-                                                <option value="4">목요일</option>
-                                                <option value="5">금요일</option>
-                                                <option value="6">토요일</option>
-                                                <option value="7">일요일</option>
-                                            </optgroup>
-                                        </select></td>
-                                        <td><input type="time"></td>
-                                        <td><input type="time"></td>
+                                        <td>
+                                            <select class="js-example-basic-single w-100">
+                                                <option value="">요일 선택</option>
+                                                <option value="월">월</option>
+                                                <option value="화">화</option>
+                                                <option value="수">수</option>
+                                                <option value="목">목</option>
+                                                <option value="금">금</option>
+                                                <option value="토">토</option>
+                                                <option value="일">일</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="time" class="form-control"
+                                                           placeholder="오픈 예정일">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="time" class="form-control"
+                                                           placeholder="오픈 예정일">
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -260,8 +277,22 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="date"></td>
-                                        <td><input type="date"></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="date" class="form-control"
+                                                           placeholder="휴무 시작일">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="date" class="form-control"
+                                                           placeholder="휴무 종료일">
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -281,7 +312,11 @@
 <script src="/assets/js/todolist.js"></script>
 <script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
 <script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
 </body>
 
 </html>
