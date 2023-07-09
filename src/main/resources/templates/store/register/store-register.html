@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 
 <body>
@@ -89,6 +91,60 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <h4 class="card-title">사업자 정보</h4>
+
+                                <div class="form-group"><label class="form-label" for="representativeName">사업자
+                                    이름</label>
+                                    <input class="form-control" type="text" id="representativeName"
+                                           name="representativeName"
+                                           th:field="*{representativeName}" th:value="*{representativeName}"
+                                           placeholder="사업자 이름">
+                                </div>
+
+                                <div class="form-group"><label class="form-label" for="storeName">사업자 등록번호</label>
+                                    <input class="form-control" type="text" id="businessLicenseNumber"
+                                           name="businessLicenseNumber"
+                                           th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
+                                           placeholder="사업자 등록번호"></div>
+
+
+                                <div class="form-group">
+                                    <label>사업자 등록증 사본</label>
+                                    <input type="file" name="businessLicense" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" class="form-control file-upload-info" disabled
+                                               th:field="*{businessLicense}" th:value="*{businessLicense}"
+                                               id="businessLicense" name="businessLicense"
+                                               placeholder="Upload Image">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-info"
+                                                    type="button">이미지 찾기</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"><label class="form-label">사업자 계좌 번호</label>
+                                    <div class="input-group col-xs-12">
+                                        <select class="js-example-basic-single w-100" id="bankName" name="bankName"
+                                                th:field="*{bankName}" th:value="*{bankName}">
+                                            <option value="">은행을 선택해주세요</option>
+                                            <option value="국민은행">국민은행</option>
+                                            <option value="신한은행">신한은행</option>
+                                            <option value="하나은행">하나은행</option>
+                                            <option value="IBK기업은행">IBK기업은행</option>
+                                        </select>
+                                    </div>
+                                    <input class="form-control" type="text"
+                                           id="bankAccount" name="bankAccount"
+                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="계좌 번호">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
                                 <h4 class="card-title">영업점 정보</h4>
 
                                 <div class="form-group"><label class="form-label" for="storeName">영업점 상호명</label>
@@ -127,11 +183,6 @@
                                     <input class="form-control" type="text" id="earningRate" name="earningRate"
                                            th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률"></div>
 
-                                <div class="form-group"><label class="form-label" for="description">가게 설명</label>
-                                    <input class="form-control" type="text" id="description" name="description"
-                                           th:field="*{description}" th:value="*{description}" placeholder="가게 설명">
-                                </div>
-
                                 <div class="form-group">
                                     <label>오픈 예정일</label>
                                     <div class="input-group col-xs-12">
@@ -141,57 +192,10 @@
                                                placeholder="오픈 예정일">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">사업자 정보</h4>
-
-                                <div class="form-group"><label class="form-label" for="representativeName">사업자
-                                    이름</label>
-                                    <input class="form-control" type="text" id="representativeName"
-                                           name="representativeName"
-                                           th:field="*{representativeName}" th:value="*{representativeName}"
-                                           placeholder="사업자 이름">
-                                </div>
-
-                                <div class="form-group"><label class="form-label" for="storeName">사업자 등록번호</label>
-                                    <input class="form-control" type="text" id="businessLicenseNumber"
-                                           name="businessLicenseNumber"
-                                           th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
-                                           placeholder="사업자 등록번호"></div>
-
                                 <div class="form-group">
-                                    <label>사업자 등록증 사본</label>
-                                    <input type="file" name="businessLicense" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               th:field="*{businessLicense}" th:value="*{businessLicense}"
-                                               id="businessLicense" name="businessLicense"
-                                               placeholder="Upload Image">
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info"
-                                                    type="button">이미지 찾기</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group"><label class="form-label">사업자 계좌 번호</label>
-                                    <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="bankName" name="bankName"
-                                                th:field="*{bankName}" th:value="*{bankName}">
-                                            <option value="">은행을 선택해주세요</option>
-                                            <option value="국민은행">국민은행</option>
-                                            <option value="신한은행">신한은행</option>
-                                            <option value="하나은행">하나은행</option>
-                                            <option value="IBK기업은행">IBK기업은행</option>
-                                        </select>
-                                    </div>
-                                    <input class="form-control" type="text"
-                                           id="bankAccount" name="bankAccount"
-                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="계좌 번호">
+                                    <label class="form-label">가게 설명</label>
+                                    <input type="text" id="description" name="description" hidden="hidden" th:field="*{description}" th:value="*{description}">
+                                    <div id="editor"></div>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +203,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <button class="btn btn-info mr-2" type="submit">영업점 신규 등록</button>
+                                <button class="btn btn-info mr-2" type="submit" id="submitButton">영업점 신규 등록</button>
                                 <button class="btn btn-light">취소</button>
                             </div>
                         </div>
@@ -232,6 +236,20 @@
             }
         }).open();
     }
+</script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        height: '500px',
+        initialValue: '가게 설명을 입력해주세요.'
+    });
+
+    document.querySelector('#submitButton').addEventListener('click', function() {
+        let editorContent = editor.getHTML();
+        document.querySelector('#description').value = editorContent;
+    });
 </script>
 </body>
 
