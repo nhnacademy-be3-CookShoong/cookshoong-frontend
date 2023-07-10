@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.store.controller;
 
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.store.service.StoreTimeManagerSer
  * @author papel
  * @since 2023.07.09
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class StoreTimeManagerController {
@@ -47,8 +49,9 @@ public class StoreTimeManagerController {
      * @since 2023.07.10
      */
     @PostMapping("/store-time-manager-businesshour")
-    public String postCreateHoliday(@Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
+    public String postCreateBusinessHour(@Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
                                     BindingResult bindingResult, Model model) {
+        log.error(createBusinessHourRequestDto.getOpenHour() + createBusinessHourRequestDto.getCloseHour());
         storeTimeManagerService.createBusinessHour(createBusinessHourRequestDto);
         return "redirect:/";
     }
@@ -60,8 +63,9 @@ public class StoreTimeManagerController {
      * @since 2023.07.10
      */
     @PostMapping("/store-time-manager-holiday")
-    public String postCreateBusinessHour(@Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
+    public String postCreateHoliday(@Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
                                          BindingResult bindingResult, Model model) {
+        log.error(createHolidayRequestDto.getHolidayStartDate() + createHolidayRequestDto.getHolidayEndDate());
         storeTimeManagerService.createHoliday(createHolidayRequestDto);
         return "redirect:/";
     }

@@ -35,10 +35,11 @@ public class StoreTimeManagerService {
     public void createHoliday(CreateHolidayRequestDto createStoreRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getBaseUrl())
-            .path("/api/accounts/1/stores/holiday")
+            .path("/api/stores/1/holiday")
             .encode()
             .build()
             .toUri();
+
         RequestEntity<CreateHolidayRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(createStoreRequestDto);
@@ -59,10 +60,11 @@ public class StoreTimeManagerService {
     public void createBusinessHour(CreateBusinessHourRequestDto createBusinessHourRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getBaseUrl())
-            .path("/api/accounts/1/stores/businesshour")
+            .path("/api/stores/1/businesshour")
             .encode()
             .build()
             .toUri();
+
         RequestEntity<CreateBusinessHourRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(createBusinessHourRequestDto);

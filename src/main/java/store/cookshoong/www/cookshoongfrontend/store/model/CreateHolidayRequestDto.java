@@ -1,10 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
-import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 휴업일 등록 Dto.
@@ -13,12 +11,12 @@ import lombok.NoArgsConstructor;
  * @since 2023.07.07
  */
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class CreateHolidayRequestDto {
 
     @NotBlank
-    private LocalDate holidayStartDate;
+    private String holidayStartDate;
 
     @NotBlank
-    private LocalDate holidayEndDate;
+    private String holidayEndDate;
 }
