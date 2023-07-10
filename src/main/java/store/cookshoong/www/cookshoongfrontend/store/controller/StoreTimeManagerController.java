@@ -38,7 +38,7 @@ public class StoreTimeManagerController {
                                             Model model) {
         model.addAttribute("createBusinessHourRequestDto", createBusinessHourRequestDto);
         model.addAttribute("createHolidayRequestDto", createHolidayRequestDto);
-        return "store/manager/store-time-manager";
+        return "store/info/store-time-manager";
     }
 
     /**

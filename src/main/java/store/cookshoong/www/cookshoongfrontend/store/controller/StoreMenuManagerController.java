@@ -5,23 +5,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 각 매장 정보 관리 페이지를 연결하는 컨트롤러.
+ * 각 메뉴 정보 관리 페이지를 연결하는 컨트롤러.
  *
  * @author papel
- * @since 2023.07.09
+ * @since 2023.07.10
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreInfoManagerController {
+public class StoreMenuManagerController {
 
     /**
-     * 매장 정보 관리 페이지를 맵핑.
+     * 매장 메뉴 관리 페이지를 맵핑.
      *
      * @author papel
-     * @since 2023.07.05
+     * @since 2023.07.10
      */
-    @GetMapping("/store-info-manager")
-    public String getStoreInfoManger() {
-        return "store/info/store-info-manager";
+    @GetMapping("/store-menu-manager")
+    public String getStoreMenuManger() {
+        return "store/menu/store-menu-manager";
     }
 }
