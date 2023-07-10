@@ -20,7 +20,6 @@ import store.cookshoong.www.cookshoongfrontend.store.service.StoreTimeManagerSer
  * @author papel
  * @since 2023.07.09
  */
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class StoreTimeManagerController {
@@ -50,8 +49,7 @@ public class StoreTimeManagerController {
      */
     @PostMapping("/store-time-manager-businesshour")
     public String postCreateBusinessHour(@Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
-                                    BindingResult bindingResult, Model model) {
-        log.error(createBusinessHourRequestDto.getOpenHour() + createBusinessHourRequestDto.getCloseHour());
+                                    BindingResult bindingResult) {
         storeTimeManagerService.createBusinessHour(createBusinessHourRequestDto);
         return "redirect:/";
     }
@@ -64,8 +62,7 @@ public class StoreTimeManagerController {
      */
     @PostMapping("/store-time-manager-holiday")
     public String postCreateHoliday(@Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
-                                         BindingResult bindingResult, Model model) {
-        log.error(createHolidayRequestDto.getHolidayStartDate() + createHolidayRequestDto.getHolidayEndDate());
+                                         BindingResult bindingResult) {
         storeTimeManagerService.createHoliday(createHolidayRequestDto);
         return "redirect:/";
     }

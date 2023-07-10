@@ -43,7 +43,7 @@ public class StoreController {
      */
     @PostMapping("/store-register")
     public String postCreateStore(@Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
-                                  BindingResult bindingResult, Model model) {
+                                  BindingResult bindingResult) {
         storeService.createStore(createStoreRequestDto);
         return "redirect:/";
     }
