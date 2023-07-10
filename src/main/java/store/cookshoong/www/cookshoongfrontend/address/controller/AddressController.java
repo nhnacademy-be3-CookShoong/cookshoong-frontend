@@ -69,7 +69,7 @@ public class AddressController {
 
         accountAddressService.createAccountAddress(1L, createAccountAddressRequestDto);
 
-        return "redirect:/addresses/maps";
+        return "redirect:/accounts/addresses/maps";
     }
 
     /**
@@ -83,6 +83,6 @@ public class AddressController {
 
         accountAddressService.deleteAccountAddress(1L, id);
 
-        return "redirect:/addresses/maps";
+        return "redirect:/accounts/addresses/maps";
     }
 }

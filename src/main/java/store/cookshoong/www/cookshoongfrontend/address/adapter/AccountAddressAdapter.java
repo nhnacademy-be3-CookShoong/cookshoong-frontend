@@ -40,11 +40,8 @@ public class AccountAddressAdapter {
      */
     public void createAccountAddress(Long accountId, CreateAccountAddressRequestDto createAccountAddressRequestDto) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_JSON);
-
         HttpEntity<CreateAccountAddressRequestDto> httpEntity =
-            new HttpEntity<>(createAccountAddressRequestDto, headers);
+            new HttpEntity<>(createAccountAddressRequestDto);
 
         restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
             POST,
@@ -61,15 +58,10 @@ public class AccountAddressAdapter {
      */
     public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(APPLICATION_JSON));
-
-        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
-
         ResponseEntity<List<AccountAddressResponseDto>> exchange =
             restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
                 GET,
-                httpEntity,
+                null,
                 new ParameterizedTypeReference<>() {
                 });
 
@@ -84,13 +76,9 @@ public class AccountAddressAdapter {
      */
     public void deleteAccountAddress(Long accountId, Long addressId) {
 
-        HttpHeaders headers = new HttpHeaders();
-
-        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
-
         restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
             DELETE,
-            httpEntity,
+            null,
             new ParameterizedTypeReference<>() {
             });
     }
