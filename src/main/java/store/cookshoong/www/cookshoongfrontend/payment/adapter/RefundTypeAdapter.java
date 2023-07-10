@@ -41,10 +41,7 @@ public class RefundTypeAdapter {
      */
     public void createChargeType(CreateTypeRequestDto createTypeRequestDto) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_JSON);
-
-        HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto, headers);
+        HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
 
         restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds", POST, httpEntity,
             new ParameterizedTypeReference<>() {
@@ -59,15 +56,10 @@ public class RefundTypeAdapter {
      */
     public TypeResponseDto selectChargeType(Long chargeTypeId) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(APPLICATION_JSON));
-
-        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
-
         ResponseEntity<TypeResponseDto> exchange =
             restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + chargeTypeId,
                 GET,
-                httpEntity,
+                null,
                 new ParameterizedTypeReference<>() {
                 });
 
@@ -81,17 +73,12 @@ public class RefundTypeAdapter {
      */
     public List<TypeResponseDto> selectChargeTypeAll() {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(APPLICATION_JSON));
-
-        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
-
         log.info("<><><>>> : {}", apiProperties.getBaseUrl());
 
         ResponseEntity<List<TypeResponseDto>> exchange =
             restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds",
                 GET,
-                httpEntity,
+                null,
                 new ParameterizedTypeReference<>() {
                 });
 
@@ -106,10 +93,7 @@ public class RefundTypeAdapter {
      */
     public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_JSON);
-
-        HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto, headers);
+        HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto);
 
         restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + id,
             PUT,
@@ -125,13 +109,9 @@ public class RefundTypeAdapter {
      */
     public void deleteChargeType(Long id) {
 
-        HttpHeaders headers = new HttpHeaders();
-
-        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
-
         restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + id,
             DELETE,
-            httpEntity,
+            null,
             new ParameterizedTypeReference<>() {
             });
     }

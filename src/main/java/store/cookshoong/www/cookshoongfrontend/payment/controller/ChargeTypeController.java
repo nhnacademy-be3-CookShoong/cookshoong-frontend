@@ -52,12 +52,12 @@ public class ChargeTypeController {
     }
 
     /**
-     * 결테 타입 생성 메서드.
+     * 결제 타입 생성 메서드.
      *
      * @param createTypeRequestDto  결제 타입에 생성되는 데이터
      * @param bindingResult         입력에 대한 검증 결과
      * @param model                 HTML 로 보낼 데이터
-     * @return                      Home 페이지로 반환
+     * @return                      결제 타입 페이지로 반환
      */
     @PostMapping
     public String postDoCreateChargeType(@ModelAttribute("type") @Valid CreateTypeRequestDto createTypeRequestDto,
