@@ -1,136 +1,92 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
-
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>CookShoong</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/style.compiled.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 </head>
 
 <body>
-    <div class="hero_area">
-        <div class="bg-box"><img src="assets/img/hero-bg.jpg" alt=""></div>
-        <header class="header_section">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg custom_nav-container"><a class="navbar-brand" href="template.html"><span>Cookshoong</span></a><button class="navbar-toggler" data-bs-toggle="collapse" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav mx-auto">
-                            <li class="nav-item active"><a class="nav-link" href="template.html">Home <span class="sr-only">(current)</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="store.html">Store</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">Menu</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.html">Template</a></li>
-                        </ul>
-                        <div class="user_option"><a href="" class="user_link"><i class="fas fa-user" aria-hidden="true"></i></a><a class="cart_link" href="#"><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewbox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"><path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                   c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"></path><path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                   C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                   c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                   C457.728,97.71,450.56,86.958,439.296,84.91z"></path><path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                   c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"></path></svg></a>
-                            <form class="form-inline"><button class="btn my-2 my-sm-0 nav_search-btn" type="submit"><i class="fas fa-search" aria-hidden="true"></i></button></form><a href="" class="order_online">LOGIN</a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </header>
-        <section class="slider_section">
-            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1>쿠폰 이름을 적어주세요</h1>
-                                        <p>쿠폰의 적용 범위와 쿠폰을 사용했을 때 어떤 혜택을 받을 수 있는지 멋지게 적어주세요</p>
-                                        <div class="btn-box"><a href="" class="btn1">쿠폰 받기</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-7 col-lg-6">
-                                    <div class="detail-box">
-                                        <h1> Fast Food Restaurant </h1>
-                                        <p> Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam. </p>
-                                        <div class="btn-box"><a href="" class="btn1"> Order Now </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="container-fluid page-body-wrapper">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                                    aria-controls="form-elements"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="form-elements">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-register">매장 등록</a></li>
+                        <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
+                        <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
+                        <li><a class="nav-link" href="store-merchant-manager">가맹점 관리</a></li>
+                    </ul>
                 </div>
-                <div class="container">
-                    <ol class="carousel-indicators">
-                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-                        <li data-target="#customCarousel1" data-slide-to="1"></li>
-                        <li data-target="#customCarousel1" data-slide-to="2"></li>
-                    </ol>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                                    aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
+                    class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="charts">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                    </ul>
                 </div>
-            </div>
-        </section>
-    </div>
-    <footer class="footer_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 footer-col">
-                    <div class="footer_contact">
-                        <h4> Contact Us </h4>
-                        <div class="contact_link_box"><a href=""></a><a href=""><i class="fas fa-phone" aria-hidden="true"></i><span> Call +01 1234567890 </span></a><a href=""><i class="fas fa-envelope" aria-hidden="true"></i><span> demo@gmail.com </span></a></div>
-                    </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                                    aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="tables">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
+                        <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
+                        <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
+                    </ul>
                 </div>
-                <div class="col-md-4 footer-col">
-                    <div class="footer_detail"><a href="" class="footer-logo">Cookshoong</a>
-                        <p>쿡슝 프로젝트는 NHN Academy 의 과제로 제작되는<br>배달 어플리케이션 개발 프로젝트입니다.</p>
-                        <div class="footer_social"><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a><a href=""><i class="fa fa-pinterest" aria-hidden="true"></i></a></div>
-                    </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                                    aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+                    class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="auth">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
+                        <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
+                    </ul>
                 </div>
-                <div class="col-md-4 footer-col">
-                    <div class="footer_contact">
-                        <h4>Location</h4>
-                        <div class="contact_link_box"><a href=""></a><a href=""><span>찾아오시는 길</span></a><a href=""><span>조선대학교 IT 융합대학 실습실</span></a></div>
-                    </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                                    aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
+                    class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="error">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
+                    </ul>
                 </div>
-            </div>
-            <div class="footer-info">
-                <p> © 2023 All Rights Reserved By NHN Academy<br><br> © 2023 Distributed By Cookshoong</p>
-            </div>
-        </div>
-    </footer>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/template.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
 </body>
 
 </html>
