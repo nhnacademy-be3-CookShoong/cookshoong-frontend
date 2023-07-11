@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -79,22 +79,91 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12">
+                <form class="col-12" th:action="@{/store-menu-manager}" th:object="${createMenuRequestDto}"
+                      method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">영업점 메뉴 관리 페이지</h4>
+                                <h4 class="card-title">영업점 메뉴 등록 페이지</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">메뉴 정보</h4>
+
+                                <div class="form-group">
+                                    <label>메뉴 이름</label>
+                                    <input class="form-control" type="text" id="name"
+                                           name="name"
+                                           th:field="*{name}" th:value="*{name}"
+                                           placeholder="메뉴 이름">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>메뉴 대표 이미지</label>
+                                    <input type="file" name="image" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" class="form-control file-upload-info" disabled
+                                               th:field="*{image}" th:value="*{image}"
+                                               id="image" name="image"
+                                               placeholder="Upload Image">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-info"
+                                                    type="button">이미지 찾기</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>가격</label>
+                                    <input class="form-control" type="text" id="price"
+                                           name="price"
+                                           th:field="*{price}" th:value="*{price}"
+                                           placeholder="메뉴 가격">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>적립률</label>
+                                    <input class="form-control" type="text" id="earningRate"
+                                           name="earningRate"
+                                           th:field="*{earningRate}" th:value="*{earningRate}"
+                                           placeholder="메뉴 적립">
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">메뉴 관리</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                    </table>
+                                <h4 class="card-title">메뉴 상세 정보</h4>
+
+                                <div class="form-group">
+                                    <label>조리 시간</label>
+                                    <input class="form-control" type="text" id="cookingTime"
+                                           name="cookingTime"
+                                           th:field="*{cookingTime}" th:value="*{cookingTime}"
+                                           placeholder="메뉴 이름">
                                 </div>
+
+                                <div class="form-group">
+                                    <label >메뉴 설명</label>
+                                    <input type="text" id="description" name="description" hidden="hidden" th:field="*{description}" th:value="*{description}">
+                                    <div id="editor"></div>
+                                </div>
+
+                                <input type="hidden" id="menuStatusName" name="menuStatusName" th:value="판매중">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-info mr-2" type="submit" id="submitButton">메뉴 신규 등록</button>
+                                <button class="btn btn-light">취소</button>
                             </div>
                         </div>
                     </div>
@@ -125,7 +194,7 @@
         initialValue: '메뉴 설명을 입력해주세요.'
     });
 
-    document.querySelector('#submitButton').addEventListener('click', function () {
+    document.querySelector('#submitButton').addEventListener('click', function() {
         let editorContent = editor.getHTML();
         document.querySelector('#description').value = editorContent;
     });
