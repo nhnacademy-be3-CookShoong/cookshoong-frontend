@@ -11509,7 +11509,7 @@ fieldset:disabled a.btn {
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.5rem 0.81rem;
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.0;
   border-radius: 0.1875rem;
 }
 
@@ -14348,7 +14348,7 @@ a.close.disabled {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    max-width: 500px;
+    max-width: 800px;
     margin: 30px auto;
   }
   .modal-dialog-scrollable {
@@ -23535,7 +23535,7 @@ body.avgrund-active {
 }
 
 /* style for off-canvas menu*/
-@media screen and (max-width: 0px) {
+@media screen and (max-width: 1000px) {
   .sidebar-offcanvas {
     position: fixed;
     max-height: calc(100vh - 64px);

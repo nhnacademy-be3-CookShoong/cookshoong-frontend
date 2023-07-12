@@ -41,7 +41,7 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
-                        <li><a class="nav-link" href="store-menu-register">메뉴 등록</a></li>
+                        
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
                     </ul>
                 </div>
@@ -81,7 +81,7 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12 grid-margin" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
+                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
