@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 
 <body>
@@ -79,7 +77,7 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12">
+                <div class="col-12">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -91,14 +89,70 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">메뉴 관리</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                    </table>
+                                <div class="col-12 grid-margin">
+                                    <form class="border-top border-bottom pb-3 pt-3">
+                                        <div class="row">
+                                            <div class="col align-content-end text-md-center border-info pr-3 pb-2" style="max-width: 200px">
+                                                <img src="/assets/images/sample1.png" alt="image" class="img-lg">
+                                            </div>
+                                            <div class="col">
+                                                <h3 class="font-weight-bold">맛있는 북극 사과고기찜</h3>
+                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span class="pr-2" style="font-size: 1.2rem">5.0</span>
+                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i> <span class="pr-2" style="font-size: 1.2rem">300</span>
+                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i> <span class="pr-2" style="font-size: 1.2rem">50분</span></p>
+                                                <div class="pt-2">
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">12,000<span style="font-size: 1.2rem">원</span></p>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <p>사과를 곁들인 고기찜 요리. 짐승 고기에 가득한 달큰한 육즙이 먹고 나서도 계속 생각난다. 사과 과수원에 누워 신선한 과일 향에 젖어드는 느낌이다.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="border-top border-bottom pb-3 pt-3">
+                                        <div class="row">
+                                            <div class="col align-content-end text-md-center border-info pr-3 pb-2" style="max-width: 200px">
+                                                <img src="/assets/images/sample2.png" alt="image" class="img-lg">
+                                            </div>
+                                            <div class="col">
+                                                <h3 class="font-weight-bold">맛있는 바삭바삭 치킨버거</h3>
+                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span class="pr-2" style="font-size: 1.2rem">4.7</span>
+                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i> <span class="pr-2" style="font-size: 1.2rem">210</span>
+                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i> <span class="pr-2" style="font-size: 1.2rem">20분</span></p>
+                                                <div class="pt-2">
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">8,000<span style="font-size: 1.2rem">원</span></p>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <p>새고기로 만든 햄버거. 새 다리가 부드럽고 육즙 가득하게 잘 구워졌다. 신선하고 아삭한 채소와 진한 소스로 풍미를 더 하면 마치 구름 위에 떠 있는 듯한 느낌을 맛보게 될 것이다.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form class="border-top border-bottom pb-3 pt-3">
+                                        <div class="row">
+                                            <div class="col align-content-end text-md-center border-info pr-3 pb-2" style="max-width: 200px">
+                                                <img src="/assets/images/sample3.png" alt="image" class="img-lg">
+                                            </div>
+                                            <div class="col">
+                                                <h3 class="font-weight-bold">맛있는 사골 라멘</h3>
+                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span class="pr-2" style="font-size: 1.2rem">4.8</span>
+                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i> <span class="pr-2" style="font-size: 1.2rem">400</span>
+                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i> <span class="pr-2" style="font-size: 1.2rem">55분</span></p>
+                                                <div class="pt-2">
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">9,000<span style="font-size: 1.2rem">원</span></p>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <p>뜨거운 김이 모락모락 피어나는 면 요리. 부드러운 면발이 육수의 알짜를 여김 없이 흡수했다. 풍부한 고명은 식감에 다양성과 새로움을 제공한다. 육수의 첫 모금은 짐승 뼈의 짙은 향을 그대로 보존했고, 부드럽지만 느끼하지는 않은 식감… 어느새 바닥을 드러낸 그릇… 아직도 여운이 남는 듯하다.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -116,20 +170,6 @@
 <script src="/assets/js/file-upload.js"></script>
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script>
-    const editor = new toastui.Editor({
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '500px',
-        initialValue: '메뉴 설명을 입력해주세요.'
-    });
-
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
-    });
-</script>
 </body>
 
 </html>

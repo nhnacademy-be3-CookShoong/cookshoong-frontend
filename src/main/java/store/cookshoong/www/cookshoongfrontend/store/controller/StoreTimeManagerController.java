@@ -66,7 +66,6 @@ public class StoreTimeManagerController {
         return "redirect:/";
     }
 
-
     /**
      * 매장 영업시간 삭제 요청을 맵핑.
      *
