@@ -41,6 +41,7 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-menu-register">메뉴 등록</a></li>
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
                     </ul>
                 </div>
@@ -80,7 +81,7 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12 forms-sample" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
+                <form class="col-12 grid-margin" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -93,7 +94,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">사업자 정보</h4>
-                                <div class="form-group"><label class="form-label" for="representativeName">사업자
+                                <div class="form-group"><label for="representativeName">사업자
                                     이름</label>
                                     <input class="form-control" type="text" id="representativeName"
                                            name="representativeName"
@@ -101,7 +102,7 @@
                                            placeholder="사업자 이름">
                                 </div>
 
-                                <div class="form-group"><label class="form-label" for="storeName">사업자 등록번호</label>
+                                <div class="form-group"><label for="storeName">사업자 등록번호</label>
                                     <input class="form-control" type="text" id="businessLicenseNumber"
                                            name="businessLicenseNumber"
                                            th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
@@ -123,7 +124,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group"><label class="form-label">사업자 계좌 번호</label>
+                                <div class="form-group"><label>사업자 계좌 번호</label>
                                     <div class="input-group col-xs-12">
                                         <select class="js-example-basic-single w-100" id="bankName" name="bankName"
                                                 th:field="*{bankName}" th:value="*{bankName}">
@@ -146,17 +147,17 @@
                             <div class="card-body">
                                 <h4 class="card-title">영업점 정보</h4>
 
-                                <div class="form-group"><label class="form-label" for="storeName">영업점 상호명</label>
+                                <div class="form-group"><label for="storeName">영업점 상호명</label>
                                     <input class="form-control" type="text" id="storeName" name="storeName"
                                            th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명"></div>
 
-                                <div class="form-group"><label class="form-label" for="phoneNumber">영업점 전화번호</label>
+                                <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
                                     <input class="form-control" type="text" id="phoneNumber"
                                            name="phoneNumber"
                                            th:field="*{phoneNumber}" th:value="*{phoneNumber}" placeholder="영업점 전화번호">
                                 </div>
 
-                                <div class="form-group"><label class="form-label">영업점 주소</label>
+                                <div class="form-group"><label>영업점 주소</label>
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control" id="mainPlace" name="mainPlace"
                                                th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">
@@ -174,12 +175,12 @@
                                     <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>
                                 </div>
 
-                                <div class="form-group"><label class="form-label" for="merchantName">가맹점 상호명</label>
+                                <div class="form-group"><label for="merchantName">가맹점 상호명</label>
                                     <input class="form-control" type="text" id="merchantName" name="merchantName"
                                            th:field="*{merchantName}" th:value="*{merchantName}" placeholder="가맹점 상호명">
                                 </div>
 
-                                <div class="form-group"><label class="form-label" for="earningRate">적립률</label>
+                                <div class="form-group"><label for="earningRate">적립률</label>
                                     <input class="form-control" type="text" id="earningRate" name="earningRate"
                                            th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률"></div>
 
@@ -193,8 +194,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">가게 설명</label>
-                                    <input type="text" id="description" name="description" hidden="hidden" th:field="*{description}" th:value="*{description}">
+                                    <label>가게 설명</label>
+                                    <input type="text" id="description" name="description" hidden="hidden"
+                                           th:field="*{description}" th:value="*{description}">
                                     <div id="editor"></div>
                                 </div>
                             </div>
@@ -241,10 +243,10 @@
 
     function execDaumPostcode() {
         new daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 var addr = data.address;
                 document.getElementById("mainPlace").value = addr;
-                geocoder.addressSearch(data.address, function(results, status) {
+                geocoder.addressSearch(data.address, function (results, status) {
                     if (status === daum.maps.services.Status.OK) {
                         var result = results[0];
                         var lat = result.y;
@@ -271,7 +273,7 @@
         initialValue: '가게 설명을 입력해주세요.'
     });
 
-    document.querySelector('#submitButton').addEventListener('click', function() {
+    document.querySelector('#submitButton').addEventListener('click', function () {
         let editorContent = editor.getHTML();
         document.querySelector('#description').value = editorContent;
     });

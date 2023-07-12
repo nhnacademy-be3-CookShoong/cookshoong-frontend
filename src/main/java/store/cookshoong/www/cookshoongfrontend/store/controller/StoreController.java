@@ -12,7 +12,7 @@ import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreService;
 
 /**
- * 매장의 등록 페이지를 연결하는 컨트롤러.
+ * 매장의 등록 페이지에서 사용될 컨트롤러.
  *
  * @author papel
  * @since 2023.07.09

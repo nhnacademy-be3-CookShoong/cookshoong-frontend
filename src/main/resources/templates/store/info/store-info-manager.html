@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -37,6 +37,7 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-menu-register">메뉴 등록</a></li>
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
                     </ul>
                 </div>
@@ -88,15 +89,15 @@
                         <div class="card-body">
                             <h4 class="card-title">영업점 관리</h4>
                             <form class="forms-sample">
-                                <div class="form-group"><label class="form-label" for="exampleInputName1">영업점
+                                <div class="form-group"><label for="exampleInputName1">영업점
                                     상호명</label><input class="form-control form-control" type="text"
                                                       id="exampleInputName1" placeholder="기존 영업점 상호명"></div>
-                                <div class="form-group"><label class="form-label" for="exampleInputName2">영업점
+                                <div class="form-group"><label for="exampleInputName2">영업점
                                     전화번호</label><input class="form-control form-control" type="text"
                                                        id="exampleInputName2" placeholder="기존 영업점 전화번호"></div>
-                                <div class="form-group"><label class="form-label">영업점 주소</label><input type="file"
-                                                                                                       name="img[]"
-                                                                                                       class="file-upload-default">
+                                <div class="form-group"><label>영업점 주소</label><input type="file"
+                                                                                    name="img[]"
+                                                                                    class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="기존 메인 주소">
@@ -105,25 +106,25 @@
                                     <input class="form-control form-control" type="text" id="exampleInputName3"
                                            placeholder="기존 서브 주소">
                                 </div>
-                                <div class="form-group"><label class="form-label">영업점 대표 이미지</label><input type="file"
-                                                                                                           name="img[]"
-                                                                                                           class="file-upload-default">
+                                <div class="form-group"><label>영업점 대표 이미지</label><input type="file"
+                                                                                        name="img[]"
+                                                                                        class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="기존 영업점 이미지 url">
                                         <button class="btn btn-info file-upload-browse" type="button">이미지 찾기</button>
                                     </div>
                                 </div>
-                                <div class="form-group"><label class="form-label">영업점 카테고리</label><input type="file"
-                                                                                                         name="img[]"
-                                                                                                         class="file-upload-default">
+                                <div class="form-group"><label>영업점 카테고리</label><input type="file"
+                                                                                      name="img[]"
+                                                                                      class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="영업점 카테고리">
                                         <button class="btn btn-info file-upload-browse" type="button">카테고리 찾기</button>
                                     </div>
                                 </div>
-                                <div class="form-group"><label class="form-label" for="exampleInputName4">영업점 소개</label><input
+                                <div class="form-group"><label for="exampleInputName4">영업점 소개</label><input
                                         class="form-control form-control" type="text" id="exampleInputName4"
                                         placeholder="이후 editor 적용"></div>
                             </form>
@@ -135,27 +136,27 @@
                         <div class="card-body">
                             <h4 class="card-title">사업자 관리</h4>
                             <form class="forms-sample">
-                                <div class="form-group"><label class="form-label">사업자 등록 번호</label><input type="file"
-                                                                                                          name="img[]"
-                                                                                                          class="file-upload-default">
+                                <div class="form-group"><label>사업자 등록 번호</label><input type="file"
+                                                                                       name="img[]"
+                                                                                       class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="기존 사업자 등록 번호">
                                         <button class="btn btn-info file-upload-browse" type="button">등록 번호 검증</button>
                                     </div>
                                 </div>
-                                <div class="form-group"><label class="form-label">사업자 등록증 사본</label><input type="file"
-                                                                                                           name="img[]"
-                                                                                                           class="file-upload-default">
+                                <div class="form-group"><label>사업자 등록증 사본</label><input type="file"
+                                                                                        name="img[]"
+                                                                                        class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="기존 사업자 등록증 사본">
                                         <button class="btn btn-info file-upload-browse" type="button">이미지 찾기</button>
                                     </div>
                                 </div>
-                                <div class="form-group"><label class="form-label">사업자 계좌 번호</label><input type="file"
-                                                                                                          name="img[]"
-                                                                                                          class="file-upload-default">
+                                <div class="form-group"><label>사업자 계좌 번호</label><input type="file"
+                                                                                       name="img[]"
+                                                                                       class="file-upload-default">
                                     <div class="input-group col-xs-12"><input
                                             class="form-control form-control file-upload-info" type="text" disabled=""
                                             placeholder="기존 계좌 은행">

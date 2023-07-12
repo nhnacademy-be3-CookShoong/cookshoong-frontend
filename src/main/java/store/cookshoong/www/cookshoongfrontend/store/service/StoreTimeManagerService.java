@@ -30,9 +30,9 @@ public class StoreTimeManagerService {
     /**
      * API 서버에 휴업일 신규등록 요청을 보냄.
      *
-     * @param createStoreRequestDto 매장 신규등록 요청 정보
+     * @param createHolidayRequestDto 휴업일 신규등록 요청 정보
      */
-    public void createHoliday(CreateHolidayRequestDto createStoreRequestDto) {
+    public void createHoliday(CreateHolidayRequestDto createHolidayRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getBaseUrl())
             .path("/api/stores/1/holiday")
@@ -42,7 +42,7 @@ public class StoreTimeManagerService {
 
         RequestEntity<CreateHolidayRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(createStoreRequestDto);
+            .body(createHolidayRequestDto);
 
         ResponseEntity<Void> response = restTemplate.exchange(request, Void.class);
 
@@ -55,7 +55,7 @@ public class StoreTimeManagerService {
     /**
      * API 서버에 영업시간 신규등록 요청을 보냄.
      *
-     * @param createBusinessHourRequestDto 매장 신규등록 요청 정보
+     * @param createBusinessHourRequestDto 영업시간 신규등록 요청 정보
      */
     public void createBusinessHour(CreateBusinessHourRequestDto createBusinessHourRequestDto) {
         URI uri = UriComponentsBuilder

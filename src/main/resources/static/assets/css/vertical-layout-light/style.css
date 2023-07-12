@@ -18997,8 +18997,8 @@ code {
 }
 
 .img-lg {
-  width: 92px;
-  height: 92px;
+  width: 160px;
+  height: auto;
 }
 
 .img-sm {
@@ -20702,7 +20702,7 @@ select.border-dark.tt-hint:focus {
   font-size: 20px;
   width: 40px;
   text-align: left;
-  color: #f2125e;
+  color: #ff0000;
 }
 
 .icon-in-bg {
@@ -20726,7 +20726,7 @@ select.border-dark.tt-hint:focus {
 }
 
 .icon-sm {
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 /* Loaders */

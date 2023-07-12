@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 각 매장 정보 관리 페이지를 연결하는 컨트롤러.
+ * 매장 정보 관리 페이지에서 사용될 컨트롤러.
  *
  * @author papel
  * @since 2023.07.09
@@ -22,6 +22,6 @@ public class StoreInfoManagerController {
      */
     @GetMapping("/store-info-manager")
     public String getStoreInfoManger() {
-        return "store/manager/store-info-manager";
+        return "store/info/store-info-manager";
     }
 }
