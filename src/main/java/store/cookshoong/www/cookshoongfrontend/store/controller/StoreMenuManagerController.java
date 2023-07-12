@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreMenuManagerService;
 
 /**
@@ -25,31 +26,6 @@ public class StoreMenuManagerController {
     private final StoreMenuManagerService storeMenuManagerService;
 
     /**
-     * 매장 메뉴 등록 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.11
-     */
-    @GetMapping("/store-menu-register")
-    public String getSelectStoreMenuRegister(@ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto, Model model) {
-        model.addAttribute("createMenuRequestDto", createMenuRequestDto);
-        return "store/menu/store-menu-register";
-    }
-
-    /**
-     * 매장 메뉴 추가 요청을 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.11
-     */
-    @PostMapping("/store-menu-register")
-    public String postCreateMenu(@Valid @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
-                                         BindingResult bindingResult) {
-        storeMenuManagerService.createMenu(createMenuRequestDto);
-        return "redirect:/";
-    }
-
-    /**
      * 매장 메뉴 관리 페이지를 맵핑.
      *
      * @author papel
@@ -62,13 +38,14 @@ public class StoreMenuManagerController {
     }
 
     /**
-     * 매장 메뉴 삭제 요청을 맵핑.
+     * 매장 옵션 관리 페이지를 맵핑.
      *
      * @author papel
      * @since 2023.07.11
      */
-    @DeleteMapping("/store-menu-manager")
-    public String deleteMenu() {
-        return "redirect:/";
+    @GetMapping("/store-option-manager")
+    public String getSelectStoreMenuRegister(@ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto, Model model) {
+        model.addAttribute("createOptionRequestDto", createOptionRequestDto);
+        return "store/menu/store-option-manager";
     }
 }

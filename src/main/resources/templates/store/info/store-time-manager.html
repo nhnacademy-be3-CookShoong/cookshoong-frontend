@@ -37,8 +37,9 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
-                        
+
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                        <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
                     </ul>
                 </div>
             </li>
@@ -78,13 +79,14 @@
         <div class="content-wrapper">
             <div class="row">
                 <form class="col-12 p-0" th:action="@{/store-time-manager-businesshour}" th:object="${createBusinessHourRequestDto}" method="post">
+
                     <div class="col-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">영업점 영업시간 관리 페이지</h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="font-weight-bold">영업시간 관리 페이지</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -327,6 +329,11 @@
 <script src="/assets/js/file-upload.js"></script>
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
+<script>
+    window.onload = function() {
+        window.scrollTo(0, 0);
+    }
+</script>
 </body>
 
 </html>

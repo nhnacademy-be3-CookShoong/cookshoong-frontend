@@ -41,8 +41,9 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
-                        
+
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                        <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
                     </ul>
                 </div>
             </li>
@@ -86,7 +87,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">영업점 등록 페이지</h4>
+                                <h1 class="font-weight-bold">영업점 등록 페이지</h1>
                             </div>
                         </div>
                     </div>
@@ -277,6 +278,11 @@
         let editorContent = editor.getHTML();
         document.querySelector('#description').value = editorContent;
     });
+</script>
+<script>
+    window.onload = function() {
+        window.scrollTo(0, 0);
+    }
 </script>
 </body>
 
