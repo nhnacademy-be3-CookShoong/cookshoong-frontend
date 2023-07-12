@@ -23535,7 +23535,7 @@ body.avgrund-active {
 }
 
 /* style for off-canvas menu*/
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 0px) {
   .sidebar-offcanvas {
     position: fixed;
     max-height: calc(100vh - 64px);

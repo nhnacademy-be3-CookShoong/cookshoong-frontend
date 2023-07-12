@@ -35,7 +35,7 @@ public class MainViewController {
      */
     @GetMapping("/store-merchant-manager")
     public String getMerchantManager() {
-        return "store-merchant-manager";
+        return "store/info/store-merchant-manager";
     }
 
     /**
