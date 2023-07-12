@@ -37,7 +37,7 @@
         <td th:text="${a.getAlias()}">별칭</td>
         <td th:text="${a.getMainAddress()}">메인 주소</td>
         <td>
-            <button th:onclick="'location.href=\'' + @{|/addresses/maps/address/${a.id}/delete|} + '\''">삭제</button>
+            <button th:onclick="'location.href=\'' + @{|/accounts/addresses/maps/${a.id}/delete|} + '\''">삭제</button>
         </td>
     </tr>
     </tbody>

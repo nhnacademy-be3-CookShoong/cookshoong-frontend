@@ -78,7 +78,7 @@ public class AddressController {
      * @param id        주소 아이디
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
-    @GetMapping("/address/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String getDeleteAccountAddress(@PathVariable Long id) {
 
         accountAddressService.deleteAccountAddress(1L, id);
