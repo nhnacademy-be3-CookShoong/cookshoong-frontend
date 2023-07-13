@@ -52,7 +52,7 @@ public class ChargeTypeAdapter {
      * @param chargeTypeId        결제 타입 아이디
      * @return          해당되는 결제 타입을 반환
      */
-    public TypeResponseDto selectChargeType(Long chargeTypeId) {
+    public TypeResponseDto selectChargeType(String chargeTypeId) {
 
         ResponseEntity<TypeResponseDto> exchange =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + chargeTypeId,
@@ -84,6 +84,7 @@ public class ChargeTypeAdapter {
     }
 
     /**
+<<<<<<< HEAD
      * 해당 결제 타입에 대한 이름을 수정하는 메서드.
      *
      * @param id                    결제 타입 아이디
@@ -101,11 +102,13 @@ public class ChargeTypeAdapter {
     }
 
     /**
+=======
+>>>>>>> a03d8f7 (refactor: 💡 수정 DB 수정으로 인한 결제 및 환불 타입에 Front 변경)
      * 해당 결제 타입을 삭제하는 메서드.
      *
      * @param id        결제 타입 아이디
      */
-    public void deleteChargeType(Long id) {
+    public void deleteChargeType(String id) {
 
         restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + id,
             DELETE,

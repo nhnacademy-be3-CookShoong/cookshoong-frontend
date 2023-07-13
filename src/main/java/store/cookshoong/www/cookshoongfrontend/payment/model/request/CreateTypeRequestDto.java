@@ -19,6 +19,11 @@ import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMess
 public class CreateTypeRequestDto {
 
     @NotBlank
+    @Length(min = 1, max = 10)
+    @Pattern(regexp = RegularExpressions.LETTER_ONLY_WITH_BLANK, message = ValidationFailureMessages.LETTER_ONLY)
+    private String id;
+
+    @NotBlank
     @Length(min = 1, max = 30)
     @Pattern(regexp = RegularExpressions.LETTER_ONLY_WITH_BLANK, message = ValidationFailureMessages.LETTER_ONLY)
     private String name;

@@ -80,7 +80,7 @@ public class ChargeTypeController {
      * @return          모든 결제 타입에 대한 목록 화면으로 반환
      */
     @GetMapping("/admin-index/{id}/delete")
-    public String postDeleteChargeType(@PathVariable Long id) {
+    public String postDeleteChargeType(@PathVariable String id) {
 
         chargeTypeService.deleteChargeType(id);
 
