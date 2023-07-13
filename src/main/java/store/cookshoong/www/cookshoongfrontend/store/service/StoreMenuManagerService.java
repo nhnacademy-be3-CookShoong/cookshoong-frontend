@@ -32,7 +32,7 @@ public class StoreMenuManagerService {
      */
     public void createMenu(CreateMenuRequestDto createMenuRequestDto) {
         URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
+            .fromUriString(apiProperties.getGatewayUrl())
             .path("/api/stores/1/menu")
             .encode()
             .build()

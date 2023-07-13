@@ -32,7 +32,7 @@ public class StoreService {
      */
     public void createStore(CreateStoreRequestDto createStoreRequestDto) {
         URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
+            .fromUriString(apiProperties.getGatewayUrl())
             .path("/api/accounts/1/stores")
             .encode()
             .build()

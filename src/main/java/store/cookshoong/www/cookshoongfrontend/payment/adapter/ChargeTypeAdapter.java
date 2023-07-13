@@ -4,14 +4,12 @@ import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -43,7 +41,7 @@ public class ChargeTypeAdapter {
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/charges", POST, httpEntity,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges", POST, httpEntity,
             new ParameterizedTypeReference<>() {
             });
     }
@@ -57,7 +55,7 @@ public class ChargeTypeAdapter {
     public TypeResponseDto selectChargeType(Long chargeTypeId) {
 
         ResponseEntity<TypeResponseDto> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/charges" + "/" + chargeTypeId,
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + chargeTypeId,
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -73,10 +71,10 @@ public class ChargeTypeAdapter {
      */
     public List<TypeResponseDto> selectChargeTypeAll() {
 
-        log.info("<><><>>> : {}", apiProperties.getBaseUrl());
+        log.info("<><><>>> : {}", apiProperties.getGatewayUrl());
 
         ResponseEntity<List<TypeResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/charges",
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -95,7 +93,7 @@ public class ChargeTypeAdapter {
 
         HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto);
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/charges" + "/" + id,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + id,
             PUT,
             httpEntity,
             new ParameterizedTypeReference<>() {
@@ -109,7 +107,7 @@ public class ChargeTypeAdapter {
      */
     public void deleteChargeType(Long id) {
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/charges" + "/" + id,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + id,
             DELETE,
             null,
             new ParameterizedTypeReference<>() {

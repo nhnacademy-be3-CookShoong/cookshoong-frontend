@@ -34,7 +34,7 @@ public class StoreTimeManagerService {
      */
     public void createHoliday(CreateHolidayRequestDto createHolidayRequestDto) {
         URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
+            .fromUriString(apiProperties.getGatewayUrl())
             .path("/api/stores/1/holiday")
             .encode()
             .build()
@@ -59,7 +59,7 @@ public class StoreTimeManagerService {
      */
     public void createBusinessHour(CreateBusinessHourRequestDto createBusinessHourRequestDto) {
         URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
+            .fromUriString(apiProperties.getGatewayUrl())
             .path("/api/stores/1/businesshour")
             .encode()
             .build()

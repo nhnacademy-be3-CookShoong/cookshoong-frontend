@@ -34,7 +34,7 @@ public class AccountService {
         String authorityCode = userType.equals("cus") ? "customer" : "business";
 
         URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
+            .fromUriString(apiProperties.getGatewayUrl())
             .path("/api/accounts")
             .queryParam("authorityCode", authorityCode)
             .encode()
