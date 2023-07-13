@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.account.controller;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 
 /**
@@ -18,9 +21,10 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
  * @author koesnam
  * @since 2023/07/04
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-public class OnBoardingViewController {
+public class OnBoardingViewController implements AccountIdAware {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
 
@@ -39,7 +43,9 @@ public class OnBoardingViewController {
      */
     @GetMapping("sign-up")
     public String getCustomerSignUpForm(@RequestParam(required = false) String userType,
-                                        Model model, SignUpRequestDto signUpRequestDto) {
+                                        Model model, SignUpRequestDto signUpRequestDto,
+                                        AccountIdOnly accountId) {
+        log.debug("=============  accountId {} =============", accountId.getAccountId());
         if (Objects.nonNull(userType) && (userType.equals("cus") || userType.equals("biz"))) {
             model.addAttribute("userType", userType);
         } else {
