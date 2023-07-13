@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -25,8 +26,8 @@ public class CreateMenuRequestDto {
 
     private String image;
 
-    @NotBlank
-    private String cookingTime;
+    @NotNull
+    private Integer cookingTime;
 
     private String earningRate;
 

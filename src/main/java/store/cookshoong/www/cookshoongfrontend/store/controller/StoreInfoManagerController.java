@@ -42,7 +42,7 @@ public class StoreInfoManagerController {
      * @since 2023.07.09
      */
     @PostMapping("/store-info-manager")
-    public String postCreateStore(@Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
+    public String postUpdateStore(@Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
                                   BindingResult bindingResult) {
         storeService.createStore(createStoreRequestDto);
         return "redirect:/";

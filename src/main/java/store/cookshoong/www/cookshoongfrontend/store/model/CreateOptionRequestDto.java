@@ -14,10 +14,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateOptionRequestDto {
     @NotBlank
-    private String menuStatusName;
-    @NotBlank
     private String name;
-
     @NotBlank
     private String price;
 
