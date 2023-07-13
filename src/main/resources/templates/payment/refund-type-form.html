@@ -88,14 +88,14 @@
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>번호</th>
+                                        <th>환불 코드</th>
                                         <th>환불 타입</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="c, i : ${refundTypes}">
-                                        <td th:text="${i.index +1}">번호</td>
-                                        <td th:text="${c.name}">이름</td>
+                                        <td th:text="${c.id}">환불 코드</td>
+                                        <td th:text="${c.name}">환불 타입</td>
                                         <td>
                                             <button class="btn btn-info mr-2" th:onclick="'location.href=\'' + @{|/payments/charges/refund-type/admin-index/${c.id}/delete|} + '\''">삭제</button>
                                         </td>
@@ -115,11 +115,18 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>이름</th>
+                                            <th>환불 코드</th>
+                                            <th>환불 타입</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
+                                            <td class="py-1">
+                                                <input type="text" name="name" th:field="*{id}" placeholder="환불 코드"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('id')}" th:error="*{id}">CODE ERROR</span>
+                                                <br/>
+                                            </td>
                                             <td class="py-1">
                                                 <input type="text" name="name" th:field="*{name}" placeholder="환불 타입"/>
                                                 <br/>

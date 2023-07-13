@@ -52,7 +52,7 @@ public class RefundTypeAdapter {
      * @param chargeTypeId        결제 타입 아이디
      * @return          해당되는 환불 타입을 반환
      */
-    public TypeResponseDto selectChargeType(Long chargeTypeId) {
+    public TypeResponseDto selectChargeType(String chargeTypeId) {
 
         ResponseEntity<TypeResponseDto> exchange =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + chargeTypeId,
@@ -84,28 +84,11 @@ public class RefundTypeAdapter {
     }
 
     /**
-     * 해당 환불 타입에 대한 이름을 수정하는 메서드.
-     *
-     * @param id                    환불 타입 아이디
-     * @param modifyTypeRequestDto  환불 타입에 이름을 수정하는 Dto
-     */
-    public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
-
-        HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto);
-
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + id,
-            PUT,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
-    }
-
-    /**
      * 해당 환불 타입을 삭제하는 메서드.
      *
      * @param id        환불 타입 아이디
      */
-    public void deleteChargeType(Long id) {
+    public void deleteChargeType(String id) {
 
         restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + id,
             DELETE,

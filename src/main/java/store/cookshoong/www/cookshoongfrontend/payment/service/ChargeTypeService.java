@@ -27,7 +27,7 @@ public class ChargeTypeService {
         chargeTypeAdapter.createChargeType(createTypeRequestDto);
     }
 
-    public TypeResponseDto selectChargeType(Long id) {
+    public TypeResponseDto selectChargeType(String id) {
 
         return chargeTypeAdapter.selectChargeType(id);
     }
@@ -37,12 +37,7 @@ public class ChargeTypeService {
         return chargeTypeAdapter.selectChargeTypeAll();
     }
 
-    public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
-
-        chargeTypeAdapter.modifyChargeType(id, modifyTypeRequestDto);
-    }
-
-    public void deleteChargeType(Long id) {
+    public void deleteChargeType(String id) {
 
         chargeTypeAdapter.deleteChargeType(id);
     }

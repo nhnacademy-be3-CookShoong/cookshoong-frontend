@@ -80,7 +80,7 @@ public class RefundTypeController {
      * @return          모든 환불 타입에 대한 목록 화면으로 반환
      */
     @GetMapping("/admin-index/{id}/delete")
-    public String postDeleteRefundType(@PathVariable Long id) {
+    public String postDeleteRefundType(@PathVariable String id) {
 
         refundTypeService.deleteChargeType(id);
 
