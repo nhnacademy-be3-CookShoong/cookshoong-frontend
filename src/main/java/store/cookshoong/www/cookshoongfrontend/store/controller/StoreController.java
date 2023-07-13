@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreService;
 
@@ -19,7 +21,7 @@ import store.cookshoong.www.cookshoongfrontend.store.service.StoreService;
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreController {
+public class StoreController implements AccountIdAware {
 
     private final StoreService storeService;
 
@@ -42,9 +44,11 @@ public class StoreController {
      * @since 2023.07.09
      */
     @PostMapping("/store-register")
-    public String postCreateStore(@Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
+    public String postCreateStore(
+        AccountIdOnly accountId,
+        @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
                                   BindingResult bindingResult) {
-        storeService.createStore(createStoreRequestDto);
+        storeService.createStore(accountId.getAccountId(), createStoreRequestDto);
         return "redirect:/";
     }
 }

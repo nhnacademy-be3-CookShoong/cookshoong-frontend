@@ -1,6 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -39,8 +41,10 @@ public class CreateStoreRequestDto {
     private String businessLicense;
     @NotBlank
     private String description;
-    @NotBlank
-    private String earningRate;
+    @NotNull
+    private BigDecimal earningRate;
+    @NotNull
+    private List<String> storeCategories;
     @NotBlank
     private String bankName;
     @NotBlank
