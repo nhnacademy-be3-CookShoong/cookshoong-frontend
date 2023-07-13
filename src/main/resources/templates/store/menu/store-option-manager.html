@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -12,8 +13,6 @@
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 
 <body>
@@ -47,23 +46,23 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신규 메뉴 그룹 등록</h4>
+                                <h4 class="card-title">신규 옵션 그룹 등록</h4>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">메뉴 그룹 정보</h4>
+                                <h4 class="card-title">옵션 그룹 정보</h4>
                                 <div class="form-group">
-                                    <label>메뉴 그룹 이름</label>
+                                    <label>옵션 그룹 이름</label>
                                     <input class="form-control" type="text"
-                                           placeholder="메뉴 그룹 이름">
+                                           placeholder="옵션 그룹 이름">
                                 </div>
                                 <div class="form-group">
-                                    <label>메뉴 그룹 상세</label>
+                                    <label>옵션 그룹 상세</label>
                                     <input class="form-control" type="text"
-                                           placeholder="메뉴 그룹 상세">
+                                           placeholder="옵션 그룹 상세">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +70,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <button class="btn btn-info mr-2" type="submit">메뉴 그룹 신규 등록</button>
+                                <button class="btn btn-info mr-2" type="submit">옵션 그룹 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
                         </div>
@@ -85,40 +84,25 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-menu-manager}" th:object="${createMenuRequestDto}"
+                <form class="col-12 p-0" th:action="@{/store-option-manager}" th:object="${createOptionRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신규 메뉴 등록</h4>
+                                <h4 class="card-title">신규 옵션 등록</h4>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">메뉴 정보</h4>
+                                <h4 class="card-title">옵션 정보</h4>
                                 <div class="form-group">
-                                    <label>메뉴 이름</label>
+                                    <label>옵션 이름</label>
                                     <input class="form-control" type="text" id="name"
                                            name="name"
                                            th:field="*{name}" th:value="*{name}"
-                                           placeholder="메뉴 이름">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>메뉴 대표 이미지</label>
-                                    <input type="file" name="image" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               th:field="*{image}" th:value="*{image}"
-                                               id="image" name="image"
-                                               placeholder="Upload Image">
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info"
-                                                    type="button">이미지 찾기</button>
-                                        </span>
-                                    </div>
+                                           placeholder="옵션 이름">
                                 </div>
 
                                 <div class="form-group">
@@ -126,15 +110,7 @@
                                     <input class="form-control" type="text" id="price"
                                            name="price"
                                            th:field="*{price}" th:value="*{price}"
-                                           placeholder="메뉴 가격">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>적립률</label>
-                                    <input class="form-control" type="text" id="earningRate"
-                                           name="earningRate"
-                                           th:field="*{earningRate}" th:value="*{earningRate}"
-                                           placeholder="메뉴 적립">
+                                           placeholder="옵션 가격">
                                 </div>
                             </div>
                         </div>
@@ -142,29 +118,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">메뉴 상세 정보</h4>
-                                <div class="form-group">
-                                    <label>조리 시간</label>
-                                    <input class="form-control" type="text" id="cookingTime"
-                                           name="cookingTime"
-                                           th:field="*{cookingTime}" th:value="*{cookingTime}"
-                                           placeholder="메뉴 이름">
-                                </div>
-                                <div class="form-group">
-                                    <label>메뉴 설명</label>
-                                    <input type="text" id="description" name="description" hidden="hidden"
-                                           th:field="*{description}"
-                                           th:value="*{description}">
-                                    <div id="editor"></div>
-                                </div>
-                                <input type="hidden" id="menuStatusName" name="menuStatusName" th:value="판매중">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="btn btn-info mr-2" type="submit" id="submitButton">메뉴 신규 등록</button>
+                                <button class="btn btn-info mr-2" type="submit" id="submitButton">옵션 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
                         </div>
@@ -241,39 +195,39 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 메뉴 관리 페이지</h1>
+                            <h1 class="font-weight-bold">영업점 옵션 관리 페이지</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">메뉴 그룹 관리</h4>
+                            <h4 class="card-title">옵션 그룹 관리</h4>
                             <div class="col-12">
                                 <div class="row border-top pt-2 pb-2">
                                     <div class="col-sm-10">
-                                        <h3 class="font-weight-bold pt-2">신메뉴!</h3>
+                                        <h3 class="font-weight-bold pt-2">신옵션!</h3>
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
                                                 data-toggle="modal"
                                                 data-target="#menuGroupAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;"
+                                        <button class="btn btn-primary mb-1" style="width: 85px"
                                                 type="button">삭제
                                         </button>
                                     </div>
                                 </div>
                                 <div class="row border-top pt-2 pb-2">
                                     <div class="col-sm-10">
-                                        <h3 class="font-weight-bold pt-2">30년 전통의 메뉴 그룹</h3>
+                                        <h3 class="font-weight-bold pt-2">30년 전통의 옵션 그룹</h3>
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
                                                 data-toggle="modal"
                                                 data-target="#menuGroupAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;"
+                                        <button class="btn btn-primary mb-1" style="width: 85px"
                                                 type="button">삭제
                                         </button>
                                     </div>
@@ -292,31 +246,16 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">메뉴 관리</h4>
+                            <h4 class="card-title">옵션 관리</h4>
                             <div class="col-12 grid-margin">
                                 <div class="row border-top pb-3 pt-3">
                                     <div class="col-sm-10">
                                         <div class="row">
-                                            <div class="col-sm-2 align-content-end text-md-center border-info pr-3 pb-2"
-                                                 style="max-width: 200px">
-                                                <img src="/assets/images/sample1.png" alt="image" class="img-lg">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3 class="font-weight-bold">맛있는 북극 사과고기찜</h3>
-                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                        class="pr-2" style="font-size: 1.2rem">4.2</span>
-                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">110</span>
-                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">30분</span></p>
+                                            <div class="col-sm-12">
+                                                <h3 class="font-weight-bold">순한맛</h3>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">12,000<span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">1,000<span
                                                             style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                                <div class="pt-2">
-                                                    <p>사과를 곁들인 고기찜 요리. 짐승 고기에 가득한 달큰한 육즙이 먹고 나서도 계속 생각난다. 사과 과수원에 누워 신선한 과일 향에 젖어드는 느낌이다.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,7 +265,7 @@
                                                 data-toggle="modal"
                                                 data-target="#menuAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;" type="button">
+                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
                                             삭제
                                         </button>
                                     </div>
@@ -334,28 +273,11 @@
                                 <div class="row border-top pb-3 pt-3">
                                     <div class="col-sm-10">
                                         <div class="row">
-                                            <div class="col-sm-2 align-content-end text-md-center border-info pr-3 pb-2"
-                                                 style="max-width: 200px">
-                                                <img src="/assets/images/sample2.png" alt="image" class="img-lg">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3 class="font-weight-bold">맛있는 바삭바삭 치킨버거</h3>
-                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                        class="pr-2" style="font-size: 1.2rem">4.7</span>
-                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">210</span>
-                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">20분</span></p>
+                                            <div class="col-sm-12">
+                                                <h3 class="font-weight-bold">매운맛</h3>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">8,000<span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">2,000<span
                                                             style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                                <div class="pt-2">
-                                                    <p>새고기로 만든 햄버거. 새 다리가 부드럽고 육즙 가득하게 잘 구워졌다. 신선하고 아삭한 채소와 진한 소스로
-                                                        풍미를 더
-                                                        하면 마치 구름 위에 떠 있는 듯한 느낌을 맛보게 될 것이다.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -365,7 +287,7 @@
                                                 data-toggle="modal"
                                                 data-target="#menuAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;" type="button">
+                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
                                             삭제
                                         </button>
                                     </div>
@@ -373,31 +295,11 @@
                                 <div class="row border-top pb-3 pt-3">
                                     <div class="col-sm-10">
                                         <div class="row">
-                                            <div class="col-sm-2 align-content-end text-md-center border-info pr-3 pb-2"
-                                                 style="max-width: 200px">
-                                                <img src="/assets/images/sample3.png" alt="image" class="img-lg">
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <h3 class="font-weight-bold">맛있는 사골 라멘</h3>
-                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                        class="pr-2" style="font-size: 1.2rem">4.8</span>
-                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">400</span>
-                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">55분</span></p>
+                                            <div class="col-sm-12">
+                                                <h3 class="font-weight-bold">황천의 맛</h3>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">9,000<span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem">4,000<span
                                                             style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                                <div class="pt-2">
-                                                    <p>뜨거운 김이 모락모락 피어나는 면 요리. 부드러운 면발이 육수의 알짜를 여김 없이 흡수했다. 풍부한 고명은
-                                                        식감에
-                                                        다양성과 새로움을 제공한다. 육수의 첫 모금은 짐승 뼈의 짙은 향을 그대로 보존했고, 부드럽지만 느끼하지는
-                                                        않은
-                                                        식감… 어느새 바닥을 드러낸 그릇… 아직도 여운이 남는 듯하다.
-                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -407,7 +309,7 @@
                                                 data-toggle="modal"
                                                 data-target="#menuAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;" type="button">
+                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
                                             삭제
                                         </button>
                                     </div>
@@ -505,20 +407,6 @@
 <script src="/assets/js/file-upload.js"></script>
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script>
-    const editor = new toastui.Editor({
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '200px',
-        initialValue: '메뉴 설명을 입력해주세요.'
-    });
-
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
-    });
-</script>
 <script>
     window.onload = function() {
         window.scrollTo(0, 0);

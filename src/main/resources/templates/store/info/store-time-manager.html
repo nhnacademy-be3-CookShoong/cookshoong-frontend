@@ -10,12 +10,35 @@
     <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 </head>
 
 <body>
+<div class="hero_area">
+    <div class="bg-box">
+        <img src="/assets/images/hero-bg.jpg" alt="">
+    </div>
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="index">
+                    <span>
+                    CookShoong
+                    </span>
+                </a>
+                <button class="navbar-toggler d-lg-none" type="button"
+                        data-toggle="offcanvas">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+</div>
 <div class="container-fluid page-body-wrapper">
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <nav class="sidebar sidebar-offcanvas">
         <ul class="nav">
             <li class="nav-item">
                 <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
@@ -37,8 +60,9 @@
                     class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
                 <div class="collapse" id="charts">
                     <ul class="flex-column nav sub-menu">
-                        <li><a class="nav-link" href="store-menu-register">메뉴 등록</a></li>
+
                         <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                        <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
                     </ul>
                 </div>
             </li>
@@ -77,14 +101,16 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12" th:action="@{/store-time-manager-businesshour}" th:object="${createBusinessHourRequestDto}" method="post">
+                <form class="col-12 p-0" th:action="@{/store-time-manager-businesshour}"
+                      th:object="${createBusinessHourRequestDto}" method="post">
+
                     <div class="col-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">영업점 영업시간 관리 페이지</h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="font-weight-bold">영업시간 관리 페이지</h1>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -178,7 +204,8 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <select class="js-example-basic-single w-100" id="dayCodeName" name="dayCodeName"
+                                                <select class="js-example-basic-single w-100" id="dayCodeName"
+                                                        name="dayCodeName"
                                                         th:field="*{dayCodeName}" th:value="*{dayCodeName}">
                                                     <option value="">요일 선택</option>
                                                     <option value="월요일">월요일</option>
@@ -217,7 +244,8 @@
                         </div>
                     </div>
                 </form>
-                <form class="col-12" th:action="@{/store-time-manager-holiday}" th:object="${createHolidayRequestDto}" method="post">
+                <form class="col-12 p-0" th:action="@{/store-time-manager-holiday}"
+                      th:object="${createHolidayRequestDto}" method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -288,7 +316,8 @@
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
                                                         <input type="date" class="form-control"
-                                                               th:field="*{holidayStartDate}" th:value="*{holidayStartDate}"
+                                                               th:field="*{holidayStartDate}"
+                                                               th:value="*{holidayStartDate}"
                                                                id="holidayStartDate" name="holidayStartDate">
                                                     </div>
                                                 </div>
@@ -314,6 +343,69 @@
         </div>
     </div>
 </div>
+<footer class="footer_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        About US
+                    </h4>
+                    <div class="contact_link_box">
+                        <a href="">
+                            <i class="mdi mdi-github-circle icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">COOKSHOONG</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-database icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">ERD-CLOUD</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-book-open icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Api Docs</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        CookShoong
+                    </h4>
+                    <p>
+                        쿡슝 프로젝트는 NHN Academy Project 로 제작된 배달 어플리케이션입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        Laboratory
+                    </h4>
+                    <div class="contact_link_box">
+                        <a href="">
+                            <i class="mdi mdi-information icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Information</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-test-tube icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Test</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-info">
+            <p>
+                &copy; 2023</span> All Rights Reserved By
+                <a href="https://nhnacademy.github.io/">NHN Academy</a><br>
+                &copy; 2023</span> Distributed By
+                <a href="https://nhnacademy.github.io/">Cookshoong</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="/assets/js/off-canvas.js"></script>
 <script src="/assets/js/hoverable-collapse.js"></script>
@@ -327,6 +419,11 @@
 <script src="/assets/js/file-upload.js"></script>
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+</script>
 </body>
 
 </html>

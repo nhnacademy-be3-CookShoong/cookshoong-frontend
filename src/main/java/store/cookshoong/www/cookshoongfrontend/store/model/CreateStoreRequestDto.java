@@ -1,6 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
+import java.math.BigDecimal;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -27,10 +29,10 @@ public class CreateStoreRequestDto {
     private String mainPlace;
     @NotBlank
     private String detailPlace;
-    @NotBlank
-    private String latitude;
-    @NotBlank
-    private String longitude;
+    @NotNull
+    private BigDecimal latitude;
+    @NotNull
+    private BigDecimal longitude;
     @NotBlank
     private String phoneNumber;
     @NotBlank
