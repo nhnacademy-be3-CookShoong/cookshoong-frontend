@@ -26,5 +26,4 @@ public class StoreService implements AccountIdAware{
     public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
         storeAdapter.createStore(accountId, createStoreRequestDto);
     }
-
 }

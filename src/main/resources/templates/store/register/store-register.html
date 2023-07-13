@@ -196,8 +196,8 @@
                                                name="detailPlace"
                                                th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">
 
-                                        <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">
-                                        <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">
+                                        <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}" th:value="*{latitude}">
+                                        <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}" th:value="*{longitude}">
 
                                         <div class="input-group" id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>
                                     </div>
@@ -229,7 +229,7 @@
                                         <div id="editor"></div>
                                     </div>
 
-                                    <input type="hidden" id="storeCategories" name="storeCategories" th:field="*{storeCategories}" th:value="'중식'">
+                                    <input type="hidden" id="storeCategories" name="storeCategories" th:field="*{storeCategories}">
                                 </div>
                             </div>
                         </div>

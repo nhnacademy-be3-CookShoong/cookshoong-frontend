@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalTime;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +19,9 @@ public class CreateBusinessHourRequestDto {
     @NotBlank
     private String dayCodeName;
 
-    @NotBlank
-    private String openHour;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalTime openHour;
 
-    @NotBlank
-    private String closeHour;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalTime closeHour;
 }

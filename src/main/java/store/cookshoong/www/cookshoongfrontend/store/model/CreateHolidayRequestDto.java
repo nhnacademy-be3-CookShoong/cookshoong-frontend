@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +16,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateHolidayRequestDto {
 
-    @NotBlank
-    private String holidayStartDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate holidayStartDate;
 
-    @NotBlank
-    private String holidayEndDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate holidayEndDate;
 }

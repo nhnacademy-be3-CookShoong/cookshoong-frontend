@@ -1,12 +1,14 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 매장 등록 Dto.
@@ -15,21 +17,19 @@ import lombok.Getter;
  * @since 2023.07.09
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateStoreRequestDto {
-    @NotBlank
     private String merchantName;
     @NotBlank
     private String businessLicenseNumber;
     @NotBlank
     private String representativeName;
-    @NotBlank
-    private String openingDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate openingDate;
     @NotBlank
     private String storeName;
     @NotBlank
     private String mainPlace;
-    @NotBlank
     private String detailPlace;
     @NotNull
     private BigDecimal latitude;
@@ -39,7 +39,6 @@ public class CreateStoreRequestDto {
     private String phoneNumber;
     @NotBlank
     private String businessLicense;
-    @NotBlank
     private String description;
     @NotNull
     private BigDecimal earningRate;

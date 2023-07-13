@@ -1,9 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
+import java.math.BigDecimal;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 메뉴 등록 Dto.
@@ -12,24 +15,18 @@ import lombok.Getter;
  * @since 2023.07.11
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateMenuRequestDto {
     @NotBlank
-    private String menuStatusName;
-    @NotBlank
     private String name;
-
-    @NotBlank
-    private String price;
-
+    @NotNull
+    private Integer price;
     private String description;
-
     private String image;
-
     @NotNull
     private Integer cookingTime;
-
-    private String earningRate;
+    @Digits(integer = 3, fraction = 1)
+    private BigDecimal earningRate;
 
 
 }
