@@ -84,26 +84,6 @@ public class ChargeTypeAdapter {
     }
 
     /**
-<<<<<<< HEAD
-     * 해당 결제 타입에 대한 이름을 수정하는 메서드.
-     *
-     * @param id                    결제 타입 아이디
-     * @param modifyTypeRequestDto  결제 타입에 이름을 수정하는 Dto
-     */
-    public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
-
-        HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto);
-
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + id,
-            PUT,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
-    }
-
-    /**
-=======
->>>>>>> a03d8f7 (refactor: 💡 수정 DB 수정으로 인한 결제 및 환불 타입에 Front 변경)
      * 해당 결제 타입을 삭제하는 메서드.
      *
      * @param id        결제 타입 아이디
