@@ -16,5 +16,5 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("cookshoong")
 public class ApiProperties {
-    String baseUrl;
+    String gatewayUrl;
 }

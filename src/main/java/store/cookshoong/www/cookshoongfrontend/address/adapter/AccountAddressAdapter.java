@@ -3,14 +3,12 @@ package store.cookshoong.www.cookshoongfrontend.address.adapter;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -43,7 +41,7 @@ public class AccountAddressAdapter {
         HttpEntity<CreateAccountAddressRequestDto> httpEntity =
             new HttpEntity<>(createAccountAddressRequestDto);
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
             POST,
             httpEntity,
             new ParameterizedTypeReference<>() {
@@ -59,7 +57,7 @@ public class AccountAddressAdapter {
     public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
 
         ResponseEntity<List<AccountAddressResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -76,7 +74,7 @@ public class AccountAddressAdapter {
      */
     public void deleteAccountAddress(Long accountId, Long addressId) {
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
             DELETE,
             null,
             new ParameterizedTypeReference<>() {
