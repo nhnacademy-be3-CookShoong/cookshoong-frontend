@@ -44,7 +44,6 @@ public class StoreInfoManagerController {
     @PostMapping("/store-info-manager")
     public String postUpdateStore(@Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
                                   BindingResult bindingResult) {
-        storeService.createStore(createStoreRequestDto);
         return "redirect:/";
     }
 }
