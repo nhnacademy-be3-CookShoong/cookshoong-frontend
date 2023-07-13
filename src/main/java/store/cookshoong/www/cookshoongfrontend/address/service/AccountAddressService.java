@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.address.adapter.AccountAddressAdapter;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 
 /**
  * 회원과 주소에 대한 Service.
@@ -41,6 +42,17 @@ public class AccountAddressService {
     public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
 
         return accountAddressAdapter.selectAccountAddressAll(accountId);
+    }
+
+    /**
+     * 회원이 최근에 등록한 주소를 가져오는 메서드.
+     *
+     * @param accountId         회원  기본키
+     * @return                  회원이 최근에 등록한 주소와 좌표를 가져옴
+     */
+    public AddressResponseDto selectAccountAddressRecentRegistration(Long accountId) {
+
+        return accountAddressAdapter.selectAccountAddressRecentRegistration(accountId);
     }
 
     /**
