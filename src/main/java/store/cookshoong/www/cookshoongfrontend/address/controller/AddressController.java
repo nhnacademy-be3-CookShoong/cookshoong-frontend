@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 
 /**
@@ -26,7 +29,7 @@ import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressSer
 @Controller
 @RequestMapping("/accounts/addresses/maps")
 @RequiredArgsConstructor
-public class AddressController {
+public class AddressController implements AccountIdAware {
 
     private final AccountAddressService accountAddressService;
 
@@ -39,10 +42,22 @@ public class AddressController {
      */
     @GetMapping
     public String getCreateAccountAddress(
-        @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto, Model model) {
+        @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
+        Model model, AccountIdOnly account) {
 
-        List<AccountAddressResponseDto> accountAddresses = accountAddressService.selectAccountAddressAll(1L);
+        AddressResponseDto addressResponse = accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
 
+        if (addressResponse.getLatitude() == null && addressResponse.getLongitude() == null) {
+
+            model.addAttribute("latitude", 35.140031585514);
+            model.addAttribute("longitude", 126.934176746529);
+        }
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(account.getAccountId());
+
+        model.addAttribute("latitude", addressResponse.getLatitude());
+        model.addAttribute("longitude", addressResponse.getLongitude());
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("url", "maps");
 
@@ -60,14 +75,14 @@ public class AddressController {
     @PostMapping
     public String postDoCreateAccountAddress(
         @ModelAttribute("address") @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model) {
+        BindingResult bindingResult, Model model, AccountIdOnly account) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "maps");
             return "address/kakao-maps";
         }
 
-        accountAddressService.createAccountAddress(1L, createAccountAddressRequestDto);
+        accountAddressService.createAccountAddress(account.getAccountId(), createAccountAddressRequestDto);
 
         return "redirect:/accounts/addresses/maps";
     }
@@ -79,9 +94,9 @@ public class AddressController {
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
     @GetMapping("/{id}/delete")
-    public String getDeleteAccountAddress(@PathVariable Long id) {
+    public String getDeleteAccountAddress(@PathVariable Long id, AccountIdOnly account) {
 
-        accountAddressService.deleteAccountAddress(1L, id);
+        accountAddressService.deleteAccountAddress(account.getAccountId(), id);
 
         return "redirect:/accounts/addresses/maps";
     }
