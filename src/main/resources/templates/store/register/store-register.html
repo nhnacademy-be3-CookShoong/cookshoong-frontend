@@ -172,9 +172,25 @@
                                 <div class="card-body">
                                     <h4 class="card-title">영업점 정보</h4>
 
-                                    <div class="form-group"><label for="storeName">영업점 상호명</label>
+                                    <div class="form-group">
+                                        <label for="storeName">영업점 상호명</label>
                                         <input class="form-control" type="text" id="storeName" name="storeName"
                                                th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>영업점 대표 이미지</label>
+                                        <input type="file" name="image" class="file-upload-default">
+                                        <div class="input-group col-xs-12">
+                                            <input type="text" class="form-control file-upload-info" disabled
+                                                   th:field="*{image}" th:value="*{image}"
+                                                   id="image" name="image"
+                                                   placeholder="Upload Image">
+                                            <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-info"
+                                                    type="button">이미지 찾기</button>
+                                        </span>
+                                        </div>
                                     </div>
 
                                     <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
@@ -196,8 +212,8 @@
                                                name="detailPlace"
                                                th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">
 
-                                        <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">
-                                        <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">
+                                        <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}" th:value="*{latitude}">
+                                        <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}" th:value="*{longitude}">
 
                                         <div class="input-group" id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>
                                     </div>
@@ -229,7 +245,7 @@
                                         <div id="editor"></div>
                                     </div>
 
-                                    <input type="hidden" id="storeCategories" name="storeCategories" th:field="*{storeCategories}" th:value="'중식'">
+                                    <input type="hidden" id="storeCategories" name="storeCategories" th:field="*{storeCategories}">
                                 </div>
                             </div>
                         </div>

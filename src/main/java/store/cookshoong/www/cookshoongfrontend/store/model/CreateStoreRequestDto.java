@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 매장 등록 Dto.
@@ -17,19 +18,17 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateStoreRequestDto {
-    @NotBlank
     private String merchantName;
     @NotBlank
     private String businessLicenseNumber;
     @NotBlank
     private String representativeName;
-    @NotBlank
-    private String openingDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate openingDate;
     @NotBlank
     private String storeName;
     @NotBlank
     private String mainPlace;
-    @NotBlank
     private String detailPlace;
     @NotNull
     private BigDecimal latitude;
@@ -39,10 +38,10 @@ public class CreateStoreRequestDto {
     private String phoneNumber;
     @NotBlank
     private String businessLicense;
-    @NotBlank
     private String description;
     @NotNull
     private BigDecimal earningRate;
+    private String image;
     @NotNull
     private List<String> storeCategories;
     @NotBlank

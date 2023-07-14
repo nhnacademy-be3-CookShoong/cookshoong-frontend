@@ -30,7 +30,7 @@ public class StoreAdapter {
      * @param accountId                         회원아이디
      * @param createStoreRequestDto             사업자가 매장을 등록하는 Dto
      */
-    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
+    public void executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
 
         HttpEntity<CreateStoreRequestDto> httpEntity =
             new HttpEntity<>(createStoreRequestDto);

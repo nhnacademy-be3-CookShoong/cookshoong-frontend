@@ -18,13 +18,12 @@ public class StoreService implements AccountIdAware{
     private final StoreAdapter storeAdapter;
 
     /**
-     * API 서버에 매장 신규등록 요청을 보냄.
+     * 매장 신규등록 요청을 보냄.
      *
      * @param accountId             회원 기본키
      * @param createStoreRequestDto 매장 신규등록 요청 정보
      */
     public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
-        storeAdapter.createStore(accountId, createStoreRequestDto);
+        storeAdapter.executeCreateStore(accountId, createStoreRequestDto);
     }
-
 }
