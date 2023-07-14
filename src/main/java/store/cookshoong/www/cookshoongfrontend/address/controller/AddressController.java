@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.address.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,19 +46,23 @@ public class AddressController implements AccountIdAware {
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
         Model model, AccountIdOnly account) {
 
-        AddressResponseDto addressResponse = accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
-
-        if (addressResponse.getLatitude() == null && addressResponse.getLongitude() == null) {
-
-            model.addAttribute("latitude", 35.140031585514);
-            model.addAttribute("longitude", 126.934176746529);
-        }
+        AddressResponseDto addressResponse =
+            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(account.getAccountId());
 
-        model.addAttribute("latitude", addressResponse.getLatitude());
-        model.addAttribute("longitude", addressResponse.getLongitude());
+        BigDecimal defaultLatitude = new BigDecimal("37.400927182162555");
+        BigDecimal defaultLongitude = new BigDecimal("127.1040662513053");
+
+        if (addressResponse == null || (addressResponse.getLatitude() == null && addressResponse.getLongitude() == null)) {
+            model.addAttribute("latitude", defaultLatitude);
+            model.addAttribute("longitude", defaultLongitude);
+        } else {
+            model.addAttribute("latitude", addressResponse.getLatitude());
+            model.addAttribute("longitude", addressResponse.getLongitude());
+        }
+
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("url", "maps");
 
