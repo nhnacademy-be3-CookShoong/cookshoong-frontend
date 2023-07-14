@@ -1,10 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 휴업일 등록 Dto.
@@ -16,9 +15,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateHolidayRequestDto {
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate holidayStartDate;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate holidayEndDate;
 }

@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.store.service;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreMenuAdapter;

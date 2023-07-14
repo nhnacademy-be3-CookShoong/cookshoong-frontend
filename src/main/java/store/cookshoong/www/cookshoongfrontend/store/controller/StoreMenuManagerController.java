@@ -5,16 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreOptionManagerService;
 
@@ -38,8 +35,12 @@ public class StoreMenuManagerController {
      * @since 2023.07.11
      */
     @GetMapping("/store-menu-manager")
-    public String getSelectStoreMenuManager(@ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto, Model model) {
+    public String getSelectStoreMenuManager(
+        @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
+        @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
+        Model model) {
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
+        model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";
     }
 
@@ -50,8 +51,12 @@ public class StoreMenuManagerController {
      * @since 2023.07.11
      */
     @GetMapping("/store-option-manager")
-    public String getSelectStoreMenuRegister(@ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto, Model model) {
+    public String getSelectStoreMenuRegister(
+        @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
+        @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
+        Model model) {
         model.addAttribute("createOptionRequestDto", createOptionRequestDto);
+        model.addAttribute("createOptionGroupRequestDto", createOptionGroupRequestDto);
         return "store/menu/store-option-manager";
     }
 

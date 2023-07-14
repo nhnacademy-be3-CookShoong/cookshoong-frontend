@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 메뉴 등록 Dto.
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
  * @since 2023.07.11
  */
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class CreateMenuRequestDto {
     @NotBlank
     private String name;

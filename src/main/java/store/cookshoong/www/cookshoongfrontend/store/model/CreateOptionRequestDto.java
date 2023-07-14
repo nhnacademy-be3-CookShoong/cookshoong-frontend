@@ -1,9 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.store.model;
 
 import javax.validation.constraints.NotBlank;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 옵션 등록 Dto.
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
  * @since 2023.07.11
  */
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class CreateOptionRequestDto {
     @NotBlank
     private String name;

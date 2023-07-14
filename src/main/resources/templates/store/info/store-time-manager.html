@@ -204,9 +204,7 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <select class="js-example-basic-single w-100" id="dayCodeName"
-                                                        name="dayCodeName"
-                                                        th:field="*{dayCodeName}" th:value="*{dayCodeName}">
+                                                <select class="js-example-basic-single w-100" name="dayCodeName">
                                                     <option value="">요일 선택</option>
                                                     <option value="월요일">월요일</option>
                                                     <option value="화요일">화요일</option>
@@ -220,18 +218,14 @@
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control"
-                                                               th:field="*{openHour}" th:value="*{openHour}"
-                                                               id="openHour" name="openHour">
+                                                        <input type="time" class="form-control" name="openHour">
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control"
-                                                               th:field="*{closeHour}" th:value="*{closeHour}"
-                                                               id="closeHour" name="closeHour">
+                                                        <input type="time" class="form-control" name="closeHour">
                                                     </div>
                                                 </div>
                                             </td>
@@ -315,19 +309,14 @@
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="date" class="form-control"
-                                                               th:field="*{holidayStartDate}"
-                                                               th:value="*{holidayStartDate}"
-                                                               id="holidayStartDate" name="holidayStartDate">
+                                                        <input type="date" class="form-control" name="holidayStartDate">
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="date" class="form-control"
-                                                               th:field="*{holidayEndDate}" th:value="*{holidayEndDate}"
-                                                               id="holidayEndDate" name="holidayEndDate">
+                                                        <input type="date" class="form-control" name="holidayEndDate">
                                                     </div>
                                                 </div>
                                             </td>
