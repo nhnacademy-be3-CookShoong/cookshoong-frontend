@@ -24246,7 +24246,7 @@ body.avgrund-active {
 }
 
 /* style for off-canvas menu*/
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 991px) {
     .sidebar-offcanvas {
         position: fixed;
         top: 200px;
