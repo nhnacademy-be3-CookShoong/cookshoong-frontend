@@ -31,7 +31,7 @@ public class StoreOptionAdapter {
      * @param storeId                     매장아이디
      * @param createOptionGroupRequestDto 사업자가 옵션 그룹을 등록하는 Dto
      */
-    public void createOptionGroup(Long storeId, CreateOptionGroupRequestDto createOptionGroupRequestDto) {
+    public void executeCreateOptionGroup(Long storeId, CreateOptionGroupRequestDto createOptionGroupRequestDto) {
 
         HttpEntity<CreateOptionGroupRequestDto> httpEntity =
             new HttpEntity<>(createOptionGroupRequestDto);
@@ -59,7 +59,7 @@ public class StoreOptionAdapter {
      * @param optionGroupId          옵션 그룹아이디
      * @param createOptionRequestDto 사업자가 옵션를 등록하는 Dto
      */
-    public void createOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
+    public void executeCreateOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
 
         HttpEntity<CreateOptionRequestDto> httpEntity =
             new HttpEntity<>(createOptionRequestDto);

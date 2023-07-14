@@ -18,22 +18,22 @@ public class StoreMenuManagerService {
     private final StoreMenuAdapter storeMenuAdapter;
 
     /**
-     * API 서버에 메뉴 그룹 신규등록 요청을 보냄.
+     * 메뉴 그룹 신규등록 요청을 보냄.
      *
      * @param storeId                   매장 기본키
      * @param createMenuGroupRequestDto 매장 메뉴 그룹 신규등록 요청 정보
      */
     public void createMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
-        storeMenuAdapter.createMenuGroup(storeId, createMenuGroupRequestDto);
+        storeMenuAdapter.executeCreateMenuGroup(storeId, createMenuGroupRequestDto);
     }
 
     /**
-     * API 서버에 메뉴 신규등록 요청을 보냄.
+     * 메뉴 신규등록 요청을 보냄.
      *
      * @param storeId              매장 기본키
      * @param createMenuRequestDto 매장 메뉴 신규등록 요청 정보
      */
     public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
-        storeMenuAdapter.createMenu(storeId, createMenuRequestDto);
+        storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto);
     }
 }

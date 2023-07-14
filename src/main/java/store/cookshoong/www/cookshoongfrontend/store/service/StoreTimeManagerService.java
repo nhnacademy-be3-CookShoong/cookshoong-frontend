@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreTimeAdapter;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateBusinessHourFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateHolidayFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateBusinessHourRequestDto;
@@ -23,57 +24,27 @@ import store.cookshoong.www.cookshoongfrontend.store.model.CreateHolidayRequestD
 @Service
 @RequiredArgsConstructor
 public class StoreTimeManagerService {
-    private final RestTemplate restTemplate;
-
-    private final ApiProperties apiProperties;
+    private final StoreTimeAdapter storeTimeAdapter;
 
     /**
-     * API 서버에 휴업일 신규등록 요청을 보냄.
+     * 영업시간 신규등록 요청을 보냄.
      *
-     * @param createHolidayRequestDto 휴업일 신규등록 요청 정보
+     * @param storeId                      매장 기본키
+     * @param createBusinessHourRequestDto 영업시간 신규등록 요청 정보
      */
-    public void createHoliday(CreateHolidayRequestDto createHolidayRequestDto) {
-        URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/1/holiday")
-            .encode()
-            .build()
-            .toUri();
-
-        RequestEntity<CreateHolidayRequestDto> request = RequestEntity.post(uri)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(createHolidayRequestDto);
-
-        ResponseEntity<Void> response = restTemplate.exchange(request, Void.class);
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateHolidayFailureException(response.getStatusCode());
-        }
+    public void createBusinessHour(Long storeId, CreateBusinessHourRequestDto createBusinessHourRequestDto) {
+        storeTimeAdapter.executeCreateBusinessHour(storeId, createBusinessHourRequestDto);
     }
 
 
     /**
-     * API 서버에 영업시간 신규등록 요청을 보냄.
+     * 휴업일 신규등록 요청을 보냄.
      *
-     * @param createBusinessHourRequestDto 영업시간 신규등록 요청 정보
+     * @param storeId                      매장 기본키
+     * @param createHolidayRequestDto      휴업일 신규등록 요청 정보
      */
-    public void createBusinessHour(CreateBusinessHourRequestDto createBusinessHourRequestDto) {
-        URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/1/businesshour")
-            .encode()
-            .build()
-            .toUri();
-
-        RequestEntity<CreateBusinessHourRequestDto> request = RequestEntity.post(uri)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(createBusinessHourRequestDto);
-
-        ResponseEntity<Void> response = restTemplate.exchange(request, Void.class);
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateBusinessHourFailureException(response.getStatusCode());
-        }
+    public void createHoliday(Long storeId, CreateHolidayRequestDto createHolidayRequestDto) {
+        storeTimeAdapter.executeCreatHoliday(storeId, createHolidayRequestDto);
     }
 }
 

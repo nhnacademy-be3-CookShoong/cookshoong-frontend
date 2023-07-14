@@ -49,7 +49,7 @@ public class StoreTimeManagerController {
     @PostMapping("/store-time-manager-businesshour")
     public String postCreateBusinessHour(@Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
                                     BindingResult bindingResult) {
-        storeTimeManagerService.createBusinessHour(createBusinessHourRequestDto);
+        storeTimeManagerService.createBusinessHour(1L, createBusinessHourRequestDto);
         return "redirect:/";
     }
 
@@ -62,7 +62,7 @@ public class StoreTimeManagerController {
     @PostMapping("/store-time-manager-holiday")
     public String postCreateHoliday(@Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
                                          BindingResult bindingResult) {
-        storeTimeManagerService.createHoliday(createHolidayRequestDto);
+        storeTimeManagerService.createHoliday(1L, createHolidayRequestDto);
         return "redirect:/";
     }
 

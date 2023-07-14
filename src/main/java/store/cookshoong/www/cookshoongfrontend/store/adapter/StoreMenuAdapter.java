@@ -31,7 +31,7 @@ public class StoreMenuAdapter {
      * @param storeId                                매장아이디
      * @param createMenuGroupRequestDto              사업자가 메뉴 그룹을 등록하는 Dto
      */
-    public void createMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
+    public void executeCreateMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
 
         HttpEntity<CreateMenuGroupRequestDto> httpEntity =
             new HttpEntity<>(createMenuGroupRequestDto);
@@ -58,7 +58,7 @@ public class StoreMenuAdapter {
      * @param storeId                           매장아이디
      * @param createMenuRequestDto              사업자가 메뉴를 등록하는 Dto
      */
-    public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
+    public void executeCreateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
 
         HttpEntity<CreateMenuRequestDto> httpEntity =
             new HttpEntity<>(createMenuRequestDto);
