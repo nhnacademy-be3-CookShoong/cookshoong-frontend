@@ -28,7 +28,7 @@ public class RefundTypeService {
         refundTypeAdapter.createChargeType(createTypeRequestDto);
     }
 
-    public TypeResponseDto selectChargeType(Long id) {
+    public TypeResponseDto selectChargeType(String id) {
 
         return refundTypeAdapter.selectChargeType(id);
     }
@@ -38,12 +38,7 @@ public class RefundTypeService {
         return refundTypeAdapter.selectChargeTypeAll();
     }
 
-    public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
-
-        refundTypeAdapter.modifyChargeType(id, modifyTypeRequestDto);
-    }
-
-    public void deleteChargeType(Long id) {
+    public void deleteChargeType(String id) {
 
         refundTypeAdapter.deleteChargeType(id);
     }

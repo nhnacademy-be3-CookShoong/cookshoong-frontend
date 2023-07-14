@@ -3,19 +3,18 @@ package store.cookshoong.www.cookshoongfrontend.address.adapter;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 
 /**
@@ -43,7 +42,7 @@ public class AccountAddressAdapter {
         HttpEntity<CreateAccountAddressRequestDto> httpEntity =
             new HttpEntity<>(createAccountAddressRequestDto);
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
             POST,
             httpEntity,
             new ParameterizedTypeReference<>() {
@@ -59,7 +58,26 @@ public class AccountAddressAdapter {
     public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
 
         ResponseEntity<List<AccountAddressResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId,
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+
+        return exchange.getBody();
+    }
+
+    /**
+     * 회원이 주문할 때 필요한 메인 주소와 상세 주소, 회원의 위치를 가지고 오는 좌표.
+     *
+     * @param accountId         회원 기본키
+     * @return                  회원이 가지고 있는 주소에 대한 모든 정보(메인 주소, 상세 주소, 위도, 경도) 반환
+     */
+    public AddressResponseDto selectAccountAddressRecentRegistration(Long accountId) {
+
+        ResponseEntity<AddressResponseDto> exchange =
+            restTemplate.exchange(
+                apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/recent-registration",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -76,7 +94,7 @@ public class AccountAddressAdapter {
      */
     public void deleteAccountAddress(Long accountId, Long addressId) {
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
             DELETE,
             null,
             new ParameterizedTypeReference<>() {

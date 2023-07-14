@@ -4,14 +4,12 @@ import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -43,7 +41,7 @@ public class RefundTypeAdapter {
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds", POST, httpEntity,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds", POST, httpEntity,
             new ParameterizedTypeReference<>() {
             });
     }
@@ -54,10 +52,10 @@ public class RefundTypeAdapter {
      * @param chargeTypeId        결제 타입 아이디
      * @return          해당되는 환불 타입을 반환
      */
-    public TypeResponseDto selectChargeType(Long chargeTypeId) {
+    public TypeResponseDto selectChargeType(String chargeTypeId) {
 
         ResponseEntity<TypeResponseDto> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + chargeTypeId,
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + chargeTypeId,
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -73,10 +71,10 @@ public class RefundTypeAdapter {
      */
     public List<TypeResponseDto> selectChargeTypeAll() {
 
-        log.info("<><><>>> : {}", apiProperties.getBaseUrl());
+        log.info("<><><>>> : {}", apiProperties.getGatewayUrl());
 
         ResponseEntity<List<TypeResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds",
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -86,30 +84,13 @@ public class RefundTypeAdapter {
     }
 
     /**
-     * 해당 환불 타입에 대한 이름을 수정하는 메서드.
-     *
-     * @param id                    환불 타입 아이디
-     * @param modifyTypeRequestDto  환불 타입에 이름을 수정하는 Dto
-     */
-    public void modifyChargeType(Long id, ModifyTypeRequestDto modifyTypeRequestDto) {
-
-        HttpEntity<ModifyTypeRequestDto> httpEntity = new HttpEntity<>(modifyTypeRequestDto);
-
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + id,
-            PUT,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
-    }
-
-    /**
      * 해당 환불 타입을 삭제하는 메서드.
      *
      * @param id        환불 타입 아이디
      */
-    public void deleteChargeType(Long id) {
+    public void deleteChargeType(String id) {
 
-        restTemplate.exchange(apiProperties.getBaseUrl() + "/api/payments/refunds" + "/" + id,
+        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + id,
             DELETE,
             null,
             new ParameterizedTypeReference<>() {

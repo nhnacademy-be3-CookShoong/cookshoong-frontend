@@ -35,18 +35,7 @@ public class MainViewController {
      */
     @GetMapping("/store-merchant-manager")
     public String getMerchantManager() {
-        return "store-merchant-manager";
-    }
-
-    /**
-     * 매장 메뉴 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-menu-manager")
-    public String getStoreMenuManager() {
-        return "store-menu-manager";
+        return "store/info/store-merchant-manager";
     }
 
     /**

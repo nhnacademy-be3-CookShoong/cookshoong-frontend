@@ -1,15 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.store.service;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.store.exception.CreateStoreFailureException;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto;
 
 /**
@@ -20,33 +14,16 @@ import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto
  */
 @Service
 @RequiredArgsConstructor
-public class StoreService {
-    private final RestTemplate restTemplate;
-
-    private final ApiProperties apiProperties;
+public class StoreService implements AccountIdAware{
+    private final StoreAdapter storeAdapter;
 
     /**
-     * API 서버에 매장 신규등록 요청을 보냄.
+     * 매장 신규등록 요청을 보냄.
      *
+     * @param accountId             회원 기본키
      * @param createStoreRequestDto 매장 신규등록 요청 정보
      */
-    public void createStore(CreateStoreRequestDto createStoreRequestDto) {
-        URI uri = UriComponentsBuilder
-            .fromUriString(apiProperties.getBaseUrl())
-            .path("/api/accounts/1/stores")
-            .encode()
-            .build()
-            .toUri();
-
-        RequestEntity<CreateStoreRequestDto> request = RequestEntity.post(uri)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(createStoreRequestDto);
-
-        ResponseEntity<Void> response = restTemplate.exchange(request, Void.class);
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateStoreFailureException(response.getStatusCode());
-        }
+    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
+        storeAdapter.executeCreateStore(accountId, createStoreRequestDto);
     }
-
 }
