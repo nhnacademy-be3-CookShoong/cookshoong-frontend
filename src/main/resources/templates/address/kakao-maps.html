@@ -48,9 +48,11 @@
     </tbody>
 </table>
 
-<script>
+<script th:inline="javascript">
+
     var latitude = [[${latitude}]];
     var longitude = [[${longitude}]];
+
 
     var mapContainer = document.getElementById('map');
     var mapOption = {
@@ -93,7 +95,9 @@
             oncomplete: function(data) {
                 // 선택한 주소 정보를 가져와서 필요한 처리를 수행.
                 var address = data.address;
+                var sigungu = data.sigungu; // 시/군/구 값 가져오기
                 document.getElementById("addressInput").value = address;
+                document.getElementById("sigunguInput").value = sigungu; // 시/군/구 값을 입력 필드에 설정
 
                 // 주소로 좌표를 반환하여 지도에 표시.
                 geocoder.addressSearch(address, function(results, status) {
