@@ -3,11 +3,13 @@ package store.cookshoong.www.cookshoongfrontend.util;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * RestTemplate Page 반환을 받기 위한 객체.
@@ -41,5 +43,13 @@ public class RestResponsePage<T> extends PageImpl<T> {
 
     public RestResponsePage() {
         super(new ArrayList<>());
+    }
+
+    public static URI pageableToParameter(String uri, Pageable pageable) {
+        return UriComponentsBuilder.fromUriString(uri)
+            .queryParam("page", pageable.getPageNumber())
+            .queryParam("size", pageable.getPageSize())
+            .queryParam("sort", pageable.getSort().toString())
+            .build().toUri();
     }
 }
