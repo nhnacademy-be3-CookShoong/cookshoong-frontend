@@ -1,7 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.store.model.response;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +11,7 @@ import lombok.NoArgsConstructor;
  * @since 2023.07.14
  */
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectAllMerchantsResponseDto {
     private Long merchantId;
     private String merchantName;
