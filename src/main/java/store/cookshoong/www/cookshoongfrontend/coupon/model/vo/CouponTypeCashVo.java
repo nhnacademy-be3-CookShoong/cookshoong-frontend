@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * 금액 쿠폰 타입 정보를 담을 vo.
  *
  * @author eora21
- * @since 2023.07.06
+ * @since 2023.07.16
  */
 @Getter
 @EqualsAndHashCode

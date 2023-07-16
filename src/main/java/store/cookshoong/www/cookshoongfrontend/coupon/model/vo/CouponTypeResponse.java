@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * 쿠폰 타입 객체를 묶기 위한 interface.
  *
  * @author eora21
- * @since 2023.07.06
+ * @since 2023.07.16
  */
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
