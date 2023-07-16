@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
  * @author seungyeon (유승연)
  * @since 2023.07.16
  */
-public class UpdateStatusFailureException extends RuntimeException{
+public class UpdateStatusFailureException extends RuntimeException {
     public UpdateStatusFailureException(HttpStatus status) {
         super(status.name() + " : " + status.getReasonPhrase());
     }
