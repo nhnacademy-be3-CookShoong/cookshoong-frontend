@@ -19,18 +19,12 @@
 </head>
 
 <body>
-<div class="hero_area">
-    <div class="bg-box">
-        <img src="/assets/images/hero-bg.jpg" alt="">
-    </div>
-    <!-- header section strats -->
-    <header class="header_section">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
+<div class="hero_area" style="background-color: #0f1531">
+    <header class="header_section" style="background-color: #0f1531">
+        <div class="container-fluid" style="background-color: #0f1531">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="index">
-                    <span>
-                    CookShoong
-                    </span>
+                    <img src="/assets/images/shoong.png" alt="" style="height: 55px">
                 </a>
                 <button class="navbar-toggler d-lg-none" type="button"
                         data-toggle="offcanvas">
@@ -39,7 +33,6 @@
             </nav>
         </div>
     </header>
-    <!-- end header section -->
 </div>
 
 <div class="container-fluid page-body-wrapper">
@@ -106,12 +99,12 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12 forms-sample" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
-                      method="post" onsubmit="handleSubmit()">
+                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
+                      method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">영업점 등록 페이지</h4>
+                                <h1 class="font-weight-bold">영업점 등록 페이지</h1>
                             </div>
                         </div>
                     </div>
@@ -119,7 +112,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">사업자 정보</h4>
-                                <div class="form-group"><label class="form-label" for="representativeName">사업자
+                                <div class="form-group"><label for="representativeName">사업자
                                     이름</label>
                                     <input class="form-control" type="text" id="representativeName"
                                            name="representativeName"
@@ -127,7 +120,7 @@
                                            placeholder="사업자 이름">
                                 </div>
 
-                                <div class="form-group"><label class="form-label" for="businessLicenseNumber">사업자 등록번호</label>
+                                <div class="form-group"><label for="storeName">사업자 등록번호</label>
                                     <input class="form-control" type="text" id="businessLicenseNumber"
                                            name="businessLicenseNumber"
                                            th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
@@ -149,12 +142,15 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group"><label class="form-label">은행명</label>
+                                <div class="form-group"><label>사업자 계좌 번호</label>
                                     <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="bankCode" name="bankCode"
-                                                th:field="*{bankCode}">
+                                        <select class="js-example-basic-single w-100" id="bankName" name="bankName"
+                                                th:field="*{bankName}" th:value="*{bankName}">
                                             <option value="">은행을 선택해주세요</option>
-                                            <option th:each="bank : ${banks}" th:value="${bank.getBankCode()}" th:text="${bank.getBankName()}"></option>
+                                            <option value="국민은행">국민은행</option>
+                                            <option value="신한은행">신한은행</option>
+                                            <option value="하나은행">하나은행</option>
+                                            <option value="IBK기업은행">IBK기업은행</option>
                                         </select>
                                     </div>
                                     <input class="form-control" type="text"
@@ -169,34 +165,35 @@
                             <div class="card-body">
                                 <h4 class="card-title">영업점 정보</h4>
 
-                                <div class="form-group"><label class="form-label" for="storeName">영업점 상호명</label>
+                                <div class="form-group">
+                                    <label for="storeName">영업점 상호명</label>
                                     <input class="form-control" type="text" id="storeName" name="storeName"
                                            th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명">
                                 </div>
 
-                                    <div class="form-group">
-                                        <label>영업점 대표 이미지</label>
-                                        <input type="file" name="image" class="file-upload-default">
-                                        <div class="input-group col-xs-12">
-                                            <input type="text" class="form-control file-upload-info" disabled
-                                                   th:field="*{image}" th:value="*{image}"
-                                                   id="image" name="image"
-                                                   placeholder="Upload Image">
-                                            <span class="input-group-append">
+                                <div class="form-group">
+                                    <label>영업점 대표 이미지</label>
+                                    <input type="file" name="image" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" class="form-control file-upload-info" disabled
+                                               th:field="*{image}" th:value="*{image}"
+                                               id="image" name="image"
+                                               placeholder="Upload Image">
+                                        <span class="input-group-append">
                                             <button class="file-upload-browse btn btn-info"
                                                     type="button">이미지 찾기</button>
                                         </span>
-                                        </div>
                                     </div>
+                                </div>
 
-                                    <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
-                                        <input class="form-control" type="text" id="phoneNumber"
-                                               name="phoneNumber"
-                                               th:field="*{phoneNumber}" th:value="*{phoneNumber}"
-                                               placeholder="영업점 전화번호">
-                                    </div>
+                                <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
+                                    <input class="form-control" type="text" id="phoneNumber"
+                                           name="phoneNumber"
+                                           th:field="*{phoneNumber}" th:value="*{phoneNumber}"
+                                           placeholder="영업점 전화번호">
+                                </div>
 
-                                <div class="form-group"><label class="form-label">영업점 주소</label>
+                                <div class="form-group"><label>영업점 주소</label>
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control" id="mainPlace" name="mainPlace"
                                                th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">
@@ -208,35 +205,28 @@
                                            name="detailPlace"
                                            th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">
 
-                                        <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}" th:value="*{latitude}">
-                                        <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}" th:value="*{longitude}">
+                                    <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
+                                           th:value="*{latitude}">
+                                    <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}"
+                                           th:value="*{longitude}">
 
-                                        <div class="input-group" id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>
-                                    </div>
-
-                                <div class="form-group"><label class="form-label">가맹점 상호명</label>
-                                    <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="merchantId" name="merchantId"
-                                                th:field="*{merchantId}">
-                                            <option value="">가맹점을 선택해주세요</option>
-                                            <option th:each="merchant : ${merchants}" th:value="${merchant.merchantId}" th:text="${merchant.merchantName}"></option>
-                                        </select>
-                                    </div>
+                                    <div class="input-group" id="map"
+                                         style="width: auto; height: 300px; margin-top: 10px;"></div>
                                 </div>
-                                <div class="form-group"><label class="form-label" for="earningRate">적립률</label>
+
+                                <div class="form-group"><label for="merchantName">가맹점 상호명</label>
+                                    <input class="form-control" type="text" id="merchantName" name="merchantName"
+                                           th:field="*{merchantName}" th:value="*{merchantName}"
+                                           placeholder="가맹점 상호명">
+                                </div>
+
+                                <div class="form-group"><label for="earningRate">적립률</label>
                                     <input class="form-control" type="text" id="earningRate" name="earningRate"
                                            th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률">
                                 </div>
-                                <div class="form-group"><label class="form-label" for="storeCategories">카테고리</label>
-                                    <div class="input-group col-xs-12">
-                                        <div th:each="category : ${categories}" id="storeCategories">
-                                            <input type="checkbox" name="storeCategories" th:value="${category.getCategoryCode()}" th:text="${category.getCategoryName()}" onclick="handleCheckboxClick.call(this)">
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
-                                    <label>개업 일자</label>
+                                    <label>오픈 예정일</label>
                                     <div class="input-group col-xs-12">
                                         <input type="date" class="form-control"
                                                th:field="*{openingDate}" th:value="*{openingDate}"
@@ -245,11 +235,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">가게 설명</label>
-                                    <input type="text" id="description" name="description" hidden="hidden" th:field="*{description}" th:value="*{description}">
+                                    <label>가게 설명</label>
+                                    <input type="text" id="description" name="description" hidden="hidden"
+                                           th:field="*{description}" th:value="*{description}">
                                     <div id="editor"></div>
                                 </div>
 
+                                <input type="hidden" id="storeCategories" name="storeCategories"
+                                       th:field="*{storeCategories}">
                             </div>
                         </div>
                     </div>
@@ -278,8 +271,8 @@
         }
         return selectedCategories;
     }
-
-<footer class="footer_section">
+</script>
+<footer class="footer_section" style="background-color: #0f1531">
     <div class="container">
         <div class="row">
             <div class="col-md-4 footer-col">
@@ -290,15 +283,15 @@
                     <div class="contact_link_box">
                         <a href="">
                             <i class="mdi mdi-github-circle icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 1.0rem">COOKSHOONG</span>
+                            <span style="font-size: 0.85rem">COOKSHOONG</span>
                         </a>
                         <a href="">
                             <i class="mdi mdi-database icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 1.0rem">ERD-CLOUD</span>
+                            <span style="font-size: 0.85rem">ERD-CLOUD</span>
                         </a>
                         <a href="">
                             <i class="mdi mdi-book-open icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 1.0rem">Api Docs</span>
+                            <span style="font-size: 0.85rem">Api Docs</span>
                         </a>
                     </div>
                 </div>
@@ -321,11 +314,11 @@
                     <div class="contact_link_box">
                         <a href="">
                             <i class="mdi mdi-information icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 1.0rem">Information</span>
+                            <span style="font-size: 0.85rem">Information</span>
                         </a>
                         <a href="">
                             <i class="mdi mdi-test-tube icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 1.0rem">Test</span>
+                            <span style="font-size: 0.85rem">Test</span>
                         </a>
                     </div>
                 </div>
