@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.store.model;
+package store.cookshoong.www.cookshoongfrontend.store.model.request;
 
 import java.time.LocalTime;
 import javax.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * 영업시간 등록 Dto.
+ * 사업자 : 영업시간 등록 Dto.
  *
  * @author papel
  * @since 2023.07.10

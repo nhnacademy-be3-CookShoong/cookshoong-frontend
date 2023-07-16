@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateOptionRequestDto;
 
 /**
  * 옵션의 Adapter.

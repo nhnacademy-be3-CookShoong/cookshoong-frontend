@@ -10514,6 +10514,7 @@ pre code {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    text-align: center;
 }
 
 .table-responsive > .table-bordered {
@@ -10708,7 +10709,7 @@ textarea.tt-hint {
     display: inline-flex;
     align-items: center;
     padding-left: 0;
-    margin-right: 0.75rem;
+    margin-right: 1.18rem;
 }
 
 .form-check-inline .form-check-input {
