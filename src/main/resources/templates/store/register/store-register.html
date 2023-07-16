@@ -259,7 +259,19 @@
         </div>
     </div>
 </div>
+<script>
+    function getSelectedCategories() {
+        var checkboxes = document.getElementsByName('storeCategories');
+        var selectedCategories = [];
 
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                selectedCategories.push(checkboxes[i].value);
+            }
+        }
+        return selectedCategories;
+    }
+</script>
 <footer class="footer_section" style="background-color: #0f1531">
     <div class="container">
         <div class="row">

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreOptionAdapter;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateOptionRequestDto;
 
 /**
  * 매장의 옵션 관리를 위한 서비스.

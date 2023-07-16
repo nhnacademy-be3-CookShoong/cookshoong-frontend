@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateBusinessHourRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateHolidayRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateBusinessHourRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateHolidayRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreTimeManagerService;
 
 /**
