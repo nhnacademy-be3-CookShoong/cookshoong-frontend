@@ -137,13 +137,6 @@ public class AddressController implements AccountIdAware {
      * 이유: 회원 가입 하면 바로 3km 이내에 위치한 주소를 가져오기 위해서 만듬.
      * 이렇게 한번 들려야 주소 아이디를 쿠키에 저장하고 저장한 값을 이용해 3km 이내 매장을 볼 수 있음.
      *
-     * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
-     */
-    /**
-     * 회원이 회원 가입을 하면 현재 url 로 Redirect 된다.
-     * 이유: 회원 가입 하면 바로 3km 이내에 위치한 주소를 가져오기 위해서 만듬.
-     * 이렇게 한번 들려야 주소 아이디를 쿠키에 저장하고 저장한 값을 이용해 3km 이내 매장을 볼 수 있음.
-     *
      * @param account           회원 정보
      * @param response          서버에 응답 메시지
      * @return                  랜딩 페이지로 반환
