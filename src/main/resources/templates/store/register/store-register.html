@@ -100,7 +100,7 @@
         <div class="content-wrapper">
             <div class="row">
                 <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
-                      method="post">
+                      method="post" onsubmit=" handleCheckboxClick()">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -142,15 +142,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group"><label>사업자 계좌 번호</label>
+                                <div class="form-group"><label class="form-label">은행명</label>
                                     <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="bankName" name="bankName"
-                                                th:field="*{bankName}" th:value="*{bankName}">
+                                        <select class="js-example-basic-single w-100" id="bankCode" name="bankCode"
+                                                th:field="*{bankCode}">
                                             <option value="">은행을 선택해주세요</option>
-                                            <option value="국민은행">국민은행</option>
-                                            <option value="신한은행">신한은행</option>
-                                            <option value="하나은행">하나은행</option>
-                                            <option value="IBK기업은행">IBK기업은행</option>
+                                            <option th:each="bank : ${banks}" th:value="${bank.getBankCode()}" th:text="${bank.getBankName()}"></option>
                                         </select>
                                     </div>
                                     <input class="form-control" type="text"
@@ -214,17 +211,26 @@
                                          style="width: auto; height: 300px; margin-top: 10px;"></div>
                                 </div>
 
-                                <div class="form-group"><label for="merchantName">가맹점 상호명</label>
-                                    <input class="form-control" type="text" id="merchantName" name="merchantName"
-                                           th:field="*{merchantName}" th:value="*{merchantName}"
-                                           placeholder="가맹점 상호명">
+                                <div class="form-group"><label class="form-label">가맹점 상호명</label>
+                                    <div class="input-group col-xs-12">
+                                        <select class="js-example-basic-single w-100" id="merchantId" name="merchantId"
+                                                th:field="*{merchantId}">
+                                            <option value="">가맹점을 선택해주세요</option>
+                                            <option th:each="merchant : ${merchants}" th:value="${merchant.merchantId}" th:text="${merchant.merchantName}"></option>
+                                        </select>
+                                    </div>
                                 </div>
-
                                 <div class="form-group"><label for="earningRate">적립률</label>
                                     <input class="form-control" type="text" id="earningRate" name="earningRate"
                                            th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률">
                                 </div>
-
+                                <div class="form-group"><label class="form-label" for="storeCategories">카테고리</label>
+                                    <div class="input-group col-xs-12">
+                                        <div th:each="category : ${categories}" id="storeCategories">
+                                            <input type="checkbox" name="storeCategories" th:value="${category.getCategoryCode()}" th:text="${category.getCategoryName()}" onclick="handleCheckboxClick.call(this)">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>오픈 예정일</label>
                                     <div class="input-group col-xs-12">
@@ -240,9 +246,6 @@
                                            th:field="*{description}" th:value="*{description}">
                                     <div id="editor"></div>
                                 </div>
-
-                                <input type="hidden" id="storeCategories" name="storeCategories"
-                                       th:field="*{storeCategories}">
                             </div>
                         </div>
                     </div>
@@ -270,6 +273,15 @@
             }
         }
         return selectedCategories;
+    }
+
+    function handleCheckboxClick(){
+        var selectedCategories = getSelectedCategories();
+        var maximum = 3;
+        if(selectedCategories.length > maximum){
+            this.checked=false;
+            alert("최대 3개의 카테고리만 선택할 수 있습니다.");
+        }
     }
 </script>
 <footer class="footer_section" style="background-color: #0f1531">
