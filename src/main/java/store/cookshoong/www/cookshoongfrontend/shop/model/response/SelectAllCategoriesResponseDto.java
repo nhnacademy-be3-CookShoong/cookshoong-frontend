@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectAllCategoriesResponseDto {
     private String categoryCode;
-    private String categoryName;
+    private String description;
 }

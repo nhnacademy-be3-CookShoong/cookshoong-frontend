@@ -133,36 +133,51 @@
                                         <td th:text="${store.storeStatus}"></td>
                                         <td>
                                             <th:block th:if="${store.storeStatus} != '폐업'">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" th:data-target="'#statusModal' + ${store.storeId}">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        th:data-target="'#statusModal' + ${store.storeId}">
                                                     Click
                                                 </button>
                                             </th:block>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" th:id="'statusModal' + ${store.storeId}" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="'statusModal' + ${store.storeId}" tabindex="-1"
+                                         role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" th:text="${store.storeName}+' 매장 상태 변경'"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <h5 class="modal-title"
+                                                        th:text="${store.storeName}+' 매장 상태 변경'"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Create a form to select the status -->
-                                                    <form th:id="'statusForm'+${store.storeId}" th:action="@{|/stores/${store.storeId}/status|}" th:method="patch" th:object="${updateStoreStatusRequestDto}">
-                                                        <div th:each="statusOne : ${status}" class="form-check form-check-inline">
-                                                            <input type="radio" name="statusCode" th:value="${statusOne.getStatusCode()}" class="form-check-input">
-                                                            <label th:for="${#ids.next('statusOne')}" th:text="${statusOne.getStatusName()}" class="form-check-label">
+                                                    <form th:id="'statusForm'+${store.storeId}"
+                                                          th:action="@{|/stores/${store.storeId}/status|}"
+                                                          th:method="patch" th:object="${updateStoreStatusRequestDto}">
+                                                        <div th:each="statusOne : ${status}"
+                                                             class="form-check form-check-inline">
+                                                            <input type="radio" name="statusCode"
+                                                                   th:value="${statusOne.getStoreStatusCode()}"
+                                                                   class="form-check-input">
+                                                            <label th:for="${#ids.next('statusOne')}"
+                                                                   th:text="${statusOne.getDescription()}"
+                                                                   class="form-check-label">
                                                             </label>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
 
                                                     <!-- Submit the form when the Save button is clicked -->
-                                                    <button type="submit" th:form="'statusForm'+ ${store.storeId}" class="btn btn-primary" th:method="patch">Save</button>
+                                                    <button type="submit" th:form="'statusForm'+ ${store.storeId}"
+                                                            class="btn btn-primary" th:method="patch">Save
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,25 +194,26 @@
                             th:with="start=${(stores.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
                             last=(${start + (buttonNumber - 1) < stores.totalPages ? start + (buttonNumber - 1) : stores.totalPages})">
                             <li>
-                                <a th:href="@{/stores(page=1)}" aria-label="First">
-                                    <span aria-hidden="true">처음으로</span>
+                                <a th:href="@{/stores(page=1, size=${stores.size})}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
                                 </a>
                             </li>
-                            <li th:class="${stores.first} ? 'disable'">
-                                <a th:href="@{/stores.first} ? '#' :@{/boards(page=${stores.number})}" aria-label="Previous">
+                            <li th:class="${stores.first} ? 'disabled'">
+                                <a th:href="${stores.first} ? '#' :@{/stores(page=${stores.number}, size=${stores.size})}"
+                                   aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
                             </li>
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == stores.number + 1} ? 'active'">
-                                <a th:text="${page}" th:href="@{/stores(page=${page})}"></a>
+                                <a th:text="${page}" th:href="@{/stores(page=${page}, size=${stores.size})}"></a>
                             </li>
                             <li th:class="${stores.last} ? 'disabled'">
-                                <a th:href="@{/stores.last} ? '#' :@{/stores(page=${stores.number + 2})}">
+                                <a th:href="${stores.last} ? '#': @{/stores(page=${stores.number + 2}, size=${stores.size})}">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/stores(page=${stores.totalPages})}" aria-label="Last">
+                                <a th:href="@{/stores(page=${stores.totalPages}, size=${stores.size})}" aria-label="Last">
                                     <span aria-hidden="true">Last</span>
                                 </a>
                             </li>
@@ -285,7 +301,7 @@
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
 <script>
-    window.onload = function() {
+    window.onload = function () {
         window.scrollTo(0, 0);
     }
 </script>

@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectAllMerchantsResponseDto {
-    private Long merchantId;
-    private String merchantName;
+    private Long id;
+    private String name;
 }

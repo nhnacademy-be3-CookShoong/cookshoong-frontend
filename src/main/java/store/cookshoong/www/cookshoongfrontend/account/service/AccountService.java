@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.account.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.account.adapter.AccountApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.account.exception.RegisterFailureException;
@@ -17,6 +18,7 @@ import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpReque
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountApiAdapter accountApiAdapter;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * API 서버에 회원가입 요청을 보낸다.
@@ -27,8 +29,9 @@ public class AccountService {
     public void requestAccountRegistration(String userType, SignUpRequestDto signUpRequestDto) {
         String authorityCode = userType.equals("cus") ? "customer" : "business";
 
-        ResponseEntity<Void> response = accountApiAdapter.executeRegistration(authorityCode, signUpRequestDto);
+        signUpRequestDto.encodePassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
 
+        ResponseEntity<Void> response = accountApiAdapter.executeRegistration(authorityCode, signUpRequestDto);
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RegisterFailureException(response.getStatusCode());
         }

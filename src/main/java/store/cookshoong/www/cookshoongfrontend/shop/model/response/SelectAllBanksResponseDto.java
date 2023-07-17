@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectAllBanksResponseDto {
-    private String bankCode;
-    private String bankName;
+    private String bankTypeCode;
+    private String description;
 }
