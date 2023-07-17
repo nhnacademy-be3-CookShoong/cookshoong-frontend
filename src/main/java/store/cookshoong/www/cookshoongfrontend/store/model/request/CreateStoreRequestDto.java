@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.store.model;
+package store.cookshoong.www.cookshoongfrontend.store.model.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * 매장 등록 Dto.
+ * 사업자 : 매장 등록 Dto.
  *
  * @author papel
  * @since 2023.07.09
@@ -18,7 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @AllArgsConstructor
 public class CreateStoreRequestDto {
-    private String merchantName;
+
+    private Long merchantId;
     @NotBlank
     private String businessLicenseNumber;
     @NotBlank
@@ -29,6 +30,7 @@ public class CreateStoreRequestDto {
     private String storeName;
     @NotBlank
     private String mainPlace;
+    @NotBlank
     private String detailPlace;
     @NotNull
     private BigDecimal latitude;
@@ -45,7 +47,7 @@ public class CreateStoreRequestDto {
     @NotNull
     private List<String> storeCategories;
     @NotBlank
-    private String bankName;
+    private String bankCode;
     @NotBlank
     private String bankAccount;
 }

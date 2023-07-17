@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.store.model;
+package store.cookshoong.www.cookshoongfrontend.store.model.request;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.Digits;
@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 메뉴 등록 Dto.
+ * 사업자 : 메뉴 등록 Dto.
  *
  * @author papel
  * @since 2023.07.11
