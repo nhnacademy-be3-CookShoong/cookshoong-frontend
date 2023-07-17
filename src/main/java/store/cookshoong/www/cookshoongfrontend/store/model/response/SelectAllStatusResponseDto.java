@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectAllStatusResponseDto {
-    private String statusCode;
-    private String statusName;
+    private String storeStatusCode;
+    private String description;
 }
