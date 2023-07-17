@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.account.model.request;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,8 +9,10 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
 import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
 
@@ -45,4 +48,15 @@ public class SignUpRequestDto {
     @NotBlank
     @Pattern(regexp = RegularExpressions.NUMBER_ONLY, message = ValidationFailureMessages.NUMBER_ONLY)
     private String phoneNumber;
+    @NotNull
+    @Setter
+    private CreateAccountAddressRequestDto createAccountAddressRequestDto;
+
+    public void encodePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
+    public boolean isAddressEmpty() {
+        return Objects.isNull(createAccountAddressRequestDto);
+    }
 }

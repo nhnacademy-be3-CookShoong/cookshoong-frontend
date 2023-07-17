@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
 import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
@@ -16,6 +18,8 @@ import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMess
  * @since 2023.07.04
  */
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class CreateAccountAddressRequestDto {
 
