@@ -28,6 +28,17 @@ public class MainViewController {
     }
 
     /**
+     * 비회원용 매장 페이지를 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.17
+     */
+    @GetMapping({"/index-unsigned"})
+    public String getIndexUnsigned() {
+        return "index-unsigned";
+    }
+
+    /**
      * 매장 페이지를 맵핑.
      *
      * @author papel
