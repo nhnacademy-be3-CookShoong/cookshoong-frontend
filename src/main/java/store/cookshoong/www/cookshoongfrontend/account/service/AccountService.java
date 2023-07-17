@@ -29,6 +29,7 @@ public class AccountService {
 
         ResponseEntity<Void> response = accountApiAdapter.executeRegistration(authorityCode, signUpRequestDto);
 
+        ResponseEntity<Void> response = accountApiAdapter.executeRegistration(authorityCode, signUpRequestDto);
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RegisterFailureException(response.getStatusCode());
         }
