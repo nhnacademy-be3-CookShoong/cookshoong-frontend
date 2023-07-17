@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  * @since 2023.07.13
  */
 public interface AccountIdAware {
+    /**
+     * 여러 컨트롤러에서 AccountId를 얻어오기 위한 메서드.
+     *
+     * @return the account id only
+     */
     @ModelAttribute
     default AccountIdOnly getAccountIdOnly() {
         // TODO : SecruityContext에서 값 가져오기.
