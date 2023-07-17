@@ -2,7 +2,6 @@ package store.cookshoong.www.cookshoongfrontend.address.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.address.adapter.AccountAddressAdapter;
@@ -18,7 +17,6 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  * @author jeongjewan
  * @since 2023.07.09
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountAddressService {
@@ -69,9 +67,10 @@ public class AccountAddressService {
         return accountAddressAdapter.selectAccountAddressRecentRegistration(accountId);
     }
 
-    public RestResponsePage<SelectAllStoresNotOutedResponseDto> selectAllStoresNotOutedResponseDto(Long addressId,
-                                                                                                   String storeCategoryCode,
-                                                                                                   Pageable pageable) {
+    public RestResponsePage<SelectAllStoresNotOutedResponseDto> selectAllStoresNotOutedResponseDto(
+        Long addressId,
+        String storeCategoryCode,
+        Pageable pageable) {
 
         return accountAddressAdapter.fetchStoresNotOuted(addressId, storeCategoryCode, pageable);
     }

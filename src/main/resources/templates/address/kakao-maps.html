@@ -36,7 +36,7 @@
     <tr>
         <td>
             <div>
-                <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소" disabled>
+                <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소" readonly>
                 <input type="hidden" id="latitudeInput" name="latitude" th:field="*{latitude}">
                 <input type="hidden" id="longitudeInput" name="longitude" th:field="*{longitude}">
                 <input type="button" onclick="execDaumPostcode()" value="주소 검색">

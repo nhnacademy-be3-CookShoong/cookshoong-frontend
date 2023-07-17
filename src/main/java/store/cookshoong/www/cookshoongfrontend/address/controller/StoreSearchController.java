@@ -2,7 +2,6 @@ package store.cookshoong.www.cookshoongfrontend.address.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  * @author jeongjewan
  * @since 2023.07.16
  */
-@Slf4j
 @Controller
 @RequestMapping("/store")
 @RequiredArgsConstructor
@@ -63,8 +61,6 @@ public class StoreSearchController {
 
         RestResponsePage<SelectAllStoresNotOutedResponseDto> store =
             accountAddressService.selectAllStoresNotOutedResponseDto(83L, storeCategoryCode, pageable);
-
-        log.info("ADDRESS LATLNG: {}", store.getContent());
 
         model.addAttribute("latitude", addressResponse.getLatitude());
         model.addAttribute("longitude", addressResponse.getLongitude());

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * {설명을 작성해주세요}.
+ * 쿠키 생성 및 쿠키 조회를 위한 Utils.
  *
  * @author jeongjewan
  * @since 2023.07.16
