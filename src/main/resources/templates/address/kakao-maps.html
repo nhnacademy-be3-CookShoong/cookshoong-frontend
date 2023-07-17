@@ -5,29 +5,53 @@
     <title>회원 주소 등록</title>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
+    <style>
+        #map {
+            width: 300px;
+            height: 300px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #currentLocationBtn {
+            position: absolute;
+            top: 83px;
+            left: 10px;
+            padding: 5px;
+            background-color: white;
+            border: 1px solid black;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
 
 <h1>주소 등록하기</h1>
 
-<div id="map" style="width: 300px; height: 300px; margin-top: 10px; position: relative; overflow: hidden;"></div>
+<div id="map"></div>
 
 <br>
 <form th:action="@{${url}}" method="POST" id="addressForm" th:object="${address}">
     <tr>
         <td>
-            <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소">
-            <input type="hidden" id="latitudeInput" name="latitude" th:field="*{latitude}">
-            <input type="hidden" id="longitudeInput" name="longitude" th:field="*{longitude}">
-            <input type="button" onclick="execDaumPostcode()" value="주소 검색">
-            <br>
-            <input type="text" id="alias" name="alias" th:field="*{alias}" placeholder="별칭">
-            <br>
-            <input type="text" id="detailAddress" name="detailPlace" th:field="*{detailPlace}" placeholder="상세주소">
-        </td>
+            <div>
+                <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소" disabled>
+                <input type="hidden" id="latitudeInput" name="latitude" th:field="*{latitude}">
+                <input type="hidden" id="longitudeInput" name="longitude" th:field="*{longitude}">
+                <input type="button" onclick="execDaumPostcode()" value="주소 검색">
+                <br>
+            </div>
+            <div>
+                <input type="text" id="alias" name="alias" th:field="*{alias}" placeholder="별칭">
+            </div>
+            <div>
+                <input type="text" id="detailAddress" name="detailPlace" th:field="*{detailPlace}" placeholder="상세주소">
+                <div id="addressError" class="error-message"></div> <!-- 오류 메시지를 표시할 요소 -->
+            </div>
     </tr>
     <br>
-    <input type="submit" value="주소와 좌표 저장">
+    <input type="submit" value="주소와 좌표 저장" onclick="return validateAddress()">
 </form>
 
 <table>
@@ -42,6 +66,9 @@
         <td th:text="${a.getAlias()}">별칭</td>
         <td th:text="${a.getMainPlace()}">메인 주소</td>
         <td>
+            <button th:onclick="'location.href=\'' + @{|/accounts/addresses/maps/${a.id}/select|} + '\''">선택</button>
+        </td>
+        <td>
             <button th:onclick="'location.href=\'' + @{|/accounts/addresses/maps/${a.id}/delete|} + '\''">삭제</button>
         </td>
     </tr>
@@ -52,7 +79,6 @@
 
     var latitude = [[${latitude}]];
     var longitude = [[${longitude}]];
-
 
     var mapContainer = document.getElementById('map');
     var mapOption = {
@@ -95,9 +121,7 @@
             oncomplete: function(data) {
                 // 선택한 주소 정보를 가져와서 필요한 처리를 수행.
                 var address = data.address;
-                var sigungu = data.sigungu; // 시/군/구 값 가져오기
                 document.getElementById("addressInput").value = address;
-                document.getElementById("sigunguInput").value = sigungu; // 시/군/구 값을 입력 필드에 설정
 
                 // 주소로 좌표를 반환하여 지도에 표시.
                 geocoder.addressSearch(address, function(results, status) {
@@ -118,6 +142,70 @@
                 });
             }
         }).open();
+    }
+
+    function validateAddress() {
+        var addressInput = document.getElementById("addressInput");
+        var detailAddress = document.getElementById("detailAddress");
+        var alias = document.getElementById("alias");
+        var addressError = document.getElementById("addressError");
+
+        var addressRegex = /^[가-힇A-Za-z0-9- ]+$/; // 주소 정규식 패턴용
+        var aliasRegex = /^[a-zA-Z0-9가-힣\s]{1,80}$/; // 별칭 정규식 패턴
+
+        if (addressInput.value.trim() === "" || !addressRegex.test(addressInput.value.trim())) {
+            addressError.innerText = "주소를 올바르게 입력해주세요.";
+            return false;
+        }
+
+        if (detailAddress.value.trim() === "" && !addressRegex.test(detailAddress.value.trim())) {
+            addressError.innerText = "상세주소를 올바르게 입력해주세요.";
+            return false;
+        }
+
+        if (alias.value.trim() === "" || !aliasRegex.test(alias.value.trim())) {
+            addressError.innerText = "별칭을 올바르게 입력해주세요.";
+            return false;
+        }
+
+        return true;
+    }
+
+    // 현재 위치 가져오기 버튼 생성
+    var currentLocationBtn = document.createElement('button');
+    currentLocationBtn.innerHTML = '현재 위치 가져오기';
+    currentLocationBtn.id = 'currentLocationBtn';
+
+    currentLocationBtn.onclick = function() {
+        getCurrentLocation();
+    };
+
+    document.body.appendChild(currentLocationBtn);
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+
+                var locPosition = new kakao.maps.LatLng(lat, lon);
+
+                // 현재 위치로 맵을 새로 생성하여 지도를 보여줍니다.
+                var currentMapOption = {
+                    center: locPosition,
+                    level: 5
+                };
+
+                var currentMap = new kakao.maps.Map(mapContainer, currentMapOption);
+
+                var currentMarker = new kakao.maps.Marker({
+                    position: locPosition,
+                    map: currentMap
+                });
+            });
+        } else {
+            alert('위치 정보를 가져올 수 없습니다.');
+        }
     }
 </script>
 </body>
