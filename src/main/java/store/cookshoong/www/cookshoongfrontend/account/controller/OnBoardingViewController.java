@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
-import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.model.IModel;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
+import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 
 /**
  * 로그인, 회원가입 등 인증을 위한 컨트롤러.
@@ -45,15 +43,16 @@ public class OnBoardingViewController implements AccountIdAware {
      */
     @GetMapping("/sign-up")
     public String getCustomerSignUpForm(@RequestParam(required = false) String userType,
-                                        Model model, SignUpRequestDto signUpRequestDto,
-                                        AccountIdOnly accountId) {
-        log.debug("=============  accountId {} =============", accountId.getAccountId());
+                                        Model model, SignUpRequestDto signUpRequestDto) {
         if (Objects.nonNull(userType) && (userType.equals("cus") || userType.equals("biz"))) {
             model.addAttribute("userType", userType);
         } else {
             return "redirect:/sign-up-choice";
         }
 
+        if (signUpRequestDto.isAddressEmpty()) {
+            signUpRequestDto.setCreateAccountAddressRequestDto(new CreateAccountAddressRequestDto());
+        }
         model.addAttribute("signUpRequestDto", signUpRequestDto);
         return REGISTER_FORM_VIEW;
     }
