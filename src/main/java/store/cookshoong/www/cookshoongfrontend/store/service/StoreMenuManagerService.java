@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreMenuAdapter;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateMenuRequestDto;
 
 /**
  * 매장의 메뉴 관리를 위한 서비스.

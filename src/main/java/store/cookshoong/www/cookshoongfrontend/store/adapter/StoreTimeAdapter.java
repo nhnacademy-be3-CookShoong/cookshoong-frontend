@@ -12,10 +12,10 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateBusinessHourFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateHolidayFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateMenuFailureException;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateBusinessHourRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateHolidayRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateBusinessHourRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateHolidayRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateMenuRequestDto;
 
 /**
  * 매장 영업시간, 휴업일의 Adapter

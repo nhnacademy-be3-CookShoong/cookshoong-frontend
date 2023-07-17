@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateOptionRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreOptionManagerService;
 

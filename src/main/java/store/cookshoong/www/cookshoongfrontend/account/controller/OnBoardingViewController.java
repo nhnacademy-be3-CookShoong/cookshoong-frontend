@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.model.IModel;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
@@ -28,7 +30,7 @@ public class OnBoardingViewController implements AccountIdAware {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
 
-    @GetMapping("sign-up-choice")
+    @GetMapping("/sign-up-choice")
     public String getSignUpChoicePage() {
         return "account/sign-up-choice";
     }
@@ -41,7 +43,7 @@ public class OnBoardingViewController implements AccountIdAware {
      * @param signUpRequestDto 회원가입요청 Dto
      * @return 회원가입 폼 뷰
      */
-    @GetMapping("sign-up")
+    @GetMapping("/sign-up")
     public String getCustomerSignUpForm(@RequestParam(required = false) String userType,
                                         Model model, SignUpRequestDto signUpRequestDto,
                                         AccountIdOnly accountId) {
@@ -64,7 +66,7 @@ public class OnBoardingViewController implements AccountIdAware {
      * @param model            View 로 보낼 데이터
      * @return 랜딩페이지
      */
-    @PostMapping("sign-up")
+    @PostMapping("/sign-up")
     public String postSignUpForm(@RequestParam String userType, @Valid SignUpRequestDto signUpRequestDto,
                                  BindingResult bindingResult, Model model) {
         // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
@@ -78,7 +80,6 @@ public class OnBoardingViewController implements AccountIdAware {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             return REGISTER_FORM_VIEW;
         }
-
 
         accountService.requestAccountRegistration(userType, signUpRequestDto);
         return "redirect:/";

@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateStoreRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.service.StoreService;
 
 /**

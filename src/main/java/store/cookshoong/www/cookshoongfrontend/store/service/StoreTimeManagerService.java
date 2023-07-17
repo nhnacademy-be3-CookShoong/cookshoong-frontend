@@ -12,8 +12,8 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreTimeAdapter;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateBusinessHourFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateHolidayFailureException;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateBusinessHourRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateHolidayRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateBusinessHourRequestDto;
+import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateHolidayRequestDto;
 
 /**
  * 매장의 영업시간 관리를 위한 서비스.
