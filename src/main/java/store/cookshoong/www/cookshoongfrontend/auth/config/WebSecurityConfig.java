@@ -36,7 +36,7 @@ public class WebSecurityConfig {
             .mvcMatchers("/login-page").permitAll()
             .mvcMatchers("/sign-up").permitAll()
             .mvcMatchers("/sign-up-choice").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().permitAll();
 
         http.formLogin()
             .loginPage("/login-page")

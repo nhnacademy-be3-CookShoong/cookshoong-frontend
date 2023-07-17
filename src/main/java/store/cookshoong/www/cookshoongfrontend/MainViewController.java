@@ -1,9 +1,23 @@
 package store.cookshoong.www.cookshoongfrontend;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeSet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Store;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
+import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
  * 각 메인 뷰 페이지를 연결하는 컨트롤러.
@@ -11,10 +25,14 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
  * @author koesnam
  * @since 2023.07.04
  */
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MainViewController {
+
     private final ApiProperties apiProperties;
+    private final StoreService storeService;
 
     /**
      * 매장 랜딩 페이지를 맵핑.
@@ -23,7 +41,14 @@ public class MainViewController {
      * @since 2023.07.05
      */
     @GetMapping({"/index", ""})
-    public String getIndex() {
+    public String getIndex(Pageable pageable, Model model) {
+        RestResponsePage<SelectAllStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(83L, pageable);
+        List<SelectAllStoresNotOutedResponseDto> distinctStores = stores.stream()
+            .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectAllStoresNotOutedResponseDto::getId))),
+                ArrayList::new));
+        model.addAttribute("allStore", distinctStores);
+        model.addAttribute("stores", stores);
+
         return "index";
     }
 
