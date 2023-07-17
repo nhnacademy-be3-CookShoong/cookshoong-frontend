@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
@@ -30,7 +27,6 @@ import store.cookshoong.www.cookshoongfrontend.util.CookieUtils;
  * @author jeongjewan
  * @since 2023.07.09
  */
-@Slf4j
 @Controller
 @RequestMapping("/accounts/addresses/maps")
 @RequiredArgsConstructor
@@ -48,12 +44,14 @@ public class AddressController implements AccountIdAware {
     @GetMapping
     public String getCreateAccountAddress(
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        Model model, AccountIdOnly account, @RequestParam(required = false) Long ai) {
+        Model model, AccountIdOnly account, HttpServletRequest request) {
+
+        String addressId = CookieUtils.getCookieValue(request, "addressId");
 
         // addressId를 사용하여 선택한 주소 정보를 가져옴
         AddressResponseDto addressResponse = null;
-        if (ai != null) {
-            addressResponse = accountAddressService.selectAccountChoiceAddress(ai);
+        if (addressId != null) {
+            addressResponse = accountAddressService.selectAccountChoiceAddress(Long.valueOf(addressId));
         }
 
         AddressResponseDto address =
@@ -83,15 +81,13 @@ public class AddressController implements AccountIdAware {
      * @param bindingResult                     입력에 대한 검증 결과
      * @param model                             HTML 로 보낼 데이터
      * @param account                           회원 정보
-     * @param redirectAttributes                ?파라미터를 붙여서 값 전달
      * @param response                          서버에 응답 메시지
      * @return                                  현제 주소 등록 페이지로 반환
      */
     @PostMapping
     public String postDoCreateAccountAddress(
         @ModelAttribute("address") @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model, AccountIdOnly account, RedirectAttributes redirectAttributes,
-        HttpServletResponse response) {
+        BindingResult bindingResult, Model model, AccountIdOnly account, HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "maps");
@@ -103,10 +99,6 @@ public class AddressController implements AccountIdAware {
         AddressResponseDto address =
             accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
 
-        log.info("ADDRESS ID: {}", address.getId());
-
-        redirectAttributes.addAttribute("ai", address.getId());
-
         CookieUtils.addCookie(response, "addressId", address.getId().toString());
 
         return "redirect:/accounts/addresses/maps";
@@ -116,16 +108,12 @@ public class AddressController implements AccountIdAware {
      * 회원이 주소록 중 선택한 주소.
      *
      * @param id                        주소 아이디
-     * @param redirectAttributes        ?파라미터를 붙여서 값 전달
      * @param response                  서버에 응답 메시지
      * @return                          현재 주소 등록 페이지로 반환
      */
     @GetMapping("/{id}/select")
     public String getSelectAccountAddress(@PathVariable Long id,
-                                          RedirectAttributes redirectAttributes,
                                           HttpServletResponse response) {
-
-        redirectAttributes.addAttribute("ai", id);
 
         CookieUtils.addCookie(response, "addressId", id.toString());
 
@@ -145,7 +133,8 @@ public class AddressController implements AccountIdAware {
     public String getCreateAccountAddressId(AccountIdOnly account,
                                             HttpServletResponse response) {
 
-        AddressResponseDto address = accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
+        AddressResponseDto address =
+            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
 
         CookieUtils.addCookie(response, "addressId", address.getId().toString());
 
