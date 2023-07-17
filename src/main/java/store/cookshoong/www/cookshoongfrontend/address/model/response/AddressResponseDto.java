@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AddressResponseDto {
 
+    private Long id;
     private String mainPlace;
     private String detailPlace;
     private BigDecimal latitude;

@@ -2,12 +2,14 @@ package store.cookshoong.www.cookshoongfrontend.address.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.address.adapter.AccountAddressAdapter;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
  * 회원과 주소에 대한 Service.
@@ -15,7 +17,6 @@ import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressRes
  * @author jeongjewan
  * @since 2023.07.09
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountAddressService {
@@ -47,6 +48,17 @@ public class AccountAddressService {
     /**
      * 회원이 최근에 등록한 주소를 가져오는 메서드.
      *
+     * @param addressId         주소 아이디
+     * @return                  회원이 최근에 등록한 주소와 좌표를 가져옴
+     */
+    public AddressResponseDto selectAccountChoiceAddress(Long addressId) {
+
+        return accountAddressAdapter.selectAccountChoiceAddress(addressId);
+    }
+
+    /**
+     * 회원이 최근에 등록한 주소를 가져오는 메서드.
+     *
      * @param accountId         회원  기본키
      * @return                  회원이 최근에 등록한 주소와 좌표를 가져옴
      */
@@ -55,13 +67,21 @@ public class AccountAddressService {
         return accountAddressAdapter.selectAccountAddressRecentRegistration(accountId);
     }
 
+    public RestResponsePage<SelectAllStoresNotOutedResponseDto> selectAllStoresNotOutedResponseDto(
+        Long addressId,
+        String storeCategoryCode,
+        Pageable pageable) {
+
+        return accountAddressAdapter.fetchStoresNotOuted(addressId, storeCategoryCode, pageable);
+    }
+
     /**
      * 회원에 주소를 삭제하는 메서드.
      *
      * @param accountId         회원 기본키
      * @param addressId         주소 아이디
      */
-    public void deleteAccountAddress(Long accountId, Long addressId) {
+    public void removeAccountAddress(Long accountId, Long addressId) {
 
         accountAddressAdapter.deleteAccountAddress(accountId, addressId);
     }
