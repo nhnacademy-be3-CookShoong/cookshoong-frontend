@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -134,284 +134,35 @@
                             <div class="card border-0">
                                 <div class="card-body">
                                     <h2 class="font-weight-bold">인기 메뉴</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
+                                    <div class="col-12" th:each="menu, i:${menus}">
+                                        <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
+                                                onclick="location.href='index-menu'">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="align-content-end border-info pr-3 pb-2"
+                                                         style="max-width: 200px">
+                                                        <img src="/assets/images/sample3.png" alt="image">
+                                                    </div>
+                                                    <div>
+                                                        <p style="text-align: left">
+                                                            <span style="font-size: 1.4rem; font-weight: bold;" th:text="${menu.name}"></span>
+                                                        </p>
+                                                        <p style="text-align: left">
+                                                            <i class="mdi mdi-message icon-sm" style="color: black">
+                                                            </i>
+                                                            <span class="pr-2" style="font-size: 1.1rem">400</span>
 
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
+                                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
+                                                            </i>
+                                                            <span class="pr-2" style="font-size: 1.1rem">55분</span>
+                                                        </p>
+                                                        <p style="text-align: left">
+                                                            <span style="font-size: 1.2rem">9,000원</span></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-
-                                <div class="card-body">
-                                    <h2 class="font-weight-bold">메뉴 분류 1</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-
-                                <div class="card-body">
-                                    <h2 class="font-weight-bold">메뉴 분류 2</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -419,108 +170,6 @@
                             <div class="card border-0">
                                 <div class="card-body">
                                     <h2 class="font-weight-bold">인기 메뉴</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -528,87 +177,6 @@
                             <div class="card border-0">
                                 <div class="card-body">
                                     <h2 class="font-weight-bold">메뉴 분류 1</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -616,87 +184,6 @@
                             <div class="card border-0">
                                 <div class="card-body">
                                     <h2 class="font-weight-bold">메뉴 분류 2</h2>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
-                                    <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
-                                            onclick="location.href='index-menu'">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
-                                                     style="max-width: 200px">
-                                                    <img src="/assets/images/sample3.png" alt="image">
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.4rem; font-weight: bold;">라면 라면</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <i class="mdi mdi-message icon-sm" style="color: black">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">400</span>
-
-                                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
-                                                        </i>
-                                                        <span class="pr-2" style="font-size: 1.1rem">55분</span>
-                                                    </p>
-                                                    <p style="text-align: left">
-                                                        <span style="font-size: 1.2rem">9,000원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </button>
                                 </div>
                             </div>
                         </div>

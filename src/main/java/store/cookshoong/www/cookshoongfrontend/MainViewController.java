@@ -16,6 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
@@ -33,6 +37,8 @@ public class MainViewController {
 
     private final ApiProperties apiProperties;
     private final StoreService storeService;
+    private final StoreMenuManagerService storeMenuManagerService;
+    private final StoreOptionManagerService storeOptionManagerService;
 
     /**
      * 매장 랜딩 페이지를 맵핑.
@@ -70,7 +76,9 @@ public class MainViewController {
      * @since 2023.07.16
      */
     @GetMapping({"/index-store"})
-    public String getIndexStore() {
+    public String getIndexStore(Model model) {
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(1L);
+        model.addAttribute("menus", menus);
         return "index-store";
     }
 
@@ -81,7 +89,9 @@ public class MainViewController {
      * @since 2023.07.16
      */
     @GetMapping({"/index-menu"})
-    public String getIndexMenu() {
+    public String getIndexMenu(Model model) {
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
+        model.addAttribute("options", options);
         return "index-menu";
     }
 

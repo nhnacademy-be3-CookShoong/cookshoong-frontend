@@ -1,10 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreOptionAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 
 /**
  * 매장의 옵션 관리를 위한 서비스.
@@ -35,5 +37,9 @@ public class StoreOptionManagerService {
      */
     public void createOption(Long optionGroupId, Long storeId, CreateOptionRequestDto createOptionRequestDto) {
         storeOptionAdapter.executeCreateOption(optionGroupId, storeId, createOptionRequestDto);
+    }
+
+    public List<SelectOptionResponseDto> selectOptions(Long storeId) {
+        return storeOptionAdapter.fetchOptions(storeId);
     }
 }

@@ -1,7 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,6 +14,8 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 
 /**
  * 옵션의 Adapter.
@@ -80,5 +84,20 @@ public class StoreOptionAdapter {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new CreateMenuFailureException(response.getStatusCode());
         }
+    }
+
+    public List<SelectOptionResponseDto> fetchOptions(Long storeId) {
+        ResponseEntity<List<SelectOptionResponseDto>> responseEntity =
+            restTemplate.exchange(
+                apiProperties.getGatewayUrl() +
+                    "/api/stores/" +
+                    storeId +
+                    "/option",
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+            );
+        return responseEntity.getBody();
     }
 }

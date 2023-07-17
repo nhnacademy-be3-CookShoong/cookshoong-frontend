@@ -1,9 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,6 +15,9 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
  * 메뉴의 Adapter.
@@ -77,5 +83,20 @@ public class StoreMenuAdapter {
         if(!response.getStatusCode().is2xxSuccessful()) {
             throw new CreateMenuFailureException(response.getStatusCode());
         }
+    }
+
+    public List<SelectMenuResponseDto> fetchMenus(Long storeId) {
+        ResponseEntity<List<SelectMenuResponseDto>> responseEntity =
+            restTemplate.exchange(
+                apiProperties.getGatewayUrl() +
+                    "/api/stores/" +
+                    storeId +
+                    "/menu",
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                }
+            );
+        return responseEntity.getBody();
     }
 }

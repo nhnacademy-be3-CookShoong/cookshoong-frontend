@@ -1,10 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreMenuAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 
 /**
  * 매장의 메뉴 관리를 위한 서비스.
@@ -35,5 +37,9 @@ public class StoreMenuManagerService {
      */
     public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
         storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto);
+    }
+
+    public List<SelectMenuResponseDto> selectMenus(Long storeId) {
+        return storeMenuAdapter.fetchMenus(storeId);
     }
 }
