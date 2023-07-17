@@ -48,7 +48,7 @@
                             <a class="nav-link" href="">Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Book</a>
+                            <a class="nav-link" href="store-register">Admin</a>
                         </li>
                     </ul>
                     <div class="user_option">
@@ -99,138 +99,14 @@
                 </div>
                 <div class="card">
                     <div class="ml-4 mt-3">
-                        <h3 class="font-weight-bold">만두피 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
+                        <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
                         <form>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
+                                        <div class="form-check" th:each="option, i:${options}">
+                                            <label class="form-check-label" th:text="${option.name}">
                                                 <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios11" value="option1">
-                                                옵션 1번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios12" value="option2">
-                                                옵션 2번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios13" value="option3">
-                                                옵션 3번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios14" value="option4">
-                                                옵션 4번
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="ml-4 mt-1">
-                        <h3 class="font-weight-bold">맛 선택</h3>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios2" id="optionsRadios21" value="option1">
-                                                옵션 1번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios2" id="optionsRadios22" value="option2">
-                                                옵션 2번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios2" id="optionsRadios23" value="option3">
-                                                옵션 3번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios2" id="optionsRadios24" value="option4">
-                                                옵션 4번
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="ml-4 mt-1">
-                        <h3 class="font-weight-bold">속 선택</h3>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios3" id="optionsRadios31" value="option1">
-                                                옵션 1번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios3" id="optionsRadios32" value="option2">
-                                                옵션 2번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios3" id="optionsRadios33" value="option3">
-                                                옵션 3번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios3" id="optionsRadios34" value="option4">
-                                                옵션 4번
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="ml-4 mt-1">
-                        <h3 class="font-weight-bold">찜 정도 선택</h3>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios4" id="optionsRadios41" value="option1">
-                                                옵션 1번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios4" id="optionsRadios42" value="option2">
-                                                옵션 2번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios4" id="optionsRadios43" value="option3">
-                                                옵션 3번
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios4" id="optionsRadios44" value="option4">
-                                                옵션 4번
                                             </label>
                                         </div>
                                     </div>
