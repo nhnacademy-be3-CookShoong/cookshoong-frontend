@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
 import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
@@ -16,6 +18,8 @@ import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMess
  * @since 2023.07.04
  */
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class CreateAccountAddressRequestDto {
 
@@ -27,7 +31,8 @@ public class CreateAccountAddressRequestDto {
     @Pattern(regexp = RegularExpressions.MAIN_DETAIL_ADDRESS, message = ValidationFailureMessages.MAIN_DETAIL_ADDRESS)
     private String mainPlace;
 
-    @Length(min = 1, max = 80)
+    @NotBlank
+    @Length(max = 80)
     @Pattern(regexp = RegularExpressions.MAIN_DETAIL_ADDRESS, message = ValidationFailureMessages.MAIN_DETAIL_ADDRESS)
     private String detailPlace;
 
