@@ -29,6 +29,6 @@ public class StoreController {
     public String getIndexStore(Model model) {
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(1L);
         model.addAttribute("menus", menus);
-        return "index-store";
+        return "index/store";
     }
 }

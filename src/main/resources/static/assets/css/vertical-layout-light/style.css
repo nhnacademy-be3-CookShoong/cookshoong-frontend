@@ -12908,6 +12908,7 @@ input[type="button"].btn-block {
     display: flex;
     flex-direction: column;
     padding-left: 0;
+    padding-right: 0;
     margin-bottom: 0;
     list-style: none;
 }
@@ -23829,7 +23830,7 @@ body.avgrund-active {
 }
 
 .content-wrapper {
-    background: #eeeeee;
+    background: #ffffff;
     padding: 1.875rem 1.875rem 0 1.875rem;
     width: 100%;
     -webkit-flex-grow: 1;

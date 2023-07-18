@@ -29,6 +29,6 @@ public class MenuController {
     public String getIndexMenu(Model model) {
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
         model.addAttribute("options", options);
-        return "index-menu";
+        return "index/menu";
     }
 }

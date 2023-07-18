@@ -13,12 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
-import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
@@ -50,7 +45,7 @@ public class MainViewController {
         model.addAttribute("allStore", distinctStores);
         model.addAttribute("stores", stores);
 
-        return "index";
+        return "index/index";
     }
 
 

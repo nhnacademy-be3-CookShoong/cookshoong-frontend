@@ -89,6 +89,7 @@
 
 .custom_nav-container .navbar-nav {
     padding-left: 10%;
+    padding-right: 10%;
 }
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
@@ -121,9 +122,9 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: end;
 }
 
 .user_option a {
@@ -439,11 +440,12 @@
     .custom_nav-container .navbar-nav {
         padding-top: 15px;
         padding-left: 0;
+        padding-right: 0;
         align-items: center;
     }
 
     .user_option{
-        justify-content: center;
+        justify-content: end;
         margin-top: 15px;
     }
     .custom_nav-container .navbar-nav .nav-item .nav-link {
