@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.address.adapter;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PATCH;
 import static org.springframework.http.HttpMethod.POST;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class AccountAddressAdapter {
      * @param accountId                      회원 기본키
      * @param createAccountAddressRequestDto 회원이 주소를 등록하는 Dto
      */
-    public void createAccountAddress(Long accountId, CreateAccountAddressRequestDto createAccountAddressRequestDto) {
+    public void executeAccountAddress(Long accountId, CreateAccountAddressRequestDto createAccountAddressRequestDto) {
 
         HttpEntity<CreateAccountAddressRequestDto> httpEntity =
             new HttpEntity<>(createAccountAddressRequestDto);
@@ -53,12 +54,29 @@ public class AccountAddressAdapter {
     }
 
     /**
+     * 회원이 선택한 주소에 대한 갱신 날짜를 업데이트.
+     * Backend Api 에서 날짜만 업데이트 해주기 때문에 요청 Entity 가 널 입니다.
+     *
+     * @param accountId      회원 기본키
+     * @param addressId     주소 아이디
+     */
+    public void changeSelectAccountAddressRenewalAt(Long accountId, Long addressId) {
+
+        restTemplate.exchange(
+            apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/select" + "/" + addressId,
+            PATCH,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
      * 회원이 가지고 있는 모든 주소 조회.
      *
      * @param accountId 회원 기본키
      * @return 회원이 등록한 모든 주소 반환
      */
-    public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
+    public List<AccountAddressResponseDto> fetchAccountAddressAll(Long accountId) {
 
         ResponseEntity<List<AccountAddressResponseDto>> exchange =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
@@ -76,7 +94,7 @@ public class AccountAddressAdapter {
      * @param addressId         주소 아이디
      * @return                  회원이 가지고 있는 주소에 대한 모든 정보(메인 주소, 상세 주소, 위도, 경도) 반환
      */
-    public AddressResponseDto selectAccountChoiceAddress(Long addressId) {
+    public AddressResponseDto fetchAccountChoiceAddress(Long addressId) {
 
         ResponseEntity<AddressResponseDto> exchange =
             restTemplate.exchange(
@@ -95,11 +113,11 @@ public class AccountAddressAdapter {
      * @param accountId         회원 기본키
      * @return                  회원이 가지고 있는 주소에 대한 모든 정보(메인 주소, 상세 주소, 위도, 경도) 반환
      */
-    public AddressResponseDto selectAccountAddressRecentRegistration(Long accountId) {
+    public AddressResponseDto fetchAccountAddressRenewalAt(Long accountId) {
 
         ResponseEntity<AddressResponseDto> exchange =
             restTemplate.exchange(
-                apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/recent-registration",
+                apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/renewal-at",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -141,7 +159,7 @@ public class AccountAddressAdapter {
      * @param accountId 회원 기본키
      * @param addressId 주소 아이디
      */
-    public void deleteAccountAddress(Long accountId, Long addressId) {
+    public void eraseAccountAddress(Long accountId, Long addressId) {
 
         restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
             DELETE,
