@@ -14,7 +14,6 @@ import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 @Controller
 @RequiredArgsConstructor
 public class MainViewController {
-    private final ApiProperties apiProperties;
 
     /**
      * 매장 랜딩 페이지를 맵핑.

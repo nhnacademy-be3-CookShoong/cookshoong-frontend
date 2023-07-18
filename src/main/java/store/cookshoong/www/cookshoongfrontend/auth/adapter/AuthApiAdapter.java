@@ -43,8 +43,6 @@ public class AuthApiAdapter {
             .toUri();
 
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
-
-        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {
-        });
+        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
     }
 }
