@@ -31,7 +31,18 @@ public class AccountAddressService {
      */
     public void createAccountAddress(Long accountId, CreateAccountAddressRequestDto createAccountAddressRequestDto) {
 
-        accountAddressAdapter.createAccountAddress(accountId, createAccountAddressRequestDto);
+        accountAddressAdapter.executeAccountAddress(accountId, createAccountAddressRequestDto);
+    }
+
+    /**
+     * 회원이 선택한 주소에 갱신 날짜를 업데이트.
+     *
+     * @param accountId         회원 기본키
+     * @param addressId         주소 아이디
+     */
+    public void updateSelectAccountAddressRenewalAt(Long accountId, Long addressId) {
+
+        accountAddressAdapter.changeSelectAccountAddressRenewalAt(accountId, addressId);
     }
 
     /**
@@ -42,7 +53,7 @@ public class AccountAddressService {
      */
     public List<AccountAddressResponseDto> selectAccountAddressAll(Long accountId) {
 
-        return accountAddressAdapter.selectAccountAddressAll(accountId);
+        return accountAddressAdapter.fetchAccountAddressAll(accountId);
     }
 
     /**
@@ -53,18 +64,18 @@ public class AccountAddressService {
      */
     public AddressResponseDto selectAccountChoiceAddress(Long addressId) {
 
-        return accountAddressAdapter.selectAccountChoiceAddress(addressId);
+        return accountAddressAdapter.fetchAccountChoiceAddress(addressId);
     }
 
     /**
-     * 회원이 최근에 등록한 주소를 가져오는 메서드.
+     * 회원이 최근에 갱신한 주소를 가져오는 메서드.
      *
      * @param accountId         회원  기본키
      * @return                  회원이 최근에 등록한 주소와 좌표를 가져옴
      */
-    public AddressResponseDto selectAccountAddressRecentRegistration(Long accountId) {
+    public AddressResponseDto selectAccountAddressRenewalAt(Long accountId) {
 
-        return accountAddressAdapter.selectAccountAddressRecentRegistration(accountId);
+        return accountAddressAdapter.fetchAccountAddressRenewalAt(accountId);
     }
 
     public RestResponsePage<SelectAllStoresNotOutedResponseDto> selectAllStoresNotOutedResponseDto(
@@ -83,6 +94,6 @@ public class AccountAddressService {
      */
     public void removeAccountAddress(Long accountId, Long addressId) {
 
-        accountAddressAdapter.deleteAccountAddress(accountId, addressId);
+        accountAddressAdapter.eraseAccountAddress(accountId, addressId);
     }
 }
