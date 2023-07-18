@@ -8,7 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateMenuRequestDto;

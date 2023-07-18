@@ -3,7 +3,6 @@ package store.cookshoong.www.cookshoongfrontend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 
 /**
  * 각 메인 뷰 페이지를 연결하는 컨트롤러.

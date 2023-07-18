@@ -1,17 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.store.service;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.adapter.StoreTimeAdapter;
-import store.cookshoong.www.cookshoongfrontend.store.exception.CreateBusinessHourFailureException;
-import store.cookshoong.www.cookshoongfrontend.store.exception.CreateHolidayFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateBusinessHourRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateHolidayRequestDto;
 

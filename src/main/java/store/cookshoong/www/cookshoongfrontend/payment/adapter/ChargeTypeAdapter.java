@@ -3,7 +3,6 @@ package store.cookshoong.www.cookshoongfrontend.payment.adapter;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +12,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
-import store.cookshoong.www.cookshoongfrontend.payment.model.request.ModifyTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 
 /**

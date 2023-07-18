@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 
 /**
  * 회원과 주소 간에 Adapter.

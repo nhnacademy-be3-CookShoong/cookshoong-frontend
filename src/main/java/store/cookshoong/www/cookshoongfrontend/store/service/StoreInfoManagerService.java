@@ -3,7 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.store.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 
 /**
  * 매장의 정보 관리를 위한 서비스.

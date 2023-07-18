@@ -8,14 +8,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateBusinessHourFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.exception.CreateHolidayFailureException;
-import store.cookshoong.www.cookshoongfrontend.store.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateBusinessHourRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateHolidayRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.CreateMenuGroupRequestDto;
-import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateMenuRequestDto;
 
 /**
  * 매장 영업시간, 휴업일의 Adapter
