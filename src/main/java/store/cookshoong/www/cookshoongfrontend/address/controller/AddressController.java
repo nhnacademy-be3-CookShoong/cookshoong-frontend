@@ -1,8 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.address.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
-import store.cookshoong.www.cookshoongfrontend.util.CookieUtils;
 
 /**
  * 주소에 대한 컨트롤러.
@@ -44,30 +41,17 @@ public class AddressController implements AccountIdAware {
     @GetMapping
     public String getCreateAccountAddress(
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        Model model, AccountIdOnly account, HttpServletRequest request) {
+        Model model, AccountIdOnly account) {
 
-        String addressId = CookieUtils.getCookieValue(request, "addressId");
-
-        // addressId를 사용하여 선택한 주소 정보를 가져옴
-        AddressResponseDto addressResponse = null;
-        if (addressId != null) {
-            addressResponse = accountAddressService.selectAccountChoiceAddress(Long.valueOf(addressId));
-        }
 
         AddressResponseDto address =
-            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
+            accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(account.getAccountId());
 
-        if (addressResponse == null) {
-            model.addAttribute("latitude", address.getLatitude());
-            model.addAttribute("longitude", address.getLongitude());
-        } else {
-            model.addAttribute("latitude", addressResponse.getLatitude());
-            model.addAttribute("longitude", addressResponse.getLongitude());
-        }
-
+        model.addAttribute("latitude", address.getLatitude());
+        model.addAttribute("longitude", address.getLongitude());
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("url", "maps");
 
@@ -81,13 +65,12 @@ public class AddressController implements AccountIdAware {
      * @param bindingResult                     입력에 대한 검증 결과
      * @param model                             HTML 로 보낼 데이터
      * @param account                           회원 정보
-     * @param response                          서버에 응답 메시지
      * @return                                  현제 주소 등록 페이지로 반환
      */
     @PostMapping
     public String postDoCreateAccountAddress(
         @ModelAttribute("address") @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model, AccountIdOnly account, HttpServletResponse response) {
+        BindingResult bindingResult, Model model, AccountIdOnly account) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "maps");
@@ -96,51 +79,23 @@ public class AddressController implements AccountIdAware {
 
         accountAddressService.createAccountAddress(account.getAccountId(), createAccountAddressRequestDto);
 
-        AddressResponseDto address =
-            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
-
-        CookieUtils.addCookie(response, "addressId", address.getId().toString());
-
         return "redirect:/accounts/addresses/maps";
     }
 
     /**
-     * 회원이 주소록 중 선택한 주소.
+     * 회원이 선택한 주소에 대해 갱신 날짜를 업데이트.
      *
      * @param id                        주소 아이디
-     * @param response                  서버에 응답 메시지
+     * @param account                           회원 정보
      * @return                          현재 주소 등록 페이지로 반환
      */
-    @GetMapping("/{id}/select")
-    public String getSelectAccountAddress(@PathVariable Long id,
-                                          HttpServletResponse response) {
+    @PostMapping("/{id}/select")
+    public String patchSelectAccountAddress(@PathVariable Long id, AccountIdOnly account) {
 
-        CookieUtils.addCookie(response, "addressId", id.toString());
+        accountAddressService.updateSelectAccountAddressRenewalAt(account.getAccountId(), id);
 
         return "redirect:/accounts/addresses/maps";
     }
-
-    /**
-     * 회원이 회원 가입을 하면 현재 url 로 Redirect 된다.
-     * 이유: 회원 가입 하면 바로 3km 이내에 위치한 주소를 가져오기 위해서 만듬.
-     * 이렇게 한번 들려야 주소 아이디를 쿠키에 저장하고 저장한 값을 이용해 3km 이내 매장을 볼 수 있음.
-     *
-     * @param account           회원 정보
-     * @param response          서버에 응답 메시지
-     * @return                  랜딩 페이지로 반환
-     */
-    @GetMapping("/create")
-    public String getCreateAccountAddressId(AccountIdOnly account,
-                                            HttpServletResponse response) {
-
-        AddressResponseDto address =
-            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
-
-        CookieUtils.addCookie(response, "addressId", address.getId().toString());
-
-        return "redirect:/";
-    }
-
 
     /**
      * 회원이 등록한 주소를 삭제하는 메서드.
@@ -149,7 +104,7 @@ public class AddressController implements AccountIdAware {
      * @param account           회원 정보
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
-    @GetMapping("/{id}/delete")
+    @PostMapping("/{id}/delete")
     public String getDeleteAccountAddress(@PathVariable Long id, AccountIdOnly account) {
 
         accountAddressService.removeAccountAddress(account.getAccountId(), id);
