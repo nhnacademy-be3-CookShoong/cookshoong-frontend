@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.store.model.response.SelectAllBanksResponseDto;
@@ -37,12 +36,13 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreController implements AccountIdAware {
+public class StoreController implements DevAccountIdAware {
 
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
     private final MerchantService merchantService;
     private final BankService bankService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 등록 페이지를 맵핑.
@@ -55,7 +55,6 @@ public class StoreController implements AccountIdAware {
         List<SelectAllMerchantsResponseDto> merchants = merchantService.selectAllMerchants();
         List<SelectAllCategoriesResponseDto> storeCategories = storeCategoryService.selectAllCategories();
         List<SelectAllBanksResponseDto> banks = bankService.selectAllBanks();
-
         model.addAttribute("banks", banks);
         model.addAttribute("merchants", merchants);
         model.addAttribute("categories", storeCategories);
@@ -72,19 +71,19 @@ public class StoreController implements AccountIdAware {
      */
     @PostMapping("/store-register")
     public String postCreateStore(
-        AccountIdOnly accountId,
         @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
         BindingResult bindingResult) {
-        storeService.createStore(accountId.getAccountId(), createStoreRequestDto);
+        Long accountId = accountIdAware.getAccountId();
+        storeService.createStore(accountId, createStoreRequestDto);
         return "redirect:/";
     }
 
     @GetMapping("/stores")
-    public String getStoresForBusiness(AccountIdOnly accountId,
-                                       Pageable pageable,
+    public String getStoresForBusiness(Pageable pageable,
                                        Model model,
                                        UpdateStoreStatusRequestDto requestDto) {
-        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId.getAccountId(), pageable);
+        Long accountId = accountIdAware.getAccountId();
+        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId, pageable);
         List<SelectAllStatusResponseDto> status = storeService.selectStatus();
 
         model.addAttribute("status", status);
@@ -96,7 +95,7 @@ public class StoreController implements AccountIdAware {
 
     @PatchMapping("/stores/{storeId}/status")
     public String patchStoreStatus(@PathVariable("storeId") Long storeId,
-                                   AccountIdOnly accountId,
+                                   DevAccountIdOnly accountId,
                                    @Valid @ModelAttribute("updateStatus") UpdateStoreStatusRequestDto updateStatus,
                                    BindingResult bindingResult,
                                    Model model){
