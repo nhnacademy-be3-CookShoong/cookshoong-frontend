@@ -9,8 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.JwtAuthenticationFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
 
 /**
@@ -25,6 +27,7 @@ public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
+    private final TokenInvalidationHandler tokenInvalidationHandler;
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -44,6 +47,12 @@ public class WebSecurityConfig {
             .passwordParameter("password")
             .loginProcessingUrl("/login")
             .successHandler(loginSuccessHandler);
+
+        http.logout()
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
+            .deleteCookies("SESSION")
+            .logoutSuccessHandler(tokenInvalidationHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);
 
