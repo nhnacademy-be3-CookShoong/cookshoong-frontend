@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,7 +91,7 @@ public class AddressController implements AccountIdAware {
      * @param account                           회원 정보
      * @return                          현재 주소 등록 페이지로 반환
      */
-    @PostMapping("/{id}/select")
+    @PatchMapping("/{id}/select")
     public String patchSelectAccountAddress(@PathVariable Long id, AccountIdOnly account) {
 
         accountAddressService.updateSelectAccountAddressRenewalAt(account.getAccountId(), id);
@@ -104,8 +106,8 @@ public class AddressController implements AccountIdAware {
      * @param account           회원 정보
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
-    @PostMapping("/{id}/delete")
-    public String getDeleteAccountAddress(@PathVariable Long id, AccountIdOnly account) {
+    @DeleteMapping("/{id}/delete")
+    public String deleteDeleteAccountAddress(@PathVariable Long id, AccountIdOnly account) {
 
         accountAddressService.removeAccountAddress(account.getAccountId(), id);
 

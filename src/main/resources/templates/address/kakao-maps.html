@@ -66,12 +66,12 @@
             <td th:text="${a.getAlias()}">별칭</td>
             <td th:text="${a.getMainPlace()}">메인 주소</td>
             <td>
-                <form th:action="@{/accounts/addresses/maps/{id}/select(id=${a.id})}" method="POST">
+                <form th:action="@{/accounts/addresses/maps/{id}/select(id=${a.id})}" th:method="PATCH">
                     <input type="submit" th:value="선택">
                 </form>
             </td>
             <td>
-                <form th:action="@{/accounts/addresses/maps/{id}/delete(id=${a.id})}" id="deleteForm" method="POST" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
+                <form th:action="@{/accounts/addresses/maps/{id}/delete(id=${a.id})}" id="deleteForm" th:method="DELETE" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
                     <input type="submit" th:value="삭제" th:onclick="return deleteAddress()">
                 </form>
             </td>
