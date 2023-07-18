@@ -15,13 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectMenuResponseDto {
     private Long id;
+    private String menuStatus;
+    private Long storeId;
     private String name;
     private Integer price;
     private String description;
     private String image;
     private Integer cookingTime;
     private BigDecimal earningRate;
-    private String menuStatus;
-    private Integer menuSequence;
-    private Long menuGroupId;
 }

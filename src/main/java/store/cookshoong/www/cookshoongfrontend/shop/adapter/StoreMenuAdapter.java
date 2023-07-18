@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 
 /**
@@ -37,8 +38,11 @@ public class StoreMenuAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/menu-group")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<CreateMenuGroupRequestDto> request = RequestEntity.post(uri)
@@ -57,8 +61,11 @@ public class StoreMenuAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/menu")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<CreateMenuRequestDto> request = RequestEntity.post(uri)
@@ -66,6 +73,33 @@ public class StoreMenuAdapter {
             .body(createMenuRequestDto);
 
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 메뉴 그룹 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
+    public List<SelectMenuGroupResponseDto> fetchMenuGroups(Long storeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .buildAndExpand(storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectMenuGroupResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
     }
 
     /**
@@ -78,8 +112,11 @@ public class StoreMenuAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/menu")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)

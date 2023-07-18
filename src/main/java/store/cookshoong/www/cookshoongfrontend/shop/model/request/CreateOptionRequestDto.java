@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.model.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +16,6 @@ import lombok.Getter;
 public class CreateOptionRequestDto {
     @NotBlank
     private String name;
-    @NotBlank
-    private String price;
+    @NotNull
+    private Integer price;
 }

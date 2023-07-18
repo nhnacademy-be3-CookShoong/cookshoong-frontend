@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 
 /**
@@ -25,7 +28,7 @@ public class StoreMenuManagerController {
     private final StoreMenuManagerService storeMenuManagerService;
 
     /**
-     * 매장 메뉴 관리 페이지를 맵핑.
+     * 매장 메뉴 관리 페이지 맵핑.
      *
      * @author papel
      * @since 2023.07.11
@@ -35,13 +38,19 @@ public class StoreMenuManagerController {
         @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
         Model model) {
+
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(1L);
+        model.addAttribute("menus", menus);
+        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(1L);
+        model.addAttribute("menuGroups", menuGroups);
+
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
         model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";
     }
 
     /**
-     * 매장 메뉴 그룹 등록 요청을 맵핑.
+     * 매장 메뉴 그룹 등록 요청 맵핑.
      *
      * @author papel
      * @since 2023.07.13
@@ -55,7 +64,7 @@ public class StoreMenuManagerController {
     }
 
     /**
-     * 매장 메뉴 등록 요청을 맵핑.
+     * 매장 메뉴 등록 요청 맵핑.
      *
      * @author papel
      * @since 2023.07.13

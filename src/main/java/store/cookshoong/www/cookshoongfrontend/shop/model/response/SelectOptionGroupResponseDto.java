@@ -5,18 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 옵션 조회 Dto.
+ * 옵션 그룹 조회 Dto.
  *
  * @author papel
  * @since 2023.07.11
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SelectOptionResponseDto {
+public class SelectOptionGroupResponseDto {
     private Long id;
-    private Long optionGroupId;
+    private Long storeId;
     private String name;
-    private Integer price;
+    private Integer minSelectCount;
+    private Integer maxSelectCount;
     private Boolean isDeleted;
-    private Integer optionSequence;
 }

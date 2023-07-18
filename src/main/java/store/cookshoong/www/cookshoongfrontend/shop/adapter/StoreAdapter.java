@@ -50,8 +50,11 @@ public class StoreAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/accounts/" + accountId + "/stores")
-            .build()
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .buildAndExpand(accountId)
             .toUri();
 
         RequestEntity<CreateStoreRequestDto> request = RequestEntity.post(uri)
@@ -72,10 +75,14 @@ public class StoreAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/accounts/customer/" + addressId + "/stores")
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("customer")
+            .pathSegment("{addressId}")
+            .pathSegment("stores")
             .queryParam("page", pageable.getPageNumber())
             .queryParam("size", pageable.getPageSize())
-            .build()
+            .buildAndExpand(addressId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)

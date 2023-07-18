@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -199,23 +199,9 @@
                         <div class="card-body">
                             <h4 class="card-title">옵션 그룹 관리</h4>
                             <div class="col-12">
-                                <div class="row border-top pt-2 pb-2">
+                                <div class="row border-top pt-2 pb-2" th:each="optionGroup, i:${optionGroups}">
                                     <div class="col-sm-10">
-                                        <h3 class="font-weight-bold pt-2">신옵션!</h3>
-                                    </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
-                                                data-toggle="modal"
-                                                data-target="#optionGroupAdd">수정
-                                        </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px"
-                                                type="button">삭제
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row border-top pt-2 pb-2">
-                                    <div class="col-sm-10">
-                                        <h3 class="font-weight-bold pt-2">30년 전통의 옵션 그룹</h3>
+                                        <h3 class="font-weight-bold pt-2" th:text="${optionGroup.name}"></h3>
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
@@ -243,57 +229,13 @@
                         <div class="card-body">
                             <h4 class="card-title">옵션 관리</h4>
                             <div class="col-12 grid-margin">
-                                <div class="row border-top pb-3 pt-3">
+                                <div class="row border-top pb-3 pt-3" th:each="option, i:${options}">
                                     <div class="col-sm-10">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <h3 class="font-weight-bold">순한맛</h3>
+                                                <h3 class="font-weight-bold" th:text="${option.name}"></h3>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">1,000<span
-                                                            style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
-                                                data-toggle="modal"
-                                                data-target="#optionAdd">수정
-                                        </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
-                                            삭제
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row border-top pb-3 pt-3">
-                                    <div class="col-sm-10">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <h3 class="font-weight-bold">매운맛</h3>
-                                                <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">2,000<span
-                                                            style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
-                                                data-toggle="modal"
-                                                data-target="#optionAdd">수정
-                                        </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
-                                            삭제
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row border-top pb-3 pt-3">
-                                    <div class="col-sm-10">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <h3 class="font-weight-bold">황천의 맛</h3>
-                                                <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem">4,000<span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem" th:text="${option.price}"><span
                                                             style="font-size: 1.2rem">원</span></p>
                                                 </div>
                                             </div>
