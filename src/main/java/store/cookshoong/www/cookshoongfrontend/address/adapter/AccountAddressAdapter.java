@@ -5,6 +5,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
 import static org.springframework.http.HttpMethod.POST;
 
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
@@ -43,14 +45,18 @@ public class AccountAddressAdapter {
      */
     public void executeAccountAddress(Long accountId, CreateAccountAddressRequestDto createAccountAddressRequestDto) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{accountId}")
+            .buildAndExpand(accountId)
+            .toUri();
+
         HttpEntity<CreateAccountAddressRequestDto> httpEntity =
             new HttpEntity<>(createAccountAddressRequestDto);
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
-            POST,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
+        restTemplate.exchange(uri, POST, httpEntity, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -62,12 +68,17 @@ public class AccountAddressAdapter {
      */
     public void changeSelectAccountAddressRenewalAt(Long accountId, Long addressId) {
 
-        restTemplate.exchange(
-            apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/select" + "/" + addressId,
-            PATCH,
-            null,
-            new ParameterizedTypeReference<>() {
-            });
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{accountId}")
+            .pathSegment("select")
+            .pathSegment("{addressId}")
+            .buildAndExpand(accountId, addressId)
+            .toUri();
+
+        restTemplate.exchange(uri, PATCH, null, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -78,12 +89,16 @@ public class AccountAddressAdapter {
      */
     public List<AccountAddressResponseDto> fetchAccountAddressAll(Long accountId) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{accountId}")
+            .buildAndExpand(accountId)
+            .toUri();
+
         ResponseEntity<List<AccountAddressResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId,
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -96,13 +111,17 @@ public class AccountAddressAdapter {
      */
     public AddressResponseDto fetchAccountChoiceAddress(Long addressId) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{addressId}")
+            .pathSegment("choice")
+            .buildAndExpand(addressId)
+            .toUri();
+
         ResponseEntity<AddressResponseDto> exchange =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() + "/api/addresses" + "/" + addressId + "/choice",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -115,13 +134,17 @@ public class AccountAddressAdapter {
      */
     public AddressResponseDto fetchAccountAddressRenewalAt(Long accountId) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{accountId}")
+            .pathSegment("renewal-at")
+            .buildAndExpand(accountId)
+            .toUri();
+
         ResponseEntity<AddressResponseDto> exchange =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/renewal-at",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -138,17 +161,20 @@ public class AccountAddressAdapter {
                                                                                     String storeCategoryCode,
                                                                                     Pageable pageable) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("customer")
+            .pathSegment("{addressId}")
+            .pathSegment("stores")
+            .queryParam("storeCategoryCode", storeCategoryCode)
+            .buildAndExpand(addressId)
+            .toUri();
+
         ResponseEntity<RestResponsePage<SelectAllStoresNotOutedResponseDto>>  exchange = restTemplate.exchange(
-            RestResponsePage.pageableToParameter(apiProperties.getGatewayUrl()
-                + "/api/accounts/customer"
-                + "/" + addressId
-                + "/stores?storeCategoryCode="
-                + storeCategoryCode,
-                pageable),
-            GET,
-            null,
-            new ParameterizedTypeReference<>() {
-            });
+            RestResponsePage.pageableToParameter(String.valueOf(uri), pageable),
+            GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -161,10 +187,16 @@ public class AccountAddressAdapter {
      */
     public void eraseAccountAddress(Long accountId, Long addressId) {
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/addresses" + "/" + accountId + "/" + addressId,
-            DELETE,
-            null,
-            new ParameterizedTypeReference<>() {
-            });
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("addresses")
+            .pathSegment("{accountId}")
+            .pathSegment("{addressId}")
+            .buildAndExpand(accountId, addressId)
+            .toUri();
+
+
+        restTemplate.exchange(uri, DELETE, null, new ParameterizedTypeReference<>() {});
     }
 }
