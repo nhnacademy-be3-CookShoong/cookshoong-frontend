@@ -2,6 +2,9 @@ package store.cookshoong.www.cookshoongfrontend.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -22,6 +25,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
  * @since 2023.07.13
  */
 @EnableWebSecurity(debug = true)
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -83,5 +87,12 @@ public class WebSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_BUSINESS > ROLE_CUSTOMER");
+        return roleHierarchy;
     }
 }
