@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Objects;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import store.cookshoong.www.cookshoongfrontend.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
 
 /**
  * Jwt 을 통한 인증을 담당하는 클래스.
@@ -14,17 +14,28 @@ import store.cookshoong.www.cookshoongfrontend.util.JwtResolver;
  */
 public class JwtAuthentication extends AbstractAuthenticationToken {
     private final String accessToken;
+    private String refreshToken;
 
     /**
      * Instantiates a new Jwt authentication.
      *
      * @param accessToken the access token
      */
-    public JwtAuthentication(String accessToken) {
-        super(Collections.singletonList(new SimpleGrantedAuthority(JwtResolver.resolveAccessToken(accessToken)
+    public JwtAuthentication(String accessToken, String refreshToken) {
+        super(Collections.singletonList(
+            new SimpleGrantedAuthority(JwtResolver.resolveToken(accessToken, ParsedAccessToken.class)
             .getAuthority())));
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.setAuthenticated(true);
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void eraseRefreshToken() {
+        this.refreshToken = null;
     }
 
     @Override
