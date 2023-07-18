@@ -11,6 +11,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailur
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
@@ -38,13 +39,22 @@ public class StoreService implements AccountIdAware {
     }
 
     /**
-     * 3km 이내 매장 조회 메서드.
+     * 3km 이내 매장 리스트 조회 메서드.
      *
      * @param addressId 주소 아이디
      * @param pageable  페이지 파라미터
      */
     public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
         return storeAdapter.fetchStoresNotOuted(addressId, pageable);
+    }
+
+    /**
+     * 매장 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     */
+    public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
+        return storeAdapter.fetchStoreForUser(storeId);
     }
 
 

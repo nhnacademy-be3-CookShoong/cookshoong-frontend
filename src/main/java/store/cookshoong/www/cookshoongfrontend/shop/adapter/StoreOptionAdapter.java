@@ -79,7 +79,7 @@ public class StoreOptionAdapter {
     }
 
     /**
-     * 옵션 그룹 조회 메서드.
+     * 옵션 그룹 리스트 조회 메서드.
      *
      * @param storeId 매장 아이디
      * @return response
@@ -106,7 +106,33 @@ public class StoreOptionAdapter {
     }
 
     /**
-     * 옵션 조회 메서드.
+     * 옵션 그룹 조회 메서드.
+     *
+     * @param optionGroupId 옵션 그룹 아이디
+     * @return response
+     */
+    public SelectOptionGroupResponseDto fetchOptionGroup(Long optionGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("option-group")
+            .pathSegment("{optionGroupId}")
+            .buildAndExpand(optionGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectOptionGroupResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 옵션 리스트 조회 메서드.
      *
      * @param storeId 매장 아이디
      * @return response
@@ -127,6 +153,32 @@ public class StoreOptionAdapter {
             .build();
 
         ResponseEntity<List<SelectOptionResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 옵션 조회 메서드.
+     *
+     * @param optionId 매장 아이디
+     * @return response
+     */
+    public SelectOptionResponseDto fetchOption(Long optionId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("option")
+            .pathSegment("{optionId}")
+            .buildAndExpand(optionId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectOptionResponseDto> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();

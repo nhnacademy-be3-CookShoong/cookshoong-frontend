@@ -41,7 +41,7 @@ public class StoreMenuManagerService {
     }
 
     /**
-     * 메뉴 그룹 조회 서비스.
+     * 메뉴 그룹 리스트 조회 서비스.
      *
      * @param storeId 매장 아이디
      * @return 매장의 메뉴 그룹 리스트
@@ -51,12 +51,32 @@ public class StoreMenuManagerService {
     }
 
     /**
-     * 메뉴 조회 서비스.
+     * 메뉴 그룹 조회 서비스.
+     *
+     * @param menuGroupId 메뉴 그룹 아이디
+     * @return 매장의 메뉴 그룹
+     */
+    public SelectMenuGroupResponseDto selectMenuGroup(Long menuGroupId) {
+        return storeMenuAdapter.fetchMenuGroup(menuGroupId);
+    }
+
+    /**
+     * 메뉴 리스트 조회 서비스.
      *
      * @param storeId 매장 아이디
      * @return 매장의 메뉴 리스트
      */
     public List<SelectMenuResponseDto> selectMenus(Long storeId) {
         return storeMenuAdapter.fetchMenus(storeId);
+    }
+
+    /**
+     * 메뉴 조회 서비스.
+     *
+     * @param menuId 메뉴 아이디
+     * @return 매장의 메뉴
+     */
+    public SelectMenuResponseDto selectMenu(Long menuId) {
+        return storeMenuAdapter.fetchMenu(menuId);
     }
 }

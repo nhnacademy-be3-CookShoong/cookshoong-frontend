@@ -76,7 +76,7 @@ public class StoreMenuAdapter {
     }
 
     /**
-     * 메뉴 그룹 조회 메서드.
+     * 메뉴 그룹 리스트 조회 메서드.
      *
      * @param storeId 매장 아이디
      * @return response
@@ -103,7 +103,33 @@ public class StoreMenuAdapter {
     }
 
     /**
-     * 메뉴 조회 메서드.
+     * 메뉴 그룹 조회 메서드.
+     *
+     * @param menuGroupId 메뉴 그룹 아이디
+     * @return response
+     */
+    public SelectMenuGroupResponseDto fetchMenuGroup(Long menuGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("menu-group")
+            .pathSegment("{menuGroupId}")
+            .buildAndExpand(menuGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectMenuGroupResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 메뉴 리스트 조회 메서드.
      *
      * @param storeId 매장 아이디
      * @return response
@@ -124,6 +150,32 @@ public class StoreMenuAdapter {
             .build();
 
         ResponseEntity<List<SelectMenuResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 메뉴 조회 메서드.
+     *
+     * @param menuId 메뉴 아이디
+     * @return response
+     */
+    public SelectMenuResponseDto fetchMenu(Long menuId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("menu")
+            .pathSegment("{menuId}")
+            .buildAndExpand(menuId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectMenuResponseDto> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();

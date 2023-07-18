@@ -22,6 +22,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreReq
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
@@ -65,7 +66,7 @@ public class StoreAdapter {
     }
 
     /**
-     * 3km 이내 매장 조회 메서드.
+     * 3km 이내 매장 리스트 조회 메서드.
      *
      * @param addressId 주소 아이디
      * @param pageable  페이지 파라미터
@@ -90,6 +91,33 @@ public class StoreAdapter {
             .build();
 
         ResponseEntity<RestResponsePage<SelectStoresNotOutedResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 매장 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
+    public SelectStoreForUserResponseDto fetchStoreForUser(Long storeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("info")
+            .buildAndExpand(storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectStoreForUserResponseDto> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();

@@ -41,7 +41,7 @@ public class StoreOptionManagerService {
     }
 
     /**
-     * 옵션 그룹 조회 서비스.
+     * 옵션 그룹 리스트 조회 서비스.
      *
      * @param storeId 매장 아이디
      * @return 매장의 옵션 그룹 리스트
@@ -51,7 +51,7 @@ public class StoreOptionManagerService {
     }
 
     /**
-     * 옵션 조회 서비스.
+     * 옵션 리스트 조회 서비스.
      *
      * @param storeId 매장 아이디
      * @return 매장의 옵션 리스트

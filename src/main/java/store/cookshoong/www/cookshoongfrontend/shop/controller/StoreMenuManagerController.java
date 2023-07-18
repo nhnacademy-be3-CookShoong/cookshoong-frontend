@@ -60,7 +60,7 @@ public class StoreMenuManagerController {
         @Valid @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
         BindingResult bindingResult) {
         storeMenuManagerService.createMenuGroup(1L, createMenuGroupRequestDto);
-        return "redirect:/";
+        return "redirect:/store-menu-manager";
     }
 
     /**
@@ -74,6 +74,6 @@ public class StoreMenuManagerController {
         @Valid @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         BindingResult bindingResult) {
         storeMenuManagerService.createMenu(1L, createMenuRequestDto);
-        return "redirect:/";
+        return "redirect:/store-menu-manager";
     }
 }

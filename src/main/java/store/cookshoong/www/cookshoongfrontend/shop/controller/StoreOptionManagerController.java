@@ -61,7 +61,7 @@ public class StoreOptionManagerController {
         @Valid @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
         BindingResult bindingResult) {
         storeOptionManagerService.createOptionGroup(1L, createOptionGroupRequestDto);
-        return "redirect:/";
+        return "redirect:/store-option-manager";
     }
 
     /**
@@ -75,6 +75,6 @@ public class StoreOptionManagerController {
         @Valid @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         BindingResult bindingResult) {
         storeOptionManagerService.createOption(1L, 1L, createOptionRequestDto);
-        return "redirect:/";
+        return "redirect:/store-option-manager";
     }
 }
