@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
@@ -45,16 +44,8 @@ public class StoreOptionAdapter {
         RequestEntity<CreateOptionGroupRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(createOptionGroupRequestDto);
-
-        ResponseEntity<Void> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
-
-        return response;
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
-
 
     /**
      * 옵션 등록 메서드.
@@ -75,15 +66,8 @@ public class StoreOptionAdapter {
             .contentType(MediaType.APPLICATION_JSON)
             .body(createOptionRequestDto);
 
-        ResponseEntity<Void> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
-
-        return response;
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
-
 
     /**
      * 옵션 조회 메서드.
@@ -108,5 +92,4 @@ public class StoreOptionAdapter {
 
         return response.getBody();
     }
-
 }

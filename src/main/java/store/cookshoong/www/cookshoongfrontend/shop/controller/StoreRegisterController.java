@@ -71,10 +71,17 @@ public class StoreRegisterController implements AccountIdAware {
     public String postCreateStore(
         AccountIdOnly accountId,
         @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
-        BindingResult bindingResult) {
+        BindingResult bindingResult, Model model) {
         storeService.createStore(accountId.getAccountId(), createStoreRequestDto);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("createStoreRequestDto", createStoreRequestDto);
+            return "store/register/store-register";
+        }
         return "redirect:/";
     }
+
+
 
 
 

@@ -16,7 +16,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreMenuController {
+public class MenuController {
     private final StoreOptionManagerService storeOptionManagerService;
 
     /**

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
@@ -45,14 +44,7 @@ public class StoreMenuAdapter {
         RequestEntity<CreateMenuGroupRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(createMenuGroupRequestDto);
-
-        ResponseEntity<Void> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
-
-        return response;
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -73,13 +65,7 @@ public class StoreMenuAdapter {
             .contentType(MediaType.APPLICATION_JSON)
             .body(createMenuRequestDto);
 
-        ResponseEntity<Void> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
-
-        return response;
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -105,5 +91,4 @@ public class StoreMenuAdapter {
 
         return response.getBody();
     }
-
 }

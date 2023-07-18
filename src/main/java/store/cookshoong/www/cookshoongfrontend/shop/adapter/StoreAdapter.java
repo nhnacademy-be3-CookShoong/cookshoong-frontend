@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateStoreFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
@@ -59,14 +58,7 @@ public class StoreAdapter {
             .contentType(MediaType.APPLICATION_JSON)
             .body(createStoreRequestDto);
 
-        ResponseEntity<Void> response
-            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateStoreFailureException(response.getStatusCode());
-        }
-
-        return response;
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
     /**
