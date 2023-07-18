@@ -36,22 +36,22 @@
     <tr>
         <td>
             <div>
-                <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소" readonly>
+                <input type="text" id="addressInput" name="mainPlace" th:field="*{mainPlace}" placeholder="주소" pattern="^[가-힇0-9\w\-\, ]+$" required>
                 <input type="hidden" id="latitudeInput" name="latitude" th:field="*{latitude}">
                 <input type="hidden" id="longitudeInput" name="longitude" th:field="*{longitude}">
                 <input type="button" onclick="execDaumPostcode()" value="주소 검색">
                 <br>
             </div>
             <div>
-                <input type="text" id="alias" name="alias" th:field="*{alias}" placeholder="별칭">
+                <input type="text" id="alias" name="alias" th:field="*{alias}" placeholder="별칭" pattern="^[가-힇\w]+$" required>
             </div>
             <div>
-                <input type="text" id="detailAddress" name="detailPlace" th:field="*{detailPlace}" placeholder="상세주소">
-                <div id="addressError" class="error-message"></div> <!-- 오류 메시지를 표시할 요소 -->
+                <input type="text" id="detailAddress" name="detailPlace" th:field="*{detailPlace}" placeholder="상세주소" pattern="^[가-힇0-9\w\-\, ]+$" required>
             </div>
     </tr>
     <br>
     <input type="submit" value="주소와 좌표 저장" onclick="return validateAddress()">
+    <div id="addressError" class="error-message"></div> <!-- 오류 메시지를 표시할 요소 -->
 </form>
 
 <table>
@@ -61,17 +61,21 @@
         <th>메인 주소</th>
     </tr>
     </thead>
-    <tbody>
-    <tr th:each="a : ${accountAddresses}">
-        <td th:text="${a.getAlias()}">별칭</td>
-        <td th:text="${a.getMainPlace()}">메인 주소</td>
-        <td>
-            <button th:onclick="'location.href=\'' + @{|/accounts/addresses/maps/${a.id}/select|} + '\''">선택</button>
-        </td>
-        <td>
-            <button th:onclick="'location.href=\'' + @{|/accounts/addresses/maps/${a.id}/delete|} + '\''">삭제</button>
-        </td>
-    </tr>
+    <tbody id="addressTable">
+        <tr th:each="a : ${accountAddresses}">
+            <td th:text="${a.getAlias()}">별칭</td>
+            <td th:text="${a.getMainPlace()}">메인 주소</td>
+            <td>
+                <form th:action="@{/accounts/addresses/maps/{id}/select(id=${a.id})}" method="POST">
+                    <input type="submit" th:value="선택">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/accounts/addresses/maps/{id}/delete(id=${a.id})}" id="deleteForm" method="POST" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
+                    <input type="submit" th:value="삭제" th:onclick="return deleteAddress()">
+                </form>
+            </td>
+        </tr>
     </tbody>
 </table>
 
@@ -145,31 +149,51 @@
     }
 
     function validateAddress() {
-        var addressInput = document.getElementById("addressInput");
-        var detailAddress = document.getElementById("detailAddress");
-        var alias = document.getElementById("alias");
-        var addressError = document.getElementById("addressError");
 
-        var addressRegex = /^[가-힇A-Za-z0-9- ]+$/; // 주소 정규식 패턴용
-        var aliasRegex = /^[a-zA-Z0-9가-힣\s]{1,80}$/; // 별칭 정규식 패턴
+        // 주소록 개수 체크
+        return checkAddressLimit();
+    }
 
-        if (addressInput.value.trim() === "" || !addressRegex.test(addressInput.value.trim())) {
-            addressError.innerText = "주소를 올바르게 입력해주세요.";
+    function  deleteAddress() {
+
+        return checkedAddressMinLimit();
+    }
+
+    function checkAddressLimit() {
+        // 주소록 테이블의 행 개수 확인
+        var addressRowCount = document.querySelectorAll('#addressTable tr').length;
+
+        // 저장 버튼 가져오기
+        var saveButton = document.querySelector('#addressForm input[type="submit"]');
+
+        // 주소록 행 개수가 10개 이상인 경우 에러 메시지 표시 및 저장 버튼 비활성화
+        if (addressRowCount > 9) {
+            var addressError = document.getElementById("addressError");
+            addressError.innerText = "회원이 가지고 있는 주소가 10개가 넘었습니다. 주소 삭제 바랍니다.";
+            saveButton.disabled = true;
             return false;
         }
+        return true;
+    }
 
-        if (detailAddress.value.trim() === "" && !addressRegex.test(detailAddress.value.trim())) {
-            addressError.innerText = "상세주소를 올바르게 입력해주세요.";
-            return false;
-        }
+    function  checkedAddressMinLimit() {
 
-        if (alias.value.trim() === "" || !aliasRegex.test(alias.value.trim())) {
-            addressError.innerText = "별칭을 올바르게 입력해주세요.";
+        // 주소록 테이블의 행 개수 확인
+        var addressRowCount = document.querySelectorAll('#addressTable tr').length;
+
+        // 저장 버튼 가져오기
+        var deleteButton = document.querySelector('#deleteForm input[type="submit"]');
+
+        if (addressRowCount < 2) {
+            var addressError = document.getElementById("addressError");
+            addressError.innerText = "주소는 최대 하나 이상은 가지고 있어야 합니다.";
+            deleteButton.disabled = true;
             return false;
         }
 
         return true;
     }
+
 
     // 현재 위치 가져오기 버튼 생성
     var currentLocationBtn = document.createElement('button');
@@ -186,22 +210,27 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var lat = position.coords.latitude;
-                var lon = position.coords.longitude;
+                var lng = position.coords.longitude;
 
-                var locPosition = new kakao.maps.LatLng(lat, lon);
+                var locPosition = new kakao.maps.LatLng(lat, lng);
 
-                // 현재 위치로 맵을 새로 생성하여 지도를 보여줍니다.
-                var currentMapOption = {
-                    center: locPosition,
-                    level: 5
-                };
+                // 현재 위치로 맵 중심 좌표 변경
+                map.setCenter(locPosition);
 
-                var currentMap = new kakao.maps.Map(mapContainer, currentMapOption);
+                // 마커 위치 변경
+                marker.setPosition(locPosition);
+                marker.setMap(map);
 
-                var currentMarker = new kakao.maps.Marker({
-                    position: locPosition,
-                    map: currentMap
+                // 현재 위치를 주소로 변환하여 주소 입력 필드에 표시
+                geocoder.coord2Address(lng, lat, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        document.getElementById("addressInput").value = result[0].address.address_name;
+                    }
                 });
+
+                // 현재 위치를 좌표로 입력 필드에 설정
+                document.getElementById("latitudeInput").value = lat;
+                document.getElementById("longitudeInput").value = lng;
             });
         } else {
             alert('위치 정보를 가져올 수 없습니다.');
