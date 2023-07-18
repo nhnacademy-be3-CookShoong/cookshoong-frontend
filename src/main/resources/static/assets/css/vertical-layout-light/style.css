@@ -23787,14 +23787,14 @@ body.avgrund-active {
 }
 
 .page-body-wrapper {
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 85px);
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 100px;
+    padding-top: 85px;
 }
 
 .page-body-wrapper.full-page-wrapper {
@@ -23810,6 +23810,13 @@ body.avgrund-active {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
+    padding-top: 35px;
+}
+@media (max-width: 991px) {
+    .landing-panel {
+        width: 100%;
+        padding-top: 0px;
+    }
 }
 
 .main-panel {
@@ -24260,8 +24267,8 @@ body.avgrund-active {
 @media screen and (max-width: 991px) {
     .sidebar-offcanvas {
         position: fixed;
-        max-height: calc(100vh - 100px);
-        top: 100px;
+        max-height: calc(100vh - 85px);
+        top: 85px;
         bottom: 0;
         overflow: auto;
         right: -255px;
