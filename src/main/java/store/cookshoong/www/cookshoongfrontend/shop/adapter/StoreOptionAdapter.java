@@ -1,24 +1,22 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 
 /**
- * 옵션의 Adapter.
+ * 옵션 어뎁터.
  *
  * @author papel
  * @since 2023.07.13
@@ -30,74 +28,68 @@ public class StoreOptionAdapter {
     private final ApiProperties apiProperties;
 
     /**
-     * 옵션 그룹을 등록하는 메서드.
+     * 옵션 그룹 등록 메서드.
      *
-     * @param storeId                     매장아이디
-     * @param createOptionGroupRequestDto 사업자가 옵션 그룹을 등록하는 Dto
+     * @param storeId                     매장 아이디
+     * @param createOptionGroupRequestDto 옵션 그룹 등록 Dto
      */
-    public void executeCreateOptionGroup(Long storeId, CreateOptionGroupRequestDto createOptionGroupRequestDto) {
+    public ResponseEntity<Void> executeCreateOptionGroup(Long storeId, CreateOptionGroupRequestDto createOptionGroupRequestDto) {
 
-        HttpEntity<CreateOptionGroupRequestDto> httpEntity =
-            new HttpEntity<>(createOptionGroupRequestDto);
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path("/api/stores/" + storeId + "/option-group")
+            .build()
+            .toUri();
 
-        ResponseEntity<Void> response =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/option-group",
-                POST,
-                httpEntity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
+        RequestEntity<CreateOptionGroupRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(createOptionGroupRequestDto);
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
     /**
-     * 옵션을 등록하는 메서드.
+     * 옵션 등록 메서드.
      *
-     * @param storeId                매장아이디
-     * @param optionGroupId          옵션 그룹아이디
-     * @param createOptionRequestDto 사업자가 옵션를 등록하는 Dto
+     * @param storeId                매장 아이디
+     * @param optionGroupId          옵션 그룹 아이디
+     * @param createOptionRequestDto 옵션 등록 Dto
      */
-    public void executeCreateOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
+    public ResponseEntity<Void> executeCreateOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
 
-        HttpEntity<CreateOptionRequestDto> httpEntity =
-            new HttpEntity<>(createOptionRequestDto);
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path("/api/stores/" + storeId + "/option-group/" + optionGroupId + "/option")
+            .build()
+            .toUri();
 
-        ResponseEntity<Void> response =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/option-group/" +
-                    optionGroupId +
-                    "/option",
-                POST,
-                httpEntity,
-                new ParameterizedTypeReference<>() {
-                });
+        RequestEntity<CreateOptionRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(createOptionRequestDto);
 
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
+    /**
+     * 옵션 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
     public List<SelectOptionResponseDto> fetchOptions(Long storeId) {
-        ResponseEntity<List<SelectOptionResponseDto>> responseEntity =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/option",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-            );
-        return responseEntity.getBody();
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path("/api/stores/" + storeId + "/option")
+            .build()
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectOptionResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
     }
 }
