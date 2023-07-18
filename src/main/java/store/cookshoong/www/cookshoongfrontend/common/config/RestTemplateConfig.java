@@ -91,4 +91,16 @@ public class RestTemplateConfig {
 
         return sslRestTemplate;
     }
+
+    /**
+     * AccessToken 을 담기 위한 헤더 객체.
+     *
+     * @return the http headers
+     */
+    @Bean
+    public HttpHeaders authorizedHeader() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth("");
+        return headers;
+    }
 }

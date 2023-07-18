@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.JwtAuthenticationFilter;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
 
 /**
@@ -23,6 +24,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -40,7 +42,8 @@ public class WebSecurityConfig {
             .loginPage("/login-page")
             .usernameParameter("loginId")
             .passwordParameter("password")
-            .loginProcessingUrl("/login");
+            .loginProcessingUrl("/login")
+            .successHandler(loginSuccessHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);
 
