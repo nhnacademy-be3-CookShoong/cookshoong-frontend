@@ -6,14 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 회원 위치에서 3km 이내에 있는 매장을 보여줄 Dto.
+ * 3km 이내 매장 조회 Dto.
  *
  * @author papel
  * @since 2023.07.17
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SelectAllStoresNotOutedResponseDto {
+public class SelectStoresNotOutedResponseDto {
     private Long id;
     private String name;
     private String storeStatus;

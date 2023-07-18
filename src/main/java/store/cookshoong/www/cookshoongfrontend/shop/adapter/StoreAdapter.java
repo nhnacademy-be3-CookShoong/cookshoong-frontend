@@ -2,31 +2,34 @@ package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
-import static org.springframework.http.HttpMethod.POST;
 
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateStoreFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 
 /**
- * 매장의 Adapter.
+ * 매장 어뎁터.
  *
  * @author papel
  * @since 2023.07.13
@@ -38,26 +41,70 @@ public class StoreAdapter {
     private final ApiProperties apiProperties;
 
     /**
-     * 매장을 등록하는 메서드.
+     * 매장 등록 메서드.
      *
-     * @param accountId             회원아이디
-     * @param createStoreRequestDto 사업자가 매장을 등록하는 Dto
+     * @param accountId             회원 아이디
+     * @param createStoreRequestDto 매장 등록 Dto
+     * @return response
      */
-    public void executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
+    public ResponseEntity<Void> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
 
-        HttpEntity<CreateStoreRequestDto> httpEntity =
-            new HttpEntity<>(createStoreRequestDto);
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path("/api/accounts/" + accountId + "/stores")
+            .build()
+            .toUri();
 
-        ResponseEntity<Void> response = restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores",
-            POST,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
+        RequestEntity<CreateStoreRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(createStoreRequestDto);
+
+        ResponseEntity<Void> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new CreateStoreFailureException(response.getStatusCode());
         }
+
+        return response;
     }
+
+    /**
+     * 3km 이내 매장 조회 메서드.
+     *
+     * @param addressId 주소 아이디
+     * @param pageable  페이지 파라미터
+     * @return response
+     */
+    public RestResponsePage<SelectStoresNotOutedResponseDto> fetchStoresNotOuted(Long addressId, Pageable pageable) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path("/api/accounts/customer/" + addressId + "/stores")
+            .queryParam("page", pageable.getPageNumber())
+            .queryParam("size", pageable.getPageSize())
+            .build()
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<RestResponsePage<SelectStoresNotOutedResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+
+
+
+
+
+
+
+
+
 
     public List<SelectAllCategoriesResponseDto> fetchAllCategories() {
         ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
@@ -104,14 +151,4 @@ public class StoreAdapter {
         return responseEntity.getStatusCode();
     }
 
-    public RestResponsePage<SelectAllStoresNotOutedResponseDto> fetchAllStoresNotOuted(Long addressId, Pageable pageable) {
-        ResponseEntity<RestResponsePage<SelectAllStoresNotOutedResponseDto>> responseEntity =
-            restTemplate.exchange(RestResponsePage.pageableToParameter(apiProperties.getGatewayUrl() + "/api/accounts/customer/" + addressId + "/stores", pageable),
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-            );
-        return responseEntity.getBody();
-    }
 }
