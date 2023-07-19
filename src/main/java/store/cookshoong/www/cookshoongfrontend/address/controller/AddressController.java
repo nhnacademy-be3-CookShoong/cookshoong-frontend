@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.address.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,22 +46,15 @@ public class AddressController implements DevAccountIdAware {
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
         Model model, DevAccountIdOnly account) {
 
-        AddressResponseDto addressResponse =
-            accountAddressService.selectAccountAddressRecentRegistration(account.getAccountId());
+
+        AddressResponseDto address =
+            accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
+
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(account.getAccountId());
 
-        BigDecimal defaultLatitude = new BigDecimal("37.400927182162555");
-        BigDecimal defaultLongitude = new BigDecimal("127.1040662513053");
-
-        if (addressResponse == null || (addressResponse.getLatitude() == null && addressResponse.getLongitude() == null)) {
-            model.addAttribute("latitude", defaultLatitude);
-            model.addAttribute("longitude", defaultLongitude);
-        } else {
-            model.addAttribute("latitude", addressResponse.getLatitude());
-            model.addAttribute("longitude", addressResponse.getLongitude());
-        }
-
+        model.addAttribute("latitude", address.getLatitude());
+        model.addAttribute("longitude", address.getLongitude());
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("url", "maps");
 
@@ -74,7 +67,8 @@ public class AddressController implements DevAccountIdAware {
      * @param createAccountAddressRequestDto    회원이 주소를 등록하는 Dto
      * @param bindingResult                     입력에 대한 검증 결과
      * @param model                             HTML 로 보낼 데이터
-     * @return                                  회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
+     * @param account                           회원 정보
+     * @return                                  현제 주소 등록 페이지로 반환
      */
     @PostMapping
     public String postDoCreateAccountAddress(
@@ -92,15 +86,31 @@ public class AddressController implements DevAccountIdAware {
     }
 
     /**
+     * 회원이 선택한 주소에 대해 갱신 날짜를 업데이트.
+     *
+     * @param id                        주소 아이디
+     * @param account                           회원 정보
+     * @return                          현재 주소 등록 페이지로 반환
+     */
+    @PatchMapping("/{id}/select")
+    public String patchSelectAccountAddress(@PathVariable Long id, DevAccountIdOnly account) {
+
+        accountAddressService.updateSelectAccountAddressRenewalAt(account.getAccountId(), id);
+
+        return "redirect:/accounts/addresses/maps";
+    }
+
+    /**
      * 회원이 등록한 주소를 삭제하는 메서드.
      *
      * @param id        주소 아이디
+     * @param account           회원 정보
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
-    @GetMapping("/{id}/delete")
-    public String getDeleteAccountAddress(@PathVariable Long id, DevAccountIdOnly account) {
+    @DeleteMapping("/{id}/delete")
+    public String deleteDeleteAccountAddress(@PathVariable Long id, DevAccountIdOnly account) {
 
-        accountAddressService.deleteAccountAddress(account.getAccountId(), id);
+        accountAddressService.removeAccountAddress(account.getAccountId(), id);
 
         return "redirect:/accounts/addresses/maps";
     }
