@@ -131,7 +131,7 @@ public class StoreAdapter {
     }
 
     public HttpStatus changeStatus(Long accountId, Long storeId, UpdateStoreStatusRequestDto requestDto) {
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+
         HttpEntity<UpdateStoreStatusRequestDto> httpEntity = new HttpEntity<>(requestDto);
         ResponseEntity<Void> responseEntity =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores/" + storeId + "/status",
