@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 
 /**
@@ -17,6 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 @Controller
 @RequiredArgsConstructor
 public class MenuController {
+    private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
 
     /**
@@ -25,10 +29,13 @@ public class MenuController {
      * @author papel
      * @since 2023.07.16
      */
-    @GetMapping({"/index-menu"})
-    public String getIndexMenu(Model model) {
-        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
+    @GetMapping({"/index/store/{storeId}/menu/{menuId}"})
+    public String getIndexMenu(Model model, @PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId) {
+        SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(menuId);
+        model.addAttribute("menu", menu);
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         model.addAttribute("options", options);
+
         return "index/menu";
     }
 }

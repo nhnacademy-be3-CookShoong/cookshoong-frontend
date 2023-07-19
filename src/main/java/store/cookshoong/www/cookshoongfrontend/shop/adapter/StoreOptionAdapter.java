@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 
 /**
@@ -37,8 +38,11 @@ public class StoreOptionAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/option-group")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option-group")
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<CreateOptionGroupRequestDto> request = RequestEntity.post(uri)
@@ -58,8 +62,13 @@ public class StoreOptionAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/option-group/" + optionGroupId + "/option")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option-group")
+            .pathSegment("{optionGroupId}")
+            .pathSegment("option")
+            .buildAndExpand(storeId, optionGroupId)
             .toUri();
 
         RequestEntity<CreateOptionRequestDto> request = RequestEntity.post(uri)
@@ -70,7 +79,60 @@ public class StoreOptionAdapter {
     }
 
     /**
-     * 옵션 조회 메서드.
+     * 옵션 그룹 리스트 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
+    public List<SelectOptionGroupResponseDto> fetchOptionGroups(Long storeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option-group")
+            .buildAndExpand(storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectOptionGroupResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 옵션 그룹 조회 메서드.
+     *
+     * @param optionGroupId 옵션 그룹 아이디
+     * @return response
+     */
+    public SelectOptionGroupResponseDto fetchOptionGroup(Long optionGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("option-group")
+            .pathSegment("{optionGroupId}")
+            .buildAndExpand(optionGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectOptionGroupResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 옵션 리스트 조회 메서드.
      *
      * @param storeId 매장 아이디
      * @return response
@@ -79,8 +141,11 @@ public class StoreOptionAdapter {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
-            .path("/api/stores/" + storeId + "/option")
-            .build()
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option")
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)
@@ -88,6 +153,32 @@ public class StoreOptionAdapter {
             .build();
 
         ResponseEntity<List<SelectOptionResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 옵션 조회 메서드.
+     *
+     * @param optionId 매장 아이디
+     * @return response
+     */
+    public SelectOptionResponseDto fetchOption(Long optionId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("option")
+            .pathSegment("{optionId}")
+            .buildAndExpand(optionId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectOptionResponseDto> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();

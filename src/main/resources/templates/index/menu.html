@@ -18,8 +18,8 @@
 </head>
 
 <body>
-<div class="hero_area" style="background-color: #0f1531">
-    <header class="header_section" style="background-color: #0f1531">
+<div class="hero_area" >
+    <header class="header_section" >
         <div class="row">
             <div class="col-4 justify-content-end align-items-center">
                 <a href="/">
@@ -45,7 +45,7 @@
                 </a>
             </div>
         </div>
-        <div class="container-fluid" style="background-color: #0f1531">
+        <div class="container-fluid" >
             <nav class="navbar navbar-expand-lg custom_nav-container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
@@ -80,15 +80,14 @@
                         <div class="bg-box">
                             <img src="/assets/images/1.png" alt="">
                         </div>
-                        <h1 class="font-weight-bold">영업점 메뉴 관리 페이지</h1>
                     </div>
                 </div>
                 <div class="card">
-                    <h1 class="card-header font-weight-bold border-0 bg-white">군만두</h1>
+                    <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menu.name}"></h1>
                 </div>
                 <div class="card">
                     <div class="ml-4 mt-3 mb-3 d-flex justify-content-between mr-4">
-                        <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;"> 12000</span> 원</h3>
+                        <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menu.price}"></span> 원</h3>
                     </div>
                 </div>
                 <div class="card">
@@ -137,7 +136,7 @@
     </div>
 </div>
 
-<footer class="footer_section" style="background-color: #0f1531">
+<footer class="footer_section" >
     <div class="container">
         <div class="row">
             <div class="col-md-4 footer-col">
