@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
@@ -41,7 +41,7 @@ public class MainViewController {
      * @since 2023.07.05
      */
     @GetMapping({"/index", ""})
-    public String getIndex(Pageable pageable, Model model, AccountIdOnly account) {
+    public String getIndex(Pageable pageable, Model model, DevAccountIdOnly account) {
         //TODO 회원에 대해 최신 갱신 날짜로 뽑아오는 주소 정보입니다. 추후 address.getId 해서 addressId 받아오시면 됩니다.
         AddressResponseDto address = accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
 

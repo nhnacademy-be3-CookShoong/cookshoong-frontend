@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.auth.provider;
 
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,7 +35,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("아이디 또는 비밀번호를 잘못 입력했습니다.");
         }
 
-        return new JwtAuthentication(Objects.requireNonNull(authenticationResponseDto).getAccessToken());
+        assert authenticationResponseDto != null;
+        String accessToken = authenticationResponseDto.getAccessToken();
+        String refreshToken = authenticationResponseDto.getRefreshToken();
+        return new JwtAuthentication(accessToken, refreshToken);
     }
 
     @Override

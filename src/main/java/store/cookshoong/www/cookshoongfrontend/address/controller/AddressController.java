@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.address.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
@@ -26,10 +27,11 @@ import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressSer
  * @author jeongjewan
  * @since 2023.07.09
  */
+@Slf4j
 @Controller
 @RequestMapping("/accounts/addresses/maps")
 @RequiredArgsConstructor
-public class AddressController implements AccountIdAware {
+public class AddressController implements DevAccountIdAware {
 
     private final AccountAddressService accountAddressService;
 
@@ -43,7 +45,7 @@ public class AddressController implements AccountIdAware {
     @GetMapping
     public String getCreateAccountAddress(
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        Model model, AccountIdOnly account) {
+        Model model, DevAccountIdOnly account) {
 
 
         AddressResponseDto address =
@@ -72,7 +74,7 @@ public class AddressController implements AccountIdAware {
     @PostMapping
     public String postDoCreateAccountAddress(
         @ModelAttribute("address") @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model, AccountIdOnly account) {
+        BindingResult bindingResult, Model model, DevAccountIdOnly account) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "maps");
@@ -92,7 +94,7 @@ public class AddressController implements AccountIdAware {
      * @return                          현재 주소 등록 페이지로 반환
      */
     @PatchMapping("/{id}/select")
-    public String patchSelectAccountAddress(@PathVariable Long id, AccountIdOnly account) {
+    public String patchSelectAccountAddress(@PathVariable Long id, DevAccountIdOnly account) {
 
         accountAddressService.updateSelectAccountAddressRenewalAt(account.getAccountId(), id);
 
@@ -107,7 +109,7 @@ public class AddressController implements AccountIdAware {
      * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
     @DeleteMapping("/{id}/delete")
-    public String deleteDeleteAccountAddress(@PathVariable Long id, AccountIdOnly account) {
+    public String deleteDeleteAccountAddress(@PathVariable Long id, DevAccountIdOnly account) {
 
         accountAddressService.removeAccountAddress(account.getAccountId(), id);
 

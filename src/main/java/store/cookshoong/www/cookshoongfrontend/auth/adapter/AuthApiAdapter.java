@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.auth.model.request.LoginRequestDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 
 /**
  * Auth 관련된 API 호출을 하기 위한 클래스.
@@ -43,8 +43,6 @@ public class AuthApiAdapter {
             .toUri();
 
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
-
-        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {
-        });
+        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
     }
 }

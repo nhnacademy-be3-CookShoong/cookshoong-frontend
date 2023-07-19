@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
@@ -35,12 +34,13 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreRegisterController implements AccountIdAware {
+public class StoreRegisterController {
 
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
     private final MerchantService merchantService;
     private final BankService bankService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 등록 페이지를 맵핑.
@@ -61,6 +61,7 @@ public class StoreRegisterController implements AccountIdAware {
         return "store/register/store-register";
     }
 
+
     /**
      * 매장 등록 요청을 맵핑.
      *
@@ -69,10 +70,10 @@ public class StoreRegisterController implements AccountIdAware {
      */
     @PostMapping("/store-register")
     public String postCreateStore(
-        AccountIdOnly accountId,
         @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
         BindingResult bindingResult, Model model) {
-        storeService.createStore(accountId.getAccountId(), createStoreRequestDto);
+        Long accountId = accountIdAware.getAccountId();
+        storeService.createStore(accountId, createStoreRequestDto);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("createStoreRequestDto", createStoreRequestDto);
@@ -81,24 +82,12 @@ public class StoreRegisterController implements AccountIdAware {
         return "redirect:/";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/stores")
-    public String getStoresForBusiness(AccountIdOnly accountId,
-                                       Pageable pageable,
+    public String getStoresForBusiness(Pageable pageable,
                                        Model model,
                                        UpdateStoreStatusRequestDto requestDto) {
-        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId.getAccountId(), pageable);
+        Long accountId = accountIdAware.getAccountId();
+        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId, pageable);
         List<SelectAllStatusResponseDto> status = storeService.selectStatus();
 
         model.addAttribute("status", status);
@@ -110,15 +99,16 @@ public class StoreRegisterController implements AccountIdAware {
 
     @PatchMapping("/stores/{storeId}/status")
     public String patchStoreStatus(@PathVariable("storeId") Long storeId,
-                                   AccountIdOnly accountId,
                                    @Valid @ModelAttribute("updateStatus") UpdateStoreStatusRequestDto updateStatus,
                                    BindingResult bindingResult,
-                                   Model model){
-        if(bindingResult.hasErrors()){
+                                   Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("UpdateStoreStatusRequestDto", updateStatus);
             return "redirect:/stores";
         }
-        storeService.updateStatus(accountId.getAccountId(), storeId, updateStatus);
+        Long accountId = accountIdAware.getAccountId();
+
+        storeService.updateStatus(accountId, storeId, updateStatus);
         return "redirect:/stores";
     }
 }

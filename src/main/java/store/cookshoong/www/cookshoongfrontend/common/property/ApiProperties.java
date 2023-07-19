@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.common.config;
+package store.cookshoong.www.cookshoongfrontend.common.property;
 
 import lombok.Getter;
 import lombok.Setter;

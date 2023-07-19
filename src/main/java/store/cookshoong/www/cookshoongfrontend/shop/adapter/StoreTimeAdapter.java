@@ -8,7 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateBusinessHourFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateHolidayFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBusinessHourRequestDto;

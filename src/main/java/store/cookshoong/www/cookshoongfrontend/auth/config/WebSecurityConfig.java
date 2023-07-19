@@ -2,6 +2,9 @@ package store.cookshoong.www.cookshoongfrontend.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -9,7 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.JwtAuthenticationFilter;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
 
 /**
@@ -19,10 +25,13 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
  * @since 2023.07.13
  */
 @EnableWebSecurity(debug = true)
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final TokenInvalidationHandler tokenInvalidationHandler;
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -40,7 +49,14 @@ public class WebSecurityConfig {
             .loginPage("/login-page")
             .usernameParameter("loginId")
             .passwordParameter("password")
-            .loginProcessingUrl("/login");
+            .loginProcessingUrl("/login")
+            .successHandler(loginSuccessHandler);
+
+        http.logout()
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
+            .deleteCookies("SESSION")
+            .logoutSuccessHandler(tokenInvalidationHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);
 
@@ -71,5 +87,12 @@ public class WebSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_BUSINESS > ROLE_CUSTOMER");
+        return roleHierarchy;
     }
 }
