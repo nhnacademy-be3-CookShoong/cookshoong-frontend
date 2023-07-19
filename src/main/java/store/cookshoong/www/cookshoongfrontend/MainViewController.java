@@ -45,7 +45,7 @@ public class MainViewController {
         //TODO 회원에 대해 최신 갱신 날짜로 뽑아오는 주소 정보입니다. 추후 address.getId 해서 addressId 받아오시면 됩니다.
         AddressResponseDto address = accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
 
-        RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(83L, pageable);
+        RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(1L, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
                 ArrayList::new));
