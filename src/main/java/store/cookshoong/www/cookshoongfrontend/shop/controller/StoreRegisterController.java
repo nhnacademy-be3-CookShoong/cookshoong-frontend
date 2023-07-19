@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.store.controller;
+package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
@@ -35,7 +34,7 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  */
 @Controller
 @RequiredArgsConstructor
-public class StoreController {
+public class StoreRegisterController {
 
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
@@ -74,7 +73,7 @@ public class StoreController {
         @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
         BindingResult bindingResult, Model model) {
         Long accountId = accountIdAware.getAccountId();
-        storeService.createStore(accountId.getAccountId(), createStoreRequestDto);
+        storeService.createStore(accountId, createStoreRequestDto);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("createStoreRequestDto", createStoreRequestDto);
@@ -102,8 +101,8 @@ public class StoreController {
     public String patchStoreStatus(@PathVariable("storeId") Long storeId,
                                    @Valid @ModelAttribute("updateStatus") UpdateStoreStatusRequestDto updateStatus,
                                    BindingResult bindingResult,
-                                   Model model){
-        if(bindingResult.hasErrors()){
+                                   Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("UpdateStoreStatusRequestDto", updateStatus);
             return "redirect:/stores";
         }
