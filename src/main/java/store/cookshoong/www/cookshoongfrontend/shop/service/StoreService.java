@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
@@ -25,7 +25,7 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 @Service
 @RequiredArgsConstructor
-public class StoreService implements AccountIdAware {
+public class StoreService implements DevAccountIdAware {
     private final StoreAdapter storeAdapter;
 
     /**
