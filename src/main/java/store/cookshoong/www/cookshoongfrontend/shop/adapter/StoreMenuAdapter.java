@@ -105,17 +105,20 @@ public class StoreMenuAdapter {
     /**
      * 메뉴 그룹 조회 메서드.
      *
+     * @param storeId 매장 아이디
      * @param menuGroupId 메뉴 그룹 아이디
      * @return response
      */
-    public SelectMenuGroupResponseDto fetchMenuGroup(Long menuGroupId) {
+    public SelectMenuGroupResponseDto fetchMenuGroup(Long storeId, Long menuGroupId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
             .pathSegment("menu-group")
             .pathSegment("{menuGroupId}")
-            .buildAndExpand(menuGroupId)
+            .buildAndExpand(storeId, menuGroupId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)
@@ -158,17 +161,20 @@ public class StoreMenuAdapter {
     /**
      * 메뉴 조회 메서드.
      *
+     * @param storeId 매장 아이디
      * @param menuId 메뉴 아이디
      * @return response
      */
-    public SelectMenuResponseDto fetchMenu(Long menuId) {
+    public SelectMenuResponseDto fetchMenu(Long storeId, Long menuId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
             .pathSegment("menu")
             .pathSegment("{menuId}")
-            .buildAndExpand(menuId)
+            .buildAndExpand(storeId, menuId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)

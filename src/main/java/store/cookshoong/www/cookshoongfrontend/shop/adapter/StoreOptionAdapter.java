@@ -108,17 +108,20 @@ public class StoreOptionAdapter {
     /**
      * 옵션 그룹 조회 메서드.
      *
+     * @param storeId 매장 아이디
      * @param optionGroupId 옵션 그룹 아이디
      * @return response
      */
-    public SelectOptionGroupResponseDto fetchOptionGroup(Long optionGroupId) {
+    public SelectOptionGroupResponseDto fetchOptionGroup(Long storeId, Long optionGroupId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
             .pathSegment("option-group")
             .pathSegment("{optionGroupId}")
-            .buildAndExpand(optionGroupId)
+            .buildAndExpand(storeId, optionGroupId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)
@@ -161,17 +164,20 @@ public class StoreOptionAdapter {
     /**
      * 옵션 조회 메서드.
      *
-     * @param optionId 매장 아이디
+     * @param storeId 매장 아이디
+     * @param optionId 옵션 아이디
      * @return response
      */
-    public SelectOptionResponseDto fetchOption(Long optionId) {
+    public SelectOptionResponseDto fetchOption(Long storeId, Long optionId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
             .pathSegment("option")
             .pathSegment("{optionId}")
-            .buildAndExpand(optionId)
+            .buildAndExpand(storeId, optionId)
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)
