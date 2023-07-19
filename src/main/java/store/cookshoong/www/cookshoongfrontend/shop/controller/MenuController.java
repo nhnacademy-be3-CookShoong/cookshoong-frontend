@@ -31,7 +31,7 @@ public class MenuController {
      */
     @GetMapping({"/index/store/{storeId}/menu/{menuId}"})
     public String getIndexMenu(Model model, @PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId) {
-        SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(menuId);
+        SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
         model.addAttribute("menu", menu);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         model.addAttribute("options", options);
