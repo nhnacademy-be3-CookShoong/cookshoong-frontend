@@ -177,4 +177,32 @@ public class StoreAdapter {
         return responseEntity.getStatusCode();
     }
 
+    /**
+     * 매장 정보를 가져오는 dto.
+     *
+     * @param accountId the account id
+     * @param storeId   the store id
+     * @return 해당 매장 정보
+     */
+    public SelectStoreInfoResponseDto fetchStoreInfo(Long accountId, Long storeId) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectStoreInfoResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+
+        return response.getBody();
+    }
 }
