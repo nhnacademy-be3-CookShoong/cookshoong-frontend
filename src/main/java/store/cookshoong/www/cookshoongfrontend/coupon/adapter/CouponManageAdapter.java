@@ -4,12 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
@@ -22,6 +26,14 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 @Component
 @RequiredArgsConstructor
 public class CouponManageAdapter {
+    private static final String COUPON_POLICY = "/api/coupon/policies";
+    private static final String STORE_ID_PARAMETER = "stores/{storeId}";
+    private static final String MERCHANT_ID_PARAMETER = "merchants/{merchantId}";
+    private static final String ALL = "all";
+    private static final String CASH = "cash";
+    private static final String PERCENT = "percent";
+    private static final String POLICY_ID_PARAMETER = "{policyId}";
+
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
 
@@ -36,8 +48,9 @@ public class CouponManageAdapter {
         ResponseEntity<RestResponsePage<SelectPolicyResponseDto>> response = restTemplate.exchange(
             RestResponsePage.pageableToParameter(
                 UriComponentsBuilder
-                    .fromUriString("http://localhost:8080")
-                    .path("/api/coupon/policies/stores/{storeId}")
+                    .fromUriString(apiProperties.getGatewayUrl())
+                    .path(COUPON_POLICY)
+                    .pathSegment(STORE_ID_PARAMETER)
                     .buildAndExpand(storeId), pageable),
             HttpMethod.GET,
             null,
@@ -58,8 +71,9 @@ public class CouponManageAdapter {
         ResponseEntity<RestResponsePage<SelectPolicyResponseDto>> response = restTemplate.exchange(
             RestResponsePage.pageableToParameter(
                 UriComponentsBuilder
-                    .fromUriString("http://localhost:8080")
-                    .path("/api/coupon/policies/merchants/{merchantId}")
+                    .fromUriString(apiProperties.getGatewayUrl())
+                    .path(COUPON_POLICY)
+                    .pathSegment(MERCHANT_ID_PARAMETER)
                     .buildAndExpand(merchantId), pageable),
             HttpMethod.GET,
             null,
@@ -78,12 +92,171 @@ public class CouponManageAdapter {
     public Page<SelectPolicyResponseDto> fetchUsageAllCouponPolicy(Pageable pageable) {
         ResponseEntity<RestResponsePage<SelectPolicyResponseDto>> response = restTemplate.exchange(
             RestResponsePage.pageableToParameter(
-                "http://localhost:8080/api/coupon/policies/all", pageable),
+                UriComponentsBuilder
+                    .fromUriString(apiProperties.getGatewayUrl())
+                    .path(COUPON_POLICY)
+                    .pathSegment(ALL)
+                    .build(), pageable),
             HttpMethod.GET,
             null,
             new ParameterizedTypeReference<>() {
             });
 
         return response.getBody();
+    }
+
+    /**
+     * 매장 금액 쿠폰 정책 생성.
+     *
+     * @param storeId the store id
+     * @param request the request
+     */
+    public void executeStoreCashCouponPolicy(Long storeId, CreateCashCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(STORE_ID_PARAMETER, CASH)
+                .buildAndExpand(storeId)
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 매장 퍼센트 쿠폰 정책 생성.
+     *
+     * @param storeId the store id
+     * @param request the request
+     */
+    public void executeStorePercentCouponPolicy(Long storeId, CreatePercentCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(STORE_ID_PARAMETER, PERCENT)
+                .buildAndExpand(storeId)
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 가맹점 금액 쿠폰 정책 생성.
+     *
+     * @param merchantId the merchant id
+     * @param request    the request
+     */
+    public void executeMerchantCashCouponPolicy(Long merchantId, CreateCashCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(MERCHANT_ID_PARAMETER, CASH)
+                .buildAndExpand(merchantId)
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 매장 퍼센트 쿠폰 정책 생성.
+     *
+     * @param merchantId the merchant id
+     * @param request    the request
+     */
+    public void executeMerchantPercentCouponPolicy(Long merchantId, CreatePercentCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(MERCHANT_ID_PARAMETER, PERCENT)
+                .buildAndExpand(merchantId)
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 모든 사용처 금액 쿠폰 정책 생성.
+     *
+     * @param request the request
+     */
+    public void executeUsageAllCashCouponPolicy(CreateCashCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(ALL, CASH)
+                .build()
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 모든 사용처 퍼센트 쿠폰 정책 생성.
+     *
+     * @param request the request
+     */
+    public void executeUsageAllPercentCouponPolicy(CreatePercentCouponPolicyRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(ALL, PERCENT)
+                .build()
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 쿠폰 정책 삭제.
+     *
+     * @param policyId the policy id
+     */
+    public void eraseCouponPolicy(Long policyId) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(POLICY_ID_PARAMETER)
+                .buildAndExpand(policyId)
+                .toUri(),
+            HttpMethod.DELETE,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 쿠폰 발행.
+     *
+     * @param request the request
+     */
+    public void executeIssueCoupon(CreateIssueCouponRequestDto request) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/coupon/issue")
+                .build()
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
     }
 }
