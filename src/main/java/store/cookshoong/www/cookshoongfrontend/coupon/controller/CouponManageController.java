@@ -19,7 +19,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
 /**
  * 쿠폰 관리 엔드포인트.
  *
- * @author eora21(김주호)
+ * @author eora21 (김주호)
  * @since 2023.07.14
  */
 @Controller

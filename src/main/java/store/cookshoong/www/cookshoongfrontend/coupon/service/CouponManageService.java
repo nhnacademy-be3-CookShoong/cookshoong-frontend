@@ -13,7 +13,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolic
 /**
  * 쿠폰 관리 서비스.
  *
- * @author eora21(김주호)
+ * @author eora21 (김주호)
  * @since 2023.07.15
  */
 @Service
