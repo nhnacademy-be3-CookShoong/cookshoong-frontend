@@ -37,4 +37,9 @@ public class StoreController {
         model.addAttribute("menus", menus);
         return "index/store";
     }
+    @ResponseBody
+    @GetMapping("/images/{imageName}")
+    public Resource getImage(@PathVariable("imageName") String imageName) throws MalformedURLException {
+        return new UrlResource("file:"+ pathVo.getMyBasePath()+imageName);
+    }
 }
