@@ -3,8 +3,8 @@ package store.cookshoong.www.cookshoongfrontend.payment.adapter;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import org.springframework.web.util.UriComponentsBuilder;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
-import store.cookshoong.www.cookshoongfrontend.payment.model.request.ModifyTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 
 /**
@@ -37,13 +37,18 @@ public class ChargeTypeAdapter {
      *
      * @param createTypeRequestDto  결제 타입에 이름을 생성하는 Dto
      */
-    public void createChargeType(CreateTypeRequestDto createTypeRequestDto) {
+    public void executeChargeType(CreateTypeRequestDto createTypeRequestDto) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("charges")
+            .build().toUri();
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges", POST, httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
+        restTemplate.exchange(uri, POST, httpEntity, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -52,14 +57,19 @@ public class ChargeTypeAdapter {
      * @param chargeTypeId        결제 타입 아이디
      * @return          해당되는 결제 타입을 반환
      */
-    public TypeResponseDto selectChargeType(String chargeTypeId) {
+    public TypeResponseDto fetchChargeType(String chargeTypeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("charges")
+            .pathSegment("{chargeTypeId}")
+            .buildAndExpand(chargeTypeId)
+            .toUri();
 
         ResponseEntity<TypeResponseDto> exchange =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + chargeTypeId,
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -69,16 +79,17 @@ public class ChargeTypeAdapter {
      *
      * @return          모든 결제 타입 반환
      */
-    public List<TypeResponseDto> selectChargeTypeAll() {
+    public List<TypeResponseDto> fetchChargeTypeAll() {
 
-        log.info("<><><>>> : {}", apiProperties.getGatewayUrl());
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("charges")
+            .build().toUri();
 
         ResponseEntity<List<TypeResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -88,12 +99,17 @@ public class ChargeTypeAdapter {
      *
      * @param id        결제 타입 아이디
      */
-    public void deleteChargeType(String id) {
+    public void eraseChargeType(String id) {
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/charges" + "/" + id,
-            DELETE,
-            null,
-            new ParameterizedTypeReference<>() {
-            });
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("charges")
+            .pathSegment("{id}")
+            .buildAndExpand(id)
+            .toUri();
+
+        restTemplate.exchange(uri, DELETE, null, new ParameterizedTypeReference<>() {});
     }
 }

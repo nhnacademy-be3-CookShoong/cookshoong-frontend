@@ -3,8 +3,8 @@ package store.cookshoong.www.cookshoongfrontend.payment.adapter;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
+import org.springframework.web.util.UriComponentsBuilder;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
-import store.cookshoong.www.cookshoongfrontend.payment.model.request.ModifyTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 
 /**
@@ -37,29 +37,39 @@ public class RefundTypeAdapter {
      *
      * @param createTypeRequestDto  환불 타입에 이름을 생성하는 Dto
      */
-    public void createChargeType(CreateTypeRequestDto createTypeRequestDto) {
+    public void executeRefundType(CreateTypeRequestDto createTypeRequestDto) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("refunds")
+            .build().toUri();
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds", POST, httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
+        restTemplate.exchange(uri, POST, httpEntity, new ParameterizedTypeReference<>() {});
     }
 
     /**
      * 해당 아이디에 대한 환불 타입을 조회하는 메서드.
      *
-     * @param chargeTypeId        결제 타입 아이디
+     * @param refundTypeId        환불 타입 아이디
      * @return          해당되는 환불 타입을 반환
      */
-    public TypeResponseDto selectChargeType(String chargeTypeId) {
+    public TypeResponseDto fetchRefundType(String refundTypeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("refunds")
+            .pathSegment("{chargeTypeId}")
+            .buildAndExpand(refundTypeId)
+            .toUri();
 
         ResponseEntity<TypeResponseDto> exchange =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + chargeTypeId,
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -69,16 +79,17 @@ public class RefundTypeAdapter {
      *
      * @return          모든 환불 타입 반환
      */
-    public List<TypeResponseDto> selectChargeTypeAll() {
+    public List<TypeResponseDto> fetchRefundTypeAll() {
 
-        log.info("<><><>>> : {}", apiProperties.getGatewayUrl());
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("refunds")
+            .build().toUri();
 
         ResponseEntity<List<TypeResponseDto>> exchange =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -88,12 +99,17 @@ public class RefundTypeAdapter {
      *
      * @param id        환불 타입 아이디
      */
-    public void deleteChargeType(String id) {
+    public void eraseRefundType(String id) {
 
-        restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/payments/refunds" + "/" + id,
-            DELETE,
-            null,
-            new ParameterizedTypeReference<>() {
-            });
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("refunds")
+            .pathSegment("{id}")
+            .buildAndExpand(id)
+            .toUri();
+
+        restTemplate.exchange(uri, DELETE, null, new ParameterizedTypeReference<>() {});
     }
 }

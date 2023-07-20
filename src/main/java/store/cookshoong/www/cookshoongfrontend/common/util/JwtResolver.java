@@ -1,10 +1,9 @@
-package store.cookshoong.www.cookshoongfrontend.util;
+package store.cookshoong.www.cookshoongfrontend.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.Base64Utils;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.InvalidAccessTokenException;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 
 /**
  * Jwt 를 읽기 좋은 형태로 바꿔주는 클래스.
@@ -18,13 +17,15 @@ public class JwtResolver {
     /**
      * Token 값을 디코딩하여 읽기 좋은 형태로 바꾸는 메서드.
      *
-     * @param accessToken String
+     * @param <T>       the type parameter
+     * @param token     the token
+     * @param tokenType the token type
      * @return the access token
      */
-    public static ParsedAccessToken resolveAccessToken(String accessToken) {
+    public static <T> T resolveToken(String token, Class<T> tokenType) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(resolveToken(accessToken), ParsedAccessToken.class);
+            return objectMapper.readValue(resolveToken(token), tokenType);
         } catch (JsonProcessingException e) {
             throw new InvalidAccessTokenException();
         }

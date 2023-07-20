@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 메뉴 조회를 위한 Dto.
+ * 메뉴 조회 Dto.
  *
  * @author papel
  * @since 2023.07.11
@@ -15,13 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectMenuResponseDto {
     private Long id;
+    private String menuStatus;
+    private Long storeId;
     private String name;
     private Integer price;
     private String description;
     private String image;
     private Integer cookingTime;
     private BigDecimal earningRate;
-    private String menuStatus;
-    private Integer menuSequence;
-    private Long menuGroupId;
 }

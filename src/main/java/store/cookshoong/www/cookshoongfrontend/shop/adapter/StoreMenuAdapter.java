@@ -1,26 +1,23 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.cookshoong.www.cookshoongfrontend.common.config.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.shop.exception.CreateMenuFailureException;
+import org.springframework.web.util.UriComponentsBuilder;
+import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
- * 메뉴의 Adapter.
+ * 메뉴 어뎁터.
  *
  * @author papel
  * @since 2023.07.13
@@ -32,71 +29,161 @@ public class StoreMenuAdapter {
     private final ApiProperties apiProperties;
 
     /**
-     * 메뉴 그룹을 등록하는 메서드.
+     * 메뉴 그룹 등록 메서드.
      *
-     * @param storeId                                매장아이디
-     * @param createMenuGroupRequestDto              사업자가 메뉴 그룹을 등록하는 Dto
+     * @param storeId                   매장 아이디
+     * @param createMenuGroupRequestDto 메뉴 그룹 등록 Dto
      */
-    public void executeCreateMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
+    public ResponseEntity<Void> executeCreateMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
 
-        HttpEntity<CreateMenuGroupRequestDto> httpEntity =
-            new HttpEntity<>(createMenuGroupRequestDto);
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .buildAndExpand(storeId)
+            .toUri();
 
-        ResponseEntity<Void> response =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/menu-group",
-                POST,
-                httpEntity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
+        RequestEntity<CreateMenuGroupRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(createMenuGroupRequestDto);
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
     /**
-     * 메뉴를 등록하는 메서드.
+     * 메뉴 등록 메서드.
      *
-     * @param storeId                           매장아이디
-     * @param createMenuRequestDto              사업자가 메뉴를 등록하는 Dto
+     * @param storeId              매장 아이디
+     * @param createMenuRequestDto 메뉴 등록 Dto
      */
-    public void executeCreateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
+    public ResponseEntity<Void> executeCreateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
 
-        HttpEntity<CreateMenuRequestDto> httpEntity =
-            new HttpEntity<>(createMenuRequestDto);
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .buildAndExpand(storeId)
+            .toUri();
 
-        ResponseEntity<Void> response =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/menu",
-            POST,
-            httpEntity,
-            new ParameterizedTypeReference<>() {
-            });
+        RequestEntity<CreateMenuRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(createMenuRequestDto);
 
-        if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new CreateMenuFailureException(response.getStatusCode());
-        }
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 
+    /**
+     * 메뉴 그룹 리스트 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
+    public List<SelectMenuGroupResponseDto> fetchMenuGroups(Long storeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .buildAndExpand(storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectMenuGroupResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 메뉴 그룹 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @param menuGroupId 메뉴 그룹 아이디
+     * @return response
+     */
+    public SelectMenuGroupResponseDto fetchMenuGroup(Long storeId, Long menuGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .pathSegment("{menuGroupId}")
+            .buildAndExpand(storeId, menuGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectMenuGroupResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 메뉴 리스트 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
     public List<SelectMenuResponseDto> fetchMenus(Long storeId) {
-        ResponseEntity<List<SelectMenuResponseDto>> responseEntity =
-            restTemplate.exchange(
-                apiProperties.getGatewayUrl() +
-                    "/api/stores/" +
-                    storeId +
-                    "/menu",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-            );
-        return responseEntity.getBody();
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .buildAndExpand(storeId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectMenuResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
+
+    /**
+     * 메뉴 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @param menuId 메뉴 아이디
+     * @return response
+     */
+    public SelectMenuResponseDto fetchMenu(Long storeId, Long menuId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .pathSegment("{menuId}")
+            .buildAndExpand(storeId, menuId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<SelectMenuResponseDto> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
     }
 }

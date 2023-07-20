@@ -6,10 +6,11 @@ import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreMenuAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 
 /**
- * 매장의 메뉴 관리를 위한 서비스.
+ * 매장 메뉴 관리 서비스.
  *
  * @author papel
  * @since 2023.07.13
@@ -20,26 +21,64 @@ public class StoreMenuManagerService {
     private final StoreMenuAdapter storeMenuAdapter;
 
     /**
-     * 메뉴 그룹 신규등록 요청을 보냄.
+     * 메뉴 그룹 등록 요청 서비스.
      *
-     * @param storeId                   매장 기본키
-     * @param createMenuGroupRequestDto 매장 메뉴 그룹 신규등록 요청 정보
+     * @param storeId                   매장 아이디
+     * @param createMenuGroupRequestDto 메뉴 그룹 등록 Dto
      */
     public void createMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
         storeMenuAdapter.executeCreateMenuGroup(storeId, createMenuGroupRequestDto);
     }
 
     /**
-     * 메뉴 신규등록 요청을 보냄.
+     * 메뉴 등록 요청 서비스.
      *
      * @param storeId              매장 기본키
-     * @param createMenuRequestDto 매장 메뉴 신규등록 요청 정보
+     * @param createMenuRequestDto 메뉴 등록 Dto
      */
     public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
         storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto);
     }
 
+    /**
+     * 메뉴 그룹 리스트 조회 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @return 매장의 메뉴 그룹 리스트
+     */
+    public List<SelectMenuGroupResponseDto> selectMenuGroups(Long storeId) {
+        return storeMenuAdapter.fetchMenuGroups(storeId);
+    }
+
+    /**
+     * 메뉴 그룹 조회 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param menuGroupId 메뉴 그룹 아이디
+     * @return 매장의 메뉴 그룹
+     */
+    public SelectMenuGroupResponseDto selectMenuGroup(Long storeId, Long menuGroupId) {
+        return storeMenuAdapter.fetchMenuGroup(storeId, menuGroupId);
+    }
+
+    /**
+     * 메뉴 리스트 조회 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @return 매장의 메뉴 리스트
+     */
     public List<SelectMenuResponseDto> selectMenus(Long storeId) {
         return storeMenuAdapter.fetchMenus(storeId);
+    }
+
+    /**
+     * 메뉴 조회 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param menuId 메뉴 아이디
+     * @return 매장의 메뉴
+     */
+    public SelectMenuResponseDto selectMenu(Long storeId, Long menuId) {
+        return storeMenuAdapter.fetchMenu(storeId, menuId);
     }
 }

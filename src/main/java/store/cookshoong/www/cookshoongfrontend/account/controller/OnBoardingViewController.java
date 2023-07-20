@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 
@@ -24,7 +23,7 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class OnBoardingViewController implements AccountIdAware {
+public class OnBoardingViewController {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
 
