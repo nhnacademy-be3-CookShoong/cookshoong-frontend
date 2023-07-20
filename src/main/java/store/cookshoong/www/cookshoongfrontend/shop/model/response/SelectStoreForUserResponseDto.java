@@ -19,4 +19,5 @@ public class SelectStoreForUserResponseDto {
     private String mainPlace;
     private String detailPlace;
     private String description;
+    private String savedName;
 }
