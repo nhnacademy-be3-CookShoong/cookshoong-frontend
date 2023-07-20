@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CouponTypePercentVo implements CouponTypeResponse {
-    private BigDecimal rate;
-    private int minimumPrice;
-    private int maximumPrice;
+    private int rate;
+    private int minimumOrderPrice;
+    private int maximumDiscountAmount;
 }

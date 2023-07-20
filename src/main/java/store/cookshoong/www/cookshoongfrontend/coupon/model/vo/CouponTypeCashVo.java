@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CouponTypeCashVo implements CouponTypeResponse {
     private int discountAmount;
-    private int minimumPrice;
+    private int minimumOrderPrice;
 }
