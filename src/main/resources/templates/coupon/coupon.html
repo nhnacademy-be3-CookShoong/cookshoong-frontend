@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Coupon-Create</title>
+    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
+</head>
+
+<body>
+<div class="hero_area">
+    <div class="bg-box">
+        <img src="/assets/images/hero-bg.jpg" alt="">
+    </div>
+    <!-- header section starts -->
+    <header class="header_section">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="index">
+                    <span>
+                    CookShoong
+                    </span>
+                </a>
+                <button class="navbar-toggler d-lg-none" type="button"
+                        data-toggle="offcanvas">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+</div>
+<div class="modal fade" id="couponPolicyAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">신규 쿠폰 정책 등록</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card border-bottom-0">
+                        <ul class="nav nav-tabs col-12">
+                            <li class="nav-item flex-grow-1" style="text-align: center">
+                                <a class="nav-link active" href="#coupon1" data-toggle="tab">쿠폰1</a>
+                            </li>
+                            <li class="nav-item flex-grow-1" style="text-align: center">
+                                <a class="nav-link" href="#coupon2" data-toggle="tab">쿠폰2</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card border-top-0">
+                    <div class="tab-content p-0 m-0">
+                        <div class="tab-pane fade show active col-12 stretch-card" id="coupon1">
+                            <form class="col-12 p-0" th:action="@{/coupon/cash}" method="post">
+                                <div class="card border-top-0">
+                                    <div class="card-body">
+
+                                        <h4 class="card-title">쿠폰 정보</h4>
+                                        <div class="form-group">
+                                            <label>쿠폰 이름</label>
+                                            <input class="form-control" type="text" name="name"
+                                                   placeholder="쿠폰 이름">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>설명</label>
+                                            <input class="form-control" type="text" name="description"
+                                                   placeholder="쿠폰 설명">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>기간</label>
+                                            <input class="form-control" type="text" name="usagePeriod"
+                                                   placeholder="쿠폰 발급 후 사용 가능 기간(일)">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>할인 금액</label>
+                                            <input class="form-control" type="text" name="discountAmount"
+                                                   placeholder="쿠폰 사용 시 할인 금액">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>최소 주문 금액</label>
+                                            <input class="form-control" type="text" name="minimumOrderPrice"
+                                                   placeholder="쿠폰 사용 시 최소 주문 금액">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button class="btn btn-info mr-2" type="submit">옵션 신규 등록
+                                            </button>
+                                            <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade col-12 stretch-card" id="coupon2">
+                            <form class="col-12 p-0" th:action="@{/coupon/percent}" method="post">
+                                <div class="card border-top-0">
+                                    <div class="card-body">
+                                        <h4 class="card-title">쿠폰 정보</h4>
+                                        <div class="form-group">
+                                            <label>쿠폰 이름</label>
+                                            <input class="form-control" type="text" name="name"
+                                                   placeholder="쿠폰 이름">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>설명</label>
+                                            <input class="form-control" type="text" name="description"
+                                                   placeholder="쿠폰 설명">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>기간</label>
+                                            <input class="form-control" type="text" name="usagePeriod"
+                                                   placeholder="쿠폰 발급 후 사용 가능 기간(일)">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>할인 퍼센트</label>
+                                            <input class="form-control" type="text" name="rate"
+                                                   placeholder="쿠폰 사용 시 할인 퍼센트">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>최소 주문 금액</label>
+                                            <input class="form-control" type="text" name="minimumOrderPrice"
+                                                   placeholder="쿠폰 사용 시 최소 주문 금액">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>최대 할인 금액</label>
+                                            <input class="form-control" type="text" name="maximumDiscountAmount"
+                                                   placeholder="쿠폰 사용 시 최대 할인 금액 제한">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <button class="btn btn-info mr-2" type="submit">옵션 신규 등록
+                                            </button>
+                                            <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid page-body-wrapper">
+    <nav class="sidebar sidebar-offcanvas">
+        <ul class="nav">
+            <li class="nav-item">
+                <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                                    aria-controls="form-elements"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="form-elements">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-register">매장 등록</a></li>
+                        <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
+                        <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
+                        <li><a class="nav-link" href="store-merchant-manager">가맹점 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                                    aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
+                    class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="charts">
+                    <ul class="flex-column nav sub-menu">
+
+                        <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+                        <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                                    aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+                    class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="tables">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
+                        <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
+                        <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                                    aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+                    class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="auth">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
+                        <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                                    aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
+                    class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
+                <div class="collapse" id="error">
+                    <ul class="flex-column nav sub-menu">
+                        <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">영업점 쿠폰 관리 페이지</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">쿠폰 정책 관리</h4>
+                            <div class="col-12">
+                                <div th:each="policy : ${policies.content}" class="row border-top pt-2 pb-2">
+                                    <div class="col-sm-10"
+                                         th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
+                                        <div th:case="CouponTypeCashVo">
+                                            <h3 class="font-weight-bold pt-2"
+                                                th:text="${policy.couponTypeResponse.discountAmount} + '원 할인 쿠폰'"></h3>
+                                            <p th:text="'최소주문금액 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원'"></p>
+                                        </div>
+                                        <div th:case="CouponTypePercentVo">
+                                            <h3 class="font-weight-bold pt-2"
+                                                th:text="${policy.couponTypeResponse.rate} + '% 할인 쿠폰'"></h3>
+                                            <p th:text="'최소주문금액 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원'"></p>
+                                            <p th:text="'최대 ' + ${policy.couponTypeResponse.maximumDiscountAmount} + '원까지'"></p>
+                                        </div>
+                                        <div th:case="*">
+                                            <p th:text="${policy.couponTypeResponse}"></p>
+                                        </div>
+                                        <h4 class="font-weight-bold pt-2" th:text="${policy.name}"></h4>
+                                        <p th:text="${policy.description}"></p>
+                                        <p th:text="'발급 후 사용 가능 기간: ' + ${policy.usagePeriod} + '일'"></p>
+                                        <p th:text="'남은 수량: ' + ${policy.unclaimedCouponCount}"></p>
+                                        <p th:text="'전체 발행 수량: ' + ${policy.issueCouponCount}"></p>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: right">
+                                        <button class="btn btn-info mb-1" style="width: 85px"
+                                                type="button"
+                                                data-toggle="modal"
+                                                th:data-target="'#couponIssue' + ${policy.id}">발행
+                                        </button>
+                                        <button class="btn btn-primary mb-1" style="width: 85px"
+                                                type="button"
+                                                data-toggle="modal"
+                                                th:data-target="'#policyDelete' + ${policy.id}">삭제
+                                        </button>
+                                    </div>
+                                    <div class="modal fade" th:id="'couponIssue' + ${policy.id}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form class="col-12 p-0"
+                                                          th:action="@{/coupon/issue}"
+                                                          th:method="post">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">쿠폰 발행</h4>
+                                                                    <div class="form-group">
+                                                                        <label>발행 개수</label>
+                                                                        <input class="form-control" type="text" name="issueQuantity"
+                                                                               placeholder="남은 수량 + 발행 수량은 최대 1,000장까지 입니다.">
+                                                                        <input type="hidden" name="couponPolicyId" th:value="${policy.id}">
+                                                                    </div>
+                                                                    <button class="btn btn-info mr-2" type="submit">발행</button>
+                                                                    <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" th:id="'policyDelete' + ${policy.id}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form class="col-12 p-0"
+                                                          th:action="@{|/coupon/policies/${policy.id}|}"
+                                                          th:method="delete">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">해당 쿠폰 정책을 삭제하시겠습니까?</h4>
+                                                                    <button class="btn btn-info mr-2" type="submit">예</button>
+                                                                    <button class="btn btn-light" data-dismiss="modal">아니오</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-top pt-2 pb-2">
+                                    <div class="col">
+                                        <button class="btn btn-info w-100 mb-1" type="button" data-toggle="modal"
+                                                data-target="#couponPolicyAdd">추가
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <nav aria-label="Page navigation" class="pagination-container">
+                        <ul class="pagination"
+                            th:with="start=${(policies.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
+                            last=(${start + (buttonNumber - 1) < policies.totalPages ? start + (buttonNumber - 1) : policies.totalPages})">
+                            <li>
+                                <a th:href="@{/coupon(page=1, size=${policies.size})}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="${policies.first} ? 'disabled'">
+                                <a th:href="${policies.first} ? '#' :@{/coupon(page=${policies.number}, size=${policies.size})}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == policies.number + 1} ? 'active'">
+                                <a th:text="${page}" th:href="@{/coupon(page=${page}, size=${policies.size})}"></a>
+                            </li>
+                            <li th:class="${policies.last} ? 'disabled'">
+                                <a th:href="${policies.last} ? '#' :@{/coupon(page=${policies.number + 2}, size=${policies.size})}">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/coupon(page=${policies.totalPages}, size=${policies.size})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        About US
+                    </h4>
+                    <div class="contact_link_box">
+                        <a href="">
+                            <i class="mdi mdi-github-circle icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">COOKSHOONG</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-database icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">ERD-CLOUD</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-book-open icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Api Docs</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        CookShoong
+                    </h4>
+                    <p>
+                        쿡슝 프로젝트는 NHN Academy Project 로 제작된 배달 어플리케이션입니다.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 footer-col">
+                <div class="footer_contact">
+                    <h4>
+                        Laboratory
+                    </h4>
+                    <div class="contact_link_box">
+                        <a href="">
+                            <i class="mdi mdi-information icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Information</span>
+                        </a>
+                        <a href="">
+                            <i class="mdi mdi-test-tube icon-sm" aria-hidden="true"></i>
+                            <span style="font-size: 1.0rem">Test</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-info">
+            <p>
+                &copy; 2023</span> All Rights Reserved By
+                <a href="https://nhnacademy.github.io/">NHN Academy</a><br>
+                &copy; 2023</span> Distributed By
+                <a href="https://nhnacademy.github.io/">Cookshoong</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/template.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+</script>
+</body>
+
+</html>
