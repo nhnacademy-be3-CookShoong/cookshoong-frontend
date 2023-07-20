@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
@@ -71,9 +73,13 @@ public class StoreRegisterController {
     @PostMapping("/store-register")
     public String postCreateStore(
         @Valid @ModelAttribute("createStoreRequestDto") CreateStoreRequestDto createStoreRequestDto,
-        BindingResult bindingResult, Model model) {
+        BindingResult bindingResult, Model model,
+        @RequestPart("businessLicense") MultipartFile businessLicense,
+        @RequestPart("storeImage") MultipartFile storeImage) {
+
         Long accountId = accountIdAware.getAccountId();
-        storeService.createStore(accountId, createStoreRequestDto);
+
+        storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("createStoreRequestDto", createStoreRequestDto);
