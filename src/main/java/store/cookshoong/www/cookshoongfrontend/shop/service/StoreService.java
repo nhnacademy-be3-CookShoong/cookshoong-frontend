@@ -100,4 +100,14 @@ public class StoreService {
         }
     }
 
+    /**
+     * 사업자 : 해당 매장 정보 조회 dto.
+     *
+     * @param accountId the account id
+     * @param storeId   the store id
+     * @return 매장 정보 조회 dto
+     */
+    public SelectStoreInfoResponseDto selectStoreInfo(Long accountId, Long storeId) {
+        return storeAdapter.fetchStoreInfo(accountId, storeId);
+    }
 }
