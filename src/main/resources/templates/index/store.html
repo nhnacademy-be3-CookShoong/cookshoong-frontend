@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="card-body" style="height: 300px">
                         <div class="bg-box">
-                            <img src="/assets/images/1.png" alt="">
+                            <img th:src="|/images/${store.getSavedName()}|" alt="image">
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                                                 <div class="row">
                                                     <div class="align-content-end border-info pr-3 pb-2"
                                                          style="max-width: 200px">
-                                                        <img src="/assets/images/nodata.png" alt="image">
+                                                        <img th:src="|/images/${menu.getSavedName()}|" alt="image">
                                                     </div>
                                                     <div>
                                                         <p style="text-align: left">
