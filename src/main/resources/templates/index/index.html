@@ -18,58 +18,7 @@
 </head>
 
 <body>
-<div class="hero_area" >
-    <header class="header_section" >
-        <div class="row">
-            <div class="col-4 justify-content-end align-items-center">
-                <a href="/">
-                    <img src="/assets/images/shoong.png" alt="" style="height: 55px">
-                </a>
-            </div>
-            <div class="col-4 justify-content-center align-items-center navbar navbar-expand-lg custom_nav-container">
-                <button class="navbar-toggler" type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class=""> </span>
-                </button>
-            </div>
-            <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a th:href="@{/sign-up}" style="color: white" class="mr-2">
-                        회원가입
-                    </a>
-                    <a th:href="@{/login-page}" style="color: white">
-                        로그인
-                    </a>
-            </div>
-        </div>
-        <div class="container-fluid" >
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Book</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="store-register">Admin</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
-</div>
+<header th:replace="fragments :: user-site-header"></header>
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
@@ -609,69 +558,7 @@
         </div>
     </div>
 </div>
-
-<footer class="footer_section" >
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 footer-col">
-                <div class="footer_contact">
-                    <h4>
-                        About US
-                    </h4>
-                    <div class="contact_link_box">
-                        <a href="">
-                            <i class="mdi mdi-github-circle icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 0.85rem">COOKSHOONG</span>
-                        </a>
-                        <a href="">
-                            <i class="mdi mdi-database icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 0.85rem">ERD-CLOUD</span>
-                        </a>
-                        <a href="">
-                            <i class="mdi mdi-book-open icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 0.85rem">Api Docs</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 footer-col">
-                <div class="footer_contact">
-                    <h4>
-                        CookShoong
-                    </h4>
-                    <p>
-                        쿡슝 프로젝트는 NHN Academy Project 로 제작된 배달 어플리케이션입니다.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4 footer-col">
-                <div class="footer_contact">
-                    <h4>
-                        Laboratory
-                    </h4>
-                    <div class="contact_link_box">
-                        <a href="">
-                            <i class="mdi mdi-information icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 0.85rem">Information</span>
-                        </a>
-                        <a href="">
-                            <i class="mdi mdi-test-tube icon-sm" aria-hidden="true"></i>
-                            <span style="font-size: 0.85rem">Test</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-info">
-            <p>
-                &copy; 2023</span> All Rights Reserved By
-                <a href="https://nhnacademy.github.io/">NHN Academy</a><br>
-                &copy; 2023</span> Distributed By
-                <a href="https://nhnacademy.github.io/">Cookshoong</a>
-            </p>
-        </div>
-    </div>
-</footer>
+<footer th:replace="fragments :: site-footer"></footer>
 
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="/assets/js/off-canvas.js"></script>

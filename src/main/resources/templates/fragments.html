@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Untitled</title>
+</head>
+
+<body>
+
+<header th:fragment="user-site-header" class="hero_area header_section" >
+    <div class="row">
+      <div class="col-4 justify-content-end align-items-center">
+        <a href="/">
+          <img src="/assets/images/shoong.png" alt="" style="height: 55px">
+        </a>
+      </div>
+      <div class="col-4 justify-content-center align-items-center navbar navbar-expand-lg custom_nav-container">
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <a th:href="@{/sign-up}" style="color: white" class="mr-2">
+          회원가입
+        </a>
+        <a th:href="@{/login-page}" style="color: white">
+          로그인
+        </a>
+      </div>
+    </div>
+    <div class="container-fluid" >
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Menu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Book</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/store-register">Admin</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</header>
+
+<header th:fragment="admin-site-header" class="hero_area header_section">
+    <div class="row">
+      <div class="col-4 justify-content-end align-items-center">
+        <a href="/">
+          <img src="/assets/images/shoong.png" alt="" style="height: 55px">
+        </a>
+      </div>
+      <div class="col-4 justify-content-center align-items-center navbar navbar-expand-lg custom_nav-container">
+        <button class="navbar-toggler d-lg-none" type="button"
+                data-toggle="offcanvas">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <a href="" style="color: white" class="mr-2">
+          회원가입
+        </a>
+        <a th:href="@{/login}" style="color: white">
+          로그인
+        </a>
+      </div>
+    </div>
+</header>
+
+<nav th:fragment="admin-site-nav" class="sidebar sidebar-offcanvas">
+    <ul class="nav">
+      <li class="nav-item">
+        <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                              aria-controls="form-elements"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+              class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
+        <div class="collapse" id="form-elements">
+          <ul class="flex-column nav sub-menu">
+            <li><a class="nav-link" href="store-register">매장 등록</a></li>
+            <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
+            <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
+            <li><a class="nav-link" href="store-merchant-manager">가맹점 관리</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                              aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
+              class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
+        <div class="collapse" id="charts">
+          <ul class="flex-column nav sub-menu">
+
+            <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
+            <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                              aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+              class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
+        <div class="collapse" id="tables">
+          <ul class="flex-column nav sub-menu">
+            <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
+            <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
+            <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                              aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+              class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
+        <div class="collapse" id="auth">
+          <ul class="flex-column nav sub-menu">
+            <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
+            <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                              aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
+              class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
+        <div class="collapse" id="error">
+          <ul class="flex-column nav sub-menu">
+            <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+<footer th:fragment="site-footer" class="footer_section" >
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 footer-col">
+        <div class="footer_contact">
+          <h4>
+            About US
+          </h4>
+          <div class="contact_link_box">
+            <a href="">
+              <i class="mdi mdi-github-circle icon-sm" aria-hidden="true"></i>
+              <span style="font-size: 0.85rem">COOKSHOONG</span>
+            </a>
+            <a href="">
+              <i class="mdi mdi-database icon-sm" aria-hidden="true"></i>
+              <span style="font-size: 0.85rem">ERD-CLOUD</span>
+            </a>
+            <a href="">
+              <i class="mdi mdi-book-open icon-sm" aria-hidden="true"></i>
+              <span style="font-size: 0.85rem">Api Docs</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 footer-col">
+        <div class="footer_contact">
+          <h4>
+            CookShoong
+          </h4>
+          <p>
+            쿡슝 프로젝트는 NHN Academy Project 로 제작된 배달 어플리케이션입니다.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4 footer-col">
+        <div class="footer_contact">
+          <h4>
+            Laboratory
+          </h4>
+          <div class="contact_link_box">
+            <a href="">
+              <i class="mdi mdi-information icon-sm" aria-hidden="true"></i>
+              <span style="font-size: 0.85rem">Information</span>
+            </a>
+            <a href="">
+              <i class="mdi mdi-test-tube icon-sm" aria-hidden="true"></i>
+              <span style="font-size: 0.85rem">Test</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-info">
+      <p>
+        &copy; 2023</span> All Rights Reserved By
+        <a href="https://nhnacademy.github.io/">NHN Academy</a><br>
+        &copy; 2023</span> Distributed By
+        <a href="https://nhnacademy.github.io/">Cookshoong</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
