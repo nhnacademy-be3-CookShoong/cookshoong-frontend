@@ -131,7 +131,7 @@ public class MainViewController {
      */
     @GetMapping("/store-coupon-manager")
     public String getStoreCouponManager() {
-        return "store-coupon-manager";
+        return "redirect:/coupon";
     }
 
     /**
