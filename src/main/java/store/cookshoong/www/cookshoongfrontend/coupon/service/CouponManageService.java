@@ -28,8 +28,7 @@ public class CouponManageService {
      * @return the page
      */
     public Page<SelectPolicyResponseDto> selectStorePolicy(Pageable pageable) {
-        // TODO: 매장 id 받아올 수 있을 때 UsageAll 아닌 Store 연결하기
-        return couponManageAdapter.fetchUsageAllCouponPolicy(pageable);
+        return couponManageAdapter.fetchStoreCouponPolicy(1L, pageable);
     }
 
     /**
@@ -38,8 +37,7 @@ public class CouponManageService {
      * @param request the request
      */
     public void createStoreCashCouponPolicy(CreateCashCouponPolicyRequestDto request) {
-        // TODO: 매장 id 받아올 수 있을 때 UsageAll 아닌 Store 연결하기
-        couponManageAdapter.executeUsageAllCashCouponPolicy(request);
+        couponManageAdapter.executeStoreCashCouponPolicy(1L, request);
     }
 
     /**
@@ -48,8 +46,7 @@ public class CouponManageService {
      * @param request the request
      */
     public void createStorePercentCouponPolicy(CreatePercentCouponPolicyRequestDto request) {
-        // TODO: 매장 id 받아올 수 있을 때 UsageAll 아닌 Store 연결하기
-        couponManageAdapter.executeUsageAllPercentCouponPolicy(request);
+        couponManageAdapter.executeStorePercentCouponPolicy(1L, request);
     }
 
     /**
