@@ -31,7 +31,6 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 public class MainViewController {
     private final StoreService storeService;
     private final AccountAddressService accountAddressService;
-//    private final AccountIdAware account;
 
     /**
      * 매장 랜딩 페이지 맵핑.
