@@ -18,4 +18,5 @@ public class ParsedRefreshToken {
     private Long accountId;
     private String status;
     private String loginId;
+    private String authority;
 }
