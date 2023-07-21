@@ -8,7 +8,7 @@ import lombok.Getter;
 /**
  * 사업자 : 옵션 등록 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.11
  */
 @Getter

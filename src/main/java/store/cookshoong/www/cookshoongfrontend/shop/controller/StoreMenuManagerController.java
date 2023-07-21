@@ -18,7 +18,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerServ
 /**
  * 매장 메뉴 관리 페이지 컨트롤러.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.11
  */
 @Controller

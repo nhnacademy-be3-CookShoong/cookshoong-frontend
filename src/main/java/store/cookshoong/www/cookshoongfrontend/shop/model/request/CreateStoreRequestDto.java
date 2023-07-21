@@ -8,12 +8,11 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 사업자 : 매장 등록 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Getter

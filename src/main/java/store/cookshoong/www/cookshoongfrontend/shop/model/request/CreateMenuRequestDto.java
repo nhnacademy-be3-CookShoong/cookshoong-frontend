@@ -10,7 +10,7 @@ import lombok.Getter;
 /**
  * 사업자 : 메뉴 등록 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.11
  */
 @Getter

@@ -21,7 +21,7 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 /**
  * 매장 등록 및 조회 서비스.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Service
