@@ -35,6 +35,9 @@ public class StoreController {
     /**
      * 매장 페이지 맵핑.
      *
+     * @param model   the model
+     * @param storeId the store id
+     * @return the index store
      * @author papel
      * @since 2023.07.16
      */
@@ -47,6 +50,13 @@ public class StoreController {
         return "index/store";
     }
 
+    /**
+     * 매장 정보 조회.
+     *
+     * @param storeId the store id
+     * @param model   the model
+     * @return 매장 정보
+     */
     @GetMapping("/stores/{storeId}")
     public String getStoreInfo(@PathVariable("storeId") Long storeId,
                                Model model) {
@@ -58,9 +68,16 @@ public class StoreController {
         return "store/info/store-info-manager";
     }
 
+    /**
+     * 이미지 로드.
+     *
+     * @param imageName the image name
+     * @return the image
+     * @throws MalformedURLException the malformed url exception
+     */
     @ResponseBody
     @GetMapping("/images/{imageName}")
     public Resource getImage(@PathVariable("imageName") String imageName) throws MalformedURLException {
-        return new UrlResource("file:"+ pathVo.getMyBasePath()+imageName);
+        return new UrlResource("file:"+ pathVo.getSaveBasePath()+imageName);
     }
 }
