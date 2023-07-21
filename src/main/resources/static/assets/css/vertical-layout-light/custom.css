@@ -1,0 +1,51 @@
+.pagination-container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.pagination {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    margin-right: 5px;
+}
+
+.pagination li a {
+    color: #333;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.pagination li.active a {
+    background-color: #001737;
+    color: #fff;
+}
+
+.pagination li.disabled a {
+    pointer-events: none;
+    background-color: #eee;
+    color: #999;
+    border-color: #ccc;
+}
+
+
+/* 선택된 라디오 버튼의 라벨 색 변경 */
+.form-check-input[type="radio"]:checked+label {
+    color: #007bff;
+}
+
+/* 수평 배치를 위한 flexbox 설정 */
+.form-check-inline {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+}

@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountIdOnly;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
+import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
 
 /**
  * 로그인, 회원가입 등 인증을 위한 컨트롤러.
@@ -24,11 +23,11 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class OnBoardingViewController implements AccountIdAware {
+public class OnBoardingViewController {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
 
-    @GetMapping("sign-up-choice")
+    @GetMapping("/sign-up-choice")
     public String getSignUpChoicePage() {
         return "account/sign-up-choice";
     }
@@ -41,17 +40,18 @@ public class OnBoardingViewController implements AccountIdAware {
      * @param signUpRequestDto 회원가입요청 Dto
      * @return 회원가입 폼 뷰
      */
-    @GetMapping("sign-up")
+    @GetMapping("/sign-up")
     public String getCustomerSignUpForm(@RequestParam(required = false) String userType,
-                                        Model model, SignUpRequestDto signUpRequestDto,
-                                        AccountIdOnly accountId) {
-        log.debug("=============  accountId {} =============", accountId.getAccountId());
+                                        Model model, SignUpRequestDto signUpRequestDto) {
         if (Objects.nonNull(userType) && (userType.equals("cus") || userType.equals("biz"))) {
             model.addAttribute("userType", userType);
         } else {
             return "redirect:/sign-up-choice";
         }
 
+        if (signUpRequestDto.isAddressEmpty()) {
+            signUpRequestDto.setCreateAccountAddressRequestDto(new CreateAccountAddressRequestDto());
+        }
         model.addAttribute("signUpRequestDto", signUpRequestDto);
         return REGISTER_FORM_VIEW;
     }
@@ -64,7 +64,7 @@ public class OnBoardingViewController implements AccountIdAware {
      * @param model            View 로 보낼 데이터
      * @return 랜딩페이지
      */
-    @PostMapping("sign-up")
+    @PostMapping("/sign-up")
     public String postSignUpForm(@RequestParam String userType, @Valid SignUpRequestDto signUpRequestDto,
                                  BindingResult bindingResult, Model model) {
         // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
@@ -78,7 +78,6 @@ public class OnBoardingViewController implements AccountIdAware {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             return REGISTER_FORM_VIEW;
         }
-
 
         accountService.requestAccountRegistration(userType, signUpRequestDto);
         return "redirect:/";

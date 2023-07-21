@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<header th:replace="fragments :: admin-site-header"></header>
+
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments :: admin-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">보유 매장 조회</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>상호명</th>
+                                        <th>매장 주소</th>
+                                        <th>매장 상태</th>
+                                        <th>상태 변경</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="store, i :${stores}">
+                                    <tr>
+                                        <td th:text="${i.index + 1}"></td>
+                                        <td th:text="${store.storeName}"></td>
+                                        <td th:text="${store.storeMainAddress}+' '+${store.storeDetailAddress}"></td>
+                                        <td th:text="${store.storeStatus}"></td>
+                                        <td>
+                                            <th:block th:if="${store.storeStatus} != '폐업'">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        th:data-target="'#statusModal' + ${store.storeId}">
+                                                    Click
+                                                </button>
+                                            </th:block>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" th:id="'statusModal' + ${store.storeId}" tabindex="-1"
+                                         role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        th:text="${store.storeName}+' 매장 상태 변경'"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Create a form to select the status -->
+                                                    <form th:id="'statusForm'+${store.storeId}"
+                                                          th:action="@{|/stores/${store.storeId}/status|}"
+                                                          th:method="patch" th:object="${updateStoreStatusRequestDto}">
+                                                        <div th:each="statusOne : ${status}"
+                                                             class="form-check form-check-inline">
+                                                            <input type="radio" name="statusCode"
+                                                                   th:value="${statusOne.getStoreStatusCode()}"
+                                                                   class="form-check-input">
+                                                            <label th:for="${#ids.next('statusOne')}"
+                                                                   th:text="${statusOne.getDescription()}"
+                                                                   class="form-check-label">
+                                                            </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+
+                                                    <!-- Submit the form when the Save button is clicked -->
+                                                    <button type="submit" th:form="'statusForm'+ ${store.storeId}"
+                                                            class="btn btn-primary" th:method="patch">Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <nav aria-label="Page navigation" class="pagination-container">
+                        <ul class="pagination"
+                            th:with="start=${(stores.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
+                            last=(${start + (buttonNumber - 1) < stores.totalPages ? start + (buttonNumber - 1) : stores.totalPages})">
+                            <li>
+                                <a th:href="@{/stores(page=1, size=${stores.size})}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="${stores.first} ? 'disabled'">
+                                <a th:href="${stores.first} ? '#' :@{/stores(page=${stores.number}, size=${stores.size})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == stores.number + 1} ? 'active'">
+                                <a th:text="${page}" th:href="@{/stores(page=${page}, size=${stores.size})}"></a>
+                            </li>
+                            <li th:class="${stores.last} ? 'disabled'">
+                                <a th:href="${stores.last} ? '#': @{/stores(page=${stores.number + 2}, size=${stores.size})}">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/stores(page=${stores.totalPages}, size=${stores.size})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: site-footer"></footer>
+
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/template.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+</script>
+</body>
+
+</html>

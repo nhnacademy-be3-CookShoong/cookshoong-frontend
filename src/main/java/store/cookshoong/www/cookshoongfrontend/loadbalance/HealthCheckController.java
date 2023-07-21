@@ -23,7 +23,8 @@ public class HealthCheckController {
 
     /**
      * health check 용.
-     * @return      health 반환
+     *
+     * @return health 반환
      */
     @GetMapping("/health-check")
     public ResponseEntity<Health> getHealthCheck() {
@@ -39,7 +40,8 @@ public class HealthCheckController {
 
     /**
      * health check Recover.
-     * @return      헬스체크 Ok 반환
+     *
+     * @return 헬스체크 Ok 반환
      */
     @PostMapping("/health-check/recover")
     public ResponseEntity<String> getHealthCheckRecover() {
@@ -51,7 +53,7 @@ public class HealthCheckController {
     /**
      * health check fail.
      *
-     * @return      헬스체크 Bad Request 반환
+     * @return 헬스체크 Bad Request 반환
      */
     @PostMapping("/health-check/fail")
     public ResponseEntity<String> getHealthCheckFail() {

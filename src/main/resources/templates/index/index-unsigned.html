@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<header th:replace="fragments :: user-site-header"></header>
+
+<div class="container-fluid page-body-wrapper">
+    <div class="landing-panel">
+        <div class="content-wrapper bg-white">
+            <section class="slider_section bg-white">
+                <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 400px">
+                            <div class="bg-box">
+                                <img src="/assets/images/1.png" alt="">
+                            </div>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="detail-box">
+                                            <h1>
+                                                만두
+                                            </h1>
+                                            <p>
+                                                맛있겠다.
+                                            </p>
+                                            <div class="btn-box">
+                                                <a href="" class="btn1">
+                                                    주문하러 가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 400px">
+                            <div class="bg-box">
+                                <img src="/assets/images/2.png" alt="">
+                            </div>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="detail-box">
+                                            <h1>
+                                                버블티
+                                            </h1>
+                                            <p>
+                                                아주 맛있겠다.
+                                            </p>
+                                            <div class="btn-box">
+                                                <a href="" class="btn1">
+                                                    주문하러 가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 400px">
+                            <div class="bg-box">
+                                <img src="/assets/images/3.png" alt="">
+                            </div>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="detail-box">
+                                            <h1>
+                                                한우
+                                            </h1>
+                                            <p>
+                                                참을 수 없이 맛있겠다.
+                                            </p>
+                                            <div class="btn-box">
+                                                <a href="" class="btn1">
+                                                    주문하러 가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 400px">
+                            <div class="bg-box">
+                                <img src="/assets/images/4.png" alt="">
+                            </div>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="detail-box">
+                                            <h1>
+                                                팟타이
+                                            </h1>
+                                            <p>
+                                                와 맛있겠다.
+                                            </p>
+                                            <div class="btn-box">
+                                                <a href="" class="btn1">
+                                                    주문하러 가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ol class="carousel-indicators">
+                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+                        <li data-target="#customCarousel1" data-slide-to="1"></li>
+                        <li data-target="#customCarousel1" data-slide-to="2"></li>
+                        <li data-target="#customCarousel1" data-slide-to="3"></li>
+                    </ol>
+                </div>
+            </section>
+            <section class="container mt-4 mb-2 bg-white">
+                <div class="row ml-1 mr-1 mt-1 mb-1">
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c1.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">고양이 도시락 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c2.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">만생당 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c3.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">에비스시 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c4.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">케이크 오브 팬 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c5.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">T.O.P.U - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c6.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">킹샌드 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c7.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">허니슈 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c8.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">쌍화점 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c9.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">야채쌈 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c10.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">피자 앤 쿱 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c11.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">미트 스튜 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 col-12 col-xl-6 pl-1 pr-1">
+                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white" onclick="location.href='index-store'"
+                                style="border-radius: 1rem">
+                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                 style="max-width: 150px">
+                                <img src="/assets/images/c12.png" alt="image" style="width: 130px">
+                            </div>
+                            <div class="col-sm-6 col-6" style="text-align: start">
+                                <h4 class="font-weight-bold">피쉬 앤 칩스 - 서울점</h4>
+                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">210</span>
+                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                    <span
+                                            class="pr-1" style="font-size: 0.85rem">20분</span></p>
+                                <p>배달요금 4000원</p>
+                                <p>
+                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                </p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: site-footer"></footer>
+
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/template.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="/assets/vendors/select2/select2.min.js"></script>
+<script src="/assets/js/file-upload.js"></script>
+<script src="/assets/js/typeahead.js"></script>
+<script src="/assets/js/select2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+</body>
+
+</html>
