@@ -28,6 +28,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStat
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
@@ -106,6 +107,37 @@ public class StoreAdapter {
             .build();
 
         ResponseEntity<RestResponsePage<SelectStoresNotOutedResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+
+        return response.getBody();
+    }
+
+    /**
+     * 매장 키워드 검색 리스트 조회 메서드.
+     *
+     * @param keyword 키워드 단어
+     * @param pageable  페이지 파라미터
+     * @return response rest response page
+     */
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresByKeyword(String keyword, Pageable pageable) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("store")
+            .pathSegment("search")
+            .queryParam("keyword", keyword)
+            .queryParam("page", pageable.getPageNumber())
+            .queryParam("size", pageable.getPageSize())
+            .build()
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
 
