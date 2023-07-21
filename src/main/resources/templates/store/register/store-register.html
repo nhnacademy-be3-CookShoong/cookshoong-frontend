@@ -27,7 +27,7 @@
         <div class="content-wrapper">
             <div class="row">
                 <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
-                      method="post" onsubmit=" handleCheckboxClick()">
+                      method="post" onsubmit=" handleCheckboxClick()" enctype="multipart/form-data">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -39,8 +39,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">사업자 정보</h4>
-                                <div class="form-group"><label for="representativeName">사업자
-                                    이름</label>
+                                <div class="form-group"><label for="representativeName">사업자 이름</label>
                                     <input class="form-control" type="text" id="representativeName"
                                            name="representativeName"
                                            th:field="*{representativeName}" th:value="*{representativeName}"
@@ -51,17 +50,16 @@
                                     <input class="form-control" type="text" id="businessLicenseNumber"
                                            name="businessLicenseNumber"
                                            th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
-                                           placeholder="사업자 등록번호"></div>
-
+                                           placeholder="사업자 등록번호">
+                                </div>
 
                                 <div class="form-group">
                                     <label>사업자 등록증 사본</label>
-                                    <input type="file" name="businessLicense" class="file-upload-default">
+                                    <input type="file" name="businessLicense" class="file-upload-default" accept="image/png,image/jpg">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
-                                               th:field="*{businessLicense}" th:value="*{businessLicense}"
-                                               id="businessLicense" name="businessLicense"
-                                               placeholder="Upload Image">
+                                           id="businessLicense"
+                                           placeholder="Upload Image">
                                         <span class="input-group-append">
                                             <button class="file-upload-browse btn btn-info"
                                                     type="button">이미지 찾기</button>
@@ -89,7 +87,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">영업점 정보</h4>
-
                                 <div class="form-group">
                                     <label for="storeName">영업점 상호명</label>
                                     <input class="form-control" type="text" id="storeName" name="storeName"
@@ -97,16 +94,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>영업점 대표 이미지</label>
-                                    <input type="file" name="image" class="file-upload-default">
+                                    <label>매장 대표 이미지</label>
+                                    <input type="file" name="storeImage" class="file-upload-default" accept="image/png,image/jpg">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
-                                               th:field="*{image}" th:value="*{image}"
-                                               id="image" name="image"
+                                               id="storeImage"
                                                placeholder="Upload Image">
                                         <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info"
-                                                    type="button">이미지 찾기</button>
+                                            <button class="file-upload-browse btn btn-info" type=
+                                                    "button">이미지 찾기</button>
                                         </span>
                                     </div>
                                 </div>

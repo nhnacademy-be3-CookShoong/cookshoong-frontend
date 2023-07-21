@@ -5,15 +5,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
@@ -22,46 +24,45 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
  * @author papel
  * @since 2023.07.09
  */
-
 @Service
 @RequiredArgsConstructor
-public class StoreService implements DevAccountIdAware {
+public class StoreService {
     private final StoreAdapter storeAdapter;
 
     /**
-     * 매장 등록 메서드.
+     * 사업자 : 매장 등록 메서드.
      *
      * @param accountId             회원 아이디
      * @param createStoreRequestDto 매장 등록 Dto
+     * @param businessLicense       the business license
+     * @param storeImage            the store image
      */
-    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto) {
-        storeAdapter.executeCreateStore(accountId, createStoreRequestDto);
+    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
+                            MultipartFile businessLicense,
+                            MultipartFile storeImage) {
+        storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
     }
 
     /**
-     * 3km 이내 매장 리스트 조회 메서드.
+     * 사용자 : 3km 이내 매장 리스트 조회 메서드.
      *
      * @param addressId 주소 아이디
      * @param pageable  페이지 파라미터
+     * @return the rest response page
      */
     public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
         return storeAdapter.fetchStoresNotOuted(addressId, pageable);
     }
 
     /**
-     * 매장 조회 메서드.
+     * 사용자 : 매장 조회 메서드.
      *
      * @param storeId 매장 아이디
+     * @return the select store for user response dto
      */
     public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
         return storeAdapter.fetchStoreForUser(storeId);
     }
-
-
-
-
-
-
 
 
     /**
@@ -76,15 +77,37 @@ public class StoreService implements DevAccountIdAware {
         return storeAdapter.fetchAllStores(accountId, pageable);
     }
 
-    public List<SelectAllStatusResponseDto> selectStatus(){
+    /**
+     * 사업자 : 매장 상태 list 조회.
+     *
+     * @return the list
+     */
+    public List<SelectAllStatusResponseDto> selectStatus() {
         return storeAdapter.fetchAllStatus();
     }
 
-    public void updateStatus(Long accountId, Long storeId, UpdateStoreStatusRequestDto requestDto){
-        HttpStatus httpStatus = storeAdapter.changeStatus(accountId, storeId, requestDto);
-        if(!httpStatus.is2xxSuccessful()){
-            throw new UpdateStatusFailureException(httpStatus);
+    /**
+     * 사업자 : 매장 상태 변경.
+     *
+     * @param accountId  the account id
+     * @param storeId    the store id
+     * @param requestDto the request dto
+     */
+    public void updateStatus(Long accountId, Long storeId, UpdateStoreStatusRequestDto requestDto) {
+        HttpStatus result = storeAdapter.changeStatus(accountId, storeId, requestDto);
+        if (!result.is2xxSuccessful()) {
+            throw new UpdateStatusFailureException(result);
         }
     }
 
+    /**
+     * 사업자 : 해당 매장 정보 조회 dto.
+     *
+     * @param accountId the account id
+     * @param storeId   the store id
+     * @return 매장 정보 조회 dto
+     */
+    public SelectStoreInfoResponseDto selectStoreInfo(Long accountId, Long storeId) {
+        return storeAdapter.fetchStoreInfo(accountId, storeId);
+    }
 }

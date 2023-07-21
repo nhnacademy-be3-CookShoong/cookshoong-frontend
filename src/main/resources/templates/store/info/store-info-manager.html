@@ -27,134 +27,91 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
-                      method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h1 class="font-weight-bold">영업점 정보 관리 페이지</h1>
+<!--                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"-->
+<!--                      method="post">-->
+<!--                    -->
+<!--                </form>-->
+
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">영업점 정보 관리 페이지</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">사업자 정보</h4>
+                            <div class="form-group"><label for="representativeName">사업자 이름</label>
+                                <span th:text="${storeInfo.getRepresentativeName()}" id="representativeName"></span>
+                            </div>
+
+                            <div class="form-group"><label for="businessLicenseNumber">사업자 등록번호</label>
+                                <span th:text="${storeInfo.getBusinessLicenseNumber()}" id="businessLicenseNumber"></span>
+                            </div>
+
+                            <div class="form-group"><label>정산 정보</label>
+                                <div class="input-group col-xs-12">
+                                    <span th:text="${storeInfo.getBankCode()}" id="bankCode"></span>
+                                </div>
+                                사업자 계좌번호 : <span th:text="${storeInfo.getBankAccountNumber()}" id="bankAccountNumber">
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">사업자 정보</h4>
-                                <div class="form-group"><label for="representativeName">사업자
-                                    이름</label>
-                                    <input class="form-control" type="text" id="representativeName"
-                                           name="representativeName"
-                                           th:field="*{representativeName}" th:value="*{representativeName}"
-                                           placeholder="사업자 이름">
-                                </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">영업점 정보</h4>
 
-                                <div class="form-group"><label for="storeName">사업자 등록번호</label>
-                                    <input class="form-control" type="text" id="businessLicenseNumber"
-                                           name="businessLicenseNumber"
-                                           th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
-                                           placeholder="사업자 등록번호"></div>
-
-
-                                <div class="form-group">
-                                    <label>사업자 등록증 사본</label>
-                                    <input type="file" name="businessLicense" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                               th:field="*{businessLicense}" th:value="*{businessLicense}"
-                                               id="businessLicense" name="businessLicense"
-                                               placeholder="Upload Image">
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info"
-                                                    type="button">이미지 찾기</button>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group"><label>사업자 계좌 번호</label>
-                                    <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="bankName" name="bankName">
-                                            <option value="">은행을 선택해주세요</option>
-                                            <option value="국민은행">국민은행</option>
-                                            <option value="신한은행">신한은행</option>
-                                            <option value="하나은행">하나은행</option>
-                                            <option value="IBK기업은행">IBK기업은행</option>
-                                        </select>
-                                    </div>
-                                    <input class="form-control" type="text"
-                                           id="bankAccount" name="bankAccount"
-                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="계좌 번호">
-                                </div>
+                            <div class="form-group"><label for="storeName">영업점 상호명</label>
+                                <span th:text="${storeInfo.getStoreName()}" id="storeName"></span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">영업점 정보</h4>
 
-                                <div class="form-group"><label for="storeName">영업점 상호명</label>
-                                    <input class="form-control" type="text" id="storeName" name="storeName"
-                                           th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명"></div>
+                            <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
+                                <span th:text="${storeInfo.getPhoneNumber()}" id="phoneNumber"></span>
+                            </div>
 
-                                <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
-                                    <input class="form-control" type="text" id="phoneNumber"
-                                           name="phoneNumber"
-                                           th:field="*{phoneNumber}" th:value="*{phoneNumber}" placeholder="영업점 전화번호">
-                                </div>
+<!--                            <div class="form-group"><label>영업점 주소</label>-->
+<!--                                <div class="input-group col-xs-12">-->
+<!--                                    <input type="text" class="form-control" id="mainPlace" name="mainPlace"-->
+<!--                                           th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">-->
+<!--                                    <button class="btn btn-info" onclick="execDaumPostcode()" type="button">-->
+<!--                                        주소 검색-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <input class="form-control" type="text" id="detailPlace"-->
+<!--                                       name="detailPlace"-->
+<!--                                       th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">-->
 
-                                <div class="form-group"><label>영업점 주소</label>
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control" id="mainPlace" name="mainPlace"
-                                               th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">
-                                        <button class="btn btn-info" onclick="execDaumPostcode()" type="button">
-                                            주소 검색
-                                        </button>
-                                    </div>
-                                    <input class="form-control" type="text" id="detailPlace"
-                                           name="detailPlace"
-                                           th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">
+<!--                                <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">-->
+<!--                                <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">-->
 
-                                    <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">
-                                    <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">
+<!--                                <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label>영업점 주소</label>
+                                <div th:text="${storeInfo.getMainPlace()}+ ' '+ ${storeInfo.getDetailPlace()}"></div>
+                            </div>
 
-                                    <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>
-                                </div>
-
-                                <div class="form-group"><label for="merchantName">가맹점 상호명</label>
-                                    <input class="form-control" type="text" id="merchantName" name="merchantName" placeholder="가맹점 상호명">
-                                </div>
-
-                                <div class="form-group"><label for="earningRate">적립률</label>
-                                    <input class="form-control" type="text" id="earningRate" name="earningRate"
-                                           th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률"></div>
-
+                            <div class="form-group"><label for="earningRate">적립률</label>
+                                <span th:text="${storeInfo.getDefaultEarningRate()}" id="earningRate"></span>
                                 <div class="form-group">
-                                    <label>오픈 예정일</label>
-                                    <div class="input-group col-xs-12">
-                                        <input type="date" class="form-control"
-                                               th:field="*{openingDate}" th:value="*{openingDate}"
-                                               id="openingDate" name="openingDate"
-                                               placeholder="오픈 예정일">
-                                    </div>
+                                    <label for="openingDate">가게 개업일</label>
+                                    <span th:text="${storeInfo.getOpeningDate()}" id="openingDate"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>가게 설명</label>
-                                    <input type="text" id="description" name="description" hidden="hidden"
-                                           th:field="*{description}" th:value="*{description}">
-                                    <div id="editor"></div>
+                                    <span th:text="${storeInfo.getDescription()}"></span>
                                 </div>
                             </div>
+                            매장 대표사진
+                            <p><img th:src="|/images/${storeInfo.getSavedName()}|" alt="No image"></p>
                         </div>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="btn btn-info mr-2" type="submit" id="submitButton">영업점 신규 등록</button>
-                                <button class="btn btn-light">취소</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
