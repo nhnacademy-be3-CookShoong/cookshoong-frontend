@@ -94,9 +94,9 @@ public class StoreService {
      * @param requestDto the request dto
      */
     public void updateStatus(Long accountId, Long storeId, UpdateStoreStatusRequestDto requestDto) {
-        HttpStatus httpStatus = storeAdapter.changeStatus(accountId, storeId, requestDto);
-        if (!httpStatus.is2xxSuccessful()) {
-            throw new UpdateStatusFailureException(httpStatus);
+        HttpStatus result = storeAdapter.changeStatus(accountId, storeId, requestDto);
+        if (!result.is2xxSuccessful()) {
+            throw new UpdateStatusFailureException(result);
         }
     }
 
