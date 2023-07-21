@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.coupon.model.vo;
 
-import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * 퍼센트 쿠폰 타입 정보를 담을 vo.
  *
- * @author eora21
+ * @author eora21 (김주호)
  * @since 2023.07.16
  */
 @Getter

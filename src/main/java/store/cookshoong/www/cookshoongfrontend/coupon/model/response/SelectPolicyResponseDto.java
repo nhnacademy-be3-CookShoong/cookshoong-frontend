@@ -8,7 +8,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.vo.CouponTypeRespons
 /**
  * 쿠폰 정책을 확인하기 위한 dto.
  *
- * @author eora21(김주호)
+ * @author eora21 (김주호)
  * @since 2023.07.15
  */
 @Getter

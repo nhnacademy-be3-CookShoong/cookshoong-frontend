@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 /**
  * 가게에서 금액 쿠폰 정책을 생성할 때 사용되는 dto.
  *
- * @author eora21
+ * @author eora21 (김주호)
  * @since 2023.07.04
  */
 @Getter

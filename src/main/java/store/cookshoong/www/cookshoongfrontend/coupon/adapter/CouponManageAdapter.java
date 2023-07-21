@@ -20,7 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 /**
  * 쿠폰 관리 어뎁터.
  *
- * @author eora21(김주호)
+ * @author eora21 (김주호)
  * @since 2023.07.15
  */
 @Component
