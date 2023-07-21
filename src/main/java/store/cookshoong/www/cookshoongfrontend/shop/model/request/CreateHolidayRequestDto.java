@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * 사업자 : 휴업일 등록 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.07
  */
 @Getter

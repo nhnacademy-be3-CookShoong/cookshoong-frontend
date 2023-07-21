@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
@@ -20,7 +18,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 /**
  * 매장 옵션 관리 페이지 컨트롤러.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.11
  */
 @Controller

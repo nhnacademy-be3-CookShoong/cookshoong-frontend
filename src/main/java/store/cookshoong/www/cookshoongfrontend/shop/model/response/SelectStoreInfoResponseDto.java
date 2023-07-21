@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.core.io.Resource;
 
 /**
  * 사업자 : 각 매장에 대한 정보 조회 dto.

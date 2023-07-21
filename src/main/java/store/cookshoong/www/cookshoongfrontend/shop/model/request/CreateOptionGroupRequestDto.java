@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 옵션 그룹 등록 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.13
  */
 @Getter

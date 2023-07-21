@@ -14,7 +14,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 /**
  * 메뉴 뷰 페이지 컨트롤러.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.18
  */
 @Controller

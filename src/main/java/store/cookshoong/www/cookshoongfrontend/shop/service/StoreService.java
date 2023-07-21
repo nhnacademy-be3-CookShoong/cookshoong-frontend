@@ -15,13 +15,14 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStat
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
  * 매장 등록 및 조회 서비스.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Service
@@ -52,6 +53,17 @@ public class StoreService {
      */
     public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
         return storeAdapter.fetchStoresNotOuted(addressId, pageable);
+    }
+
+    /**
+     * 사용자 : 매장 리스트 키워드 조회 메서드.
+     *
+     * @param keyword 키워드 단어
+     * @param pageable  페이지 파라미터
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Pageable pageable) {
+        return storeAdapter.fetchStoresByKeyword(keyword, pageable);
     }
 
     /**

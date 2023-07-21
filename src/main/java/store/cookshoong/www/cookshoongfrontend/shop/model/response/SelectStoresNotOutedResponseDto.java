@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * 3km 이내 매장 조회 Dto.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.17
  */
 @Getter

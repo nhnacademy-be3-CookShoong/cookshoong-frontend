@@ -31,7 +31,7 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 /**
  * 매장 등록 페이지 컨트롤러.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Controller

@@ -19,7 +19,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuRes
 /**
  * 메뉴 어뎁터.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.13
  */
 @Component

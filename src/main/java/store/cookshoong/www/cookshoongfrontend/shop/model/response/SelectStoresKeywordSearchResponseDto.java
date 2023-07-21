@@ -5,18 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 옵션 그룹 조회 Dto.
+ * 키워드에 맞는 매장 응답 Dto.
  *
  * @author papel (윤동현)
- * @since 2023.07.11
+ * @since 2023.07.17
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SelectOptionGroupResponseDto {
+public class SelectStoresKeywordSearchResponseDto {
     private Long id;
-    private Long storeId;
     private String name;
-    private Integer minSelectCount;
-    private Integer maxSelectCount;
-    private Boolean isDeleted;
+    private String description;
 }

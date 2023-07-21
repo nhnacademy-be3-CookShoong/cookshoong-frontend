@@ -13,10 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdOnly;
-import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
@@ -34,7 +34,6 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 public class MainViewController {
     private final StoreService storeService;
     private final AccountAddressService accountAddressService;
-//    private final AccountIdAware account;
 
     /**
      * 매장 랜딩 페이지 맵핑.
@@ -53,6 +52,16 @@ public class MainViewController {
                 ArrayList::new));
         model.addAttribute("allStore", distinctStores);
         model.addAttribute("stores", stores);
+
+        return "index/index";
+    }
+
+    @GetMapping("/store/search")
+    public String searchByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
+        model.addAttribute("allStore", null);
+        model.addAttribute("stores", null);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
+        model.addAttribute("searchStores", searchedStores);
 
         return "index/index";
     }

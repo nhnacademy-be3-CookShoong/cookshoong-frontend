@@ -9,7 +9,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateHolidayR
 /**
  * 매장의 영업시간 관리를 위한 서비스.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Service

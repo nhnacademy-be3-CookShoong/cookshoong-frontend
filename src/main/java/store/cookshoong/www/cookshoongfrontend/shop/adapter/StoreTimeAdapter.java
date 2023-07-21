@@ -17,7 +17,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateHolidayR
 /**
  * 매장 영업시간, 휴업일의 Adapter
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.14
  */
 @Component

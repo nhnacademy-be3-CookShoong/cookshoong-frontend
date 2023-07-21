@@ -12,7 +12,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuRes
 /**
  * 매장 메뉴 관리 서비스.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.13
  */
 @Service

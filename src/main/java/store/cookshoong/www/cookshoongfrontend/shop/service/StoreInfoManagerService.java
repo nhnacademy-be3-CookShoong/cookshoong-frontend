@@ -8,7 +8,7 @@ import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 /**
  * 매장의 정보 관리를 위한 서비스.
  *
- * @author papel
+ * @author papel (윤동현)
  * @since 2023.07.09
  */
 @Service
