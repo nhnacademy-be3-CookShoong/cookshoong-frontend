@@ -43,6 +43,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+            .mvcMatchers("/health-check/**").permitAll()
             .anyRequest().authenticated();
 
         http.formLogin()
