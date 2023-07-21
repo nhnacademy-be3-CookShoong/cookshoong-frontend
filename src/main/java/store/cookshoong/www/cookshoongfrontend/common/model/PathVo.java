@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
+@ConfigurationProperties("files")
 public class PathVo {
-    @Value("${files.save.base.path}")
-    String myBasePath;
+    private String saveBasePath;
 }
