@@ -25,9 +25,9 @@
         <div class="content-wrapper">
             <section class="container">
                 <div class="card">
-                    <div class="card-body" style="height: 400px">
-                        <div class="bg-box">
-                            <img th:src="|/images/${menu.getSavedName()}|" alt="No image">
+                    <div class="card-body" style="height: 300px">
+                        <div class="bg-box" style="background-color: #28282b; text-align: center;">
+                            <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px;">
                         </div>
                     </div>
                 </div>
@@ -122,5 +122,9 @@
         quantityInput.value = Number(quantityInput.value) + 1;
     });
 </script>
-
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+</script>
 </html>

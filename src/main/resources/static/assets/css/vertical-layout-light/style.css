@@ -12262,12 +12262,12 @@ input[type="button"].btn-block {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1;
-    color: #495057;
+    color: #ffffff;
     text-align: center;
     white-space: nowrap;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: 2px;
+    background-color: #ffffff;
+    border: 3px solid #ffa636;
+    border-radius: 6px;
 }
 
 .input-group-text input[type="radio"],
@@ -22660,7 +22660,6 @@ dl li {
 .tab-content {
     border: 1px solid #e8eff9;
     border-top: 0;
-    padding: 2rem 1rem;
     text-align: justify;
 }
 

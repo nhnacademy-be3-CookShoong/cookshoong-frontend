@@ -26,8 +26,8 @@
             <section class="container">
                 <div class="card">
                     <div class="card-body" style="height: 300px">
-                        <div class="bg-box">
-                            <img th:src="|/images/${store.getSavedName()}|" alt="image">
+                        <div class="bg-box" style="background-color: #28282b; text-align: center;">
+                            <img th:src="|/images/${store.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px">
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="card border-bottom-0">
-                    <ul class="nav nav-tabs col-12 m-0">
+                    <ul class="nav nav-tabs col-12 m-0 p-0">
                         <li class="nav-item flex-grow-1" style="text-align: center">
                             <a class="nav-link active" href="#all" data-toggle="tab">모두 보기</a>
                         </li>
@@ -75,30 +75,30 @@
                             <div class="card border-0">
                                 <div class="card-body pl-0 pr-0">
                                     <h2 class="font-weight-bold">모두 보기</h2>
-                                    <div class="col-12" th:each="menu, i:${menus}">
+                                    <div class="col-12 pr-0" th:each="menu, i:${menus}">
                                         <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
                                                 th:onclick="'window.location.href=\'/index/store/' + ${menu.storeId} + '/menu/' + ${menu.id}+'\''">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="align-content-end border-info pr-3 pb-2"
                                                          style="max-width: 200px">
-                                                        <img th:src="|/images/${menu.getSavedName()}|" alt="image">
+                                                        <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                                     </div>
                                                     <div>
-                                                        <p style="text-align: left">
-                                                            <span style="font-size: 1.4rem; font-weight: bold;" th:text="${menu.name}"></span>
+                                                        <p>
+                                                            <h3 style="text-align: left" th:text="${menu.name}"></h3>
                                                         </p>
                                                         <p style="text-align: left">
                                                             <i class="mdi mdi-message icon-sm" style="color: black">
                                                             </i>
-                                                            <span class="pr-2" style="font-size: 1.1rem">400</span>
+                                                            <span class="pr-2 pt-0" style="font-size: 0.9rem">400</span>
 
                                                             <i class="mdi mdi mdi-timer icon-sm" style="color: grey">
                                                             </i>
-                                                            <span class="pr-2" style="font-size: 1.1rem">55분</span>
+                                                            <span class="pr-2 pt-0" style="font-size: 0.9rem">55분</span>
                                                         </p>
                                                         <p style="text-align: left">
-                                                            <span style="font-size: 1.2rem" th:text="${menu.price}+'원'"></span></p>
+                                                            <h4 style="text-align: left" th:text="${menu.price}+'원'"></h4></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,6 +151,11 @@
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+</script>
 </body>
 
 </html>
