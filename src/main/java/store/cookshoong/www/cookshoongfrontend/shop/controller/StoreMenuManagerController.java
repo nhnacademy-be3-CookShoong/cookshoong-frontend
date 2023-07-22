@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
@@ -72,8 +74,9 @@ public class StoreMenuManagerController {
     @PostMapping("/store-menu-manager")
     public String postCreateMenu(
         @Valid @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
-        BindingResult bindingResult) {
-        storeMenuManagerService.createMenu(1L, createMenuRequestDto);
+        BindingResult bindingResult,
+        @RequestPart("menuImage") MultipartFile menuImage) {
+        storeMenuManagerService.createMenu(1L, createMenuRequestDto, menuImage);
         return "redirect:/store-menu-manager";
     }
 }
