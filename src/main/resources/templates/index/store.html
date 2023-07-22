@@ -27,7 +27,9 @@
                 <div class="card">
                     <div class="card-body" style="height: 300px">
                         <div class="bg-box" style="background-color: #28282b; text-align: center;">
-                            <img th:src="|/images/${store.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px">
+                            <img th:src="|/images/${store.getSavedName()}|"
+                                 onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                 style="width: 350px">
                         </div>
                     </div>
                 </div>
@@ -40,7 +42,7 @@
                     <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>매장 설명</strong></p>
                     <p class="ml-3 mr-3 pt-1 pb-1"
                        style="height: 60px; padding-left: 1.25rem; padding-right: 1.25rem; border-radius: 1rem; background-color: whitesmoke"
-                        th:text="${store.description}">
+                       th:text="${store.description}">
                     </p>
                     <div class="col-12 d-flex">
                         <button class="flex-grow-1 border-bottom border-left border-right border-top bg-white m-2"
@@ -74,19 +76,20 @@
                         <div class="tab-pane fade show active col-12 stretch-card" id="all">
                             <div class="card border-0">
                                 <div class="card-body pl-0 pr-0">
-                                    <h2 class="font-weight-bold">모두 보기</h2>
+                                    <h3 class="font-weight-bold">모두 보기</h3>
                                     <div class="col-12 pr-0" th:each="menu, i:${menus}">
-                                        <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white"
+                                        <button class="row border-top border-bottom border-left border-right pt-2 mt-1 mb-1 w-100 bg-white" style="border-radius: 5px;"
                                                 th:onclick="'window.location.href=\'/index/store/' + ${menu.storeId} + '/menu/' + ${menu.id}+'\''">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="align-content-end border-info pr-3 pb-2"
                                                          style="max-width: 200px">
-                                                        <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
+                                                        <img th:src="|/images/${menu.getSavedName()}|"
+                                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                                     </div>
                                                     <div>
                                                         <p>
-                                                            <h3 style="text-align: left" th:text="${menu.name}"></h3>
+                                                        <h3 style="text-align: left" th:text="${menu.name}"></h3>
                                                         </p>
                                                         <p style="text-align: left">
                                                             <i class="mdi mdi-message icon-sm" style="color: black">
@@ -98,7 +101,8 @@
                                                             <span class="pr-2 pt-0" style="font-size: 0.9rem">55분</span>
                                                         </p>
                                                         <p style="text-align: left">
-                                                            <h4 style="text-align: left" th:text="${menu.price}+'원'"></h4></p>
+                                                        <h4 style="text-align: left"
+                                                            th:text="${menu.price}+'원'"></h4></p>
                                                     </div>
                                                 </div>
                                             </div>
