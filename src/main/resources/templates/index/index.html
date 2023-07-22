@@ -126,7 +126,7 @@
                     </ol>
                 </div>
             </section>
-            <section class="container mt-4 mb-2 bg-white" style="padding-left: 2.5rem">
+            <section class="container mt-4 mb-2 bg-white pl-2">
                 <form class="form-group" th:action="@{/store/search}" method="get">
                     <div class="input-group w-100">
                         <input type="text" name="keyword" class="form-control" placeholder="Search.."
@@ -200,16 +200,17 @@
                 <div class="tab-content w-100 border-0">
                     <div class="tab-pane fade show active" id="c1">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1"
+                                 th:each="search, i:${searchStores}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -264,17 +265,17 @@
                     </div>
                     <div class="tab-pane fade" id="c2">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'KOR')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'KOR')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -330,17 +331,17 @@
                     </div>
                     <div class="tab-pane fade" id="c3">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'JPN')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'JPN')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -396,17 +397,17 @@
                     </div>
                     <div class="tab-pane fade" id="c4">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'CHN')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'CHN')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -462,17 +463,17 @@
                     </div>
                     <div class="tab-pane fade" id="c5">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'POR')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'POR')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -522,17 +523,17 @@
                     </div>
                     <div class="tab-pane fade" id="c6">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'CHK')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'CHK')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -582,17 +583,17 @@
                     </div>
                     <div class="tab-pane fade" id="c7">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'PIZ')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'PIZ')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -648,17 +649,17 @@
                     </div>
                     <div class="tab-pane fade" id="c8">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'BOX')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'BOX')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -708,17 +709,17 @@
                     </div>
                     <div class="tab-pane fade" id="c9">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'NIG')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'NIG')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -774,17 +775,17 @@
                     </div>
                     <div class="tab-pane fade" id="c10">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'EST')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'EST')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -834,17 +835,17 @@
                     </div>
                     <div class="tab-pane fade" id="c11">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'BUN')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'BUN')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
@@ -900,17 +901,17 @@
                     </div>
                     <div class="tab-pane fade" id="c12">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}"
-                                 th:if="${#strings.contains(${store.category}, 'DES')}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}"
+                                 th:if="${#strings.contains(search.category, 'DES')}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
                                         <img src="/assets/images/nodata.png" alt="">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>

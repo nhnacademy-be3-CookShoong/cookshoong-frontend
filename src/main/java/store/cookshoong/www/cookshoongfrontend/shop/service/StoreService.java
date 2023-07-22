@@ -66,6 +66,8 @@ public class StoreService {
         return storeAdapter.fetchStoresByKeyword(keyword, pageable);
     }
 
+
+
     /**
      * 사용자 : 매장 조회 메서드.
      *
