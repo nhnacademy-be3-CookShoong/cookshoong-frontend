@@ -23810,6 +23810,7 @@ body.avgrund-active {
     -webkit-flex-direction: column;
     flex-direction: column;
     padding-top: 35px;
+    padding-bottom: 30px;
 }
 @media (max-width: 991px) {
     .landing-panel {
@@ -23826,6 +23827,7 @@ body.avgrund-active {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
+    padding-bottom: 30px;
 }
 
 @media (max-width: 991px) {
