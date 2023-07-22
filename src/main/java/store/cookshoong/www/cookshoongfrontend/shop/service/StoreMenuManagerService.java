@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreMenuAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
@@ -26,7 +27,8 @@ public class StoreMenuManagerService {
      * @param storeId                   매장 아이디
      * @param createMenuGroupRequestDto 메뉴 그룹 등록 Dto
      */
-    public void createMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
+    public void createMenuGroup(Long storeId,
+                                CreateMenuGroupRequestDto createMenuGroupRequestDto) {
         storeMenuAdapter.executeCreateMenuGroup(storeId, createMenuGroupRequestDto);
     }
 
@@ -36,8 +38,8 @@ public class StoreMenuManagerService {
      * @param storeId              매장 기본키
      * @param createMenuRequestDto 메뉴 등록 Dto
      */
-    public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
-        storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto);
+    public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto, MultipartFile menuImage) {
+        storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto, menuImage);
     }
 
     /**

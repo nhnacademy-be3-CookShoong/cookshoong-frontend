@@ -85,7 +85,7 @@ public class StoreRegisterController {
             model.addAttribute("createStoreRequestDto", createStoreRequestDto);
             return "store/register/store-register";
         }
-        return "redirect:/";
+        return "redirect:/stores";
     }
 
     @GetMapping("/stores")

@@ -67,7 +67,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{/store-menu-manager}" th:object="${createMenuRequestDto}"
-                      method="post">
+                      method="post"  enctype="multipart/form-data">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -111,10 +111,10 @@
 
                                 <div class="form-group">
                                     <label>메뉴 대표 이미지</label>
-                                    <input type="file" name="storeImage" class="file-upload-default" accept="image/png,image/jpg">
+                                    <input type="file" name="menuImage" class="file-upload-default" accept="image/png,image/jpg">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
-                                               id="storeImage"
+                                               id="menuImage"
                                                placeholder="Upload Image">
                                         <span class="input-group-append">
                                             <button class="file-upload-browse btn btn-info"
@@ -196,7 +196,7 @@
                                         <div class="row">
                                             <div class="col-2 align-content-end text-md-center border-info pr-3 pb-2"
                                                  style="max-width: 400px">
-                                                <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
+                                                <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" width="130px">
                                             </div>
                                             <div class="col-sm-7">
                                                 <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
