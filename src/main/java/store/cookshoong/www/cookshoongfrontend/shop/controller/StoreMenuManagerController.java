@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,15 +36,16 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.11
      */
-    @GetMapping("/store-menu-manager")
+    @GetMapping("/stores/{storeId}/store-menu-manager")
     public String getSelectStoreMenuManager(
         @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         Model model) {
 
-        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(1L);
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         model.addAttribute("menus", menus);
-        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(1L);
+        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         model.addAttribute("menuGroups", menuGroups);
 
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
@@ -57,11 +59,12 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-menu-group-manager")
+    @PostMapping("/stores/{storeId}/store-menu-group-manager")
     public String postCreateMenuGroup(
         @Valid @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeMenuManagerService.createMenuGroup(1L, createMenuGroupRequestDto);
+        storeMenuManagerService.createMenuGroup(storeId, createMenuGroupRequestDto);
         return "redirect:/store-menu-manager";
     }
 
@@ -71,12 +74,13 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-menu-manager")
+    @PostMapping("/stores/{storeId}/store-menu-manager")
     public String postCreateMenu(
         @Valid @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
+        @PathVariable("storeId") Long storeId,
         BindingResult bindingResult,
         @RequestPart("menuImage") MultipartFile menuImage) {
-        storeMenuManagerService.createMenu(1L, createMenuRequestDto, menuImage);
+        storeMenuManagerService.createMenu(storeId, createMenuRequestDto, menuImage);
         return "redirect:/store-menu-manager";
     }
 }

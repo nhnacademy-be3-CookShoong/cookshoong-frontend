@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
@@ -32,15 +33,16 @@ public class StoreOptionManagerController {
      * @author papel
      * @since 2023.07.11
      */
-    @GetMapping("/store-option-manager")
+    @GetMapping("/stores/{storeId}/store-option-manager")
     public String getSelectStoreMenuRegister(
         @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         Model model) {
 
-        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         model.addAttribute("options", options);
-        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(1L);
+        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
         model.addAttribute("optionGroups", optionGroups);
 
         model.addAttribute("createOptionRequestDto", createOptionRequestDto);
@@ -54,11 +56,12 @@ public class StoreOptionManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-option-group-manager")
+    @PostMapping("/stores/{storeId}/store-option-group-manager")
     public String postCreateOptionGroup(
         @Valid @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeOptionManagerService.createOptionGroup(1L, createOptionGroupRequestDto);
+        storeOptionManagerService.createOptionGroup(storeId, createOptionGroupRequestDto);
         return "redirect:/store-option-manager";
     }
 
@@ -68,11 +71,12 @@ public class StoreOptionManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-option-manager")
+    @PostMapping("/stores/{storeId}/store-option-manager")
     public String postCreateOption(
         @Valid @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
+        @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeOptionManagerService.createOption(1L, 1L, createOptionRequestDto);
+        storeOptionManagerService.createOption(1L, storeId, createOptionRequestDto);
         return "redirect:/store-option-manager";
     }
 }

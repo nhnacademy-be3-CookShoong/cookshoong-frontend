@@ -62,8 +62,6 @@ public class StoreController {
         Long accountId = accountIdAware.getAccountId();
 
         SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);
-
-
         model.addAttribute("storeInfo", storeInfo);
         return "store/info/store-info-manager";
     }
