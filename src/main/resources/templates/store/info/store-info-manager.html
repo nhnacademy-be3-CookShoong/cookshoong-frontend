@@ -27,10 +27,10 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-<!--                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"-->
-<!--                      method="post">-->
-<!--                    -->
-<!--                </form>-->
+                <!--                <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"-->
+                <!--                      method="post">-->
+                <!--                    -->
+                <!--                </form>-->
 
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
@@ -48,7 +48,8 @@
                             </div>
 
                             <div class="form-group"><label for="businessLicenseNumber">사업자 등록번호</label>
-                                <span th:text="${storeInfo.getBusinessLicenseNumber()}" id="businessLicenseNumber"></span>
+                                <span th:text="${storeInfo.getBusinessLicenseNumber()}"
+                                      id="businessLicenseNumber"></span>
                             </div>
 
                             <div class="form-group"><label>정산 정보</label>
@@ -74,23 +75,23 @@
                                 <span th:text="${storeInfo.getPhoneNumber()}" id="phoneNumber"></span>
                             </div>
 
-<!--                            <div class="form-group"><label>영업점 주소</label>-->
-<!--                                <div class="input-group col-xs-12">-->
-<!--                                    <input type="text" class="form-control" id="mainPlace" name="mainPlace"-->
-<!--                                           th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">-->
-<!--                                    <button class="btn btn-info" onclick="execDaumPostcode()" type="button">-->
-<!--                                        주소 검색-->
-<!--                                    </button>-->
-<!--                                </div>-->
-<!--                                <input class="form-control" type="text" id="detailPlace"-->
-<!--                                       name="detailPlace"-->
-<!--                                       th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">-->
+                            <!--                            <div class="form-group"><label>영업점 주소</label>-->
+                            <!--                                <div class="input-group col-xs-12">-->
+                            <!--                                    <input type="text" class="form-control" id="mainPlace" name="mainPlace"-->
+                            <!--                                           th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">-->
+                            <!--                                    <button class="btn btn-info" onclick="execDaumPostcode()" type="button">-->
+                            <!--                                        주소 검색-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
+                            <!--                                <input class="form-control" type="text" id="detailPlace"-->
+                            <!--                                       name="detailPlace"-->
+                            <!--                                       th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">-->
 
-<!--                                <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">-->
-<!--                                <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">-->
+                            <!--                                <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">-->
+                            <!--                                <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">-->
 
-<!--                                <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>-->
-<!--                            </div>-->
+                            <!--                                <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label>영업점 주소</label>
                                 <div th:text="${storeInfo.getMainPlace()}+ ' '+ ${storeInfo.getDetailPlace()}"></div>
@@ -108,7 +109,8 @@
                                 </div>
                             </div>
                             매장 대표사진
-                            <p><img th:src="|/images/${storeInfo.getSavedName()}|" alt="No image"></p>
+                            <p><img th:src="@{/images(imageName=${storeInfo.getPathName()})}" alt="No image"
+                                    width="200px"></p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +185,7 @@
     });
 </script>
 <script>
-    window.onload = function() {
+    window.onload = function () {
         window.scrollTo(0, 0);
     }
 </script>
