@@ -30,7 +30,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreFo
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 
 /**

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.SelectAllStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
-import store.cookshoong.www.cookshoongfrontend.util.CookieUtils;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.CookieUtils;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 매장 조회에 대한 Controller.

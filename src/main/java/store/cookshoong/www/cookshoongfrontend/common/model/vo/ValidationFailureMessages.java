@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.common.util;
+package store.cookshoong.www.cookshoongfrontend.common.model.vo;
 
 /**
  * 검증 로직에 위반되었을 때 반환되는 메세지들.

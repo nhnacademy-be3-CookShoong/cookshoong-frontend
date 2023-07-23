@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.util;
+package store.cookshoong.www.cookshoongfrontend.common.util;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

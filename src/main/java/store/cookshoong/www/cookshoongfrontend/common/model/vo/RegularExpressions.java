@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.common.util;
+package store.cookshoong.www.cookshoongfrontend.common.model.vo;
 
 /**
  * 자주 쓰일 것 같은 정규표현식들.

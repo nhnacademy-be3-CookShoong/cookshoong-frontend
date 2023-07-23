@@ -26,7 +26,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.BankService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.MerchantService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 매장 등록 페이지 컨트롤러.

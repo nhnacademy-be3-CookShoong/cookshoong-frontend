@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
-import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.RegularExpressions;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailureMessages;
 
 /**
  * 회원이 주소를 등록할 때.
