@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepository;
-import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 
 /**
  * 로그아웃시 동작들을 정의해줄 핸들러.

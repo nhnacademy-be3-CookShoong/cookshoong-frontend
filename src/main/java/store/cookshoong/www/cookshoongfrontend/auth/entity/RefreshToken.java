@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedRefreshToken;
-import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 
 /**
  * 리프레쉬 토큰을 레디스에 저장하기 위한 엔터티.
