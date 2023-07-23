@@ -13,8 +13,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
-import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
-import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.RegularExpressions;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailureMessages;
 
 /**
  * 회원가입 폼에서 회원가입 요청을 위해 보내는 Dto.

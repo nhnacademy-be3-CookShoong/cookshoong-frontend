@@ -6,8 +6,8 @@ import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
-import store.cookshoong.www.cookshoongfrontend.common.util.RegularExpressions;
-import store.cookshoong.www.cookshoongfrontend.common.util.ValidationFailureMessages;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.RegularExpressions;
+import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailureMessages;
 
 /**
  * 결제 타입과 환불 타입에 name을 수정하는 Request Dto.

@@ -9,7 +9,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedRefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepository;
-import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 
 /**
  * Json Web Token 으로부터 accountId를 가져오는 방식을 정의하는 클래스.

@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.common.util;
+package store.cookshoong.www.cookshoongfrontend.auth.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

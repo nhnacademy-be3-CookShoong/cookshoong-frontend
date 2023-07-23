@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.util;
+package store.cookshoong.www.cookshoongfrontend.common.util;
 
 import java.util.Arrays;
 import java.util.Optional;
