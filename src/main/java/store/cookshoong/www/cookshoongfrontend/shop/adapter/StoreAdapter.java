@@ -82,7 +82,7 @@ public class StoreAdapter {
     }
 
     /**
-     * 3km 이내 매장 리스트 조회 메서드.
+     * 사용자 : 3km 이내 매장 리스트 조회 메서드.
      *
      * @param addressId 주소 아이디
      * @param pageable  페이지 파라미터
@@ -114,10 +114,10 @@ public class StoreAdapter {
     }
 
     /**
-     * 매장 키워드 검색 리스트 조회 메서드.
+     * 사용자 : 키워드 검색 매장 리스트 조회 메서드.
      *
-     * @param keyword 키워드 단어
-     * @param pageable  페이지 파라미터
+     * @param keyword  키워드 단어
+     * @param pageable 페이지 파라미터
      * @return response rest response page
      */
     public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresByKeyword(String keyword, Pageable pageable) {
@@ -143,6 +143,9 @@ public class StoreAdapter {
 
         return response.getBody();
     }
+
+
+
 
     /**
      * 매장 조회 메서드.

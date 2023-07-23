@@ -29,19 +29,6 @@ import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 public class StoreService {
     private final StoreAdapter storeAdapter;
 
-    /**
-     * 사업자 : 매장 등록 메서드.
-     *
-     * @param accountId             회원 아이디
-     * @param createStoreRequestDto 매장 등록 Dto
-     * @param businessLicense       the business license
-     * @param storeImage            the store image
-     */
-    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
-                            MultipartFile businessLicense,
-                            MultipartFile storeImage) {
-        storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
-    }
 
     /**
      * 사용자 : 3km 이내 매장 리스트 조회 메서드.
@@ -55,14 +42,31 @@ public class StoreService {
     }
 
     /**
-     * 사용자 : 매장 리스트 키워드 조회 메서드.
+     * 사용자 : 키워드 검색 매장 리스트 조회 메서드.
      *
-     * @param keyword 키워드 단어
-     * @param pageable  페이지 파라미터
+     * @param keyword  키워드 단어
+     * @param pageable 페이지 파라미터
      * @return the rest response page
      */
     public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Pageable pageable) {
         return storeAdapter.fetchStoresByKeyword(keyword, pageable);
+    }
+
+
+
+    
+    /**
+     * 사업자 : 매장 등록 메서드.
+     *
+     * @param accountId             회원 아이디
+     * @param createStoreRequestDto 매장 등록 Dto
+     * @param businessLicense       the business license
+     * @param storeImage            the store image
+     */
+    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
+                            MultipartFile businessLicense,
+                            MultipartFile storeImage) {
+        storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
     }
 
 
