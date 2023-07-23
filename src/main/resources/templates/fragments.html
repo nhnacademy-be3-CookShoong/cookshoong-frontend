@@ -143,12 +143,9 @@
 
     <script type="text/javascript">
       const storeId = window.document.location.pathname.split("/")[2];
-      console.log("storeId", storeId);
-      console.log("first", window.document.location.pathname.split("/")[0]);
 
       const navLinks = document.getElementsByClassName("nav-link-item");
       for (const navLink of navLinks) {
-        console.log("href", navLink.getAttribute("href"));
         navLink.setAttribute("href", `/stores/${storeId}/${navLink.getAttribute("href")}`)
       }
     </script>
