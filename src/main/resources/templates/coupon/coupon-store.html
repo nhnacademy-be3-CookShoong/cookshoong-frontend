@@ -56,10 +56,10 @@
                     <div class="card border-bottom-0">
                         <ul class="nav nav-tabs col-12">
                             <li class="nav-item flex-grow-1" style="text-align: center">
-                                <a class="nav-link active" href="#coupon1" data-toggle="tab">쿠폰1</a>
+                                <a class="nav-link active" href="#coupon1" data-toggle="tab">금액 쿠폰</a>
                             </li>
                             <li class="nav-item flex-grow-1" style="text-align: center">
-                                <a class="nav-link" href="#coupon2" data-toggle="tab">쿠폰2</a>
+                                <a class="nav-link" href="#coupon2" data-toggle="tab">포인트 쿠폰</a>
                             </li>
                         </ul>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="card border-top-0">
                     <div class="tab-content p-0 m-0">
                         <div class="tab-pane fade show active col-12 stretch-card" id="coupon1">
-                            <form class="col-12 p-0" th:action="@{/coupon/cash}" method="post">
+                            <form class="col-12 p-0" th:action="@{|/coupon/stores/${storeId}/cash|}" method="post">
                                 <div class="card border-top-0">
                                     <div class="card-body">
 
@@ -117,7 +117,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade col-12 stretch-card" id="coupon2">
-                            <form class="col-12 p-0" th:action="@{/coupon/percent}" method="post">
+                            <form class="col-12 p-0" th:action="@{percent}" method="post">
                                 <div class="card border-top-0">
                                     <div class="card-body">
                                         <h4 class="card-title">쿠폰 정보</h4>

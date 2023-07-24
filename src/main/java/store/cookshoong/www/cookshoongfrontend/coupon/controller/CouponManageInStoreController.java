@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,15 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/coupon")
+@RequestMapping("/coupon/stores/{storeId}")
 public class CouponManageController {
     private static final String REDIRECT_COUPON_INDEX = "redirect:/coupon";
     private final CouponManageService couponManageService;
+
+    @ModelAttribute
+    private Long storeId(@PathVariable Long storeId) {
+        return storeId;
+    }
 
     /**
      * 매장 쿠폰 정책 확인 엔드포인트.
@@ -37,7 +43,7 @@ public class CouponManageController {
      * @return the coupon policies
      */
     @GetMapping
-    public String getStoreCouponPolicies(Pageable pageable, Model model) {
+    public String getStoreCouponPolicies(Pageable pageable, Model model, @ModelAttribute Long storeId) {
         Page<SelectPolicyResponseDto> policies = couponManageService.selectStorePolicy(pageable);
         model.addAttribute("policies", policies);
         model.addAttribute("buttonNumber", 5);
@@ -51,7 +57,7 @@ public class CouponManageController {
      * @return 매장 쿠폰 view 화면
      */
     @PostMapping("/cash")
-    public String postStoreCashCouponPolicies(CreateCashCouponPolicyRequestDto request) {
+    public String postStoreCashCouponPolicies(CreateCashCouponPolicyRequestDto request, @ModelAttribute Long storeId) {
         couponManageService.createStoreCashCouponPolicy(request);
         return REDIRECT_COUPON_INDEX;
     }
@@ -63,7 +69,8 @@ public class CouponManageController {
      * @return 매장 쿠폰 view 화면
      */
     @PostMapping("/percent")
-    public String postStorePercentCouponPolicies(CreatePercentCouponPolicyRequestDto request) {
+    public String postStorePercentCouponPolicies(CreatePercentCouponPolicyRequestDto request,
+                                                 @ModelAttribute Long storeId) {
         couponManageService.createStorePercentCouponPolicy(request);
         return REDIRECT_COUPON_INDEX;
     }
