@@ -24,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import store.cookshoong.www.cookshoongfrontend.auth.interceptor.RestTemplateHeaderModifierInterceptor;
 import store.cookshoong.www.cookshoongfrontend.common.property.SecureKeyManagerProperties;
 
 /**
@@ -45,6 +46,7 @@ public class RestTemplateConfig {
         return new RestTemplateBuilder().setConnectTimeout(Duration.ofSeconds(5))
             .setReadTimeout(Duration.ofSeconds(5))
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .additionalInterceptors(new RestTemplateHeaderModifierInterceptor())
             .build();
     }
 
