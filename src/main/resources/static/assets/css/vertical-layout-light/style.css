@@ -11123,14 +11123,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #f2125e;
-    border-color: #f2125e;
+    background-color: #f28212;
+    border-color: #f24612;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #d20c4f;
-    border-color: #c60b4a;
+    background-color: #f28212;
+    border-color: #f24612;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -11139,15 +11139,15 @@ fieldset:disabled a.btn {
 
 .btn-primary.disabled, .btn-primary:disabled {
     color: #fff;
-    background-color: #f2125e;
-    border-color: #f2125e;
+    background-color: #f28212;
+    border-color: #f24612;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #c60b4a;
-    border-color: #ba0a46;
+    background-color: #f28212;
+    border-color: #f24612;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -23669,10 +23669,12 @@ body.avgrund-active {
 
 .auth .brand-logo {
     margin-bottom: 2rem;
+    text-align: center
 }
 
 .auth .brand-logo img {
-    width: 150px;
+    width: 350px;
+    height: auto
 }
 
 .auth form .form-group {
