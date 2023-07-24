@@ -31,7 +31,7 @@ public class StoreTimeManagerController {
      * @author papel
      * @since 2023.07.10
      */
-    @GetMapping("/store-time-manager")
+    @GetMapping("/stores/{storeId}/store-time-manager")
     public String getSelectStoreTimeManager(@ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
                                             @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
                                             Model model) {
