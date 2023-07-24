@@ -37,7 +37,19 @@
             </a>
         </div>
 
-        <div class="col-4 d-flex justify-content-end align-items-center" sec:authorize="isAuthenticated()">
+        <div class="col-4 d-flex justify-content-end align-items-center" sec:authorize="hasAuthority('CUSTOMER')">
+            <a th:href="@{/my-page}" style="color: white; font-size: 0.9rem" class="mr-2">
+                마이페이지
+            </a>
+            <a th:href="@{/logout}" style="color: white; font-size: 0.9rem" class="mr-2">
+                로그아웃
+            </a>
+        </div>
+
+        <div class="col-4 d-flex justify-content-end align-items-center" sec:authorize="hasAuthority('BUSINESS')">
+            <a th:href="@{/stores}" style="color: white; font-size: 0.9rem" class="mr-2">
+                사장님페이지
+            </a>
             <a th:href="@{/my-page}" style="color: white; font-size: 0.9rem" class="mr-2">
                 마이페이지
             </a>
@@ -64,7 +76,7 @@
                         <a class="nav-link" style="font-size:1.1rem; font-weight: bold" href="">Book</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="font-size:1.1rem; font-weight: bold" href="/stores">Admin</a>
+                        <a class="nav-link" style="font-size:1.1rem; font-weight: bold" href="">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -85,6 +97,7 @@
                 <span class="typcn typcn-th-menu"></span>
             </button>
         </div>
+
         <div class="col-4 d-flex justify-content-end align-items-center" sec:authorize="!isAuthenticated()">
             <a th:href="@{/sign-up}" style="color: white; font-size: 0.9rem" class="mr-2">
                 회원가입
@@ -95,13 +108,17 @@
         </div>
 
         <div class="col-4 d-flex justify-content-end align-items-center" sec:authorize="isAuthenticated()">
-            <a th:href="@{/sign-up}" style="color: white; font-size: 0.9rem" class="mr-2">
+            <a th:href="@{/stores}" style="color: white; font-size: 0.9rem" class="mr-2">
+                사장님페이지
+            </a>
+            <a th:href="@{/my-page}" style="color: white; font-size: 0.9rem" class="mr-2">
                 마이페이지
             </a>
-            <a th:href="@{/login}" style="color: white; font-size: 0.9rem" class="mr-2">
+            <a th:href="@{/logout}" style="color: white; font-size: 0.9rem" class="mr-2">
                 로그아웃
             </a>
         </div>
+
     </div>
 </header>
 
