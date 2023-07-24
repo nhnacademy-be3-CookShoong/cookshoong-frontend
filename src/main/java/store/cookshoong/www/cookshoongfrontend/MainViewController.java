@@ -3,19 +3,29 @@ package store.cookshoong.www.cookshoongfrontend;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
@@ -31,12 +41,15 @@ import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 @RequiredArgsConstructor
 public class MainViewController {
     private final StoreService storeService;
+    private final StoreMenuManagerService storeMenuManagerService;
+    private final StoreOptionManagerService storeOptionManagerService;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
      *
-     * @author papel
-     * @since 2023.07.05
+     * @param pageable the pageable
+     * @param model    the model
+     * @return the index
      */
     @GetMapping({"", "/index"})
     public String getIndexByDistance(Pageable pageable, Model model) {
@@ -52,8 +65,10 @@ public class MainViewController {
     /**
      * 매장 검색 랜딩 페이지 맵핑.
      *
-     * @author papel
-     * @since 2023.07.05
+     * @param keywordText the keywordText
+     * @param pageable    the pageable
+     * @param model       the model
+     * @return the index
      */
     @GetMapping("/index/search")
     public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
@@ -62,8 +77,52 @@ public class MainViewController {
         return "index/index";
     }
 
+    /**
+     * 매장 페이지 맵핑.
+     *
+     * @param storeId the store id
+     * @param model   the model
+     * @return the index store
+     */
+    @GetMapping({"/index/store/{storeId}"})
+    public String getIndexStore(@PathVariable("storeId") Long storeId, Model model) {
+        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
+        model.addAttribute("store", store);
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
+        model.addAttribute("menus", menus);
+        return "index/store";
+    }
 
+    /**
+     * 메뉴 페이지 맵핑.
+     *
+     * @param storeId the store id
+     * @param menuId  the menu id
+     * @param model   the model
+     * @return the index menu
+     */
+    @GetMapping({"/index/store/{storeId}/menu/{menuId}"})
+    public String getIndexMenu(@PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId, Model model) {
+        SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
+        model.addAttribute("menu", menu);
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
+        model.addAttribute("options", options);
 
+        return "index/menu";
+    }
+
+    /**
+     * 이미지 로드.
+     *
+     * @param imageName the image name
+     * @return the image
+     * @throws MalformedURLException the malformed url exception
+     */
+    @ResponseBody
+    @GetMapping("/images")
+    public Resource getImage(@RequestParam("imageName") String imageName) throws MalformedURLException {
+        return new UrlResource("file:" + imageName);
+    }
 
 
 
