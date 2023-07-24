@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
 import java.net.MalformedURLException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
@@ -43,6 +46,8 @@ public class MainViewController {
     private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final AccountAddressService accountAddressService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
@@ -52,8 +57,12 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping({"", "/index"})
-    public String getIndexByDistance(Pageable pageable, Model model) {
-        RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(1L, pageable);
+    public String getIndexByDistance(Model model, Pageable pageable, Principal principal) {
+        Long addressId = 1L;
+        if(principal != null) {
+            addressId = accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId()).getId();
+        }
+        RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
                 ArrayList::new));
