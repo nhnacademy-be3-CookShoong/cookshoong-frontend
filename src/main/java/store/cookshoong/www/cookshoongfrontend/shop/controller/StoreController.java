@@ -29,41 +29,21 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 public class StoreController {
     private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
-    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 페이지 맵핑.
      *
-     * @param model   the model
      * @param storeId the store id
+     * @param model   the model
      * @return the index store
-     * @author papel
-     * @since 2023.07.16
      */
     @GetMapping({"/index/store/{storeId}"})
-    public String getIndexStore(Model model, @PathVariable("storeId") Long storeId) {
+    public String getIndexStore(@PathVariable("storeId") Long storeId, Model model) {
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
         model.addAttribute("store", store);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         model.addAttribute("menus", menus);
         return "index/store";
-    }
-
-    /**
-     * 매장 정보 조회.
-     *
-     * @param storeId the store id
-     * @param model   the model
-     * @return 매장 정보
-     */
-    @GetMapping("/stores/{storeId}")
-    public String getStoreInfo(@PathVariable("storeId") Long storeId,
-                               Model model) {
-        Long accountId = accountIdAware.getAccountId();
-
-        SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);
-        model.addAttribute("storeInfo", storeInfo);
-        return "store/info/store-info-manager";
     }
 
     /**

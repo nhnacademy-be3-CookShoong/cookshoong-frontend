@@ -49,7 +49,7 @@
                                     <tbody th:each="store, i :${stores}">
                                     <tr>
                                         <td th:text="${(stores.pageable.pageNumber * stores.pageable.pageSize) + i.index +1}"></td>
-                                        <td><a th:href="@{|/stores/${store.storeId}|}" th:text="${store.storeName}"></a></td>
+                                        <td><a th:href="@{|/stores/${store.storeId}/store-info-manager|}" th:text="${store.storeName}"></a></td>
                                         <td th:text="${store.storeMainAddress}+' '+${store.storeDetailAddress}"></td>
                                         <td th:text="${store.storeStatus}"></td>
                                         <td>

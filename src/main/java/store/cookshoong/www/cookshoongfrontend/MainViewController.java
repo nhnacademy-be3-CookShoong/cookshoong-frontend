@@ -39,7 +39,7 @@ public class MainViewController {
      * @since 2023.07.05
      */
     @GetMapping({"", "/index"})
-    public String getIndex(Pageable pageable, Model model) {
+    public String getIndexByDistance(Pageable pageable, Model model) {
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(1L, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
@@ -56,7 +56,7 @@ public class MainViewController {
      * @since 2023.07.05
      */
     @GetMapping("/index/search")
-    public String searchByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
+    public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
         model.addAttribute("searchStores", searchedStores);
         return "index/index";

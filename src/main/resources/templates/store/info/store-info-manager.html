@@ -12,10 +12,6 @@
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
 </head>
 
 <body>
@@ -134,61 +130,6 @@
 <script src="/assets/js/file-upload.js"></script>
 <script src="/assets/js/typeahead.js"></script>
 <script src="/assets/js/select2.js"></script>
-<script>
-    var mapContainer = document.getElementById('map');
-    var mapOption = {
-        center: new daum.maps.LatLng(35.140031585514, 126.934176746529),
-        level: 5
-    };
-    var map = new daum.maps.Map(mapContainer, mapOption);
-    var geocoder = new daum.maps.services.Geocoder();
-    var marker = new daum.maps.Marker({
-        position: new daum.maps.LatLng(35.140031585514, 126.934176746529),
-        map: map
-    });
-
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function (data) {
-                var addr = data.address;
-                document.getElementById("mainPlace").value = addr;
-                geocoder.addressSearch(data.address, function (results, status) {
-                    if (status === daum.maps.services.Status.OK) {
-                        var result = results[0];
-                        var lat = result.y;
-                        var lng = result.x;
-                        document.getElementById("latitude").value = lat;
-                        document.getElementById("longitude").value = lng;
-                        mapContainer.style.display = "block";
-                        map.relayout();
-                        map.setCenter(new daum.maps.LatLng(lat, lng));
-                        marker.setPosition(new daum.maps.LatLng(lat, lng));
-                    }
-                });
-            }
-        }).open();
-    }
-
-</script>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script>
-    const editor = new toastui.Editor({
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '500px',
-        initialValue: '가게 설명을 입력해주세요.'
-    });
-
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
-    });
-</script>
-<script>
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    }
-</script>
 </body>
 
 </html>
