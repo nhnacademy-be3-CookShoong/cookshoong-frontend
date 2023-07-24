@@ -59,7 +59,7 @@ public class MainViewController {
     @GetMapping({"", "/index"})
     public String getIndexByDistance(Model model, Pageable pageable, Principal principal) {
         Long addressId = 1L;
-        if(principal.getName() != null) {
+        if(principal != null) {
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId()).getId();
         }
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
