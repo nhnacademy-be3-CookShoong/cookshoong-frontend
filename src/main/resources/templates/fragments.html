@@ -93,10 +93,8 @@
               class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
         <div class="collapse" id="form-elements">
           <ul class="flex-column nav sub-menu">
-            <li><a class="nav-link" href="store-register">매장 등록</a></li>
-            <li><a class="nav-link" href="store-info-manager">매장 관리</a></li>
-            <li><a class="nav-link" href="store-time-manager">영업시간 관리</a></li>
-            <li><a class="nav-link" href="store-merchant-manager">가맹점 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-time-manager">영업시간 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-merchant-manager">가맹점 관리</a></li>
           </ul>
         </div>
       </li>
@@ -106,8 +104,8 @@
         <div class="collapse" id="charts">
           <ul class="flex-column nav sub-menu">
 
-            <li><a class="nav-link" href="store-menu-manager">메뉴 관리</a></li>
-            <li><a class="nav-link" href="store-option-manager">옵션 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-menu-manager">메뉴 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-option-manager">옵션 관리</a></li>
           </ul>
         </div>
       </li>
@@ -116,9 +114,9 @@
               class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
         <div class="collapse" id="tables">
           <ul class="flex-column nav sub-menu">
-            <li><a class="nav-link" href="store-order-manager">주문 관리</a></li>
-            <li><a class="nav-link" href="store-delivery-manager">배송 관리</a></li>
-            <li><a class="nav-link" href="store-charge-manager">결제 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-order-manager">주문 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-delivery-manager">배송 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-charge-manager">결제 관리</a></li>
           </ul>
         </div>
       </li>
@@ -127,8 +125,8 @@
               class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
         <div class="collapse" id="auth">
           <ul class="flex-column nav sub-menu">
-            <li><a class="nav-link" href="store-coupon-manager">쿠폰 관리</a></li>
-            <li><a class="nav-link" href="store-point-manager">포인트 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-coupon-manager">쿠폰 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-point-manager">포인트 관리</a></li>
           </ul>
         </div>
       </li>
@@ -137,11 +135,20 @@
               class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
         <div class="collapse" id="error">
           <ul class="flex-column nav sub-menu">
-            <li><a class="nav-link" href="store-review-manager">리뷰 관리</a></li>
+            <li><a class="nav-link nav-link-item" href="store-review-manager">리뷰 관리</a></li>
           </ul>
         </div>
       </li>
     </ul>
+
+    <script type="text/javascript">
+      const storeId = window.document.location.pathname.split("/")[2];
+
+      const navLinks = document.getElementsByClassName("nav-link-item");
+      for (const navLink of navLinks) {
+        navLink.setAttribute("href", `/stores/${storeId}/${navLink.getAttribute("href")}`)
+      }
+    </script>
   </nav>
 
 <footer th:fragment="site-footer" class="footer_section" >
