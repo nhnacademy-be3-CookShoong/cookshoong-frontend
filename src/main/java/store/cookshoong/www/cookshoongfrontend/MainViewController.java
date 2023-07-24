@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
@@ -182,9 +183,9 @@ public class MainViewController {
      * @author papel
      * @since 2023.07.05
      */
-    @GetMapping("/store-coupon-manager")
-    public String getStoreCouponManager() {
-        return "redirect:/coupon";
+    @GetMapping("stores/{storeId}/store-coupon-manager")
+    public String getStoreCouponManager(@PathVariable Long storeId) {
+        return CouponManageInStoreController.redirectStoreCouponIndex(storeId);
     }
 
     /**
