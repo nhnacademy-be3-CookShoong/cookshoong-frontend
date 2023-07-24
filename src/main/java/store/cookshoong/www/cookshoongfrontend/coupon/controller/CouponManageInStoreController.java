@@ -5,20 +5,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
-import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
 
 /**
- * 쿠폰 관리 엔드포인트.
+ * 매장에서의 쿠폰 관리 엔드포인트.
  *
  * @author eora21 (김주호)
  * @since 2023.07.14
@@ -26,8 +24,8 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/coupon/stores/{storeId}")
-public class CouponManageController {
-    private static final String REDIRECT_COUPON_INDEX = "redirect:/coupon";
+public class CouponManageInStoreController {
+    private static final String REDIRECT_STORE_COUPON_INDEX = "redirect:/coupon/stores/";
     private final CouponManageService couponManageService;
 
     @ModelAttribute
@@ -44,10 +42,11 @@ public class CouponManageController {
      */
     @GetMapping
     public String getStoreCouponPolicies(Pageable pageable, Model model, @ModelAttribute Long storeId) {
-        Page<SelectPolicyResponseDto> policies = couponManageService.selectStorePolicy(pageable);
+        Page<SelectPolicyResponseDto> policies = couponManageService.selectStorePolicy(pageable, storeId);
         model.addAttribute("policies", policies);
         model.addAttribute("buttonNumber", 5);
-        return "coupon/coupon";
+        model.addAttribute("storeId", storeId);
+        return "coupon/coupon-store";
     }
 
     /**
@@ -58,8 +57,8 @@ public class CouponManageController {
      */
     @PostMapping("/cash")
     public String postStoreCashCouponPolicies(CreateCashCouponPolicyRequestDto request, @ModelAttribute Long storeId) {
-        couponManageService.createStoreCashCouponPolicy(request);
-        return REDIRECT_COUPON_INDEX;
+        couponManageService.createStoreCashCouponPolicy(request, storeId);
+        return redirectStoreCouponIndex(storeId);
     }
 
     /**
@@ -71,31 +70,11 @@ public class CouponManageController {
     @PostMapping("/percent")
     public String postStorePercentCouponPolicies(CreatePercentCouponPolicyRequestDto request,
                                                  @ModelAttribute Long storeId) {
-        couponManageService.createStorePercentCouponPolicy(request);
-        return REDIRECT_COUPON_INDEX;
+        couponManageService.createStorePercentCouponPolicy(request, storeId);
+        return redirectStoreCouponIndex(storeId);
     }
 
-    /**
-     * 쿠폰 정책 삭제 엔드포인트.
-     *
-     * @param policyId the policy id
-     * @return 매장 쿠폰 view 화면
-     */
-    @DeleteMapping("/policies/{policyId}")
-    public String deleteCouponPolicy(@PathVariable Long policyId) {
-        couponManageService.removeCouponPolicy(policyId);
-        return REDIRECT_COUPON_INDEX;
-    }
-
-    /**
-     * 쿠폰 발행 엔드포인트.
-     *
-     * @param createIssueCouponRequestDto 쿠폰 발행 dto
-     * @return 매장 쿠폰 view 화면
-     */
-    @PostMapping("/issue")
-    public String postCouponIssue(CreateIssueCouponRequestDto createIssueCouponRequestDto) {
-        couponManageService.createIssueCoupon(createIssueCouponRequestDto);
-        return REDIRECT_COUPON_INDEX;
+    private String redirectStoreCouponIndex(Long storeId) {
+        return REDIRECT_STORE_COUPON_INDEX + storeId;
     }
 }
