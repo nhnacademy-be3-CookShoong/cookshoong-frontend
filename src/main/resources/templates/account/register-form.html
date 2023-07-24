@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 
+    <script src="/assets/js/form-validation.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
 </head>
@@ -21,15 +23,17 @@
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                         <div class="brand-logo">
-<!--                            <img src="/assets/images/logo.svg" alt="logo">-->
+                            <img src="/assets/images/shoong_orange.png" alt="logo">
                         </div>
                         <h4>New here?</h4>
                         <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-                        <form class="pt-3" th:action="@{/sign-up(userType=${userType})}" th:object="${signUpRequestDto}" method="post">
+                        <form class="pt-3 needs-validation" th:action="@{/sign-up(userType=${userType})}" th:object="${signUpRequestDto}" method="post">
                             <div class="form-group" >
                                 <input type="text" class="form-control form-control-lg" id="loginId" name="loginId"
                                        th:field="*{loginId}" placeholder="아이디" required>
-                                <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}">loginId Error</p>
+                                <div class="invalid-feedback">
+                                    <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></p>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control form-control-lg" id="password"
@@ -63,13 +67,13 @@
                                     Error</p>
                             </div>
                             <div class="form-group">
-                                <div>
-                                <input type="text" class="form-control form-control-lg" id="mainPlace"
-                                       name="createAccountAddressRequestDto.mainPlace"
-                                       th:field="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소">
-                                <button class="btn btn-info" onclick="execDaumPostcode()" type="button">
-                                    주소 검색
-                                </button>
+                                <div class="flex-container">
+                                    <input type="text" class="form-control form-control-lg address-inputField" id="mainPlace"
+                                           name="createAccountAddressRequestDto.mainPlace"
+                                           th:field="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소">
+                                    <button class="btn btn-outline-warning" onclick="execDaumPostcode()" type="button">
+                                        주소 검색
+                                    </button>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -87,7 +91,7 @@
                             <input type="hidden" id="longitude" name="createAccountAddressRequestDto.longitude"
                                    th:field="*{createAccountAddressRequestDto.longitude}">
                             <div class="mb-4">
-                                <div class="form-check">
+                                <div class="form-check form-check-warning">
                                     <label class="form-check-label text-muted">
                                         <input type="checkbox" class="form-check-input">
                                         I agree to all Terms & Conditions
@@ -100,8 +104,8 @@
                                         type="submit">SIGN UP
                                 </button>
                             </div>
-                            <div class="text-center mt-4 font-weight-light">
-                                Already have an account? <a th:href="@{/login-page}" class="text-primary">Login</a>
+                            <div class="text-center mt-4 font-weight-normal">
+                                Already have an account? <a th:href="@{/login-page}" class="text-warning">Login</a>
                             </div>
                         </form>
                     </div>

@@ -104,3 +104,12 @@
     font-size: 14px;
     margin-left: 10px;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.address-inputField {
+    flex: 1;
+    margin-right: 10px;
+}
