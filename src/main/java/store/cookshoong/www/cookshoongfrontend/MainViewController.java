@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 메인 뷰 페이지 컨트롤러.
@@ -33,27 +33,29 @@ public class MainViewController {
     private final StoreService storeService;
 
     /**
-     * 매장 랜딩 페이지 맵핑.
+     * 매장 기본 랜딩 페이지 맵핑.
      *
      * @author papel
      * @since 2023.07.05
      */
-    @GetMapping({"/index", ""})
+    @GetMapping({"", "/index"})
     public String getIndex(Pageable pageable, Model model) {
-        //TODO 회원에 대해 최신 갱신 날짜로 뽑아오는 주소 정보입니다. 추후 address.getId 해서 addressId 받아오시면 됩니다.
-//        AddressResponseDto address = accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
-
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(1L, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
                 ArrayList::new));
         model.addAttribute("allStore", distinctStores);
         model.addAttribute("stores", stores);
-
         return "index/index";
     }
 
-    @GetMapping("/store/search")
+    /**
+     * 매장 검색 랜딩 페이지 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.05
+     */
+    @GetMapping("/index/search")
     public String searchByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
         model.addAttribute("searchStores", searchedStores);
@@ -70,17 +72,6 @@ public class MainViewController {
 
 
 
-
-    /**
-     * 비회원용 매장 페이지 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.17
-     */
-    @GetMapping({"/index-unsigned"})
-    public String getIndexUnsigned() {
-        return "index-unsigned";
-    }
 
     /**
      * 매장 가맹점 관리 페이지를 맵핑.
