@@ -24,7 +24,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
  * 매장 정보 관리 페이지에서 사용될 컨트롤러.
  *
  * @author papel (윤동현)
- * {@code @contributor} seongyeon (유승연)
+ * @contributor seongyeon (유승연)
  * @since 2023.07.09
  */
 @Controller
