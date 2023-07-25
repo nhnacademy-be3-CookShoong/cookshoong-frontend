@@ -25,7 +25,7 @@ import store.cookshoong.www.cookshoongfrontend.payment.service.RefundTypeService
  */
 @Slf4j
 @Controller
-@RequestMapping("/payments/charges/refund-type")
+@RequestMapping("/admin/management/refunds")
 @RequiredArgsConstructor
 public class RefundTypeController {
 
@@ -70,7 +70,7 @@ public class RefundTypeController {
 
         refundTypeService.createChargeType(createTypeRequestDto);
 
-        return "redirect:/payments/charges/refund-type";
+        return "redirect:/admin/management/refunds";
     }
 
     /**
@@ -79,11 +79,11 @@ public class RefundTypeController {
      * @param id        환불 타입 아이디
      * @return          모든 환불 타입에 대한 목록 화면으로 반환
      */
-    @GetMapping("/admin-index/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String postDeleteRefundType(@PathVariable String id) {
 
         refundTypeService.deleteChargeType(id);
 
-        return "redirect:/payments/charges/refund-type";
+        return "redirect:/admin/management/refunds";
     }
 }
