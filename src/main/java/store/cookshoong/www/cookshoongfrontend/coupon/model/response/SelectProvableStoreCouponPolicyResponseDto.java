@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.vo.CouponTypeResponse;
 
 /**
- * 매장에서 쿠폰 발급을 위해 정책 id와 쿠폰 타입을 전달하는 dto.
+ * 매장에서 쿠폰 발급을 위해 정책 id와 쿠폰 타입, 쿠폰 사용 기간을 전달하는 dto.
  *
  * @author eora21 (김주호)
  * @since 2023.07.24
