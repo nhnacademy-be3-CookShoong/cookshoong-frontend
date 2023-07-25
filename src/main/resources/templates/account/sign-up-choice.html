@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 </head>
 
@@ -20,7 +21,7 @@
                         <div class="brand-logo">
                             <img src="/assets/images/shoong_orange.png" alt="logo">
                         </div>
-                        <button class="btn btn-block btn-primary btn-lg font-weight-medium" th:onclick="|location.href='@{/sign-up(userType=cus)}'|">일반 회원가입</button>
+                        <button class="btn btn-block btn-warning btn-lg font-weight-medium sign-up-btn" th:onclick="|location.href='@{/sign-up(userType=cus)}'|">일반 회원가입</button>
                         <button class="btn btn-block btn-secondary btn-lg font-weight-medium" th:onclick="|location.href='@{/sign-up(userType=biz)}'|">사업자 회원가입</button>
                     </div>
                 </div>
