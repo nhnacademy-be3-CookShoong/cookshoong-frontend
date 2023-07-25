@@ -27,8 +27,8 @@ public class CouponManageService {
      * @param pageable the pageable
      * @return the page
      */
-    public Page<SelectPolicyResponseDto> selectStorePolicy(Pageable pageable) {
-        return couponManageAdapter.fetchStoreCouponPolicy(1L, pageable);
+    public Page<SelectPolicyResponseDto> selectStorePolicy(Pageable pageable, Long storeId) {
+        return couponManageAdapter.fetchStoreCouponPolicy(storeId, pageable);
     }
 
     /**
@@ -36,8 +36,8 @@ public class CouponManageService {
      *
      * @param request the request
      */
-    public void createStoreCashCouponPolicy(CreateCashCouponPolicyRequestDto request) {
-        couponManageAdapter.executeStoreCashCouponPolicy(1L, request);
+    public void createStoreCashCouponPolicy(CreateCashCouponPolicyRequestDto request, Long storeId) {
+        couponManageAdapter.executeStoreCashCouponPolicy(storeId, request);
     }
 
     /**
@@ -45,8 +45,8 @@ public class CouponManageService {
      *
      * @param request the request
      */
-    public void createStorePercentCouponPolicy(CreatePercentCouponPolicyRequestDto request) {
-        couponManageAdapter.executeStorePercentCouponPolicy(1L, request);
+    public void createStorePercentCouponPolicy(CreatePercentCouponPolicyRequestDto request, Long storeId) {
+        couponManageAdapter.executeStorePercentCouponPolicy(storeId, request);
     }
 
     /**
