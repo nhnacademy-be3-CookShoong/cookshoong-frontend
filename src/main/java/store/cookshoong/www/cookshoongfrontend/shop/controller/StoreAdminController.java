@@ -37,7 +37,7 @@ public class StoreAdminController {
     private final StoreAdminService storeAdminService;
 
     /**
-     * d.
+     * 은행 리스트 가져오는 컨트롤러.
      *
      * @param pageable             the pageable
      * @param model                the model
@@ -56,7 +56,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Post create bank string.
+     * 은행 추가 컨트롤러.
      *
      * @param createBankRequestDto the create bank request dto
      * @param bindingResult        the binding result
@@ -76,7 +76,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Gets merchants.
+     * 가맹점 조회하는 컨트롤러.
      *
      * @param pageable                 the pageable
      * @param model                    the model
@@ -95,7 +95,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Post create merchant string.
+     * 가맹점 등록하는 컨트롤러.
      *
      * @param createMerchantRequestDto the create merchant request dto
      * @param bindingResult            the binding result
@@ -115,7 +115,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Delete merchant string.
+     * 가맹점 삭제하는 컨트롤러.
      *
      * @param merchantId the merchant id
      * @return the string
@@ -127,7 +127,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Gets merchants.
+     * 카테고리 조회 컨트롤러.
      *
      * @param pageable                   the pageable
      * @param model                      the model
@@ -136,7 +136,7 @@ public class StoreAdminController {
      * @return the merchants
      */
     @GetMapping("/categories")
-    public String getMerchants(@PageableDefault(size = 5) Pageable pageable,
+    public String getCategories(@PageableDefault(size = 5) Pageable pageable,
                                Model model,
                                CreateCategoriesRequestDto createCategoriesRequestDto,
                                UpdateCategoryRequestDto updateCategoryRequestDto) {
@@ -149,7 +149,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Post create merchant string.
+     * 카테고리 등록 컨트롤러.
      *
      * @param createCategoriesRequestDto the create categories request dto
      * @param bindingResult              the binding result
@@ -157,7 +157,7 @@ public class StoreAdminController {
      * @return the string
      */
     @PostMapping("/categories")
-    public String postCreateMerchant(@Valid @ModelAttribute("createCategoriesRequestDto") CreateCategoriesRequestDto createCategoriesRequestDto,
+    public String postCreateCategory(@Valid @ModelAttribute("createCategoriesRequestDto") CreateCategoriesRequestDto createCategoriesRequestDto,
                                      BindingResult bindingResult,
                                      Model model) {
         if (bindingResult.hasErrors()) {
@@ -169,7 +169,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Delete category string.
+     * 카테고리 삭제 컨트롤러.
      *
      * @param categoryCode the category code
      * @return the string
@@ -181,7 +181,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Patch category string.
+     * 카테고리 수정 컨트롤러.
      *
      * @param categoryCode             the category code
      * @param updateCategoryRequestDto the update category request dto
