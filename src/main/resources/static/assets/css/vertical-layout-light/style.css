@@ -16635,6 +16635,7 @@ button.bg-dark:focus,
 .template-demo > .btn-group-vertical, .template-demo > .dropdown,
 .mx-2 {
     margin-right: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .mb-2,
