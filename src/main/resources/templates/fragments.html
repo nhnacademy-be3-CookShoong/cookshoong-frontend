@@ -57,6 +57,17 @@
                 로그아웃
             </a>
         </div>
+        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">
+                쿡슝관리
+            </a>
+            <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
+                내 정보
+            </a>
+            <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">
+                로그아웃
+            </a>
+        </div>
 
     </div>
     <div class="container-fluid">
@@ -106,8 +117,18 @@
                 로그인
             </a>
         </div>
-
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="isAuthenticated()">
+        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">
+                메인보기
+            </a>
+            <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
+                내 정보
+            </a>
+            <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">
+                로그아웃
+            </a>
+        </div>
+        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('BUSINESS')">
             <a th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
                 매장보기
             </a>
@@ -118,11 +139,10 @@
                 로그아웃
             </a>
         </div>
-
     </div>
 </header>
 
-<nav th:fragment="admin-site-nav" class="sidebar sidebar-offcanvas">
+<nav th:fragment="business-site-nav" class="sidebar sidebar-offcanvas">
     <ul class="nav">
         <li class="nav-item">
             <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>

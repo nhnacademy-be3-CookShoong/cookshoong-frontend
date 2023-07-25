@@ -46,6 +46,7 @@ public class WebSecurityConfig {
             .mvcMatchers("/").permitAll()
             .anyRequest().authenticated();
 
+
         http.formLogin()
             .loginPage("/login-page")
             .usernameParameter("loginId")

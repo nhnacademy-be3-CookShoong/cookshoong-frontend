@@ -3,7 +3,6 @@ package store.cookshoong.www.cookshoongfrontend.shop.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,13 +19,10 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreSta
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerchantsResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.service.BankService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.MerchantService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreAdminService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 매장 등록 페이지 컨트롤러.
@@ -41,8 +37,8 @@ public class StoreRegisterController {
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
     private final MerchantService merchantService;
-    private final BankService bankService;
     private final AccountIdAware accountIdAware;
+
 
     /**
      * 매장 등록 페이지를 맵핑.
@@ -54,7 +50,7 @@ public class StoreRegisterController {
     public String getSelectStore(CreateStoreRequestDto createStoreRequestDto, Model model) {
         List<SelectAllMerchantsResponseDto> merchants = merchantService.selectAllMerchants();
         List<SelectAllCategoriesResponseDto> storeCategories = storeCategoryService.selectAllCategories();
-        List<SelectAllBanksResponseDto> banks = bankService.selectAllBanks();
+        List<SelectAllBanksResponseDto> banks = storeService.selectAllBanks();
 
         model.addAttribute("banks", banks);
         model.addAttribute("merchants", merchants);
@@ -88,20 +84,7 @@ public class StoreRegisterController {
         return "redirect:/stores";
     }
 
-    @GetMapping("/stores")
-    public String getStoresForBusiness(Pageable pageable,
-                                       Model model,
-                                       UpdateStoreStatusRequestDto requestDto) {
-        Long accountId = accountIdAware.getAccountId();
-        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId, pageable);
-        List<SelectAllStatusResponseDto> status = storeService.selectStatus();
 
-        model.addAttribute("status", status);
-        model.addAttribute("stores", stores);
-        model.addAttribute("updateStoreStatusRequestDto", requestDto);
-        model.addAttribute("buttonNumber", 5);
-        return "store/info/store-list";
-    }
 
     @PatchMapping("/stores/{storeId}/status")
     public String patchStoreStatus(@PathVariable("storeId") Long storeId,
@@ -117,4 +100,6 @@ public class StoreRegisterController {
         storeService.updateStatus(accountId, storeId, updateStatus);
         return "redirect:/stores";
     }
+
+
 }
