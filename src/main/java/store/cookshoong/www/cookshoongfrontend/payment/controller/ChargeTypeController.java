@@ -70,7 +70,7 @@ public class ChargeTypeController {
 
         chargeTypeService.createChargeType(createTypeRequestDto);
 
-        return "redirect:admin/management/charges";
+        return "redirect:/admin/management/charges";
     }
 
     /**
@@ -84,6 +84,6 @@ public class ChargeTypeController {
 
         chargeTypeService.deleteChargeType(id);
 
-        return "redirect:admin/management/charges";
+        return "redirect:/admin/management/charges";
     }
 }
