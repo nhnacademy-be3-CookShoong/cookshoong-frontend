@@ -1,14 +1,11 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
 import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
 
 import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +34,12 @@ public class AdminAdapter {
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
 
+    /**
+     * 은행 목록 조회 (페이지).
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
     public RestResponsePage<SelectAllBanksResponseDto> fetchBanksPage(Pageable pageable) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -59,6 +62,12 @@ public class AdminAdapter {
         return response.getBody();
     }
 
+    /**
+     * 은행 추가 등록.
+     *
+     * @param createBankRequestDto the create bank request dto
+     * @return the response entity
+     */
     public ResponseEntity<Void> executeCreateBank(CreateBankRequestDto createBankRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -75,6 +84,12 @@ public class AdminAdapter {
         });
     }
 
+    /**
+     * 가맹점 조회(페이지).
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
     public RestResponsePage<SelectAllMerchantsResponseDto> fetchMerchantsPage(Pageable pageable) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -97,6 +112,12 @@ public class AdminAdapter {
         return response.getBody();
     }
 
+    /**
+     * 가맹점 등록.
+     *
+     * @param createMerchantRequestDto the create merchant request dto
+     * @return the response entity
+     */
     public ResponseEntity<Void> executeCreateMerchant(CreateMerchantRequestDto createMerchantRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -113,7 +134,13 @@ public class AdminAdapter {
         });
     }
 
-    public ResponseEntity<Void> eraseMerchant(Long merchantId){
+    /**
+     * 가맹점 삭제.
+     *
+     * @param merchantId the merchant id
+     * @return the response entity
+     */
+    public ResponseEntity<Void> eraseMerchant(Long merchantId) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
@@ -126,8 +153,16 @@ public class AdminAdapter {
         return restTemplate.exchange(uri,
             DELETE,
             null,
-            new ParameterizedTypeReference<>() {});
+            new ParameterizedTypeReference<>() {
+            });
     }
+
+    /**
+     * 카테고리 조회(페이지).
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
     public RestResponsePage<SelectAllCategoriesResponseDto> fetchCategoriesPage(Pageable pageable) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -150,6 +185,12 @@ public class AdminAdapter {
         return response.getBody();
     }
 
+    /**
+     * 카테고리 추가 등록.
+     *
+     * @param createMerchantRequestDto the create merchant request dto
+     * @return the response entity
+     */
     public ResponseEntity<Void> executeCreateCategories(CreateCategoriesRequestDto createMerchantRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -165,7 +206,14 @@ public class AdminAdapter {
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
     }
-    public ResponseEntity<Void> eraseCategory(String categoryCode){
+
+    /**
+     * 카테고리 삭.
+     *
+     * @param categoryCode the category code
+     * @return the response entity
+     */
+    public ResponseEntity<Void> eraseCategory(String categoryCode) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
@@ -178,10 +226,19 @@ public class AdminAdapter {
         return restTemplate.exchange(uri,
             DELETE,
             null,
-            new ParameterizedTypeReference<>() {});
+            new ParameterizedTypeReference<>() {
+            });
     }
+
+    /**
+     * 카테고리 수정.
+     *
+     * @param updateCategoryRequestDto the update category request dto
+     * @param categoryCode             the category code
+     * @return the response entity
+     */
     public ResponseEntity<Void> changeCategory(UpdateCategoryRequestDto updateCategoryRequestDto,
-                                                       String categoryCode) {
+                                               String categoryCode) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
