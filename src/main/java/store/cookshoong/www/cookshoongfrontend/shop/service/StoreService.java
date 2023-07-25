@@ -10,6 +10,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
@@ -54,7 +55,7 @@ public class StoreService {
 
 
 
-    
+
     /**
      * 사업자 : 매장 등록 메서드.
      *
@@ -79,6 +80,10 @@ public class StoreService {
      */
     public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
         return storeAdapter.fetchStoreForUser(storeId);
+    }
+
+    public List<SelectAllBanksResponseDto> selectAllBanks(){
+        return storeAdapter.fetchAllBanks();
     }
 
 
