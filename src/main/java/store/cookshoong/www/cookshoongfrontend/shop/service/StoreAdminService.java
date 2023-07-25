@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,38 +25,89 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerc
 public class StoreAdminService {
     private final AdminAdapter adminAdapter;
 
-    public RestResponsePage<SelectAllBanksResponseDto> selectAllBanks(Pageable pageable){
+    /**
+     * 은행 페이지 조회 서비스.
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectAllBanksResponseDto> selectAllBanks(Pageable pageable) {
         return adminAdapter.fetchBanksPage(pageable);
     }
 
-    public void createBank(CreateBankRequestDto bankRequestDto){
+    /**
+     * 은행 등록 서비스 코드.
+     *
+     * @param bankRequestDto the bank request dto
+     */
+    public void createBank(CreateBankRequestDto bankRequestDto) {
         adminAdapter.executeCreateBank(bankRequestDto);
     }
 
-    public RestResponsePage<SelectAllMerchantsResponseDto> selectAllMerchants(Pageable pageable){
+    /**
+     * 가맹점 페이지 조회 서비스.
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectAllMerchantsResponseDto> selectAllMerchants(Pageable pageable) {
         return adminAdapter.fetchMerchantsPage(pageable);
     }
 
-    public void createMerchant(CreateMerchantRequestDto createMerchantRequestDto){
+    /**
+     * 가맹점 등록 서비스.
+     *
+     * @param createMerchantRequestDto the create merchant request dto
+     */
+    public void createMerchant(CreateMerchantRequestDto createMerchantRequestDto) {
         adminAdapter.executeCreateMerchant(createMerchantRequestDto);
     }
-    public void removeMerchant(Long merchantId){
+
+    /**
+     * 가맹점 삭제 서비스.
+     *
+     * @param merchantId the merchant id
+     */
+    public void removeMerchant(Long merchantId) {
         adminAdapter.eraseMerchant(merchantId);
     }
 
-    public RestResponsePage<SelectAllCategoriesResponseDto> selectAllCategories(Pageable pageable){
+    /**
+     * 카테고리 조회 페이지 서비스.
+     *
+     * @param pageable the pageable
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectAllCategoriesResponseDto> selectAllCategories(Pageable pageable) {
         return adminAdapter.fetchCategoriesPage(pageable);
     }
 
-    public void createCategory(CreateCategoriesRequestDto categoriesRequestDto){
+    /**
+     * 카테고리 등록 서비스.
+     *
+     * @param categoriesRequestDto the categories request dto
+     */
+    public void createCategory(CreateCategoriesRequestDto categoriesRequestDto) {
         adminAdapter.executeCreateCategories(categoriesRequestDto);
     }
-    public void removeCategory(String categoryCode){
+
+    /**
+     * 카테고리 삭제 서비스.
+     *
+     * @param categoryCode the category code
+     */
+    public void removeCategory(String categoryCode) {
         adminAdapter.eraseCategory(categoryCode);
     }
 
+    /**
+     * 카테고리 수정 서비스.
+     *
+     * @param updateCategoryRequestDto the update category request dto
+     * @param code                     the code
+     */
     public void updateCategory(UpdateCategoryRequestDto updateCategoryRequestDto,
-                               String code){
+                               String code) {
         adminAdapter.changeCategory(updateCategoryRequestDto, code);
     }
 }

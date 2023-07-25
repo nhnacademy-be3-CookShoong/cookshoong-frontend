@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
@@ -17,7 +18,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreFo
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 매장 등록 및 조회 서비스.
@@ -54,8 +54,6 @@ public class StoreService {
     }
 
 
-
-
     /**
      * 사업자 : 매장 등록 메서드.
      *
@@ -71,7 +69,6 @@ public class StoreService {
     }
 
 
-
     /**
      * 사용자 : 매장 조회 메서드.
      *
@@ -82,7 +79,12 @@ public class StoreService {
         return storeAdapter.fetchStoreForUser(storeId);
     }
 
-    public List<SelectAllBanksResponseDto> selectAllBanks(){
+    /**
+     * 사업자 : 은행 리스트 조회.
+     *
+     * @return the list
+     */
+    public List<SelectAllBanksResponseDto> selectAllBanks() {
         return storeAdapter.fetchAllBanks();
     }
 
