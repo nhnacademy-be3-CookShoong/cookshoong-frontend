@@ -17,19 +17,15 @@ import lombok.ToString;
  * @since 2023.07.20
  */
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartRedisDto {
-    @NotNull
     private Long accountId;
-    @NotNull
     private Long storeId;
-    @NotBlank
     private String storeName;
-    @Setter
     private CartMenuDto menu;
-    @Setter
     private List<CartOptionDto> options;
     private Long createTimeMillis;
     private String hashKey;

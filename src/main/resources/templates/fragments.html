@@ -44,6 +44,9 @@
             <a sec:authorize="!hasRole('ADMIN') && hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
                 매장보기
             </a>
+            <a sec:authorize="!hasRole('ADMIN') && !hasRole('BUSINESS')" th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">
+                장바구니
+            </a>
             <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
                 내 정보
             </a>

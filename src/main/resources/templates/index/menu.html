@@ -23,30 +23,38 @@
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
-            <section class="container">
-                <div class="card">
-                    <div class="card-body" style="height: 300px">
-                        <div class="bg-box" style="background-color: #28282b; text-align: center;">
-                            <img th:src="|/images/${menu.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px;">
+            <form th:action="@{/index/store/menu/cart}" method="POST">
+
+                <input type="hidden" name="accountId"  th:value="${accountId}">
+                <input type="hidden" name="storeId" th:value="${storeId}">
+                <input type="hidden" name="storeName" th:value="${storeName}">
+                <input type="hidden" name="menu.menuId" th:value="${menuInfo.id}">
+                <input type="hidden" name="menu.menuName" th:value="${menuInfo.name}">
+                <input type="hidden" name="menu.menuImage" th:value="${menuInfo.savedName}">
+                <input type="hidden" name="menu.menuPrice" th:value="${menuInfo.price}">
+                <section class="container">
+                    <div class="card">
+                        <div class="card-body" style="height: 300px">
+                            <div class="bg-box" style="background-color: #28282b; text-align: center;">
+                                <img th:src="|/images/${menuInfo.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px;">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menu.name}"></h1>
-                </div>
-                <div class="card">
-                    <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                        <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menu.price}"></span> 원</h3>
+                    <div class="card">
+                        <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menuInfo.name}"></h1>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="ml-3 mt-3">
-                        <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
-                        <form>
+                    <div class="card">
+                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
+                            <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menuInfo.price}"></span> 원</h3>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="ml-3 mt-3">
+                            <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${options}">
+                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${optionsInfo}">
                                             <label class="form-check-label">
                                                 <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios11" value="option1" th:text="${option.name}">
                                             </label>
@@ -55,38 +63,32 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                        <h3 class="font-weight-bold">수량</h3>
-                        <div>
-                            <button class="btn btn-rounded btn-outline-dark btn-icon border-light" id="decrement">
-                                <i class="mdi mdi-minus"></i>
-                            </button>
-                            <input type="text" id="quantity" value="1" style="text-align: center; font-size: 1.2rem; font-weight: bold; width: 100px;" class="border-0">
-                            <button class="btn btn-rounded btn-outline-dark btn-icon border-light" id="increment">
-                                <i class="mdi mdi-plus"></i>
-                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                        <h3 class="font-weight-bold">가격</h3>
-                        <div>
-                            <h2 class="font-weight-bold">가격 : <span style="font-size: 25px; color: orange;"> 14000</span> 원</h2>
+                    <div class="card">
+                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
+                            <h3 class="font-weight-bold">수량입력</h3>
+                            <div>
+                                <h4>입력: <input type="text" id="count" name="count" th:value="1" style="text-align: center; font-size: 1.2rem; font-weight: bold; width: 100px;" class="border-0"></h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="ml-3 mt-3 mb-3 d-flex justify-content-end mr-4">
-                        <button class="btn btn-info mr-2"
-                                th:onclick="">메뉴 담기</button>
+                    <div class="card">
+                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
+                            <h3 class="font-weight-bold">가격</h3>
+                            <div>
+                                <h2 class="font-weight-bold">가격 : <span style="font-size: 25px; color: orange;"> 14000</span> 원</h2>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </section>
+                    <div class="card">
+                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-end mr-4">
+                            <button class="btn btn-info mr-2"
+                                    th:type="submit">메뉴 담기</button>
+                        </div>
+                    </div>
+                </section>
+            </form>
         </div>
     </div>
 </div>
@@ -109,18 +111,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </body>
 <script>
+
+</script>
+<script>
     const decrementButton = document.getElementById('decrement');
     const incrementButton = document.getElementById('increment');
     const quantityInput = document.getElementById('quantity');
+    const count = document.getElementById('quantity');
 
     decrementButton.addEventListener('click', function() {
         if (quantityInput.value > 1) {
             quantityInput.value = Number(quantityInput.value) - 1;
+            count.value = quantityInput.value;
         }
     });
 
     incrementButton.addEventListener('click', function() {
         quantityInput.value = Number(quantityInput.value) + 1;
+        count.value = quantityInput.value;
     });
 </script>
 <script>

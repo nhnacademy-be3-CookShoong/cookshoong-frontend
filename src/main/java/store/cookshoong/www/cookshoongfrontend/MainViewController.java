@@ -18,10 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
@@ -112,13 +114,36 @@ public class MainViewController {
      * @return the index menu
      */
     @GetMapping({"/index/store/{storeId}/menu/{menuId}"})
-    public String getIndexMenu(@PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId, Model model) {
-        SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
-        model.addAttribute("menu", menu);
-        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
-        model.addAttribute("options", options);
+    public String getIndexMenu(@PathVariable("storeId") Long storeId,
+                               @PathVariable("menuId") Long menuId,
+                               Model model) {
+
+        SelectMenuResponseDto menuInfo = storeMenuManagerService.selectMenu(storeId, menuId);
+        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
+        List<SelectOptionResponseDto> optionsInfo = storeOptionManagerService.selectOptions(storeId);
+
+        model.addAttribute("accountId", accountIdAware.getAccountId());
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("storeName", store.getStoreName());
+        model.addAttribute("menuInfo", menuInfo);
+        model.addAttribute("optionsInfo", optionsInfo);
 
         return "index/menu";
+    }
+
+    /**
+     * 장바구니에 메뉴 등록.
+     *
+     * @param cartRedisDto      장바구니에 담기 정보
+     * @return                  해당 매장으로 반환
+     */
+    @PostMapping("/index/store/menu/cart")
+    public String postCreateCart(CartRedisDto cartRedisDto) {
+
+        log.info("TEST CASE: {}", cartRedisDto.getAccountId());
+
+
+        return "redirect:/";
     }
 
     /**
