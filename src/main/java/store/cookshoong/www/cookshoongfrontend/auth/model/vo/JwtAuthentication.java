@@ -1,11 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.auth.model.vo;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import store.cookshoong.www.cookshoongfrontend.auth.adapter.JwtRoleAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 
 /**
@@ -24,7 +20,7 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
      * @param accessToken the access token
      */
     public JwtAuthentication(String accessToken, String refreshToken) {
-        super(JwtRoleAdapter.convertToRole(accessToken));
+        super(JwtResolver.convertToRole(accessToken));
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.setAuthenticated(true);
