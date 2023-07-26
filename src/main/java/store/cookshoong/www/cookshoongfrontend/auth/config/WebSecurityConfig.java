@@ -31,6 +31,8 @@ public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
+    private static final String[] PERMIT_ALL_PATTERNS = { "/health-check/**", "/login-page", "/sign-up",
+        "/sign-up-choice", "/" };
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -42,8 +44,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-            .mvcMatchers("/health-check/**").permitAll()
-            .mvcMatchers("/").permitAll()
+            .mvcMatchers(PERMIT_ALL_PATTERNS).permitAll()
             .anyRequest().authenticated();
 
 
@@ -82,8 +83,7 @@ public class WebSecurityConfig {
      */
     @Bean
     public WebSecurityCustomizer webSecurity() {
-        return web -> web.ignoring().mvcMatchers("/assets/**", "/login-page", "/sign-up",
-            "/sign-up-choice");
+        return web -> web.ignoring().mvcMatchers("/assets/**");
     }
 
     @Bean
