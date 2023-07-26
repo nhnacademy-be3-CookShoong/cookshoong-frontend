@@ -16,6 +16,9 @@ import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
  * @since 2023.07.24
  */
 public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestInterceptor {
+    /**
+     * RestTemplate 을 통해 API 를 호출하기 전 인증 헤더를 추가해준다.
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
         throws IOException {
