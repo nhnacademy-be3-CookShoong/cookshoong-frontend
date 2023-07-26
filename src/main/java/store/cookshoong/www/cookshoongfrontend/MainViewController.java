@@ -146,9 +146,6 @@ public class MainViewController {
         log.info("TEST CASE: {}", cartRedisDto.getAccountId());
 
 
-//        cartRedisService.createCart(
-//            String.valueOf(accountIdAware.getAccountId()), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
-
         return "redirect:/";
     }
 
