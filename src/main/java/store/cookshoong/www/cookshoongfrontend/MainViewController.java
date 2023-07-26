@@ -53,7 +53,6 @@ public class MainViewController {
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
-    private final CartRedisService cartRedisService;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
