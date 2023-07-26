@@ -2,8 +2,12 @@ package store.cookshoong.www.cookshoongfrontend.auth.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.Base64Utils;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.InvalidAccessTokenException;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 
 /**
  * Jwt 를 읽기 좋은 형태로 바꿔주는 클래스.
@@ -34,5 +38,16 @@ public class JwtResolver {
     private static String resolveToken(String token) {
         String payload = token.split("\\.")[1];
         return new String(Base64Utils.decodeFromString(payload));
+    }
+
+    /**
+     * 토큰으로부터 받아온 권한을 시큐리티에 호환되는 형식의 권한으로 바꿔준다.
+     *
+     * @param token the token
+     * @return the list
+     */
+    public static List<GrantedAuthority> convertToRole(String token) {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + resolveToken(token, ParsedAccessToken.class)
+            .getAuthority()));
     }
 }
