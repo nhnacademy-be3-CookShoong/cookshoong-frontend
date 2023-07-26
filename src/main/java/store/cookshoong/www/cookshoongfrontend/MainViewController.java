@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
@@ -31,7 +32,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresN
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 메인 뷰 페이지 컨트롤러.
@@ -60,7 +60,7 @@ public class MainViewController {
     @GetMapping({"", "/index"})
     public String getIndexByDistance(Model model, Pageable pageable, Principal principal) {
         Long addressId = 1L;
-        if(principal != null) {
+        if (principal != null) {
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId()).getId();
         }
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);

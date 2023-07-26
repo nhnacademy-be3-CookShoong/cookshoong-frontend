@@ -24,19 +24,14 @@ import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepos
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final RefreshTokenRepository refreshTokenRepository;
-    private final HttpHeaders authorizedHeader;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
-        String accessToken = jwtAuthentication.getName();
         String rawRefreshToken = jwtAuthentication.getRefreshToken();
-
         refreshTokenRepository.save(RefreshToken.createRefreshToken(rawRefreshToken));
         jwtAuthentication.eraseRefreshToken();
-
-        authorizedHeader.setBearerAuth(accessToken);
 
         goHome(response);
     }
