@@ -19,17 +19,17 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
         throws IOException {
-        SecurityContext session = SecurityContextHolder.getContext();
-        if (isAuthenticated(session)) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        if (isAuthenticated(context)) {
             return execution.execute(request, body);
         }
 
-        String accessToken = session.getAuthentication().getName();
+        String accessToken = context.getAuthentication().getName();
         request.getHeaders().setBearerAuth(accessToken);
         return execution.execute(request, body);
     }
 
-    private static boolean isAuthenticated(SecurityContext session) {
-        return session == null || !(session.getAuthentication() instanceof JwtAuthentication);
+    private static boolean isAuthenticated(SecurityContext context) {
+        return context == null || !(context.getAuthentication() instanceof JwtAuthentication);
     }
 }
