@@ -37,17 +37,11 @@
             </a>
         </div>
 
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('CUSTOMER')">
-            <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
-                내 정보
+        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">
+                쿡슝관리
             </a>
-            <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">
-                로그아웃
-            </a>
-        </div>
-
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('BUSINESS')">
-            <a th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
+            <a sec:authorize="!hasRole('ADMIN') && hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
                 매장보기
             </a>
             <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
@@ -57,18 +51,6 @@
                 로그아웃
             </a>
         </div>
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">
-                쿡슝관리
-            </a>
-            <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
-                내 정보
-            </a>
-            <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">
-                로그아웃
-            </a>
-        </div>
-
     </div>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container">
@@ -110,26 +92,15 @@
         </div>
 
         <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="!isAuthenticated()">
-            <a th:href="@{/sign-up}" style="color: white; font-size: 0.85rem" class="mr-2">
-                회원가입
-            </a>
             <a th:href="@{/login}" style="color: white; font-size: 0.85rem" class="mr-2">
                 로그인
             </a>
         </div>
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">
+        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasRole('ADMIN')">
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/}" style="color: white; font-size: 0.85rem" class="mr-2">
                 메인보기
             </a>
-            <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
-                내 정보
-            </a>
-            <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">
-                로그아웃
-            </a>
-        </div>
-        <div class="col-5 d-flex justify-content-end align-items-center p-0" sec:authorize="hasAuthority('BUSINESS')">
-            <a th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
+            <a sec:authorize="!hasRole('ADMIN') && hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2">
                 매장보기
             </a>
             <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">
