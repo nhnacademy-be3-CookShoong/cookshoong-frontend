@@ -8,6 +8,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.adapter.CouponManageAdapte
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 
 /**
@@ -25,6 +26,7 @@ public class CouponManageService {
      * 매장 정책 확인.
      *
      * @param pageable the pageable
+     * @param storeId  the store id
      * @return the page
      */
     public Page<SelectPolicyResponseDto> selectStorePolicy(Pageable pageable, Long storeId) {
@@ -35,6 +37,7 @@ public class CouponManageService {
      * 매장 금액 쿠폰 정책 생성.
      *
      * @param request the request
+     * @param storeId the store id
      */
     public void createStoreCashCouponPolicy(CreateCashCouponPolicyRequestDto request, Long storeId) {
         couponManageAdapter.executeStoreCashCouponPolicy(storeId, request);
@@ -44,6 +47,7 @@ public class CouponManageService {
      * 매장 퍼센트 쿠폰 정책 생성.
      *
      * @param request the request
+     * @param storeId the store id
      */
     public void createStorePercentCouponPolicy(CreatePercentCouponPolicyRequestDto request, Long storeId) {
         couponManageAdapter.executeStorePercentCouponPolicy(storeId, request);
@@ -65,5 +69,15 @@ public class CouponManageService {
      */
     public void createIssueCoupon(CreateIssueCouponRequestDto createIssueCouponRequestDto) {
         couponManageAdapter.executeIssueCoupon(createIssueCouponRequestDto);
+    }
+
+    /**
+     * 쿠폰 발급.
+     *
+     * @param accountId                     the account id
+     * @param createProvideCouponRequestDto the create provide coupon request dto
+     */
+    public void createProvideCoupon(Long accountId, CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        couponManageAdapter.executeProvideCoupon(accountId, createProvideCouponRequestDto);
     }
 }

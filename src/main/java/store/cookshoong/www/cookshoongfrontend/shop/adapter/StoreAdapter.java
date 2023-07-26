@@ -21,8 +21,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
@@ -30,7 +32,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreFo
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 
 /**
@@ -46,7 +47,21 @@ import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 public class StoreAdapter {
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
-    private final HttpHeaders authorizedHeader;
+
+    /**
+     * 사업자 : 은행 리스트(셀렉트 박스를 위한) 조회.
+     *
+     * @return the list
+     */
+    public List<SelectAllBanksResponseDto> fetchAllBanks() {
+        HttpEntity<List<SelectAllBanksResponseDto>> httpEntity =
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/banks",
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+        return httpEntity.getBody();
+    }
 
     /**
      * 매장을 등록하는 메서드.
@@ -143,8 +158,6 @@ public class StoreAdapter {
 
         return response.getBody();
     }
-
-
 
 
     /**

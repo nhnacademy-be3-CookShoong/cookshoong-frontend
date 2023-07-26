@@ -23,7 +23,7 @@
 <header th:replace="fragments :: admin-site-header"></header>
 
 <div class="container-fluid page-body-wrapper">
-    <nav th:replace="fragments :: admin-site-nav"></nav>
+    <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
@@ -266,8 +266,8 @@
 
 <script>
     function getSelectedCategories() {
-        var checkboxes = document.getElementsByName('storeCategories');
-        var selectedCategories = [];
+        const checkboxes = document.getElementsByName('storeCategories');
+        const selectedCategories = [];
 
         for (let i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
@@ -278,9 +278,9 @@
     }
 
     function handleCheckboxClick() {
-        var selectedCategories = getSelectedCategories();
-        var maximum = 3;
-        if (selectedCategories.length > maximum) {
+        const selectedCategories = getSelectedCategories();
+        const checkMaximum = 3;
+        if (selectedCategories.length > checkMaximum) {
             this.checked = false;
             alert("최대 3개의 카테고리만 선택할 수 있습니다.");
         }

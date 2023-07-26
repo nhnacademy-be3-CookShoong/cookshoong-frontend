@@ -165,13 +165,6 @@ public class MainViewController {
     }
 
 
-
-
-
-
-
-
-
     /**
      * 매장 가맹점 관리 페이지를 맵핑.
      *

@@ -28,6 +28,5 @@ public class SelectStoreInfoResponseDto {
     private String description;
     private String bankCode;
     private String bankAccountNumber;
-    private String savedName;
     private String pathName;
 }
