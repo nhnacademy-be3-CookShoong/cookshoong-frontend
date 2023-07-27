@@ -23,7 +23,7 @@
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
-            <form th:action="@{/index/store/menu/cart}" method="POST">
+            <form id="addCart" th:action="@{/index/store/menu/cart}" method="POST">
 
                 <input type="hidden" name="accountId"  th:value="${accountId}">
                 <input type="hidden" name="storeId" th:value="${storeId}">
@@ -56,8 +56,10 @@
                                     <div class="form-group">
                                         <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${optionsInfo}">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios11" value="option1" th:text="${option.name}">
+                                                <input type="radio" class="form-check-input" name="'optionsRadios'+${option.id}" th:id="'optionsRadio-'+${option.id}" th:value="${option.id}" th:text="${option.name}">
                                             </label>
+                                            <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
+                                            <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
                                             <span th:text="${option.price}+'원'"></span>
                                         </div>
                                     </div>
@@ -83,8 +85,7 @@
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-end mr-4">
-                            <button class="btn btn-info mr-2"
-                                    th:type="submit">메뉴 담기</button>
+                            <button class="btn btn-info mr-2" type="submit">메뉴 담기</button>
                         </div>
                     </div>
                 </section>
@@ -112,24 +113,84 @@
 </body>
 <script>
 
-</script>
-<script>
-    const decrementButton = document.getElementById('decrement');
-    const incrementButton = document.getElementById('increment');
-    const quantityInput = document.getElementById('quantity');
-    const count = document.getElementById('quantity');
+    const addCart = document.getElementById('addCart');
 
-    decrementButton.addEventListener('click', function() {
-        if (quantityInput.value > 1) {
-            quantityInput.value = Number(quantityInput.value) - 1;
-            count.value = quantityInput.value;
+    addCart.addEventListener("submit", function () {
+
+        const radioButtons = document.querySelectorAll("input[type='radio']:checked");
+        console.log("RadioButtons:" + radioButtons.item(0));
+
+        for (let i = 0; i < radioButtons.length; i++) {
+            const optionId = radioButtons[i].id.split('-')[1];
+            const optionName = document.getElementById('optionName' + optionId).value;
+            const optionPrice = document.getElementById('optionsPrice' + optionId).value;
+
+            console.log("ID:" + optionId);
+            console.log("NAME:" + optionName);
+            console.log("PRICE:" + optionPrice);
+
+
+            const optionIdHiddenInput = document.createElement("input");
+            optionIdHiddenInput.type = "hidden";
+            optionIdHiddenInput.name = "options[" + i + "].optionId"; // 수정: JavaScript 코드로 변경
+            optionIdHiddenInput.value = optionId;
+
+            const optionNameHiddenInput = document.createElement("input");
+            optionNameHiddenInput.type = "hidden";
+            optionNameHiddenInput.name = "options[" + i + "].optionName"; // 수정: JavaScript 코드로 변경
+            optionNameHiddenInput.value = optionName;
+
+            const optionPriceHiddenInput = document.createElement("input");
+            optionPriceHiddenInput.type = "hidden";
+            optionPriceHiddenInput.name = "options[" + i + "].optionPrice"; // 수정: JavaScript 코드로 변경
+            optionPriceHiddenInput.value = optionPrice;
+
+            console.log("ID:" + optionIdHiddenInput.name);
+            console.log("NAME:" + optionNameHiddenInput.name);
+            console.log("PRICE:" + optionPriceHiddenInput.name);
+
+            addCart.appendChild(optionIdHiddenInput);
+            addCart.appendChild(optionNameHiddenInput);
+            addCart.appendChild(optionPriceHiddenInput);
         }
-    });
 
-    incrementButton.addEventListener('click', function() {
-        quantityInput.value = Number(quantityInput.value) + 1;
-        count.value = quantityInput.value;
-    });
+        const checkBoxButtons = document.querySelectorAll("input[type='checkbox']:checked");
+        console.log("RadioButtons:" + checkBoxButtons.item(0));
+
+        for (let i = 0; i < checkBoxButtons.length; i++) {
+            const optionId = checkBoxButtons[i].id.split('-')[1];
+            const optionName = document.getElementById('optionName' + optionId).value;
+            const optionPrice = document.getElementById('optionsPrice' + optionId).value;
+
+            console.log("ID:" + optionId);
+            console.log("NAME:" + optionName);
+            console.log("PRICE:" + optionPrice);
+
+
+            const optionIdHiddenInput = document.createElement("input");
+            optionIdHiddenInput.type = "hidden";
+            optionIdHiddenInput.name = "options[" + i + "].optionId"; // 수정: JavaScript 코드로 변경
+            optionIdHiddenInput.value = optionId;
+
+            const optionNameHiddenInput = document.createElement("input");
+            optionNameHiddenInput.type = "hidden";
+            optionNameHiddenInput.name = "options[" + i + "].optionName"; // 수정: JavaScript 코드로 변경
+            optionNameHiddenInput.value = optionName;
+
+            const optionPriceHiddenInput = document.createElement("input");
+            optionPriceHiddenInput.type = "hidden";
+            optionPriceHiddenInput.name = "options[" + i + "].optionPrice"; // 수정: JavaScript 코드로 변경
+            optionPriceHiddenInput.value = optionPrice;
+
+            console.log("ID:" + optionIdHiddenInput.name);
+            console.log("NAME:" + optionNameHiddenInput.name);
+            console.log("PRICE:" + optionPriceHiddenInput.name);
+
+            addCart.appendChild(optionIdHiddenInput);
+            addCart.appendChild(optionNameHiddenInput);
+            addCart.appendChild(optionPriceHiddenInput);
+        }
+    })
 </script>
 <script>
     window.onload = function () {
