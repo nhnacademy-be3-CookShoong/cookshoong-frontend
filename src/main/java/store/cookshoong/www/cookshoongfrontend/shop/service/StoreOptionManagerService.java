@@ -36,8 +36,8 @@ public class StoreOptionManagerService {
      * @param storeId                매장 기본키
      * @param createOptionRequestDto 옵션 등록 Dto
      */
-    public void createOption(Long optionGroupId, Long storeId, CreateOptionRequestDto createOptionRequestDto) {
-        storeOptionAdapter.executeCreateOption(optionGroupId, storeId, createOptionRequestDto);
+    public void createOption(Long storeId, CreateOptionRequestDto createOptionRequestDto) {
+        storeOptionAdapter.executeCreateOption(storeId, createOptionRequestDto);
     }
 
     /**

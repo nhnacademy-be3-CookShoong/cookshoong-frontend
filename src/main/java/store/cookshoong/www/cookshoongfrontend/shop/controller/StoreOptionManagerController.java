@@ -78,7 +78,7 @@ public class StoreOptionManagerController {
         @Valid @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeOptionManagerService.createOption(1L, storeId, createOptionRequestDto);
+        storeOptionManagerService.createOption(storeId, createOptionRequestDto);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
 

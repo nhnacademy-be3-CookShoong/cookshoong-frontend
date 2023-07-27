@@ -55,20 +55,17 @@ public class StoreOptionAdapter {
      * 옵션 등록 메서드.
      *
      * @param storeId                매장 아이디
-     * @param optionGroupId          옵션 그룹 아이디
      * @param createOptionRequestDto 옵션 등록 Dto
      */
-    public ResponseEntity<Void> executeCreateOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
+    public ResponseEntity<Void> executeCreateOption(Long storeId, CreateOptionRequestDto createOptionRequestDto) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
             .pathSegment("stores")
             .pathSegment("{storeId}")
-            .pathSegment("option-group")
-            .pathSegment("{optionGroupId}")
             .pathSegment("option")
-            .buildAndExpand(storeId, optionGroupId)
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<CreateOptionRequestDto> request = RequestEntity.post(uri)
