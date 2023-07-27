@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,6 +82,32 @@ public class StoreMenuManagerController {
         BindingResult bindingResult,
         @RequestPart("menuImage") MultipartFile menuImage) {
         storeMenuManagerService.createMenu(storeId, createMenuRequestDto, menuImage);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+    }
+
+    /**
+     * 매장 메뉴 그룹 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping ("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
+    public String postDeleteMenuGroup(
+        @PathVariable("storeId") Long storeId, @PathVariable("menuGroupId") Long menuGroupId) {
+        storeMenuManagerService.deleteMenuGroup(storeId, menuGroupId);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+    }
+
+    /**
+     * 매장 메뉴 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping("/stores/{storeId}/store-menu-manager/{menuId}")
+    public String postDeleteMenu(
+        @PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId) {
+        storeMenuManagerService.deleteMenu(storeId, menuId);
         return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
 }

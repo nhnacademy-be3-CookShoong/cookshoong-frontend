@@ -57,7 +57,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-menu-manager'}}" th:object="${createMenuRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-manager'}" th:object="${createMenuRequestDto}"
                       method="post"  enctype="multipart/form-data">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -161,9 +161,11 @@
                                                 data-toggle="modal"
                                                 data-target="#menuGroupAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;"
-                                                type="button">삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager/' + ${menuGroup.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">
@@ -214,9 +216,11 @@
                                                 data-toggle="modal"
                                                 data-target="#menuAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px;" type="button">
-                                            삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-manager/' + ${menu.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">

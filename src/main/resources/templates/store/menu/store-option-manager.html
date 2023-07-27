@@ -12,7 +12,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-option-group-manager'}}" th:object="${createOptionGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager'}" th:object="${createOptionGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -50,7 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-option-manager'}}" th:object="${createOptionRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-manager'}" th:object="${createOptionRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -116,9 +116,11 @@
                                                 data-toggle="modal"
                                                 data-target="#optionGroupAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px"
-                                                type="button">삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager/' + ${optionGroup.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">
@@ -154,9 +156,11 @@
                                                 data-toggle="modal"
                                                 data-target="#optionAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
-                                            삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-manager/' + ${option.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">

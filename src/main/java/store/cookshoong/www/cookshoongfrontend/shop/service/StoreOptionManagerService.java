@@ -59,4 +59,24 @@ public class StoreOptionManagerService {
     public List<SelectOptionResponseDto> selectOptions(Long storeId) {
         return storeOptionAdapter.fetchOptions(storeId);
     }
+
+    /**
+     * 옵션 그룹 삭제 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param optionGroupId 옵션 그룹 아이디
+     */
+    public void deleteOptionGroup(Long storeId, Long optionGroupId) {
+        storeOptionAdapter.executeDeleteOptionGroup(storeId, optionGroupId);
+    }
+
+    /**
+     * 옵션 삭제 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param optionId  옵션 아이디
+     */
+    public void deleteOption(Long storeId, Long optionId) {
+        storeOptionAdapter.executeDeleteOption(storeId, optionId);
+    }
 }

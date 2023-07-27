@@ -83,4 +83,24 @@ public class StoreMenuManagerService {
     public SelectMenuResponseDto selectMenu(Long storeId, Long menuId) {
         return storeMenuAdapter.fetchMenu(storeId, menuId);
     }
+
+    /**
+     * 메뉴 그룹 삭제 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param menuGroupId 메뉴 그룹 아이디
+     */
+    public void deleteMenuGroup(Long storeId, Long menuGroupId) {
+        storeMenuAdapter.executeDeleteMenuGroup(storeId, menuGroupId);
+    }
+
+    /**
+     * 메뉴 삭제 서비스.
+     *
+     * @param storeId 매장 아이디
+     * @param menuId 메뉴 아이디
+     */
+    public void deleteMenu(Long storeId, Long menuId) {
+        storeMenuAdapter.executeDeleteMenu(storeId, menuId);
+    }
 }

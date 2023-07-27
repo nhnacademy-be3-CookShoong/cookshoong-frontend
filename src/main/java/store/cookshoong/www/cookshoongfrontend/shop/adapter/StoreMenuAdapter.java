@@ -195,4 +195,48 @@ public class StoreMenuAdapter {
 
         return response.getBody();
     }
+
+    /**
+     * 메뉴 그룹 삭제 메서드.
+     *
+     * @param storeId     매장 아이디
+     * @param menuGroupId 메뉴 그룹 아이디
+     */
+    public ResponseEntity<Void> executeDeleteMenuGroup(Long storeId, Long menuGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .pathSegment("{menu-group}")
+            .buildAndExpand(storeId, menuGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 메뉴 삭제 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @param menuId  메뉴 아이디
+     */
+    public ResponseEntity<Void> executeDeleteMenu(Long storeId, Long menuId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .pathSegment("{menuId}")
+            .buildAndExpand(storeId, menuId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+    }
 }
