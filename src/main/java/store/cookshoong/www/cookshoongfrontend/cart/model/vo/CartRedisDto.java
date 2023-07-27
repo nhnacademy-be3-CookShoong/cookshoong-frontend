@@ -22,8 +22,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartRedisDto {
+
+    @NotNull
     private Long accountId;
+    @NotNull
     private Long storeId;
+    @NotBlank
     private String storeName;
     private CartMenuDto menu;
     private List<CartOptionDto> options;
@@ -41,8 +45,8 @@ public class CartRedisDto {
     public String generateUniqueHashKey() {
         String optionIdsString = options.stream()
             .map(cartOptionDto -> cartOptionDto.getOptionId().toString())
-            .collect(Collectors.joining(","));
+            .collect(Collectors.joining(""));
 
-        return menu.getMenuId() + ":" + optionIdsString;
+        return menu.getMenuId() + optionIdsString;
     }
 }

@@ -21,8 +21,12 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CartMenuDto {
 
+    @NotNull
     private Long menuId;
+    @NotBlank
     private String menuName;
+    @NotBlank
     private String menuImage;
+    @NotNull
     private int menuPrice;
 }
