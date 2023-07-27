@@ -17,7 +17,9 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGrou
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 
 /**
  * 매장 메뉴 관리 페이지 컨트롤러.
@@ -30,6 +32,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerServ
 public class StoreMenuManagerController {
 
     private final StoreMenuManagerService storeMenuManagerService;
+    private final StoreOptionManagerService storeOptionManagerService;
 
     /**
      * 매장 메뉴 관리 페이지 맵핑.
@@ -49,6 +52,9 @@ public class StoreMenuManagerController {
         model.addAttribute("menus", menus);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         model.addAttribute("menuGroups", menuGroups);
+        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
+        model.addAttribute("optionGroups", optionGroups);
+
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
         model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";

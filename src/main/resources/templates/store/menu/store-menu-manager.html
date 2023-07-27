@@ -121,12 +121,25 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>그룹</label>
+                                    <label>메뉴 그룹</label>
                                     <div class="row">
                                         <div class="col-sm-3" th:each="menuGroup, i:${menuGroups}">
                                             <label class="custom-checkbox">
                                                 <input type="checkbox" name="menuGroups" th:value="${menuGroup.id}"
                                                        th:text="${menuGroup.name}" onclick="handleCheckboxClick.call(this)">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>옵션 그룹</label>
+                                    <div class="row">
+                                        <div class="col-sm-3" th:each="optionGroup, i:${optionGroups}">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox" name="optionGroups" th:value="${optionGroup.id}"
+                                                       th:text="${optionGroup.name}">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
