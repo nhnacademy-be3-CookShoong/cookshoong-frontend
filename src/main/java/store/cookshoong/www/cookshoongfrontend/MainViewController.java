@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartRedisService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
@@ -39,6 +40,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
  * 메인 뷰 페이지 컨트롤러.
  *
  * @author koesnam
+ * @contributor jeongjewan
  * @since 2023.07.04
  */
 
@@ -51,6 +53,7 @@ public class MainViewController {
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
+    private final CartRedisService cartRedisService;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
@@ -140,10 +143,11 @@ public class MainViewController {
     @PostMapping("/index/store/menu/cart")
     public String postCreateCart(CartRedisDto cartRedisDto) {
 
-        log.info("TEST CASE: {}", cartRedisDto.getAccountId());
 
+        cartRedisService.createCart(
+            String.valueOf(accountIdAware.getAccountId()), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
 
-        return "redirect:/";
+        return "redirect:/index/store/" + cartRedisDto.getStoreId();
     }
 
     /**
