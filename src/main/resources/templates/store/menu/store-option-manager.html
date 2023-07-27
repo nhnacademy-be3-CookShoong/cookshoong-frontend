@@ -12,7 +12,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-option-group-manager}" th:object="${createOptionGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-option-group-manager'}}" th:object="${createOptionGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -50,7 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-option-manager}" th:object="${createOptionRequestDto}"
+                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-option-manager'}}" th:object="${createOptionRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">

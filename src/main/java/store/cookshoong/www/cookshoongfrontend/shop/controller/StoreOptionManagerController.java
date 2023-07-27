@@ -40,6 +40,7 @@ public class StoreOptionManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
+        model.addAttribute("storeId", storeId);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         model.addAttribute("options", options);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
@@ -62,7 +63,7 @@ public class StoreOptionManagerController {
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
         storeOptionManagerService.createOptionGroup(storeId, createOptionGroupRequestDto);
-        return "redirect:/store-option-manager";
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
 
     /**
@@ -77,6 +78,6 @@ public class StoreOptionManagerController {
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
         storeOptionManagerService.createOption(1L, storeId, createOptionRequestDto);
-        return "redirect:/store-option-manager";
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
 }

@@ -14,7 +14,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-menu-group-manager}" th:object="${createMenuGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager'}" th:object="${createMenuGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -57,7 +57,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-menu-manager}" th:object="${createMenuRequestDto}"
+                <form class="col-12 p-0" th:action="@{@{'/stores/' + ${storeId} + '/store-menu-manager'}}" th:object="${createMenuRequestDto}"
                       method="post"  enctype="multipart/form-data">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -244,7 +244,6 @@
         height: '200px',
         initialValue: '메뉴 설명을 입력해주세요.'
     });
-
     document.querySelector('#submitButton').addEventListener('click', function () {
         let editorContent = editor.getHTML();
         document.querySelector('#description').value = editorContent;

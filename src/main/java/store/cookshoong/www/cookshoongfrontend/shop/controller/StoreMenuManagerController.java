@@ -43,11 +43,11 @@ public class StoreMenuManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
+        model.addAttribute("storeId", storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         model.addAttribute("menus", menus);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         model.addAttribute("menuGroups", menuGroups);
-
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
         model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";
@@ -65,7 +65,7 @@ public class StoreMenuManagerController {
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
         storeMenuManagerService.createMenuGroup(storeId, createMenuGroupRequestDto);
-        return "redirect:/store-menu-manager";
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
 
     /**
@@ -81,6 +81,6 @@ public class StoreMenuManagerController {
         BindingResult bindingResult,
         @RequestPart("menuImage") MultipartFile menuImage) {
         storeMenuManagerService.createMenu(storeId, createMenuRequestDto, menuImage);
-        return "redirect:/store-menu-manager";
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
 }
