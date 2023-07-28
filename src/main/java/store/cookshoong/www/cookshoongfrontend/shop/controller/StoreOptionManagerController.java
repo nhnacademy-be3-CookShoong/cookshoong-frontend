@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,10 +42,11 @@ public class StoreOptionManagerController {
         Model model) {
 
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
-        model.addAttribute("options", options);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
-        model.addAttribute("optionGroups", optionGroups);
 
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("options", options);
+        model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("createOptionRequestDto", createOptionRequestDto);
         model.addAttribute("createOptionGroupRequestDto", createOptionGroupRequestDto);
         return "store/menu/store-option-manager";
@@ -62,7 +64,7 @@ public class StoreOptionManagerController {
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
         storeOptionManagerService.createOptionGroup(storeId, createOptionGroupRequestDto);
-        return "redirect:/store-option-manager";
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
 
     /**
@@ -76,7 +78,33 @@ public class StoreOptionManagerController {
         @Valid @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeOptionManagerService.createOption(1L, storeId, createOptionRequestDto);
-        return "redirect:/store-option-manager";
+        storeOptionManagerService.createOption(storeId, createOptionRequestDto);
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
+    }
+
+    /**
+     * 매장 옵션 그룹 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping("/stores/{storeId}/store-option-group-manager/{optionGroupId}")
+    public String postDeleteOptionGroup(
+        @PathVariable("storeId") Long storeId, @PathVariable("optionGroupId") Long optionGroupId) {
+        storeOptionManagerService.deleteOptionGroup(storeId, optionGroupId);
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
+    }
+
+    /**
+     * 매장 옵션 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping("/stores/{storeId}/store-option-manager/{optionId}")
+    public String postDeleteOption(
+        @PathVariable("storeId") Long storeId, @PathVariable("optionId") Long optionId) {
+        storeOptionManagerService.deleteOption(storeId, optionId);
+        return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
 }
