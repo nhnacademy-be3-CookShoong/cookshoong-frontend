@@ -6,18 +6,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import store.cookshoong.www.cookshoongfrontend.account.model.vo.DevAccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 
 /**
  * 매장 등록 및 조회 서비스.
@@ -29,6 +29,30 @@ import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
 @RequiredArgsConstructor
 public class StoreService {
     private final StoreAdapter storeAdapter;
+
+
+    /**
+     * 사용자 : 3km 이내 매장 리스트 조회 메서드.
+     *
+     * @param addressId 주소 아이디
+     * @param pageable  페이지 파라미터
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
+        return storeAdapter.fetchStoresNotOuted(addressId, pageable);
+    }
+
+    /**
+     * 사용자 : 키워드 검색 매장 리스트 조회 메서드.
+     *
+     * @param keyword  키워드 단어
+     * @param pageable 페이지 파라미터
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Pageable pageable) {
+        return storeAdapter.fetchStoresByKeyword(keyword, pageable);
+    }
+
 
     /**
      * 사업자 : 매장 등록 메서드.
@@ -44,27 +68,6 @@ public class StoreService {
         storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
     }
 
-    /**
-     * 사용자 : 3km 이내 매장 리스트 조회 메서드.
-     *
-     * @param addressId 주소 아이디
-     * @param pageable  페이지 파라미터
-     * @return the rest response page
-     */
-    public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
-        return storeAdapter.fetchStoresNotOuted(addressId, pageable);
-    }
-
-    /**
-     * 사용자 : 매장 리스트 키워드 조회 메서드.
-     *
-     * @param keyword 키워드 단어
-     * @param pageable  페이지 파라미터
-     * @return the rest response page
-     */
-    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Pageable pageable) {
-        return storeAdapter.fetchStoresByKeyword(keyword, pageable);
-    }
 
     /**
      * 사용자 : 매장 조회 메서드.
@@ -74,6 +77,15 @@ public class StoreService {
      */
     public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
         return storeAdapter.fetchStoreForUser(storeId);
+    }
+
+    /**
+     * 사업자 : 은행 리스트 조회.
+     *
+     * @return the list
+     */
+    public List<SelectAllBanksResponseDto> selectAllBanks() {
+        return storeAdapter.fetchAllBanks();
     }
 
 

@@ -1,4 +1,8 @@
 
+.text-gradient {
+    background: linear-gradient(50deg, #ffa636, #ff6a0e);
+}
+
 /*header section*/
 .hero_area {
     position: fixed;
@@ -10,7 +14,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    background-color: #0f1531;
+    background-color: #ef7b09;
     border-radius: 3px;
     left: 0;
     top: 0;
@@ -69,8 +73,8 @@
 }
 
 .header_section {
-    padding: 15px 15px;
-    background-color: #0f1531;
+    padding: 10px 10px;
+    background-color: #ef7b09;
 }
 
 .header_section .container-fluid {

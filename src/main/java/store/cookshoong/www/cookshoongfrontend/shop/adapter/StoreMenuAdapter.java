@@ -8,7 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
@@ -34,7 +37,8 @@ public class StoreMenuAdapter {
      * @param storeId                   매장 아이디
      * @param createMenuGroupRequestDto 메뉴 그룹 등록 Dto
      */
-    public ResponseEntity<Void> executeCreateMenuGroup(Long storeId, CreateMenuGroupRequestDto createMenuGroupRequestDto) {
+    public ResponseEntity<Void> executeCreateMenuGroup(Long storeId,
+                                                       CreateMenuGroupRequestDto createMenuGroupRequestDto) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -57,7 +61,8 @@ public class StoreMenuAdapter {
      * @param storeId              매장 아이디
      * @param createMenuRequestDto 메뉴 등록 Dto
      */
-    public ResponseEntity<Void> executeCreateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto) {
+    public ResponseEntity<Void> executeCreateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto,
+                                                  MultipartFile menuImage) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -68,9 +73,13 @@ public class StoreMenuAdapter {
             .buildAndExpand(storeId)
             .toUri();
 
-        RequestEntity<CreateMenuRequestDto> request = RequestEntity.post(uri)
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(createMenuRequestDto);
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("requestDto", createMenuRequestDto);
+        multiValueMap.add("menuImage", menuImage.getResource());
+
+        RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.post(uri)
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(multiValueMap);
 
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
@@ -185,5 +194,49 @@ public class StoreMenuAdapter {
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();
+    }
+
+    /**
+     * 메뉴 그룹 삭제 메서드.
+     *
+     * @param storeId     매장 아이디
+     * @param menuGroupId 메뉴 그룹 아이디
+     */
+    public ResponseEntity<Void> executeDeleteMenuGroup(Long storeId, Long menuGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu-group")
+            .pathSegment("{menu-group}")
+            .buildAndExpand(storeId, menuGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 메뉴 삭제 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @param menuId  메뉴 아이디
+     */
+    public ResponseEntity<Void> executeDeleteMenu(Long storeId, Long menuId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .pathSegment("{menuId}")
+            .buildAndExpand(storeId, menuId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 }

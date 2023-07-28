@@ -1,23 +1,12 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
-    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
-
-<body>
+<body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
@@ -32,12 +21,12 @@
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="detail-box">
+                                        <div class="detail-box pl-3">
                                             <h1>
                                                 만두
                                             </h1>
                                             <p>
-                                                맛있겠다.
+                                                광고 설명
                                             </p>
                                             <div class="btn-box">
                                                 <a href="" class="btn1">
@@ -55,12 +44,12 @@
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="detail-box">
+                                        <div class="detail-box pl-3">
                                             <h1>
                                                 버블티
                                             </h1>
                                             <p>
-                                                아주 맛있겠다.
+                                                광고 설명
                                             </p>
                                             <div class="btn-box">
                                                 <a href="" class="btn1">
@@ -78,12 +67,12 @@
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="detail-box">
+                                        <div class="detail-box pl-3">
                                             <h1>
                                                 한우
                                             </h1>
                                             <p>
-                                                참을 수 없이 맛있겠다.
+                                                광고 설명
                                             </p>
                                             <div class="btn-box">
                                                 <a href="" class="btn1">
@@ -101,12 +90,12 @@
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="detail-box">
+                                        <div class="detail-box pl-3">
                                             <h1>
                                                 팟타이
                                             </h1>
                                             <p>
-                                                와 맛있겠다.
+                                                광고 설명
                                             </p>
                                             <div class="btn-box">
                                                 <a href="" class="btn1">
@@ -126,91 +115,72 @@
                     </ol>
                 </div>
             </section>
-            <section class="container mt-4 mb-2 bg-white">
-                    <form class="col-12 p-0" th:action="@{/store/search}" method="get">
-                        <input type="text" name="keyword" placeholder="Enter keyword">
-                        <input type="submit" value="Search">
-                    </form>
-                <div class="row ml-1 mr-1 mt-1 mb-1">
-                    <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${searchStores}">
-                        <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
-                                th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
-                                style="border-radius: 1rem">
-                            <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
-                                 style="max-width: 150px">
-                            </div>
-                            <div class="col-sm-6 col-6" style="text-align: start">
-                                <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                        class="pr-1" style="font-size: 0.85rem">4.7</span>
-                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                    <span
-                                            class="pr-1" style="font-size: 0.85rem">210</span>
-                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                    <span
-                                            class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
-                                <p>배달요금 4000원</p>
-                                <p>
-                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
-                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
-                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
-                                        class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
-                                </p>
-                            </div>
-                        </button>
+            <section class="container mt-4 mb-2 bg-white pl-4">
+                <form class="form-group" th:action="@{/index/search}" method="get">
+                    <div class="input-group w-100">
+                        <input type="text" name="keyword" class="form-control" placeholder="Search.."
+                               style="border: 3px solid #f68007; border-radius: 10px; z-index: 0;">
+                        <span class="input-group-append" style="width: 100px;">
+                            <button class="btn btn-warning w-100"
+                                    style="border-top-right-radius: 10px;
+                                    border-bottom-right-radius: 10px;
+                                    margin-left: -15px;" type="submit">
+                                <i class="mdi mdi-yeast" style="color: white"></i>
+                            </button>
+                        </span>
                     </div>
-                </div>
+                </form>
             </section>
             <section class="container mt-4 mb-2 bg-white">
                 <div class="most-popular">
-                    <ul class="nav nav-tabs col-12 border-0">
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                    <ul class="nav nav-tabs col-12 border-0 p-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link active p-0 border-0 m-0 bg-white" href="#c1"
                                data-toggle="tab">모두</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c2"
                                data-toggle="tab">한식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c3"
                                data-toggle="tab">일식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c4"
                                data-toggle="tab">중식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c5"
-                               data-toggle="tab">디저트</a>
+                               data-toggle="tab">양식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c6"
                                data-toggle="tab">치킨</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c7"
                                data-toggle="tab">피자</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c8"
                                data-toggle="tab">도시락</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c9"
                                data-toggle="tab">야식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c10"
-                               data-toggle="tab">분식</a>
+                               data-toggle="tab">동남아</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c11"
                                data-toggle="tab">분식</a>
                         </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0">
+                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
                             <a class="category-font nav-link p-0 border-0 m-0 bg-white" href="#c12"
-                               data-toggle="tab">1인분</a>
+                               data-toggle="tab">디저트</a>
                         </li>
                     </ul>
                 </div>
@@ -219,15 +189,48 @@
                 <div class="tab-content w-100 border-0">
                     <div class="tab-pane fade show active" id="c1">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1"
+                                 th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${allStore}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width:130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -251,16 +254,48 @@
                     </div>
                     <div class="tab-pane fade" id="c2">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='KOR'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -284,16 +319,48 @@
                     </div>
                     <div class="tab-pane fade" id="c3">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='JPN'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -317,16 +384,48 @@
                     </div>
                     <div class="tab-pane fade" id="c4">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='CHN'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -350,16 +449,48 @@
                     </div>
                     <div class="tab-pane fade" id="c5">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
-                                 th:if="${store.category}=='DES'">
+                                 th:if="${store.category}=='POR'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -377,16 +508,48 @@
                     </div>
                     <div class="tab-pane fade" id="c6">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='CHK'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -404,16 +567,48 @@
                     </div>
                     <div class="tab-pane fade" id="c7">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='PIZ'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -437,16 +632,48 @@
                     </div>
                     <div class="tab-pane fade" id="c8">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='BOX'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -464,16 +691,48 @@
                     </div>
                     <div class="tab-pane fade" id="c9">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
                                  th:if="${store.category}=='NIG'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -497,16 +756,48 @@
                     </div>
                     <div class="tab-pane fade" id="c10">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
-                                 th:if="${store.category}=='BUN'">
+                                 th:if="${store.category}=='EST'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -524,16 +815,48 @@
                     </div>
                     <div class="tab-pane fade" id="c11">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
-                                 th:if="${store.category}=='JPN'">
+                                 th:if="${store.category}=='BUN'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -557,16 +880,48 @@
                     </div>
                     <div class="tab-pane fade" id="c12">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                                <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
+                                        th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
+                                        style="border-radius: 1rem">
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
+                                         style="max-width: 150px">
+                                        <img src="/assets/images/nodata.png" alt="">
+                                    </div>
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
+                                        <h4 class="font-weight-bold" th:text="${search.name}"></h4>
+                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem">210</span>
+                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                            <span
+                                                    class="pr-1" style="font-size: 0.85rem" th:text="20분"></span></p>
+                                        <p>배달요금 4000원</p>
+                                        <p>
+                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
+                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
+                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
+                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mr-1 mt-1 mb-1">
                             <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
-                                 th:if="${store.category}=='POR'">
+                                 th:if="${store.category}=='DES'">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 align-content-start text-md-center pr-3 pb-2"
+                                    <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|" alt="image" style="width: 130px">
+                                        <img th:src="|/images/${store.getSavedName()}|"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                             style="width: 130px">
                                     </div>
-                                    <div class="col-sm-6 col-6" style="text-align: start">
+                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
                                         <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
                                                 class="pr-1" style="font-size: 0.85rem">4.7</span>
@@ -594,21 +949,5 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
-
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/template.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
-<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-<script src="/assets/vendors/select2/select2.min.js"></script>
-<script src="/assets/js/file-upload.js"></script>
-<script src="/assets/js/typeahead.js"></script>
-<script src="/assets/js/select2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </body>
-
 </html>

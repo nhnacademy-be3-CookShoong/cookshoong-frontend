@@ -7,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
+import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepository;
-import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 
 /**
  * 로그아웃시 동작들을 정의해줄 핸들러.
@@ -23,15 +24,15 @@ import store.cookshoong.www.cookshoongfrontend.common.util.JwtResolver;
 @RequiredArgsConstructor
 public class TokenInvalidationHandler implements LogoutSuccessHandler {
     private final RefreshTokenRepository refreshTokenRepository;
+    private final AuthApiAdapter adapter;
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+        throws IOException {
         String accessToken = authentication.getName();
         String jti = JwtResolver.resolveToken(accessToken, ParsedAccessToken.class).getJti();
         refreshTokenRepository.deleteById(jti);
-        // TODO : Gateway에 액세스 토큰 만료요청
-        // alertInvalidAccessToken(accessToken)
-        //
+        adapter.executeTokenInvalidated();
 
         response.sendRedirect("/login-page");
     }

@@ -1,28 +1,20 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
-    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
 </head>
 
-<body>
+<body layout:fragment="content">
 <header th:replace="fragments :: admin-site-header"></header>
-
 <div class="container-fluid page-body-wrapper">
-    <nav th:replace="fragments :: admin-site-nav"></nav>
+    <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
@@ -150,12 +142,13 @@
                                            th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률">
                                 </div>
                                 <div class="form-group"><label class="form-label" for="storeCategories">카테고리</label>
-                                    <div class="input-group col-xs-12">
-                                        <div th:each="category : ${categories}" id="storeCategories">
-                                            <input type="checkbox" name="storeCategories"
-                                                   th:value="${category.getCategoryCode()}"
-                                                   th:text="${category.getDescription()}"
-                                                   onclick="handleCheckboxClick.call(this)">
+                                    <div class="row">
+                                        <div class="col-sm-3" th:each="category : ${categories}"  id="storeCategories">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox" name="storeCategories" th:value="${category.getCategoryCode()}"
+                                                       th:text="${category.getDescription()}" onclick="handleCheckboxClick.call(this)">
+                                                <span class="checkmark"></span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -190,22 +183,7 @@
         </div>
     </div>
 </div>
-
 <footer th:replace="fragments :: site-footer"></footer>
-
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/template.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
-<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-<script src="/assets/vendors/select2/select2.min.js"></script>
-<script src="/assets/js/file-upload.js"></script>
-<script src="/assets/js/typeahead.js"></script>
-<script src="/assets/js/select2.js"></script>
 <script>
     var mapContainer = document.getElementById('map');
     var mapOption = {
@@ -257,15 +235,9 @@
     });
 </script>
 <script>
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    }
-</script>
-
-<script>
     function getSelectedCategories() {
-        var checkboxes = document.getElementsByName('storeCategories');
-        var selectedCategories = [];
+        const checkboxes = document.getElementsByName('storeCategories');
+        const selectedCategories = [];
 
         for (let i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
@@ -276,15 +248,13 @@
     }
 
     function handleCheckboxClick() {
-        var selectedCategories = getSelectedCategories();
-        var maximum = 3;
-        if (selectedCategories.length > maximum) {
+        const selectedCategories = getSelectedCategories();
+        const checkMaximum = 3;
+        if (selectedCategories.length > checkMaximum) {
             this.checked = false;
             alert("최대 3개의 카테고리만 선택할 수 있습니다.");
         }
     }
 </script>
-
 </body>
-
 </html>

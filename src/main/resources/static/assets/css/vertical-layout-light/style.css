@@ -9242,8 +9242,6 @@ pre code {
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
 }
 
 .no-gutters {
@@ -11125,8 +11123,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #f2125e;
-    border-color: #f2125e;
+    background-color: #d20c4f;
+    border-color: #c60b4a;
 }
 
 .btn-primary:hover {
@@ -12262,12 +12260,12 @@ input[type="button"].btn-block {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1;
-    color: #495057;
+    color: #ffffff;
     text-align: center;
     white-space: nowrap;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: 2px;
+    background-color: #ffffff;
+    border: 3px solid #ffa636;
+    border-radius: 6px;
 }
 
 .input-group-text input[type="radio"],
@@ -16637,6 +16635,7 @@ button.bg-dark:focus,
 .template-demo > .btn-group-vertical, .template-demo > .dropdown,
 .mx-2 {
     margin-right: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .mb-2,
@@ -22660,7 +22659,6 @@ dl li {
 .tab-content {
     border: 1px solid #e8eff9;
     border-top: 0;
-    padding: 2rem 1rem;
     text-align: justify;
 }
 
@@ -23672,10 +23670,12 @@ body.avgrund-active {
 
 .auth .brand-logo {
     margin-bottom: 2rem;
+    text-align: center
 }
 
 .auth .brand-logo img {
-    width: 150px;
+    width: 350px;
+    height: auto
 }
 
 .auth form .form-group {
@@ -23811,6 +23811,7 @@ body.avgrund-active {
     -webkit-flex-direction: column;
     flex-direction: column;
     padding-top: 35px;
+    padding-bottom: 30px;
 }
 @media (max-width: 991px) {
     .landing-panel {
@@ -23827,6 +23828,7 @@ body.avgrund-active {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
+    padding-bottom: 30px;
 }
 
 @media (max-width: 991px) {
@@ -24271,14 +24273,14 @@ body.avgrund-active {
         top: 85px;
         bottom: 0;
         overflow: auto;
-        right: -255px;
+        left: -255px;
         -webkit-transition: all 0.25s ease-out;
         -o-transition: all 0.25s ease-out;
         transition: all 0.25s ease-out;
     }
 
     .sidebar-offcanvas.active {
-        right: 0;
+        left: 0;
     }
 }
 

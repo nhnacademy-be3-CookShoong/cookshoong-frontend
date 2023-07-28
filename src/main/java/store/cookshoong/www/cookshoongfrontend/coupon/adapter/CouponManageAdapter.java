@@ -14,8 +14,9 @@ import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 쿠폰 관리 어뎁터.
@@ -256,6 +257,26 @@ public class CouponManageAdapter {
                 .toUri(),
             HttpMethod.POST,
             new HttpEntity<>(request),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
+     * 쿠폰 발급.
+     *
+     * @param accountId                     the account id
+     * @param createProvideCouponRequestDto the create provide coupon request dto
+     */
+    public void executeProvideCoupon(Long accountId, CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/coupon/issue")
+                .pathSegment("account/{accountId}")
+                .buildAndExpand(accountId)
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(createProvideCouponRequestDto),
             new ParameterizedTypeReference<>() {
             });
     }

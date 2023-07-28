@@ -21,7 +21,7 @@ import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAdd
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.SelectAllStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
 /**
  * 회원과 주소 간에 Adapter.

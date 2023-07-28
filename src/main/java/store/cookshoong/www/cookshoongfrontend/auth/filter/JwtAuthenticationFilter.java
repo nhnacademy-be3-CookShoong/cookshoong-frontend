@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.auth.filter;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +21,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final RequestMatcher IS_RESOURCE = new AntPathRequestMatcher("/assets/**");
-    private final RequestMatcher IS_LOGIN_PAGE = new AntPathRequestMatcher("/login-page");
-    private final RequestMatcher IS_LANDING_PAGE = new AntPathRequestMatcher("/");
+
+    private final List<RequestMatcher> EXCLUDED_PATHS = List.of(
+        new AntPathRequestMatcher("/assets/**"),
+        new AntPathRequestMatcher("/login-page"),
+        new AntPathRequestMatcher("/")
+    );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -37,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return IS_LOGIN_PAGE.matches(request) || IS_RESOURCE.matches(request) || IS_LANDING_PAGE.matches(request);
+        return EXCLUDED_PATHS.stream()
+            .anyMatch(matcher -> matcher.matches(request));
     }
 }

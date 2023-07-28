@@ -55,20 +55,17 @@ public class StoreOptionAdapter {
      * 옵션 등록 메서드.
      *
      * @param storeId                매장 아이디
-     * @param optionGroupId          옵션 그룹 아이디
      * @param createOptionRequestDto 옵션 등록 Dto
      */
-    public ResponseEntity<Void> executeCreateOption(Long storeId, Long optionGroupId, CreateOptionRequestDto createOptionRequestDto) {
+    public ResponseEntity<Void> executeCreateOption(Long storeId, CreateOptionRequestDto createOptionRequestDto) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
             .pathSegment("stores")
             .pathSegment("{storeId}")
-            .pathSegment("option-group")
-            .pathSegment("{optionGroupId}")
             .pathSegment("option")
-            .buildAndExpand(storeId, optionGroupId)
+            .buildAndExpand(storeId)
             .toUri();
 
         RequestEntity<CreateOptionRequestDto> request = RequestEntity.post(uri)
@@ -188,5 +185,50 @@ public class StoreOptionAdapter {
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
 
         return response.getBody();
+    }
+
+
+    /**
+     * 옵션 그룹 삭제 메서드.
+     *
+     * @param storeId     매장 아이디
+     * @param optionGroupId 옵션 그룹 아이디
+     */
+    public ResponseEntity<Void> executeDeleteOptionGroup(Long storeId, Long optionGroupId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option-group")
+            .pathSegment("{option-group}")
+            .buildAndExpand(storeId, optionGroupId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 옵션 삭제 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @param optionId  메뉴 아이디
+     */
+    public ResponseEntity<Void> executeDeleteOption(Long storeId, Long optionId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("option")
+            .pathSegment("{optionId}")
+            .buildAndExpand(storeId, optionId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.delete(uri).build();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
     }
 }

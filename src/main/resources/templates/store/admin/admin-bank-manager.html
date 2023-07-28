@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+</head>
+
+<body layout:fragment="content">
+<header th:replace="fragments :: admin-site-header"></header>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments-admin :: admin-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">은행 관리 페이지</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">은행타입 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>은행 코드</th>
+                                        <th>은행명</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="bank, i: ${banks}">
+                                        <td th:text="${(banks.pageable.pageNumber * banks.pageable.pageSize) + i.index +1}"></td>
+                                        <td th:text="${bank.getBankTypeCode()}"></td>
+                                        <td th:text="${bank.getDescription()}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <nav aria-label="Page navigation" class="pagination-container">
+                        <ul class="pagination"
+                            th:with="start=${(banks.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
+                            last=(${start + (buttonNumber - 1) < banks.totalPages ? start + (buttonNumber - 1) : banks.totalPages})">
+                            <li>
+                                <a th:href="@{/admin/management/banks(page=1, size=${banks.size})}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="${banks.first} ? 'disabled'">
+                                <a th:href="${banks.first} ? '#' :@{/admin/management/banks(page=${banks.number}, size=${banks.size})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == banks.number + 1} ? 'active'">
+                                <a th:text="${page}" th:href="@{/admin/management/banks(page=${page}, size=${banks.size})}"></a>
+                            </li>
+                            <li th:class="${banks.last} ? 'disabled'">
+                                <a th:href="${banks.last} ? '#': @{/admin/management/banks(page=${banks.number + 2}, size=${banks.size})}">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/management/banks(page=${banks.totalPages}, size=${banks.size})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <form th:action="@{/admin/management/banks}" th:object="${createBankRequestDto}" th:method="post">
+                            <div class="card-body">
+                                <span><h4 class="card-title">은행 등록</h4></span>
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-info mr-2" type="submit">은행타입 추가</button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>은행 코드</th>
+                                            <th>은행 이름</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="py-1">
+                                                <input type="text" name="bankCode" th:field="*{bankCode}" placeholder="은행 코드"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('bankCode')}" th:error="*{bankCode}">CODE ERROR</span>
+                                                <br/>
+                                            </td>
+                                            <td class="py-1">
+                                                <input type="text" name="bankName" th:field="*{bankName}" placeholder="은행 이름"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('bankName')}" th:error="*{bankName}">NAME ERROR</span>
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+</body>
+
+</html>

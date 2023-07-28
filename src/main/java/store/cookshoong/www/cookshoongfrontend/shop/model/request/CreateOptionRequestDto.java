@@ -18,4 +18,6 @@ public class CreateOptionRequestDto {
     private String name;
     @NotNull
     private Integer price;
+
+    private Long optionGroup;
 }

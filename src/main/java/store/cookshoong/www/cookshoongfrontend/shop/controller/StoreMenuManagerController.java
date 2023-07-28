@@ -6,14 +6,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 
 /**
  * 매장 메뉴 관리 페이지 컨트롤러.
@@ -26,6 +32,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerServ
 public class StoreMenuManagerController {
 
     private final StoreMenuManagerService storeMenuManagerService;
+    private final StoreOptionManagerService storeOptionManagerService;
 
     /**
      * 매장 메뉴 관리 페이지 맵핑.
@@ -33,17 +40,21 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.11
      */
-    @GetMapping("/store-menu-manager")
+    @GetMapping("/stores/{storeId}/store-menu-manager")
     public String getSelectStoreMenuManager(
         @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         Model model) {
 
-        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(1L);
-        model.addAttribute("menus", menus);
-        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(1L);
-        model.addAttribute("menuGroups", menuGroups);
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
+        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
+        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
 
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("menus", menus);
+        model.addAttribute("menuGroups", menuGroups);
+        model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
         model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";
@@ -55,12 +66,13 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-menu-group-manager")
+    @PostMapping("/stores/{storeId}/store-menu-group-manager")
     public String postCreateMenuGroup(
         @Valid @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
+        @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
-        storeMenuManagerService.createMenuGroup(1L, createMenuGroupRequestDto);
-        return "redirect:/store-menu-manager";
+        storeMenuManagerService.createMenuGroup(storeId, createMenuGroupRequestDto);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
 
     /**
@@ -69,11 +81,39 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.13
      */
-    @PostMapping("/store-menu-manager")
+    @PostMapping("/stores/{storeId}/store-menu-manager")
     public String postCreateMenu(
         @Valid @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
-        BindingResult bindingResult) {
-        storeMenuManagerService.createMenu(1L, createMenuRequestDto);
-        return "redirect:/store-menu-manager";
+        @PathVariable("storeId") Long storeId,
+        BindingResult bindingResult,
+        @RequestPart("menuImage") MultipartFile menuImage) {
+        storeMenuManagerService.createMenu(storeId, createMenuRequestDto, menuImage);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+    }
+
+    /**
+     * 매장 메뉴 그룹 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping ("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
+    public String postDeleteMenuGroup(
+        @PathVariable("storeId") Long storeId, @PathVariable("menuGroupId") Long menuGroupId) {
+        storeMenuManagerService.deleteMenuGroup(storeId, menuGroupId);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+    }
+
+    /**
+     * 매장 메뉴 삭제 요청 맵핑.
+     *
+     * @author papel
+     * @since 2023.07.27
+     */
+    @DeleteMapping("/stores/{storeId}/store-menu-manager/{menuId}")
+    public String postDeleteMenu(
+        @PathVariable("storeId") Long storeId, @PathVariable("menuId") Long menuId) {
+        storeMenuManagerService.deleteMenu(storeId, menuId);
+        return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
 }

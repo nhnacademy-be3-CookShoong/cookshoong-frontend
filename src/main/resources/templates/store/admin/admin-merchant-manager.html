@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+</head>
+<body>
+<header th:replace="fragments :: admin-site-header"></header>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments-admin :: admin-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">가맹점 관리 페이지</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">가맹점 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>가맹점명</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="merchant, i: ${merchants}">
+                                    <tr>
+                                        <td th:text="${(merchants.pageable.pageNumber * merchants.pageable.pageSize) + i.index +1}"></td>
+                                        <td th:text="${merchant.name}"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    th:data-target="'#merchantDelete' + ${merchant.id}">삭제
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" th:id="'merchantDelete' + ${merchant.id}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form class="col-12 p-0"
+                                                          th:action="@{|/admin/management/merchants/${merchant.id}|}"
+                                                          th:method="delete">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">해당 가맹점을 삭제하시겠습니까?</h4>
+                                                                    <button class="btn btn-info mr-2" type="submit">예
+                                                                    </button>
+                                                                    <button class="btn btn-light" data-dismiss="modal">
+                                                                        아니오
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <nav aria-label="Page navigation" class="pagination-container">
+                        <ul class="pagination"
+                            th:with="start=${(merchants.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
+                            last=(${start + (buttonNumber - 1) < merchants.totalPages ? start + (buttonNumber - 1) : merchants.totalPages})">
+                            <li>
+                                <a th:href="@{/admin/management/merchants(page=1, size=${merchants.size})}"
+                                   aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="${merchants.first} ? 'disabled'">
+                                <a th:href="${merchants.first} ? '#' :@{/admin/management/merchants(page=${merchants.number}, size=${merchants.size})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(start, last)}"
+                                th:class="${page == merchants.number + 1} ? 'active'">
+                                <a th:text="${page}"
+                                   th:href="@{/admin/management/merchants(page=${page}, size=${merchants.size})}"></a>
+                            </li>
+                            <li th:class="${merchants.last} ? 'disabled'">
+                                <a th:href="${merchants.last} ? '#': @{/admin/management/merchants(page=${merchants.number + 2}, size=${merchants.size})}">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/management/merchants(page=${merchants.totalPages}, size=${merchants.size})}"
+                                   aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <form th:action="@{/admin/management/merchants}" th:object="${createMerchantRequestDto}"
+                              th:method="post">
+                            <div class="card-body">
+                                <span><h4 class="card-title">가맹점 등록</h4></span>
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-info mr-2" type="submit">가맹점 추가</button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>가맹점 이름을 등록하세요.</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="py-1">
+                                                <input type="text" name="merchantName" th:field="*{merchantName}"
+                                                       placeholder="가맹점 이름"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('merchantName')}"
+                                                      th:error="*{merchantName}"></span>
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+</body>
+</html>

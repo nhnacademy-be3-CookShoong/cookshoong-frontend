@@ -25,7 +25,7 @@ import store.cookshoong.www.cookshoongfrontend.payment.service.ChargeTypeService
  */
 @Slf4j
 @Controller
-@RequestMapping("/payments/charges/charge-type")
+@RequestMapping("/admin/management/charges")
 @RequiredArgsConstructor
 public class ChargeTypeController {
 
@@ -70,7 +70,7 @@ public class ChargeTypeController {
 
         chargeTypeService.createChargeType(createTypeRequestDto);
 
-        return "redirect:/payments/charges/charge-type";
+        return "redirect:/admin/management/charges";
     }
 
     /**
@@ -79,11 +79,11 @@ public class ChargeTypeController {
      * @param id        결제 타입 아이디
      * @return          모든 결제 타입에 대한 목록 화면으로 반환
      */
-    @GetMapping("/admin-index/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String postDeleteChargeType(@PathVariable String id) {
 
         chargeTypeService.deleteChargeType(id);
 
-        return "redirect:/payments/charges/charge-type";
+        return "redirect:/admin/management/charges";
     }
 }

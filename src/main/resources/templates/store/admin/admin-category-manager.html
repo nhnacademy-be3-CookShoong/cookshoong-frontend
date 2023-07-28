@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+</head>
+<body>
+<header th:replace="fragments :: admin-site-header"></header>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments-admin :: admin-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">카테고리 관리 페이지</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">카테고리 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>카테고리 코드</th>
+                                        <th>카테고명</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="category, i: ${categories}">
+                                    <tr>
+                                        <td th:text="${(categories.pageable.pageNumber * categories.pageable.pageSize) + i.index +1}"></td>
+                                        <td th:text="${category.categoryCode}"></td>
+                                        <td th:text="${category.description}"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    th:data-target="'#categoryPatch' + ${category.categoryCode}">수정</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    th:data-target="'#categoryDelete' + ${category.categoryCode}">삭제</button>
+
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" th:id="'categoryDelete' + ${category.categoryCode}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form class="col-12 p-0"
+                                                          th:action="@{|/admin/management/categories/${category.getCategoryCode()}|}"
+                                                          th:method="delete">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">해당 카테고리를 삭제하시겠습니까?</h4>
+                                                                    <button class="btn btn-info mr-2" type="submit">예</button>
+                                                                    <button class="btn btn-light" data-dismiss="modal">아니오</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" th:id="'categoryPatch' + ${category.categoryCode}" tabindex="-1"
+                                         role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        th:text="${category.categoryCode}+' 카테고리 수정'"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:id="'category'+${category.categoryCode}"
+                                                          th:action="@{|/admin/management/categories/${category.getCategoryCode()}|}"
+                                                          th:method="patch" th:object="${updateCategoryRequestDto}">
+                                                        <input type="text" name="storeCategoryName" th:field="*{storeCategoryName}" placeholder="카테고리 이름"/>
+                                                        <br/>
+                                                        <span class="error" th:if="${#fields.hasErrors('storeCategoryName')}" th:error="*{storeCategoryName}"></span>
+                                                        <br/>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="submit" th:form="'category'+ ${category.categoryCode}"
+                                                            class="btn btn-primary" th:method="patch">Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <nav aria-label="Page navigation" class="pagination-container">
+                        <ul class="pagination"
+                            th:with="start=${(categories.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
+                            last=(${start + (buttonNumber - 1) < categories.totalPages ? start + (buttonNumber - 1) : categories.totalPages})">
+                            <li>
+                                <a th:href="@{/admin/management/categories(page=1, size=${categories.size})}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="${categories.first} ? 'disabled'">
+                                <a th:href="${categories.first} ? '#' :@{/admin/management/categories(page=${categories.number}, size=${categories.size})}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == categories.number + 1} ? 'active'">
+                                <a th:text="${page}" th:href="@{/admin/management/categories(page=${page}, size=${categories.size})}"></a>
+                            </li>
+                            <li th:class="${categories.last} ? 'disabled'">
+                                <a th:href="${categories.last} ? '#': @{/admin/management/categories(page=${categories.number + 2}, size=${categories.size})}">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/admin/management/categories(page=${categories.totalPages}, size=${categories.size})}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <form th:action="@{/admin/management/categories}" th:object="${createCategoriesRequestDto}" th:method="post">
+                            <div class="card-body">
+                                <span><h4 class="card-title">카테고리 등록</h4></span>
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-info mr-2" type="submit">카테고리 추가</button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>카테고리를 등록하세요.</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="py-1">
+                                                <input type="text" name="storeCategoryCode" th:field="*{storeCategoryCode}" placeholder="카테고리 코드"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('storeCategoryCode')}" th:error="*{storeCategoryCode}"></span>
+                                                <br/>
+                                            </td>
+                                            <td class="py-1">
+                                                <input type="text" name="storeCategoryName" th:field="*{storeCategoryName}" placeholder="카테고리 이름"/>
+                                                <br/>
+                                                <span class="error" th:if="${#fields.hasErrors('storeCategoryName')}" th:error="*{storeCategoryName}"></span>
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+</body>
+</html>
