@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import store.cookshoong.www.cookshoongfrontend.auth.filter.JwtAuthenticationFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
@@ -29,7 +27,6 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
@@ -63,8 +60,6 @@ public class WebSecurityConfig {
             .logoutSuccessHandler(tokenInvalidationHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);
-
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.sessionManagement()
             .sessionFixation()
