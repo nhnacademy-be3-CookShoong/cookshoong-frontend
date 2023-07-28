@@ -45,4 +45,17 @@ public class AuthApiAdapter {
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
         return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
     }
+
+    /**
+     * 게이트웨이에 무효화시킬 토큰을 보내는 메서드.
+     *
+     */
+    public void executeTokenInvalidated() {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("token-invalidate")
+            .build()
+            .toUri();
+        restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {});
+    }
 }
