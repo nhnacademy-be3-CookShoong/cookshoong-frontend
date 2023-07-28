@@ -113,3 +113,17 @@
     flex: 1;
     margin-right: 10px;
 }
+
+.sign-in-btn {
+    color: #ffffff;
+}
+
+.sign-up-btn {
+    color: #ffffff;
+}
+
+.btn-outline-warning:hover {
+    color: #ffffff;
+    background-color: #ff8300;
+    border-color: #ff8300;
+}

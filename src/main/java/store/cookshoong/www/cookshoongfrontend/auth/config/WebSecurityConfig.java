@@ -2,6 +2,8 @@ package store.cookshoong.www.cookshoongfrontend.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -31,6 +33,8 @@ public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
+    private static final String[] PERMIT_ALL_PATTERNS = { "/health-check/**", "/login-page", "/sign-up",
+        "/sign-up-choice", "/", "/config", "/fragment", "/fragment-admin" };
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -42,10 +46,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-            .mvcMatchers("/health-check/**").permitAll()
-            .mvcMatchers("/").permitAll()
+            .mvcMatchers(PERMIT_ALL_PATTERNS).permitAll()
             .anyRequest().authenticated();
-
 
         http.formLogin()
             .loginPage("/login-page")
@@ -82,8 +84,7 @@ public class WebSecurityConfig {
      */
     @Bean
     public WebSecurityCustomizer webSecurity() {
-        return web -> web.ignoring().mvcMatchers("/assets/**", "/login-page", "/sign-up",
-            "/sign-up-choice");
+        return web -> web.ignoring().mvcMatchers("/assets/**");
     }
 
     @Bean
@@ -96,5 +97,12 @@ public class WebSecurityConfig {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_BUSINESS > ROLE_CUSTOMER");
         return roleHierarchy;
+    }
+
+    @Bean
+    static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setRoleHierarchy(roleHierarchy);
+        return expressionHandler;
     }
 }

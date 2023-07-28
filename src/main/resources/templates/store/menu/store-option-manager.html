@@ -1,28 +1,18 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
-
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/config}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
-    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 </head>
-
-<body>
+<body layout:fragment="content">
 <header th:replace="fragments :: admin-site-header"></header>
-
 <div class="modal fade" id="optionGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-option-group-manager}" th:object="${createOptionGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager'}" th:object="${createOptionGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -60,7 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{/store-option-manager}" th:object="${createOptionRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-manager'}" th:object="${createOptionRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -84,6 +74,19 @@
                                     <input class="form-control" type="text" name="price"
                                            placeholder="옵션 가격">
                                 </div>
+
+                                <div class="form-group">
+                                    <label>그룹</label>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <select name="optionGroup">
+                                                <option value="">-- 선택 --</option>
+                                                <option th:each="optionGroup, i : ${optionGroups}" th:value="${optionGroup.id}" th:text="${optionGroup.name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -126,9 +129,11 @@
                                                 data-toggle="modal"
                                                 data-target="#optionGroupAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px"
-                                                type="button">삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager/' + ${optionGroup.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">
@@ -164,9 +169,11 @@
                                                 data-toggle="modal"
                                                 data-target="#optionAdd">수정
                                         </button>
-                                        <button class="btn btn-primary mb-1" style="width: 85px" type="button">
-                                            삭제
-                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-manager/' + ${option.id} }" th:method="delete">
+                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="border-top pt-2 pb-2">
@@ -185,27 +192,27 @@
         </div>
     </div>
 </div>
-
 <footer th:replace="fragments :: site-footer"></footer>
-
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/template.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
-<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-<script src="/assets/vendors/select2/select2.min.js"></script>
-<script src="/assets/js/file-upload.js"></script>
-<script src="/assets/js/typeahead.js"></script>
-<script src="/assets/js/select2.js"></script>
 <script>
-    window.onload = function() {
-        window.scrollTo(0, 0);
+    function getSelectedGroups() {
+        const checkboxes = document.getElementsByName('optionGroups');
+        const selectedCategories = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                selectedCategories.push(checkboxes[i].value);
+            }
+        }
+        return selectedCategories;
+    }
+    function handleCheckboxClick() {
+        const selectedCategories = getSelectedGroups();
+        const checkMaximum = 1;
+        if (selectedCategories.length > checkMaximum) {
+            this.checked = false;
+            alert("최대 1개의 그룹만 선택할 수 있습니다.");
+        }
     }
 </script>
 </body>
-
 </html>
