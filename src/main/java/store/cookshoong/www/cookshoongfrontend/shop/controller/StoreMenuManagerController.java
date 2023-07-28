@@ -47,14 +47,14 @@ public class StoreMenuManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
-        model.addAttribute("storeId", storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
-        model.addAttribute("menus", menus);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
-        model.addAttribute("menuGroups", menuGroups);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
-        model.addAttribute("optionGroups", optionGroups);
 
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("menus", menus);
+        model.addAttribute("menuGroups", menuGroups);
+        model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("createMenuRequestDto", createMenuRequestDto);
         model.addAttribute("createMenuGroupRequestDto", createMenuGroupRequestDto);
         return "store/menu/store-menu-manager";

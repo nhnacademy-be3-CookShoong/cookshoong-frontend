@@ -41,12 +41,12 @@ public class StoreOptionManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
-        model.addAttribute("storeId", storeId);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
-        model.addAttribute("options", options);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
-        model.addAttribute("optionGroups", optionGroups);
 
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("options", options);
+        model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("createOptionRequestDto", createOptionRequestDto);
         model.addAttribute("createOptionGroupRequestDto", createOptionGroupRequestDto);
         return "store/menu/store-option-manager";
