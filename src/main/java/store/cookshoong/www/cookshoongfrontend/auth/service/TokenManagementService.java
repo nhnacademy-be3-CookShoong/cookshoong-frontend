@@ -88,4 +88,8 @@ public class TokenManagementService {
             authApiAdapter.executeTokenInvalidated(accessToken);
         }
     }
+
+    public void saveRefreshToken(String rawRefreshToken) {
+        refreshTokenRepository.save(RefreshToken.createRefreshToken(rawRefreshToken));
+    }
 }
