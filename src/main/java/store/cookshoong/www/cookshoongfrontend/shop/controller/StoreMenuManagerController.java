@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
  */
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class StoreMenuManagerController {
 
     private final StoreMenuManagerService storeMenuManagerService;
@@ -97,7 +99,7 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.27
      */
-    @DeleteMapping ("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
+    @DeleteMapping("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
     public String postDeleteMenuGroup(
         @PathVariable("storeId") Long storeId, @PathVariable("menuGroupId") Long menuGroupId) {
         storeMenuManagerService.deleteMenuGroup(storeId, menuGroupId);

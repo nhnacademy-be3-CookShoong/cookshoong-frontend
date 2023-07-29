@@ -16,4 +16,5 @@ public class CreateMenuGroupRequestDto {
     @NotBlank
     private String name;
     private String description;
+    private Long targetMenuGroupId;
 }
