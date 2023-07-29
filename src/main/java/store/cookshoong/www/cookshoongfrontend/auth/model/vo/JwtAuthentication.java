@@ -11,7 +11,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
  * @since 2023.07.14
  */
 public class JwtAuthentication extends AbstractAuthenticationToken {
-    private final String accessToken;
+    private String accessToken;
     private String refreshToken;
 
     /**
@@ -42,6 +42,10 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
     @Override
     public Object getPrincipal() {
         return accessToken;
+    }
+
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     @Override
