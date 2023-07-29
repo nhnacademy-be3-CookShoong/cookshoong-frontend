@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.Base64Utils;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.InvalidAccessTokenException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedRefreshToken;
 
 /**
  * Jwt 를 읽기 좋은 형태로 바꿔주는 클래스.
@@ -17,6 +18,15 @@ import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
  */
 public class JwtResolver {
     private JwtResolver() {}
+
+
+    public static ParsedAccessToken resolveAccessToken(String accessToken) {
+        return resolveToken(accessToken, ParsedAccessToken.class);
+    }
+
+    public static ParsedRefreshToken resolveRefreshToken(String refreshToken) {
+        return resolveToken(refreshToken, ParsedRefreshToken.class);
+    }
 
     /**
      * Token 값을 디코딩하여 읽기 좋은 형태로 바꾸는 메서드.
