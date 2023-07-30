@@ -13,16 +13,18 @@ import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 public class JwtAuthentication extends AbstractAuthenticationToken {
     private String accessToken;
     private String refreshToken;
+    private String status;
 
     /**
      * Instantiates a new Jwt authentication.
      *
      * @param accessToken the access token
      */
-    public JwtAuthentication(String accessToken, String refreshToken) {
+    public JwtAuthentication(String accessToken, String refreshToken, String status) {
         super(JwtResolver.convertToRole(accessToken));
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.status = status;
         this.setAuthenticated(true);
     }
 
@@ -44,8 +46,8 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
         return accessToken;
     }
 
-    public void updateAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public String getStatus() {
+        return this.status;
     }
 
     @Override
@@ -67,5 +69,13 @@ public class JwtAuthentication extends AbstractAuthenticationToken {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), accessToken);
+    }
+
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public void updateStatus(String status) {
+        this.status = status;
     }
 }
