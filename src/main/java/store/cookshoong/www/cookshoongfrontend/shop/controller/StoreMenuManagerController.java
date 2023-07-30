@@ -97,7 +97,7 @@ public class StoreMenuManagerController {
      * @author papel
      * @since 2023.07.27
      */
-    @DeleteMapping ("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
+    @DeleteMapping("/stores/{storeId}/store-menu-group-manager/{menuGroupId}")
     public String postDeleteMenuGroup(
         @PathVariable("storeId") Long storeId, @PathVariable("menuGroupId") Long menuGroupId) {
         storeMenuManagerService.deleteMenuGroup(storeId, menuGroupId);
