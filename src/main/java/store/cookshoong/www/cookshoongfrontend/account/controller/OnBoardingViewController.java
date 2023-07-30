@@ -85,7 +85,7 @@ public class OnBoardingViewController {
         return "redirect:/";
     }
 
-    @GetMapping("dormancy")
+    @GetMapping("/dormancy")
     public String getDormancyAccount() {
         return "account/dormancy";
     }
@@ -95,7 +95,7 @@ public class OnBoardingViewController {
      *
      * @return the account active
      */
-    @GetMapping("dormancy/active")
+    @GetMapping("/dormancy/active")
     public String getAccountActive() {
         Long accountId = accountIdAware.getAccountId();
         accountService.updateAccountStatus(accountId, "ACTIVE");
