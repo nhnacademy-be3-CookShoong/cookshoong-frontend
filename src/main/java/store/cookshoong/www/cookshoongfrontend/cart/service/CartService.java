@@ -151,6 +151,17 @@ public class CartService {
     }
 
     /**
+     * Redis 장바구니에 redis Key 에 hashKey 존재여부 확인하는 메소드.
+     *
+     * @param cartKey       redis Key
+     * @return              존재여부를 반환
+     */
+    public boolean existMenuInCartRedis(String cartKey, String menuKey) {
+
+        return cartAdapter.existMenuInCartRedis(cartKey, menuKey);
+    }
+
+    /**
      * DB 장바구니에 회원 장바구니 존재여부 확인하는 메소드.
      *
      * @param accountId     회원아이디
@@ -159,5 +170,20 @@ public class CartService {
     public boolean hashDbCart(Long accountId) {
 
         return cartAdapter.hasDbCart(accountId);
+    }
+
+    /**
+     * 장바구니에 들어있는 메뉴에 총 가격을 계산하는 메서드.
+     *
+     * @param cartItems     장바구니 내역들
+     * @return              메뉴에 총 가격을 반환
+     */
+    public Integer calculateTotalPrice(List<CartRedisDto> cartItems) {
+        int totalPrice = 0;
+        for (CartRedisDto item : cartItems) {
+            int menuPrice = Integer.parseInt(item.getTotalMenuPrice());
+            totalPrice += menuPrice;
+        }
+        return totalPrice;
     }
 }
