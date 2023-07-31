@@ -35,6 +35,7 @@ public class CartRedisController {
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountIdAware account;
     private static final String CART = "cartKey=";
+    private static final String NO_MENU = "NO_KEY";
 
     /**
      *  회원 장바구니에 담겨있는 메뉴를 보여주는 Controller.
@@ -48,6 +49,12 @@ public class CartRedisController {
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(CART + account.getAccountId());
         List<SelectOptionResponseDto> optionsInfo = storeOptionManagerService.selectOptions(1L);
 
+        if (!cartService.existMenuInCartRedis(CART + account.getAccountId(), NO_MENU)) {
+            int totalPrice = cartService.calculateTotalPrice(cartItems);
+            String storeName = cartItems.get(0).getStoreName();
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("storeName", storeName);
+        }
 
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("optionsInfo", optionsInfo);
