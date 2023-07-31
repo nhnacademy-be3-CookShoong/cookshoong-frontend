@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.cart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,10 +76,17 @@ public class CartRedisController {
                                                 @RequestBody List<CartOptionDto> cartOptionDto) {
 
         CartRedisDto cart = cartService.selectCartMenu(CART + account.getAccountId(), menuKey);
+        List<CartOptionDto> optionDtoList = new ArrayList<>();
+
+        if (cartOptionDto.size() == 0) {
+            return ResponseEntity.ok().build();
+        } else if (cart.getOptions() == null) {
+            cart.setOptions(optionDtoList);
+        }
 
         cart.getOptions().clear();
-
         cart.getOptions().addAll(cartOptionDto);
+
         cartService.modifyCartMenu(CART + account.getAccountId(), menuKey, cart);
 
         return ResponseEntity.ok().build();
