@@ -28,7 +28,6 @@
                     <div class="card-body" style="height: 80px">
                         <div class="bg-box" style="background-color: #FFFFFF; text-align: center;">
                             <h1>장바구니</h1>
-                            <h2>매장: <span th:text="${cart.storeName}"></span></h2>
                         </div>
                     </div>
                 </div>
@@ -37,7 +36,7 @@
                         <div class="tab-pane fade show active col-12 stretch-card" id="all">
                             <div class="card border-0">
                                 <div class="card-body pl-0 pr-0">
-                                    <div class="col-12 pr-0" th:each="item, i:${cartItems}">
+                                    <div class="col-12 pr-0" th:each="item, i:${cartItems}" th:unless="${item == null}">
                                         <div class="col-sm-12">
                                             <div class="row">
                                                 <div class="align-content-end border-info pr-3 pb-2"
