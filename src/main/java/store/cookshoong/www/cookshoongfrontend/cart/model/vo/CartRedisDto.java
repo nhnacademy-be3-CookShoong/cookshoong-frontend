@@ -43,9 +43,11 @@ public class CartRedisDto {
      * @return      메뉴 + 오셥s -> hashKey 반환
      */
     public String generateUniqueHashKey() {
-        String optionIdsString = options.stream()
+        String optionIdsString = options != null
+            ? options.stream()
             .map(cartOptionDto -> cartOptionDto.getOptionId().toString())
-            .collect(Collectors.joining(""));
+            .collect(Collectors.joining(""))
+            : "";
 
         return menu.getMenuId() + optionIdsString;
     }
