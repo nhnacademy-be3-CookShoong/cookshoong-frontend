@@ -42,7 +42,7 @@
                                                 <div class="align-content-end border-info pr-3 pb-1"
                                                      style="max-width: 200px"
                                                      th:onclick="'window.location.href=\'/index/store/' + ${item.storeId} + '\''">
-                                                    <img style="border-radius: 5px; width: 100px; height: 100px;" th:src="|/images/${item.menu.menuImage}|"
+                                                    <img style="border-radius: 5px; width: 100px; height: 100px;" th:src="${item.menu.menuImage}"
                                                          onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                                 </div>
                                             </td>
