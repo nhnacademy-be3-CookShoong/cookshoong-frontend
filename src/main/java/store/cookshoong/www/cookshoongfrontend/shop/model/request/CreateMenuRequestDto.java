@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 사업자 : 메뉴 등록 Dto.
+ * 메뉴 등록 Dto.
  *
  * @author papel (윤동현)
  * @since 2023.07.11
@@ -26,9 +26,8 @@ public class CreateMenuRequestDto {
     private Integer cookingTime;
     @Digits(integer = 3, fraction = 1)
     private BigDecimal earningRate;
-
     private List<Long> menuGroups;
-
     private List<Long> optionGroups;
+    private Long targetMenuId;
 
 }

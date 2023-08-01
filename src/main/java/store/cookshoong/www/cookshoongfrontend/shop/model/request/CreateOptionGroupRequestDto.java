@@ -17,4 +17,5 @@ public class CreateOptionGroupRequestDto {
     private String name;
     private Integer minSelectCount;
     private Integer maxSelectCount;
+    private Long targetOptionGroupId;
 }

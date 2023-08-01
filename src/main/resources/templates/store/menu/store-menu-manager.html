@@ -14,7 +14,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager'}" th:object="${createMenuGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager'}"
+                      th:object="${createMenuGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -43,6 +44,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <input class="form-control" type="hidden" name="targetMenuGroupId">
                                 <button class="btn btn-info mr-2" type="submit">메뉴 그룹 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
@@ -57,8 +59,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-manager'}" th:object="${createMenuRequestDto}"
-                      method="post"  enctype="multipart/form-data">
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-manager'}"
+                      th:object="${createMenuRequestDto}"
+                      method="post" enctype="multipart/form-data">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -102,7 +105,8 @@
 
                                 <div class="form-group">
                                     <label>메뉴 대표 이미지</label>
-                                    <input type="file" name="menuImage" class="file-upload-default" accept="image/png,image/jpg">
+                                    <input type="file" name="menuImage" class="file-upload-default"
+                                           accept="image/png,image/jpg">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
                                                id="menuImage"
@@ -126,13 +130,13 @@
                                         <div class="col-sm-3" th:each="menuGroup, i:${menuGroups}">
                                             <label class="custom-checkbox">
                                                 <input type="checkbox" name="menuGroups" th:value="${menuGroup.id}"
-                                                       th:text="${menuGroup.name}" onclick="handleCheckboxClick.call(this)">
+                                                       th:text="${menuGroup.name}"
+                                                       onclick="handleCheckboxClick.call(this)">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label>옵션 그룹</label>
                                     <div class="row">
@@ -145,7 +149,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -153,6 +156,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <input class="form-control" type="hidden" name="targetMenuId">
                                 <button class="btn btn-info mr-2" type="submit" id="submitButton">메뉴 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
@@ -186,10 +190,16 @@
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                                th:id="${menuGroup.id}"
                                                 data-toggle="modal"
-                                                data-target="#menuGroupAdd">수정
+                                                data-target="#menuGroupAdd"
+                                                th:data-targetmenugroupid="${menuGroup.id}"
+                                                th:data-name="${menuGroup.name}"
+                                                th:data-description="${menuGroup.description}">
+                                            수정
                                         </button>
-                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager/' + ${menuGroup.id} }" th:method="delete">
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager/' + ${menuGroup.id} }"
+                                              th:method="delete">
                                             <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
                                                 삭제
                                             </button>
@@ -230,21 +240,34 @@
                                                     <span
                                                             class="pr-2" style="font-size: 1.2rem">30분</span></p>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem" th:text="${menu.price}"><span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                       th:text="${menu.price}"><span
                                                             style="font-size: 1.2rem">원</span></p>
                                                 </div>
                                                 <div class="pt-2">
-                                                    <p>사과를 곁들인 고기찜 요리. 짐승 고기에 가득한 달큰한 육즙이 먹고 나서도 계속 생각난다. 사과 과수원에 누워 신선한 과일 향에 젖어드는 느낌이다.</p>
+                                                    <p>사과를 곁들인 고기찜 요리. 짐승 고기에 가득한 달큰한 육즙이 먹고 나서도 계속 생각난다. 사과 과수원에 누워 신선한
+                                                        과일 향에 젖어드는 느낌이다.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                                th:id="${menu.id}"
                                                 data-toggle="modal"
-                                                data-target="#menuAdd">수정
+                                                data-target="#menuAdd"
+                                                th:data-targetmenuid="${menu.id}"
+                                                th:data-name="${menu.name}"
+                                                th:data-price="${menu.price}"
+                                                th:data-description="${menu.description}"
+                                                th:data-cookingtime="${menu.cookingTime}"
+                                                th:data-earningrate="${menu.earningRate}"
+                                                th:data-menugroups="${menu.menuGroups}"
+                                                th:data-optiongroups="${menu.optionGroups}"
+                                        >수정
                                         </button>
-                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-manager/' + ${menu.id} }" th:method="delete">
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-manager/' + ${menu.id} }"
+                                              th:method="delete">
                                             <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
                                                 삭제
                                             </button>
@@ -270,18 +293,6 @@
 <footer th:replace="fragments :: site-footer"></footer>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-    const editor = new toastui.Editor({
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '200px',
-        initialValue: '메뉴 설명을 입력해주세요.'
-    });
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
-    });
-</script>
-<script>
     function getSelectedGroups() {
         const checkboxes = document.getElementsByName('menuGroups');
         const selectedCategories = [];
@@ -293,6 +304,7 @@
         }
         return selectedCategories;
     }
+
     function handleCheckboxClick() {
         const selectedCategories = getSelectedGroups();
         const checkMaximum = 3;
@@ -302,6 +314,69 @@
         }
     }
 </script>
-</body>
+<script>
+    $('#menuGroupAdd').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const target = button.data('targetmenugroupid')
+        const name = button.data('name')
+        const description = button.data('description')
 
+        const modal = $(this)
+        modal.find('input[name="targetMenuGroupId"]').val(target)
+        modal.find('input[name="name"]').val(name)
+        modal.find('input[name="description"]').val(description)
+    })
+</script>
+<script>
+    let editor;
+
+    $('#menuAdd').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const target = button.data('targetmenuid')
+        const name = button.data('name')
+        const price = button.data('price')
+        const description = button.data('description') || '내용을 입력해주세요.'
+        const cookingTime = button.data('cookingtime')
+        const earningRate = button.data('earningrate')
+        const menuGroups = button.data('menugroups')
+        const optionGroups = button.data('optiongroups')
+
+        const modal = $(this)
+        modal.find('input[name="targetMenuId"]').val(target)
+        modal.find('input[name="name"]').val(name)
+        modal.find('input[name="price"]').val(price)
+        modal.find('input[name="description"]').val(description)
+        modal.find('input[name="cookingTime"]').val(cookingTime)
+        modal.find('input[name="earningRate"]').val(earningRate)
+
+        modal.find('input[name="menuGroups"]').prop('checked', false)
+        modal.find('input[name="optionGroups"]').prop('checked', false)
+
+        if (menuGroups != null) {
+            menuGroups.forEach(function (group) {
+                modal.find(`input[name="menuGroups"][value="${group}"]`).prop('checked', true)
+            })
+        }
+
+        if (optionGroups != null) {
+            optionGroups.forEach(function (group) {
+                modal.find(`input[name="optionGroups"][value="${group}"]`).prop('checked', true)
+            })
+        }
+
+        // Create the editor with the current description
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            previewStyle: 'vertical',
+            height: '200px',
+            initialValue: description
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#description').value = editorContent;
+        });
+    });
+</script>
+</body>
 </html>

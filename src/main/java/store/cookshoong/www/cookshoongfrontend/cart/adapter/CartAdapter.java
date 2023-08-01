@@ -27,7 +27,7 @@ import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
  */
 @Component
 @RequiredArgsConstructor
-public class CartRedisAdapter {
+public class CartAdapter {
 
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
@@ -55,6 +55,48 @@ public class CartRedisAdapter {
             new HttpEntity<>(cartRedisDto);
 
         restTemplate.exchange(uri, POST, httpEntity, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 빈 장바구니를 생성하는 메서드.
+     *
+     * @param cartKey       redis key
+     * @param noKey         redis hashKey
+     */
+    public void executeEmptyCart(String cartKey, String noKey) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("{cartKey}")
+            .pathSegment("add-menu")
+            .pathSegment("{noKey}")
+            .pathSegment("empty")
+            .buildAndExpand(cartKey, noKey)
+            .toUri();
+
+        restTemplate.exchange(uri, POST, null, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * Db 장바구니 정보를 Redis 에 저장하는 메서드.
+     *
+     * @param accountId     회원 아이디
+     */
+    public void executeDbUploadRedis(String cartKey, Long accountId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("{cartKey}")
+            .pathSegment("db-upload-redis")
+            .pathSegment("{accountId}")
+            .buildAndExpand(cartKey, accountId)
+            .toUri();
+
+        restTemplate.exchange(uri, POST, null, new ParameterizedTypeReference<>() {});
     }
 
     /**
@@ -141,7 +183,7 @@ public class CartRedisAdapter {
             .toUri();
 
         ResponseEntity<List<CartRedisDto>> exchange =
-            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<List<CartRedisDto>>() {});
+            restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
         return exchange.getBody();
     }
@@ -232,5 +274,79 @@ public class CartRedisAdapter {
             .toUri();
 
         restTemplate.exchange(uri, DELETE, null, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * Redis 장바구니에 회원에 대한 장바구니가 존재하는지 확인.
+     *
+     * @param redisKey         redis Key
+     * @return                  DB 장바구니 존재여부 반환
+     */
+    public boolean existKeyInCartRedis(String redisKey) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("redis")
+            .pathSegment("{cartKey}")
+            .pathSegment("exist")
+            .buildAndExpand(redisKey)
+            .toUri();
+
+        ResponseEntity<Boolean> exchange = restTemplate.exchange(
+            uri, GET, null, new ParameterizedTypeReference<>() {});
+
+        return Boolean.TRUE.equals(exchange.getBody());
+    }
+
+    /**
+     * Redis 장바구니에 회원에 대한 장바구니에 hashKey 가 존재하는지 확인.
+     *
+     * @param redisKey         redis Key
+     * @return                  DB 장바구니 존재여부 반환
+     */
+    public boolean existMenuInCartRedis(String redisKey, String menuKey) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("redis")
+            .pathSegment("{cartKey}")
+            .pathSegment("exist")
+            .pathSegment("{menuKey}")
+            .pathSegment("menu")
+            .buildAndExpand(redisKey, menuKey)
+            .toUri();
+
+        ResponseEntity<Boolean> exchange = restTemplate.exchange(
+            uri, GET, null, new ParameterizedTypeReference<>() {});
+
+        return Boolean.TRUE.equals(exchange.getBody());
+    }
+
+    /**
+     * DB 장바구니에 회원에 대한 장바구니가 존재하는지 확인.
+     *
+     * @param accountId         회원 아이디
+     * @return                  DB 장바구니 존재여부 반환
+     */
+    public boolean hasDbCart(Long accountId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("db")
+            .pathSegment("{accountId}")
+            .pathSegment("has")
+            .buildAndExpand(accountId)
+            .toUri();
+
+        ResponseEntity<Boolean> exchange = restTemplate.exchange(
+            uri, GET, null, new ParameterizedTypeReference<Boolean>() {});
+
+        return Boolean.TRUE.equals(exchange.getBody());
     }
 }

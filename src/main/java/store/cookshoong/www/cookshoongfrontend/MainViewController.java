@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
-import store.cookshoong.www.cookshoongfrontend.cart.service.CartRedisService;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
@@ -53,7 +53,8 @@ public class MainViewController {
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
-    private final CartRedisService cartRedisService;
+    private final CartService cartService;
+    private static final String CART = "cartKey=";
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
@@ -144,8 +145,8 @@ public class MainViewController {
     public String postCreateCart(CartRedisDto cartRedisDto) {
 
 
-        cartRedisService.createCart(
-            String.valueOf(accountIdAware.getAccountId()), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
+        cartService.createCart(
+            CART + accountIdAware.getAccountId(), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
 
         return "redirect:/index/store/" + cartRedisDto.getStoreId();
     }

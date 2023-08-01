@@ -19,90 +19,85 @@
 
 <body>
 <header th:replace="fragments :: user-site-header"></header>
-
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
-            <section class="container">
-                <div class="card">
-                    <div class="card-body" style="height: 80px">
-                        <div class="bg-box" style="background-color: #FFFFFF; text-align: center;">
-                            <h1>장바구니</h1>
-                            <h2>매장: <span th:text="${cart.storeName}"></span></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-top-0">
-                    <div class="tab-content p-0 m-0">
-                        <div class="tab-pane fade show active col-12 stretch-card" id="all">
-                            <div class="card border-0">
-                                <div class="card-body pl-0 pr-0">
-                                    <div class="col-12 pr-0" th:each="item, i:${cartItems}">
-                                        <div class="col-sm-12">
-                                            <div class="row">
-                                                <div class="align-content-end border-info pr-3 pb-2"
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <section class="container">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 style="font-size:1.4rem; font-weight: bold;" class="card-title">장바구니</h4>
+                                <p class="card-description">
+                                    매장 <code th:text="${storeName}"></code>
+                                </p>
+
+                                <hr style="border-top: 1px solid #ccc; margin: 20px 0;">
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr th:each="item, i:${cartItems}" th:unless="${item == null}">
+                                            <td class="p-1">
+                                                <div class="align-content-end border-info pr-3 pb-1"
                                                      style="max-width: 200px"
                                                      th:onclick="'window.location.href=\'/index/store/' + ${item.storeId} + '\''">
-                                                    <img th:src="|/images/${item.menu.menuImage}|"
+                                                    <img style="border-radius: 5px; width: 100px; height: 100px;" th:src="|/images/${item.menu.menuImage}|"
                                                          onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                                 </div>
-                                                <div>
-                                                    <p>
-                                                    <h4 style="text-align: left" th:utext="${item.menuOptName.replaceAll('\n', '<br>')}"></h4>
-                                                </div>
-                                                <div style="text-align: center">
-                                                    <form th:action="@{/carts/menu-count-down/{menuKey}(menuKey=${item.hashKey})}" th:method="PUT">
-                                                        <input type="submit" th:value="마이너스">
-                                                    </form>
-                                                    <span th:text="${item.count}"></span>
-                                                    <form th:action="@{/carts/menu-count-up/{menuKey}(menuKey=${item.hashKey})}" th:method="PUT">
-                                                        <input type="submit" th:value="플러스">
-                                                    </form>
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: right">
-                                                    <h4 style="text-align: right"
-                                                        th:text="${item.totalMenuPrice}+'원'">
-                                                    </h4>
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-2" style="text-align: right">
-                                                    <button class="btn mr-2" style="width: 100px; background: #f2a654"
-                                                            type="button"
-                                                            data-toggle="modal"
-                                                            th:data-target="'#cartMenu' + ${item.hashKey}">옵션수정
+                                            </td>
+                                            <td>
+                                                <h5 style="text-align: left; word-wrap: break-word;" th:class="${item.menuOptName.length() > 20 ? 'breake-word' : ''}" th:utext="${item.menuOptName}"></h5>
+                                            </td>
+                                            <td>
+                                                <form th:action="@{/carts/menu-count-down/{menuKey}(menuKey=${item.hashKey})}" th:method="PUT" class="d-inline">
+                                                    <button class="btn btn-sm btn-icon" style="color: #ffa636" type="submit">
+                                                        <i class="mdi mdi-magnify-minus"></i> <!-- 마이너스 아이콘 -->
                                                     </button>
-                                                </div>
-                                                <div>
-                                                    <p style="text-align: right">
-                                                    <h4 style="text-align: right">
-                                                        <form th:action="@{/carts/menu-delete/{menuKey}(menuKey=${item.hashKey})}" th:method="DELETE">
-                                                            <input type="submit" th:value="삭제">
-                                                        </form>
-                                                    </h4>
-                                                    </p>
-                                                </div>
-                                                <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-                                                                <div class="card">
-                                                                    <div class="ml-3 mt-3">
-                                                                        <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
-                                                                        <div class="row">
-                                                                            <div class="col-md-12">
-                                                                                <div class="form-group">
-                                                                                    <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${optionsInfo}">
-                                                                                        <label class="form-check-label">
-                                                                                            <input type="radio" class="form-check-input" name="'optionsRadios'+${option.id}" th:id="'optionsRadio'+${option.id}" th:value="${option.id}" th:text="${option.name}">
-                                                                                        </label>
-                                                                                        <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
-                                                                                        <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
-                                                                                        <span th:text="${option.price}+'원'"></span>
-                                                                                    </div>
-                                                                                    <button class="btn mr-2" style="background: #f2a654" th:customHashKey="${item.hashKey}" th:onclick="saveSelectedOption(this.getAttribute('customHashKey'))">변경</button>
-                                                                                    <button class="btn btn-light mr-2" style="text-align: center" data-dismiss="modal">취소</button>
+                                                </form>
+                                                <span class="menu-count" th:text="${item.count}"></span>
+                                                <form th:action="@{/carts/menu-count-up/{menuKey}(menuKey=${item.hashKey})}" th:method="PUT" class="d-inline">
+                                                    <button class="btn btn-sm btn-icon" style="color: #ffa636" type="submit">
+                                                        <i class="mdi mdi-magnify-plus"></i> <!-- 플러스 아이콘 -->
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td style="font-size:0.9rem; font-weight: bold" th:text="${#numbers.formatInteger(item.totalMenuPrice,3,'COMMA')}+'원'">
+                                            </td>
+                                            <td>
+                                                <button class="btn mr-2" style="width: 100px; background: #ffa636"
+                                                        type="button"
+                                                        data-toggle="modal"
+                                                        th:data-target="'#cartMenu' + ${item.hashKey}">옵션수정
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <form th:action="@{/carts/menu-delete/{menuKey}(menuKey=${item.hashKey})}" th:method="DELETE">
+                                                    <button class="btn btn-sm btn-icon" style="color: #ffa636" type="submit">
+                                                        <i class="mdi mdi-close"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <div class="card">
+                                                                <div class="ml-3 mt-3">
+                                                                    <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${optionsInfo}">
+                                                                                    <label class="form-check-label">
+                                                                                        <input type="radio" class="form-check-input" name="'optionsRadios'+${option.id}" th:id="'optionsRadio'+${option.id}" th:value="${option.id}" th:text="${option.name}">
+                                                                                    </label>
+                                                                                    <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
+                                                                                    <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
+                                                                                    <span th:text="${option.price}+'원'"></span>
                                                                                 </div>
+                                                                                <button class="btn mr-2" style="background: #ffa636" th:customHashKey="${item.hashKey}" th:onclick="saveSelectedOption(this.getAttribute('customHashKey'))">변경</button>
+                                                                                <button class="btn btn-light mr-2" style="text-align: center" data-dismiss="modal">취소</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -112,22 +107,30 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div>
-                                    <h3 th:value="총 + '가격'"></h3>
+
+                                <hr style="border-top: 1px solid #ccc; margin: 20px 0;">
+
+                                <div class="d-flex justify-content-center p-3">
+                                    <h4 style="font-size:1.0rem; font-weight: bold; margin-top: 2px; margin-right: 5px; margin-bottom: -1px" th:text="'총 결제금액: '"></h4>
+                                    <h4 style="font-size:1.3rem; font-weight: bold; margin-left: 5px; margin-bottom: -1px" th:text="(${totalPrice} != null ? ${#numbers.formatInteger(totalPrice, 3, 'COMMA')} : '0') + '원'"></h4>
                                 </div>
-                                <div>
+                                <div class="d-flex justify-content-center">
                                     <form th:action="@{/carts/menu-del-all}" th:method="DELETE">
-                                        <input type="submit" th:value="전체삭제">
+                                        <input class="btn mr-2" style="width: 100px; background: #ffa636" type="submit" th:value="전체삭제">
+                                    </form>
+                                    <form>
+                                        <input class="btn mr-2" style="width: 100px; background: #ffa636" type="submit" th:value="주문하기">
                                     </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </div>

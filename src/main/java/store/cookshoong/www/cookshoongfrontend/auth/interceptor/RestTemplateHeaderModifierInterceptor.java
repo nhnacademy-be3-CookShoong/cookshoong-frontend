@@ -23,7 +23,7 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
         throws IOException {
         SecurityContext context = SecurityContextHolder.getContext();
-        if (isAuthenticated(context)) {
+        if (isNotAuthenticated(context) || isReissueRequest(request)) {
             return execution.execute(request, body);
         }
 
@@ -32,7 +32,11 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
         return execution.execute(request, body);
     }
 
-    private static boolean isAuthenticated(SecurityContext context) {
+    private boolean isReissueRequest(HttpRequest request) {
+        return request.getURI().getPath().equals("/auth/reissue");
+    }
+
+    private static boolean isNotAuthenticated(SecurityContext context) {
         return context == null || !(context.getAuthentication() instanceof JwtAuthentication);
     }
 }

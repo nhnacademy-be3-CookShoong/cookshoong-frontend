@@ -12,7 +12,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager'}" th:object="${createOptionGroupRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager'}"
+                      th:object="${createOptionGroupRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -30,12 +31,25 @@
                                     <input class="form-control" type="text" name="name"
                                            placeholder="옵션 그룹 이름">
                                 </div>
+
+                                <div class="form-group">
+                                    <label>옵션 최소 선택 수</label>
+                                    <input class="form-control" type="text" name="minSelectCount"
+                                           placeholder="옵션 최소 선택 수">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>옵션 최대 선택 수</label>
+                                    <input class="form-control" type="text" name="maxSelectCount"
+                                           placeholder="옵션 최대 선택 수">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <input class="form-control" type="hidden" name="targetOptionGroupId">
                                 <button class="btn btn-info mr-2" type="submit">옵션 그룹 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
@@ -50,7 +64,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-manager'}" th:object="${createOptionRequestDto}"
+                <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-manager'}"
+                      th:object="${createOptionRequestDto}"
                       method="post">
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -81,7 +96,9 @@
                                         <div class="col-sm-3">
                                             <select name="optionGroup">
                                                 <option value="">-- 선택 --</option>
-                                                <option th:each="optionGroup, i : ${optionGroups}" th:value="${optionGroup.id}" th:text="${optionGroup.name}"></option>
+                                                <option th:each="optionGroup, i : ${optionGroups}"
+                                                        th:value="${optionGroup.id}"
+                                                        th:text="${optionGroup.name}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -93,6 +110,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <input class="form-control" type="hidden" name="targetOptionId">
                                 <button class="btn btn-info mr-2" type="submit" id="submitButton">옵션 신규 등록</button>
                                 <button class="btn btn-light" data-dismiss="modal">취소</button>
                             </div>
@@ -126,10 +144,17 @@
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                                th:id="${optionGroup.id}"
                                                 data-toggle="modal"
-                                                data-target="#optionGroupAdd">수정
+                                                data-target="#optionGroupAdd"
+                                                th:data-targetoptiongroupid="${optionGroup.id}"
+                                                th:data-name="${optionGroup.name}"
+                                                th:data-minselectcount="${optionGroup.minSelectCount}"
+                                                th:data-maxselectcount="${optionGroup.maxSelectCount}"
+                                        >수정
                                         </button>
-                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager/' + ${optionGroup.id} }" th:method="delete">
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager/' + ${optionGroup.id} }"
+                                              th:method="delete">
                                             <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
                                                 삭제
                                             </button>
@@ -158,7 +183,8 @@
                                             <div class="col-sm-12">
                                                 <h3 class="font-weight-bold" th:text="${option.name}"></h3>
                                                 <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem" th:text="${option.price}"><span
+                                                    <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                       th:text="${option.price}"><span
                                                             style="font-size: 1.2rem">원</span></p>
                                                 </div>
                                             </div>
@@ -166,10 +192,17 @@
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                                th:id="${option.id}"
                                                 data-toggle="modal"
-                                                data-target="#optionAdd">수정
+                                                data-target="#optionAdd"
+                                                th:data-targetoptionid="${option.id}"
+                                                th:data-name="${option.name}"
+                                                th:data-price="${option.price}"
+                                                th:data-optiongroup="${option.optionGroupId}"
+                                        >수정
                                         </button>
-                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-manager/' + ${option.id} }" th:method="delete">
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-option-manager/' + ${option.id} }"
+                                              th:method="delete">
                                             <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
                                                 삭제
                                             </button>
@@ -205,6 +238,7 @@
         }
         return selectedCategories;
     }
+
     function handleCheckboxClick() {
         const selectedCategories = getSelectedGroups();
         const checkMaximum = 1;
@@ -213,6 +247,42 @@
             alert("최대 1개의 그룹만 선택할 수 있습니다.");
         }
     }
+</script>
+<script>
+    $('#optionGroupAdd').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const target = button.data('targetoptiongroupid')
+        const name = button.data('name')
+        const minSelectCount = button.data('minselectcount')
+        const maxSelectCount = button.data('maxselectcount')
+
+        const modal = $(this)
+        modal.find('input[name="targetOptionGroupId"]').val(target)
+        modal.find('input[name="name"]').val(name)
+        modal.find('input[name="minSelectCount"]').val(minSelectCount)
+        modal.find('input[name="maxSelectCount"]').val(maxSelectCount)
+    })
+</script>
+<script>
+    $('#optionAdd').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const target = button.data('targetoptionid')
+        const name = button.data('name')
+        const price = button.data('price')
+        const optionGroup = button.data('optiongroup')
+
+        const modal = $(this)
+        modal.find('input[name="targetOptionId"]').val(target)
+        modal.find('input[name="name"]').val(name)
+        modal.find('input[name="price"]').val(price)
+
+        modal.find('select[name="optionGroup"]').val('')
+
+        if (optionGroup != null) {
+            modal.find('select[name="optionGroup"]').val(optionGroup)
+        }
+
+    })
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.cart.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import store.cookshoong.www.cookshoongfrontend.cart.adapter.CartRedisAdapter;
+import store.cookshoong.www.cookshoongfrontend.cart.adapter.CartAdapter;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 
 /**
@@ -14,9 +14,9 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
  */
 @Service
 @RequiredArgsConstructor
-public class CartRedisService {
+public class CartService {
 
-    private final CartRedisAdapter cartRedisAdapter;
+    private final CartAdapter cartAdapter;
 
     /**
      * 회원이 장바구니에 메뉴를 담는 메서드.
@@ -27,7 +27,28 @@ public class CartRedisService {
      */
     public void createCart(String cartKey, String menuKey, CartRedisDto cartRedisDto) {
 
-        cartRedisAdapter.executeCart(cartKey, menuKey, cartRedisDto);
+        cartAdapter.executeCart(cartKey, menuKey, cartRedisDto);
+    }
+
+    /**
+     * DB 장바구니 정보를 Redis 에 저장하는 메서드.
+     *
+     * @param accountId      회원 아이디
+     */
+    public void createDbUploadRedis(String cartKey, Long accountId) {
+
+        cartAdapter.executeDbUploadRedis(cartKey, accountId);
+    }
+
+    /**
+     * 빈 장바구니를 만드는 메서드.
+     *
+     * @param cartKey       redis key
+     * @param noKey         redis hashKey
+     */
+    public void createEmptyCart(String cartKey, String noKey) {
+
+        cartAdapter.executeEmptyCart(cartKey, noKey);
     }
 
     /**
@@ -39,7 +60,7 @@ public class CartRedisService {
      */
     public void modifyCartMenu(String cartKey, String menuKey, CartRedisDto cartRedisDto) {
 
-        cartRedisAdapter.changeCartMenu(cartKey, menuKey, cartRedisDto);
+        cartAdapter.changeCartMenu(cartKey, menuKey, cartRedisDto);
     }
 
     /**
@@ -50,7 +71,7 @@ public class CartRedisService {
      */
     public void modifyCartMenuIncrement(String cartKey, String menuKey) {
 
-        cartRedisAdapter.changeCartMenuIncrement(cartKey, menuKey);
+        cartAdapter.changeCartMenuIncrement(cartKey, menuKey);
     }
 
     /**
@@ -61,7 +82,7 @@ public class CartRedisService {
      */
     public void modifyCartMenuDecrement(String cartKey, String menuKey) {
 
-        cartRedisAdapter.changeCartMenuDecrement(cartKey, menuKey);
+        cartAdapter.changeCartMenuDecrement(cartKey, menuKey);
     }
 
     /**
@@ -72,7 +93,7 @@ public class CartRedisService {
      */
     public List<CartRedisDto> selectCartMenuAll(String cartKey) {
 
-        return cartRedisAdapter.fetchCartMenuAll(cartKey);
+        return cartAdapter.fetchCartMenuAll(cartKey);
     }
 
     /**
@@ -83,7 +104,7 @@ public class CartRedisService {
      */
     public CartRedisDto selectCartMenu(String cartKey, String menuKey) {
 
-        return cartRedisAdapter.fetchCartMenu(cartKey, menuKey);
+        return cartAdapter.fetchCartMenu(cartKey, menuKey);
     }
 
     /**
@@ -94,7 +115,7 @@ public class CartRedisService {
      */
     public Long selectCartMenuCountAll(String cartKey) {
 
-        return cartRedisAdapter.fetchCartMenuCountAll(cartKey);
+        return cartAdapter.fetchCartMenuCountAll(cartKey);
     }
 
     /**
@@ -105,7 +126,7 @@ public class CartRedisService {
      */
     public void removeCartMenu(String cartKey, String menuKey) {
 
-        cartRedisAdapter.eraseCartMenu(cartKey, menuKey);
+        cartAdapter.eraseCartMenu(cartKey, menuKey);
     }
 
     /**
@@ -115,6 +136,54 @@ public class CartRedisService {
      */
     public void removeCartMenuAll(String cartKey) {
 
-        cartRedisAdapter.eraseCartMenuAll(cartKey);
+        cartAdapter.eraseCartMenuAll(cartKey);
+    }
+
+    /**
+     * Redis 장바구니에 redis Key 존재여부 확인하는 메소드.
+     *
+     * @param cartKey       redis Key
+     * @return              존재여부를 반환
+     */
+    public boolean existKeyInCartRedis(String cartKey) {
+
+        return cartAdapter.existKeyInCartRedis(cartKey);
+    }
+
+    /**
+     * Redis 장바구니에 redis Key 에 hashKey 존재여부 확인하는 메소드.
+     *
+     * @param cartKey       redis Key
+     * @return              존재여부를 반환
+     */
+    public boolean existMenuInCartRedis(String cartKey, String menuKey) {
+
+        return cartAdapter.existMenuInCartRedis(cartKey, menuKey);
+    }
+
+    /**
+     * DB 장바구니에 회원 장바구니 존재여부 확인하는 메소드.
+     *
+     * @param accountId     회원아이디
+     * @return              존재여부를 반환
+     */
+    public boolean hashDbCart(Long accountId) {
+
+        return cartAdapter.hasDbCart(accountId);
+    }
+
+    /**
+     * 장바구니에 들어있는 메뉴에 총 가격을 계산하는 메서드.
+     *
+     * @param cartItems     장바구니 내역들
+     * @return              메뉴에 총 가격을 반환
+     */
+    public Integer calculateTotalPrice(List<CartRedisDto> cartItems) {
+        int totalPrice = 0;
+        for (CartRedisDto item : cartItems) {
+            int menuPrice = Integer.parseInt(item.getTotalMenuPrice());
+            totalPrice += menuPrice;
+        }
+        return totalPrice;
     }
 }
