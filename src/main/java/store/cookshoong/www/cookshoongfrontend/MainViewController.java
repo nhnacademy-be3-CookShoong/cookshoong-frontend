@@ -159,11 +159,10 @@ public class MainViewController {
      * @throws MalformedURLException the malformed url exception
      */
     @ResponseBody
-    @GetMapping("/images")
+    @GetMapping("/images/local")
     public Resource getImage(@RequestParam("imageName") String imageName) throws MalformedURLException {
         return new UrlResource("file:" + imageName);
     }
-
 
     /**
      * 매장 가맹점 관리 페이지를 맵핑.

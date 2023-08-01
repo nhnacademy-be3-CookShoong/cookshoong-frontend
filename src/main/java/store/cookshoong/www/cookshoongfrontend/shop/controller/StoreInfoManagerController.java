@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class StoreInfoManagerController {
      * @param storeId the store id
      * @param model   the model
      * @return 매장 정보
+     * @throws IOException the io exception
      */
     @GetMapping("/stores/{storeId}/store-info-manager")
     public String getStoreInfo(@PathVariable("storeId") Long storeId, Model model) {
@@ -47,12 +49,16 @@ public class StoreInfoManagerController {
 
         SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);
         model.addAttribute("storeInfo", storeInfo);
+
         return "store/info/store-info-manager";
     }
 
     /**
      * 매장 수정 요청을 맵핑.
      *
+     * @param createStoreRequestDto the create store request dto
+     * @param bindingResult         the binding result
+     * @return the string
      * @author papel
      * @since 2023.07.09
      */
@@ -62,6 +68,14 @@ public class StoreInfoManagerController {
         return "redirect:/";
     }
 
+    /**
+     * 사업자 : 해당 사업자의 모든 매장 리스트 조회.
+     *
+     * @param pageable   the pageable
+     * @param model      the model
+     * @param requestDto the request dto
+     * @return 매장 리스트 반환
+     */
     @GetMapping("/stores")
     public String getStoresForBusiness(Pageable pageable,
                                        Model model,

@@ -15,9 +15,9 @@
                 <div class="card">
                     <div class="card-body" style="height: 300px">
                         <div class="bg-box" style="background-color: #28282b; text-align: center;">
-                            <img th:src="|/images/${store.getSavedName()}|"
+                            <img th:src="${store.getSavedName()}"
                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
-                                 style="width: 350px">
+                                 style="width: 100%">
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                                                 <div class="row">
                                                     <div class="align-content-end border-info pr-3 pb-2"
                                                          style="max-width: 200px">
-                                                        <img th:src="|/images/${menu.getSavedName()}|"
+                                                        <img th:src="${menu.getSavedName()}" th:width="150px"
                                                              onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                                     </div>
                                                     <div>
