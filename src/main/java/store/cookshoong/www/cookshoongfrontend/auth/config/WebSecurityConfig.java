@@ -31,7 +31,7 @@ public class WebSecurityConfig {
     private final LoginSuccessHandler loginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
     private static final String[] PERMIT_ALL_PATTERNS = { "/health-check/**", "/login-page", "/sign-up",
-        "/sign-up-choice", "/", "/config", "/fragment", "/fragment-admin", "/images/**" };
+        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**"};
 
     /**
      * 시큐리티 필터 체인 설정빈.

@@ -6,8 +6,9 @@
 <head>
     <title>Untitled</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="src/main/resources/static/assets/css/vertical-layout-light/custom.css">
 </head>
-<body>
+<body layout:fragment="content">
 <header th:replace="fragments :: admin-site-header"></header>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments-admin :: admin-site-nav"></nav>

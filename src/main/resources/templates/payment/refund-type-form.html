@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" data-bs-theme="light" lang="en" data-bss-forced-theme="light">
-
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
-    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="src/main/resources/static/assets/css/vertical-layout-light/custom.css">
 </head>
 
-<body>
+<body layout:fragment="content">
 
 <header th:replace="fragments :: admin-site-header"></header>
 
