@@ -204,16 +204,14 @@ public class StoreAdapter {
     }
 
     /**
-     * 사장님의 모든 매장들을 조회(페이지 단위).
+     * 사장님의 모든 매장들을 조회.
      *
      * @param accountId the account id
-     * @param pageable  the pageable
      * @return the rest response page
      */
-    public RestResponsePage<SelectAllStoresResponseDto> fetchAllStores(Long accountId,
-                                                                       Pageable pageable) {
-        ResponseEntity<RestResponsePage<SelectAllStoresResponseDto>> responseEntity =
-            restTemplate.exchange(RestResponsePage.pageableToParameter(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores", pageable),
+    public List<SelectAllStoresResponseDto> fetchAllStores(Long accountId) {
+        ResponseEntity<List<SelectAllStoresResponseDto>> responseEntity =
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {

@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 <body layout:fragment="content">
-<header th:replace="fragments :: admin-site-header"></header>
+<header th:replace="fragments :: business-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
 <div class="modal fade" id="menuGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -20,7 +21,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신규 메뉴 그룹 등록</h4>
+                                <h2 class="card-title">신규 메뉴 그룹 등록</h2>
                             </div>
                         </div>
                     </div>
@@ -45,8 +46,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <input class="form-control" type="hidden" name="targetMenuGroupId">
-                                <button class="btn btn-info mr-2" type="submit">메뉴 그룹 신규 등록</button>
-                                <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                <button class="btn btn-info m-1" type="submit" name="submitButton"></button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
@@ -65,7 +66,7 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신규 메뉴 등록</h4>
+                                <h2 class="card-title">신규 메뉴 등록</h2>
                             </div>
                         </div>
                     </div>
@@ -157,8 +158,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <input class="form-control" type="hidden" name="targetMenuId">
-                                <button class="btn btn-info mr-2" type="submit" id="submitButton">메뉴 신규 등록</button>
-                                <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                <button class="btn btn-info m-1" type="submit" id="submitButton"
+                                        name="submitButton"></button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
@@ -175,7 +177,7 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 메뉴 관리 페이지</h1>
+                            <h1 class="font-weight-bold">영업점 메뉴 관리</h1>
                         </div>
                     </div>
                 </div>
@@ -183,13 +185,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">메뉴 그룹 관리</h4>
-                            <div class="col-sm-12">
-                                <div class="row border-top pt-2 pb-2" th:each="menuGroup, i:${menuGroups}">
-                                    <div class="col-sm-10">
+                            <div class="col-12">
+                                <div class="row border-top pt-3 pb-3 justify-content-between" th:each="menuGroup, i:${menuGroups}">
+                                    <div class="row" style="width: 600px;">
                                         <h3 class="font-weight-bold pt-2" th:text="${menuGroup.name}"></h3>
                                     </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                    <div class="row">
+                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;" type="button"
                                                 th:id="${menuGroup.id}"
                                                 data-toggle="modal"
                                                 data-target="#menuGroupAdd"
@@ -200,7 +202,7 @@
                                         </button>
                                         <form th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager/' + ${menuGroup.id} }"
                                               th:method="delete">
-                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                            <button class="btn btn-primary m-1" style="width: 85px; height: 40px;" type="submit">
                                                 삭제
                                             </button>
                                         </form>
@@ -222,37 +224,34 @@
                         <div class="card-body">
                             <h4 class="card-title">메뉴 관리</h4>
                             <div class="col-12 grid-margin">
-                                <div class="row border-top pb-3 pt-3" th:each="menu, i:${menus}">
-                                    <div class="col-sm-10">
-                                        <div class="row">
-                                            <div class="col-2 align-content-end text-md-center border-info pr-3 pb-2"
-                                                 style="max-width: 400px">
-                                                <img th:src="${menu.getSavedName()}" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" width="130px">
+                                <div class="row border-top pb-3 pt-3 justify-content-between" th:each="menu, i:${menus}">
+                                    <div class="row" style="width: 600px;">
+                                        <div class="align-content-end text-md-center border-info mr-3 mb-2"
+                                             style="max-width: 400px">
+                                            <img th:src="${menu.getSavedName()}"
+                                                 onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                                 style="object-fit: cover; width: 130px; height: 130px;">
+                                        </div>
+                                        <div>
+                                            <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
+                                            <p><i class="mdi mdi mdi-file-powerpoint-box"
+                                                  style="color: orange; font-size: 1.1rem"></i>
+                                                <span class="pr-2" style="font-size: 1.2rem"
+                                                      th:text="${menu.earningRate} + '%'"></span>
+                                                <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                                <span class="pr-2" style="font-size: 1.2rem"
+                                                      th:text="${menu.cookingTime} + '분'"></span></p>
+                                            <div class="pt-2">
+                                                <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                   th:text="${menu.price} + ' 원'"></p>
                                             </div>
-                                            <div class="col-sm-7">
-                                                <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
-                                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                        class="pr-2" style="font-size: 1.2rem">4.2</span>
-                                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">110</span>
-                                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                                    <span
-                                                            class="pr-2" style="font-size: 1.2rem">30분</span></p>
-                                                <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem"
-                                                       th:text="${menu.price}"><span
-                                                            style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                                <div class="pt-2">
-                                                    <p>사과를 곁들인 고기찜 요리. 짐승 고기에 가득한 달큰한 육즙이 먹고 나서도 계속 생각난다. 사과 과수원에 누워 신선한
-                                                        과일 향에 젖어드는 느낌이다.</p>
-                                                </div>
+                                            <div class="pt-1" style="width: 200px;">
+                                                <span th:utext="${menu.description}"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                    <div class="row">
+                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;" type="button"
                                                 th:id="${menu.id}"
                                                 data-toggle="modal"
                                                 data-target="#menuAdd"
@@ -268,7 +267,7 @@
                                         </button>
                                         <form th:action="@{'/stores/' + ${storeId} + '/store-menu-manager/' + ${menu.id} }"
                                               th:method="delete">
-                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                            <button class="btn btn-primary m-1" style="width: 85px; height: 40px;" type="submit">
                                                 삭제
                                             </button>
                                         </form>
@@ -325,6 +324,11 @@
         modal.find('input[name="targetMenuGroupId"]').val(target)
         modal.find('input[name="name"]').val(name)
         modal.find('input[name="description"]').val(description)
+        if (target != null) {
+            modal.find('button[name="submitButton"]').text('메뉴 그룹 수정')
+        } else {
+            modal.find('button[name="submitButton"]').text('메뉴 그룹 신규 등록')
+        }
     })
 </script>
 <script>
@@ -364,11 +368,18 @@
             })
         }
 
+        if (target != null) {
+            modal.find('button[name="submitButton"]').text('메뉴 수정')
+        } else {
+            modal.find('button[name="submitButton"]').text('메뉴 신규 등록')
+        }
+
         // Create the editor with the current description
         editor = new toastui.Editor({
             el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
             previewStyle: 'vertical',
-            height: '200px',
+            height: '300px',
             initialValue: description
         });
 

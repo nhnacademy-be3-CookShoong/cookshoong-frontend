@@ -93,12 +93,10 @@ public class StoreService {
      * 사업자 : 사업자가 현재 가지고 있는 매장들 조회.
      *
      * @param accountId the account id
-     * @param pageable  the pageable
      * @return the rest response page
      */
-    public RestResponsePage<SelectAllStoresResponseDto> selectStores(Long accountId,
-                                                                     Pageable pageable) {
-        return storeAdapter.fetchAllStores(accountId, pageable);
+    public List<SelectAllStoresResponseDto> selectStores(Long accountId) {
+        return storeAdapter.fetchAllStores(accountId);
     }
 
     /**

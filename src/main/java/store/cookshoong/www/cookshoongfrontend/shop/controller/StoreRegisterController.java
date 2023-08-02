@@ -20,7 +20,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBank
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerchantsResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.MerchantService;
-import store.cookshoong.www.cookshoongfrontend.shop.service.StoreAdminService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
