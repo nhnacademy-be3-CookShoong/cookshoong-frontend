@@ -49,13 +49,11 @@ public class CartRedisController {
      * @return          회원이 담은 장바구니 페이지로 반환
      */
     @GetMapping
-    public String getCartMenuAll(Principal principal, Model model) {
+    public String getCartMenuAll(Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(CART + accountIdAware.getAccountId());
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);

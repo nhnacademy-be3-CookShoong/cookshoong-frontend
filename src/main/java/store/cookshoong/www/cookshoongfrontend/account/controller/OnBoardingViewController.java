@@ -108,13 +108,10 @@ public class OnBoardingViewController {
     }
 
     @GetMapping("/my-page")
-    public String getMyPage(Principal principal, Model model) {
-
-        if (principal != null) {
+    public String getMyPage(Model model) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         return "account/my-page";
     }

@@ -45,14 +45,11 @@ public class StoreOptionManagerController {
         @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
         @PathVariable("storeId") Long storeId,
-        Principal principal,
         Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);

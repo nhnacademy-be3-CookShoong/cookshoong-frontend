@@ -51,14 +51,11 @@ public class StoreMenuManagerController {
         @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
         @PathVariable("storeId") Long storeId,
-        Principal principal,
         Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);

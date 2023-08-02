@@ -98,13 +98,11 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping("/index/search")
-    public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Principal principal, Model model) {
+    public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
         model.addAttribute("searchStores", searchedStores);
@@ -120,13 +118,11 @@ public class MainViewController {
      * @return the index store
      */
     @GetMapping({"/index/store/{storeId}"})
-    public String getIndexStore(@PathVariable("storeId") Long storeId, Principal principal, Model model) {
+    public String getIndexStore(@PathVariable("storeId") Long storeId, Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
@@ -150,14 +146,11 @@ public class MainViewController {
     @GetMapping({"/index/store/{storeId}/menu/{menuId}"})
     public String getIndexMenu(@PathVariable("storeId") Long storeId,
                                @PathVariable("menuId") Long menuId,
-                               Principal principal,
                                Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
 
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
         SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);

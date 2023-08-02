@@ -43,16 +43,11 @@ public class StoreInfoManagerController {
     @GetMapping("/stores/{storeId}/store-info-manager")
     public String getStoreInfo(
         @PathVariable("storeId") Long storeId,
-        Principal principal,
         Model model) {
 
-        if (principal != null) {
             Long accountId = accountIdAware.getAccountId();
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
-        }
-
-        Long accountId = accountIdAware.getAccountId();
 
         SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);
         model.addAttribute("storeInfo", storeInfo);
