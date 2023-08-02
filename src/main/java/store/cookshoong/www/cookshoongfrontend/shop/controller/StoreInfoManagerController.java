@@ -1,10 +1,10 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
@@ -44,7 +41,17 @@ public class StoreInfoManagerController {
      * @throws IOException the io exception
      */
     @GetMapping("/stores/{storeId}/store-info-manager")
-    public String getStoreInfo(@PathVariable("storeId") Long storeId, Model model) {
+    public String getStoreInfo(
+        @PathVariable("storeId") Long storeId,
+        Principal principal,
+        Model model) {
+
+        if (principal != null) {
+            Long accountId = accountIdAware.getAccountId();
+            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+            model.addAttribute("businessStoreList", businessStoreList);
+        }
+
         Long accountId = accountIdAware.getAccountId();
 
         SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);

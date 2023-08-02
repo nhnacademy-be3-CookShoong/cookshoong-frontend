@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 <body layout:fragment="content">
-<header th:replace="fragments :: admin-site-header"></header>
+<header th:replace="fragments :: business-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
 <div class="modal fade" id="menuGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -168,7 +169,6 @@
         </div>
     </div>
 </div>
-
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">

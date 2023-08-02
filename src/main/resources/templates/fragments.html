@@ -11,20 +11,19 @@
 <body>
 
 <header th:fragment="user-site-header" class="hero_area header_section text-gradient">
-    <div class="row">
+    <div class="row justify-content-between">
 
-        <div class="col-6 justify-content-end align-items-center pl-3 pr-3">
+        <div>
             <a href="/">
                 <img src="/assets/images/shoong.png" alt="" style="height: 65px">
             </a>
         </div>
 
-
-        <div class="col-6 d-flex justify-content-end align-items-center p-0" sec:authorize="!isAuthenticated()">
+        <div class="navbar navbar-expand-lg" sec:authorize="!isAuthenticated()">
             <div class="navbar-toggler">
-                <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem" class="mr-2 mdi-human-greeting">
+                <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                 </a>
-                <a th:href="@{/login}" style="color: white; font-size: 1.2rem" class="mr-2 mdi-login">
+                <a th:href="@{/login}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                 </a>
             </div>
             <div class="navbar-toggler-ex">
@@ -35,8 +34,7 @@
             </div>
         </div>
 
-
-        <div class="col-6 d-flex justify-content-end align-items-center p-0 navbar navbar-expand-sm" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
+        <div class="navbar navbar-expand-lg" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
             <div class="navbar-toggler">
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
                 </a>
@@ -62,10 +60,9 @@
                 </a>
             </div>
         </div>
+
     </div>
-
 </header>
-
 
 <div th:fragment="business-store-list" class="modal fade" id="storeList">
     <div class="modal-dialog">
@@ -108,16 +105,16 @@
     </div>
 </div>
 
-<header th:fragment="admin-site-header" class="hero_area header_section" style="background: #0f1531">
-    <div class="row">
+<header th:fragment="admin-site-header" class="hero_area header_section" style="background: #000000">
+    <div class="row justify-content-between">
 
-        <div class="col-6 justify-content-end align-items-center">
+        <div>
             <a href="/">
                 <img src="/assets/images/shoong.png" alt="" style="height: 65px">
             </a>
         </div>
 
-        <div class="col-6 justify-content-end align-items-center pr-3 navbar navbar-expand-lg custom_nav-container">
+        <div class="navbar navbar-expand-lg custom_nav-container">
             <button class="navbar-toggler" type="button"
                     data-toggle="offcanvas">
                 <span class="typcn typcn-th-menu"></span>
@@ -127,16 +124,75 @@
     </div>
 </header>
 
+<header th:fragment="business-site-header" class="hero_area header_section" style="background: #161d3d">
+    <div class="row justify-content-between">
+
+        <div>
+            <a href="/">
+                <img src="/assets/images/shoong.png" alt="" style="height: 65px">
+            </a>
+        </div>
+
+        <div class="navbar navbar-expand-lg custom_nav-container">
+            <button class="navbar-toggler" type="button"
+                    data-toggle="offcanvas">
+                <span class="typcn typcn-th-menu"></span>
+            </button>
+        </div>
+
+        <div class="navbar navbar-expand-lg" sec:authorize="!isAuthenticated()">
+            <div class="navbar-toggler">
+                <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
+                </a>
+                <a th:href="@{/login}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                </a>
+            </div>
+            <div class="navbar-toggler-ex">
+                <a th:href="@{/sign-up}" style="color: white; font-size: 0.85rem" class="mr-2">회원가입
+                </a>
+                <a th:href="@{/login}" style="color: white; font-size: 0.85rem" class="mr-2">로그인
+                </a>
+            </div>
+        </div>
+
+        <div class="navbar navbar-expand-lg" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
+            <div class="navbar-toggler">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                </a>
+            </div>
+            <div class="navbar-toggler-ex">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">쿡슝관리
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
 <nav th:fragment="business-site-nav" class="sidebar sidebar-offcanvas">
     <ul class="nav">
         <li class="nav-item">
             <p class="sidebar-menu-title">쿡슝 사장님 메뉴</p>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                                aria-controls="form-elements"><i
-                class="typcn typcn-th-small-outline menu-icon"></i><span
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#business-store" aria-expanded="false"
+                                aria-controls="business-store"><i class="typcn typcn-chart-bar-outline menu-icon"></i><span
                 class="menu-title">매장 관리</span><i class="menu-arrow"></i></a>
-            <div class="collapse" id="form-elements">
+            <div class="collapse" id="business-store">
                 <ul class="flex-column nav sub-menu">
                     <li><a class="nav-link nav-link-item" href="store-info-manager">매장정보 관리</a></li>
                     <li><a class="nav-link nav-link-item" href="store-time-manager">영업시간 관리</a></li>
@@ -144,21 +200,20 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
-                                aria-controls="charts"><i class="typcn typcn-chart-pie-outline menu-icon"></i><span
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#business-menu" aria-expanded="false"
+                                aria-controls="business-menu"><i class="typcn typcn-clipboard menu-icon"></i><span
                 class="menu-title">메뉴 관리</span><i class="menu-arrow"></i></a>
-            <div class="collapse" id="charts">
+            <div class="collapse" id="business-menu">
                 <ul class="flex-column nav sub-menu">
-
                     <li><a class="nav-link nav-link-item" href="store-menu-manager">메뉴 관리</a></li>
                     <li><a class="nav-link nav-link-item" href="store-option-manager">옵션 관리</a></li>
                 </ul>
             </div>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
-                                aria-controls="tables"><i class="typcn typcn-th-small-outline menu-icon"></i><span
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#business-order" aria-expanded="false"
+                                aria-controls="business-order"><i class="typcn typcn-phone-outline menu-icon"></i><span
                 class="menu-title">주문 관리</span><i class="menu-arrow"></i></a>
-            <div class="collapse" id="tables">
+            <div class="collapse" id="business-order">
                 <ul class="flex-column nav sub-menu">
                     <li><a class="nav-link nav-link-item" href="store-order-manager">주문 관리</a></li>
                     <li><a class="nav-link nav-link-item" href="store-delivery-manager">배송 관리</a></li>
@@ -166,20 +221,20 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
-                                aria-controls="auth"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#business-coupon" aria-expanded="false"
+                                aria-controls="business-coupon"><i class="typcn typcn-group-outline menu-icon"></i><span
                 class="menu-title">할인 관리</span><i class="menu-arrow"></i></a>
-            <div class="collapse" id="auth">
+            <div class="collapse" id="business-coupon">
                 <ul class="flex-column nav sub-menu">
                     <li><a class="nav-link nav-link-item" href="store-coupon-manager">쿠폰 관리</a></li>
                     <li><a class="nav-link nav-link-item" href="store-point-manager">포인트 관리</a></li>
                 </ul>
             </div>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
-                                aria-controls="error"><i class="typcn typcn-globe-outline menu-icon"></i><span
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#business-review" aria-expanded="false"
+                                aria-controls="business-review"><i class="typcn typcn-message menu-icon"></i><span
                 class="menu-title">리뷰 관리</span><i class="menu-arrow"></i></a>
-            <div class="collapse" id="error">
+            <div class="collapse" id="business-review">
                 <ul class="flex-column nav sub-menu">
                     <li><a class="nav-link nav-link-item" href="store-review-manager">리뷰 관리</a></li>
                 </ul>
@@ -194,6 +249,88 @@
             navLink.setAttribute("href", `/stores/${storeId}/${navLink.getAttribute("href")}`)
         }
     </script>
+</nav>
+
+<header th:fragment="mypage-site-header" class="hero_area header_section" style="background: #4b2762">
+    <div class="row justify-content-between">
+        <div>
+            <a href="/">
+                <img src="/assets/images/shoong.png" alt="" style="height: 65px">
+            </a>
+        </div>
+        <div class="navbar navbar-expand-lg custom_nav-container">
+            <button class="navbar-toggler" type="button" data-toggle="offcanvas">
+                <span class="typcn typcn-th-menu"></span>
+            </button>
+        </div>
+        <div class="navbar navbar-expand-lg" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
+            <div class="navbar-toggler">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                </a>
+            </div>
+            <div class="navbar-toggler-ex">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">쿡슝관리
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav th:fragment="mypage-site-nav" class="sidebar sidebar-offcanvas">
+    <ul class="nav">
+        <li class="nav-item">
+            <p class="sidebar-menu-title">쿡슝 마이페이지 메뉴</p>
+        </li>
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#mypage-info" aria-expanded="false"
+                                aria-controls="mypage-info"><i class="typcn typcn-user-add-outline menu-icon"></i><span
+                class="menu-title">내 정보</span><i class="menu-arrow"></i></a>
+            <div class="collapse" id="mypage-info">
+                <ul class="flex-column nav sub-menu">
+                    <li><a class="nav-link nav-link-item" href="/my-page">내 정보 관리</a></li>
+                </ul>
+                <ul class="flex-column nav sub-menu">
+                    <li><a class="nav-link nav-link-item" href="store-info-manager">내 주소 관리</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#mypage-basket" aria-expanded="false"
+                                aria-controls="mypage-basket"><i class="typcn typcn-shopping-cart menu-icon"></i><span
+                class="menu-title">장바구니</span><i class="menu-arrow"></i></a>
+            <div class="collapse" id="mypage-basket">
+                <ul class="flex-column nav sub-menu">
+                    <li><a class="nav-link nav-link-item" href="/carts">장바구니 확인</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" data-toggle="collapse" href="#mypage-history" aria-expanded="false"
+                                aria-controls="mypage-history"><i class="typcn typcn-th-menu-outline menu-icon"></i><span
+                class="menu-title">주문 및 리뷰 내역</span><i class="menu-arrow"></i></a>
+            <div class="collapse" id="mypage-history">
+                <ul class="flex-column nav sub-menu">
+                    <li><a class="nav-link nav-link-item" href="store-order-manager">주문 내역</a></li>
+                </ul>
+                <ul class="flex-column nav sub-menu">
+                    <li><a class="nav-link nav-link-item" href="store-order-manager">리뷰 내역</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
 </nav>
 
 <footer th:fragment="site-footer" class="footer_section">

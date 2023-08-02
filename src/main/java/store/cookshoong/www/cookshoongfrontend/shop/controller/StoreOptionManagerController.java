@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장 옵션 관리 페이지 컨트롤러.
@@ -26,7 +30,9 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 @Controller
 @RequiredArgsConstructor
 public class StoreOptionManagerController {
+    private final StoreService storeService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 옵션 관리 페이지 맵핑.
@@ -39,7 +45,14 @@ public class StoreOptionManagerController {
         @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
         @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
         @PathVariable("storeId") Long storeId,
+        Principal principal,
         Model model) {
+
+        if (principal != null) {
+            Long accountId = accountIdAware.getAccountId();
+            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+            model.addAttribute("businessStoreList", businessStoreList);
+        }
 
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);

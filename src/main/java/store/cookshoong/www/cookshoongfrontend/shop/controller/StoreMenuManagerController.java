@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMenuRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장 메뉴 관리 페이지 컨트롤러.
@@ -31,8 +35,10 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 @RequiredArgsConstructor
 public class StoreMenuManagerController {
 
+    private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 메뉴 관리 페이지 맵핑.
@@ -45,7 +51,14 @@ public class StoreMenuManagerController {
         @ModelAttribute("createMenuRequestDto") CreateMenuRequestDto createMenuRequestDto,
         @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
         @PathVariable("storeId") Long storeId,
+        Principal principal,
         Model model) {
+
+        if (principal != null) {
+            Long accountId = accountIdAware.getAccountId();
+            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+            model.addAttribute("businessStoreList", businessStoreList);
+        }
 
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);

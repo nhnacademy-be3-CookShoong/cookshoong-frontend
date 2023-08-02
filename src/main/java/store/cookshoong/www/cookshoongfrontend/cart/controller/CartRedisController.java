@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.cart.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,11 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 회원 장바구니에 대한 저장, 수정, 삭제 에 대한 Controller.
@@ -31,10 +35,10 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerSe
 @RequestMapping("/carts")
 @RequiredArgsConstructor
 public class CartRedisController {
-
+    private final StoreService storeService;
     private final CartService cartService;
     private final StoreOptionManagerService storeOptionManagerService;
-    private final AccountIdAware account;
+    private final AccountIdAware accountIdAware;
     private static final String CART = "cartKey=";
     private static final String NO_MENU = "NO_KEY";
 
@@ -45,12 +49,19 @@ public class CartRedisController {
      * @return          회원이 담은 장바구니 페이지로 반환
      */
     @GetMapping
-    public String getCartMenuAll(Model model) {
+    public String getCartMenuAll(Principal principal, Model model) {
 
-        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(CART + account.getAccountId());
-        List<SelectOptionResponseDto> optionsInfo = storeOptionManagerService.selectOptions(1L);
+        if (principal != null) {
+            Long accountId = accountIdAware.getAccountId();
+            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+            model.addAttribute("businessStoreList", businessStoreList);
+        }
 
-        if (!cartService.existMenuInCartRedis(CART + account.getAccountId(), NO_MENU)) {
+        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(CART + accountIdAware.getAccountId());
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
+        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(1L);
+
+        if (!cartService.existMenuInCartRedis(CART + accountIdAware.getAccountId(), NO_MENU)) {
             int totalPrice = cartService.calculateTotalPrice(cartItems);
             String storeName = cartItems.get(0).getStoreName();
             model.addAttribute("totalPrice", totalPrice);
@@ -58,7 +69,8 @@ public class CartRedisController {
         }
 
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("optionsInfo", optionsInfo);
+        model.addAttribute("options", options);
+        model.addAttribute("optionGroups", optionGroups);
 
         return "cart/cart-list";
     }
@@ -75,7 +87,7 @@ public class CartRedisController {
     public ResponseEntity<Void> putCartMenuAll(@PathVariable String menuKey,
                                                 @RequestBody List<CartOptionDto> cartOptionDto) {
 
-        CartRedisDto cart = cartService.selectCartMenu(CART + account.getAccountId(), menuKey);
+        CartRedisDto cart = cartService.selectCartMenu(CART + accountIdAware.getAccountId(), menuKey);
         List<CartOptionDto> optionDtoList = new ArrayList<>();
 
         if (cartOptionDto.size() == 0) {
@@ -87,7 +99,7 @@ public class CartRedisController {
         cart.getOptions().clear();
         cart.getOptions().addAll(cartOptionDto);
 
-        cartService.modifyCartMenu(CART + account.getAccountId(), menuKey, cart);
+        cartService.modifyCartMenu(CART + accountIdAware.getAccountId(), menuKey, cart);
 
         return ResponseEntity.ok().build();
     }
@@ -101,7 +113,7 @@ public class CartRedisController {
     @PutMapping("/menu-count-up/{menuKey}")
     public String putCartMenuIncrement(@PathVariable String menuKey) {
 
-        cartService.modifyCartMenuIncrement(CART + account.getAccountId(), menuKey);
+        cartService.modifyCartMenuIncrement(CART + accountIdAware.getAccountId(), menuKey);
 
         return "redirect:/carts";
     }
@@ -115,7 +127,7 @@ public class CartRedisController {
     @PutMapping("/menu-count-down/{menuKey}")
     public String putCartMenuDecrement(@PathVariable String menuKey) {
 
-        cartService.modifyCartMenuDecrement(CART + account.getAccountId(), menuKey);
+        cartService.modifyCartMenuDecrement(CART + accountIdAware.getAccountId(), menuKey);
 
         return "redirect:/carts";
     }
@@ -129,7 +141,7 @@ public class CartRedisController {
     @DeleteMapping("/menu-delete/{menuKey}")
     public String deleteCartMenu(@PathVariable String menuKey) {
 
-        cartService.removeCartMenu(CART + account.getAccountId(), menuKey);
+        cartService.removeCartMenu(CART + accountIdAware.getAccountId(), menuKey);
 
         return "redirect:/carts";
     }
@@ -142,7 +154,7 @@ public class CartRedisController {
     @DeleteMapping("/menu-del-all")
     public String deleteCartMenuAll() {
 
-        cartService.removeCartMenuAll(CART + account.getAccountId());
+        cartService.removeCartMenuAll(CART + accountIdAware.getAccountId());
 
         return "redirect:/carts";
     }
