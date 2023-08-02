@@ -12942,6 +12942,16 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
 }
 
+.navbar-toggler-ex {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    display: none;
+}
+
 .navbar-toggler:hover, .navbar-toggler:focus {
     text-decoration: none;
 }
@@ -12996,6 +13006,10 @@ input[type="button"].btn-block {
     .navbar-expand-sm .navbar-toggler {
         display: none;
     }
+
+    .navbar-expand-sm .navbar-toggler-ex {
+        display: flex;
+    }
 }
 
 @media (max-width: 767.98px) {
@@ -13037,6 +13051,10 @@ input[type="button"].btn-block {
 
     .navbar-expand-md .navbar-toggler {
         display: none;
+    }
+
+    .navbar-expand-md .navbar-toggler-ex {
+        display: flex;
     }
 }
 
@@ -13080,6 +13098,10 @@ input[type="button"].btn-block {
     .navbar-expand-lg .navbar-toggler {
         display: none;
     }
+
+    .navbar-expand-lg .navbar-toggler-ex {
+        display: flex;
+    }
 }
 
 @media (max-width: 1199.98px) {
@@ -13121,6 +13143,10 @@ input[type="button"].btn-block {
 
     .navbar-expand-xl .navbar-toggler {
         display: none;
+    }
+
+    .navbar-expand-xl .navbar-toggler-ex {
+        display: flex;
     }
 }
 
@@ -20787,7 +20813,7 @@ code {
 }
 
 .card .card-body {
-    padding: 1.875rem 1.875rem;
+    padding: 1.2rem 1.2rem;
 }
 
 .card .card-body + .card-body {
@@ -23810,14 +23836,8 @@ body.avgrund-active {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-    padding-top: 35px;
+    padding-top: 0px;
     padding-bottom: 30px;
-}
-@media (max-width: 991px) {
-    .landing-panel {
-        width: 100%;
-        padding-top: 0px;
-    }
 }
 
 .main-panel {
@@ -23840,16 +23860,10 @@ body.avgrund-active {
 
 .content-wrapper {
     background: #ffffff;
-    padding: 1.875rem 1.875rem 0 1.875rem;
+    padding: 1.2rem 1.2rem 0 1.2rem;
     width: 100%;
     -webkit-flex-grow: 1;
     flex-grow: 1;
-}
-
-@media (max-width: 767px) {
-    .content-wrapper {
-        padding: 1.5rem 1.5rem;
-    }
 }
 
 /* Sidebar */

@@ -67,27 +67,4 @@ public class StoreInfoManagerController {
                                   BindingResult bindingResult) {
         return "redirect:/";
     }
-
-    /**
-     * 사업자 : 해당 사업자의 모든 매장 리스트 조회.
-     *
-     * @param pageable   the pageable
-     * @param model      the model
-     * @param requestDto the request dto
-     * @return 매장 리스트 반환
-     */
-    @GetMapping("/stores")
-    public String getStoresForBusiness(Pageable pageable,
-                                       Model model,
-                                       UpdateStoreStatusRequestDto requestDto) {
-        Long accountId = accountIdAware.getAccountId();
-        RestResponsePage<SelectAllStoresResponseDto> stores = storeService.selectStores(accountId, pageable);
-        List<SelectAllStatusResponseDto> status = storeService.selectStatus();
-
-        model.addAttribute("status", status);
-        model.addAttribute("stores", stores);
-        model.addAttribute("updateStoreStatusRequestDto", requestDto);
-        model.addAttribute("buttonNumber", 5);
-        return "store/info/store-list";
-    }
 }

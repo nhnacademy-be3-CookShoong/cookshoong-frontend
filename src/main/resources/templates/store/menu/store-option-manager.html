@@ -50,8 +50,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <input class="form-control" type="hidden" name="targetOptionGroupId">
-                                <button class="btn btn-info mr-2" type="submit">옵션 그룹 신규 등록</button>
-                                <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                <button class="btn btn-info m-1" type="submit" name="submitButton"></button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
@@ -111,8 +111,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <input class="form-control" type="hidden" name="targetOptionId">
-                                <button class="btn btn-info mr-2" type="submit" id="submitButton">옵션 신규 등록</button>
-                                <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                <button class="btn btn-info m-1" type="submit" id="submitButton" name="submitButton"></button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 옵션 관리 페이지</h1>
+                            <h1 class="font-weight-bold">영업점 옵션 관리</h1>
                         </div>
                     </div>
                 </div>
@@ -138,24 +138,27 @@
                         <div class="card-body">
                             <h4 class="card-title">옵션 그룹 관리</h4>
                             <div class="col-12">
-                                <div class="row border-top pt-2 pb-2" th:each="optionGroup, i:${optionGroups}">
-                                    <div class="col-sm-10">
+                                <div class="row border-top pt-2 pb-2 justify-content-between"
+                                     th:each="optionGroup, i:${optionGroups}">
+                                    <div class="row" style="width: 600px;">
                                         <h3 class="font-weight-bold pt-2" th:text="${optionGroup.name}"></h3>
                                     </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                    <div class="row">
+                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;"
+                                                type="button"
                                                 th:id="${optionGroup.id}"
                                                 data-toggle="modal"
                                                 data-target="#optionGroupAdd"
                                                 th:data-targetoptiongroupid="${optionGroup.id}"
                                                 th:data-name="${optionGroup.name}"
                                                 th:data-minselectcount="${optionGroup.minSelectCount}"
-                                                th:data-maxselectcount="${optionGroup.maxSelectCount}"
-                                        >수정
+                                                th:data-maxselectcount="${optionGroup.maxSelectCount}">
+                                            수정
                                         </button>
                                         <form th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager/' + ${optionGroup.id} }"
                                               th:method="delete">
-                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                            <button class="btn btn-primary m-1" style="width: 85px; height: 40px;"
+                                                    type="submit">
                                                 삭제
                                             </button>
                                         </form>
@@ -176,22 +179,19 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">옵션 관리</h4>
-                            <div class="col-12 grid-margin">
-                                <div class="row border-top pb-3 pt-3" th:each="option, i:${options}">
-                                    <div class="col-sm-10">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <h3 class="font-weight-bold" th:text="${option.name}"></h3>
-                                                <div class="pt-2">
-                                                    <p class="font-weight-bold" style="font-size: 1.3rem"
-                                                       th:text="${option.price}"><span
-                                                            style="font-size: 1.2rem">원</span></p>
-                                                </div>
-                                            </div>
+                            <div class="col-12">
+                                <div class="row border-top pb-3 pt-3 justify-content-between"
+                                     th:each="option, i:${options}">
+                                    <div style="width: 600px;">
+                                        <h3 class="font-weight-bold" th:text="${option.name}"></h3>
+                                        <div class="pt-2">
+                                            <p class="font-weight-bold" style="font-size: 1.3rem"
+                                               th:text="${option.price} + ' 원'"><span
+                                                    style="font-size: 1.2rem"></span></p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2" style="text-align: right">
-                                        <button class="btn btn-light mb-1" style="width: 85px" type="button"
+                                    <div class="row">
+                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;" type="button"
                                                 th:id="${option.id}"
                                                 data-toggle="modal"
                                                 data-target="#optionAdd"
@@ -203,7 +203,7 @@
                                         </button>
                                         <form th:action="@{'/stores/' + ${storeId} + '/store-option-manager/' + ${option.id} }"
                                               th:method="delete">
-                                            <button class="btn btn-primary mb-1" style="width: 85px;" type="submit">
+                                            <button class="btn btn-primary m-1" style="width: 85px; height: 40px;" type="submit">
                                                 삭제
                                             </button>
                                         </form>
@@ -226,28 +226,7 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
-<script>
-    function getSelectedGroups() {
-        const checkboxes = document.getElementsByName('optionGroups');
-        const selectedCategories = [];
 
-        for (let i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                selectedCategories.push(checkboxes[i].value);
-            }
-        }
-        return selectedCategories;
-    }
-
-    function handleCheckboxClick() {
-        const selectedCategories = getSelectedGroups();
-        const checkMaximum = 1;
-        if (selectedCategories.length > checkMaximum) {
-            this.checked = false;
-            alert("최대 1개의 그룹만 선택할 수 있습니다.");
-        }
-    }
-</script>
 <script>
     $('#optionGroupAdd').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget)
@@ -261,6 +240,12 @@
         modal.find('input[name="name"]').val(name)
         modal.find('input[name="minSelectCount"]').val(minSelectCount)
         modal.find('input[name="maxSelectCount"]').val(maxSelectCount)
+
+        if (target != null) {
+            modal.find('button[name="submitButton"]').text('옵션 그룹 수정')
+        } else {
+            modal.find('button[name="submitButton"]').text('옵션 그룹 신규 등록')
+        }
     })
 </script>
 <script>
@@ -280,6 +265,12 @@
 
         if (optionGroup != null) {
             modal.find('select[name="optionGroup"]').val(optionGroup)
+        }
+
+        if (target != null) {
+            modal.find('button[name="submitButton"]').text('옵션 수정')
+        } else {
+            modal.find('button[name="submitButton"]').text('옵션 신규 등록')
         }
 
     })
