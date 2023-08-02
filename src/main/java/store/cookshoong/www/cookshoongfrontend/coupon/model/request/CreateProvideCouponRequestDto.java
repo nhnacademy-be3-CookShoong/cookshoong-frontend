@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 쿠폰 발급 요청 시 사용되는 dto.
@@ -16,4 +17,6 @@ import lombok.Getter;
 public class CreateProvideCouponRequestDto {
     @NotNull
     private Long couponPolicyId;
+    @Setter
+    private Long accountId;
 }
