@@ -17,7 +17,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/coupon/issue")
+@RequestMapping("/coupon/provide")
 public class IssueCouponController {
     private final AccountIdAware accountIdAware;
     private final CouponManageService couponManageService;
@@ -28,10 +28,11 @@ public class IssueCouponController {
      * @param createProvideCouponRequestDto the create provide coupon request dto
      * @return the string
      */
-    @PostMapping("/provide")
+    @PostMapping
     public String postProvideCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
         try {
-            couponManageService.createProvideCoupon(accountIdAware.getAccountId(), createProvideCouponRequestDto);
+            createProvideCouponRequestDto.setAccountId(accountIdAware.getAccountId());
+            couponManageService.createProvideCoupon(createProvideCouponRequestDto);
         } catch (HttpClientErrorException e) {
             return e.getMessage();
         }
