@@ -31,7 +31,7 @@
                                     <input class="btn mr-2" style="width: 100px; height: 40px; background: #ffa636" type="submit" th:value="전체삭제">
                                 </form>
                             </div>
-                            <div class="col-12 grid-margin" th:each="item, i:${cartItems}">
+                            <div class="col-12 grid-margin" th:each="item, i:${cartItems}" th:unless="${item == null}">
                                 <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
