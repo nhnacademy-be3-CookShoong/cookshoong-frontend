@@ -89,7 +89,16 @@
 
     const addCart = document.getElementById('addCart');
 
-    addCart.addEventListener("submit", function () {
+    addCart.addEventListener("submit", function (e) {
+
+        e.preventDefault();
+        const cartStoreId = [[${cartStoreId}]];
+        const storeId = [[${storeId}]];
+
+        if (cartStoreId !== null && cartStoreId !== storeId) {
+            alert("매장이 달라서 장바구니에 담을 수 없습니다.");
+            return;
+        }
 
         const radioButtons = document.querySelectorAll("input[type='radio']:checked");
         console.log("RadioButtons:" + radioButtons.item(0));
@@ -164,6 +173,7 @@
             addCart.appendChild(optionNameHiddenInput);
             addCart.appendChild(optionPriceHiddenInput);
         }
+        addCart.submit();
     })
 </script>
 </body>
