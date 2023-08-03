@@ -35,7 +35,7 @@
                     <div id="notificationArea"></div>
                     <div class="row">
                         <div th:each="policy : ${store.provableCouponPolicies}" class="col-3">
-                            <form th:action="@{/coupon/issue/provide}" th:method="post">
+                            <form th:action="@{/coupon/provide}" th:method="post">
                                 <input type="hidden" name="couponPolicyId" th:value="${policy.couponPolicyId}">
                                 <button class="btn btn-warning mr-2 provide-button"
                                         th:data-policy-id="${policy.couponPolicyId}" type="submit">
