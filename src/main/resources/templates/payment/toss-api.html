@@ -20,13 +20,6 @@
 <script>
     function paymentButton(method, toss, order) {
 
-        console.log("clientId: ", toss.clientId);
-        console.log("successUrl: ", toss.successUrl);
-        console.log("failUrl: ", toss.failUrl);
-        console.log("amount: ", order.amount);
-        console.log("orderId: ", order.orderId);
-        console.log("orderName: ", order.orderName);
-
         var tossPayments = TossPayments(toss.clientId)
         tossPayments.requestPayment(method, {
             amount: order.amount,

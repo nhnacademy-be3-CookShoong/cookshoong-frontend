@@ -65,14 +65,11 @@ public class TossPaymentAdapter {
      */
     private HttpHeaders getTossSecretHeaders() {
 
-
         HttpHeaders headers = new HttpHeaders();
         String encodeAuthKey =
             Base64.getEncoder().encodeToString((tossProperties.getTossSecret().getSecret().trim() + ":").getBytes());
-        log.info("encodeAuthKey: {}", encodeAuthKey);
         headers.setContentType(APPLICATION_JSON);
         headers.setBasicAuth(encodeAuthKey);
-        log.info("headers: {}", headers);
 
         return headers;
     }

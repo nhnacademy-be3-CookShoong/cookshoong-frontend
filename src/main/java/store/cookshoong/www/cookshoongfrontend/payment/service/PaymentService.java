@@ -40,8 +40,6 @@ public class PaymentService {
                     paymentKey, amount, orderId
             );
 
-        log.info("tossResponseDto: {}", tossResponseDto);
-
         chargeAdapter.executePayment(new CreatePaymentDto(
                 tossResponseDto.getOrderId(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getTotalAmount(), tossResponseDto.getPaymentKey(),
