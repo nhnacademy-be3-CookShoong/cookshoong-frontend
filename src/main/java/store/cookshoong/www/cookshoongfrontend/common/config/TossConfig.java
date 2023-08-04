@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossSecret;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossUrl;
