@@ -50,11 +50,11 @@ public class CartRedisController {
     @GetMapping
     public String getCartMenuAll(Model model) {
 
-            Long accountId = accountIdAware.getAccountId();
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
 
-        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(CART + accountIdAware.getAccountId());
+        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(1L);
 

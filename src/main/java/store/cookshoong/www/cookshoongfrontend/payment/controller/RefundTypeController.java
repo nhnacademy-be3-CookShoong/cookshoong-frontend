@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
-import store.cookshoong.www.cookshoongfrontend.payment.service.ChargeTypeService;
 import store.cookshoong.www.cookshoongfrontend.payment.service.RefundTypeService;
 
 /**
