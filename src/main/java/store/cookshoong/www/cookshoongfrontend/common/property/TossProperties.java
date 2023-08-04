@@ -15,7 +15,6 @@ import store.cookshoong.www.cookshoongfrontend.payment.model.request.TossPayment
 public class TossProperties {
     private TossSecret tossSecret;
     private TossUrl tossUrl;
-    public static final String BASE_TOSS_URL = "https://api.tosspayments.com";
 
     /**
      *  Toss 결제 API 에 필요한 데이터 가져오는 메서드.

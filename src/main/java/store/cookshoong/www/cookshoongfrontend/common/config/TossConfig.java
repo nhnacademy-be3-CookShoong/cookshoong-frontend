@@ -29,7 +29,6 @@ public class TossConfig {
      * @return              toss 설정 값
      */
     @Bean
-    @Profile("!default")
     public TossProperties tossProperties(@Value("${cookshoong.skm.keyid.toss}") String tossKeyid,
                           @Value("${toss.successUrl}") String successUrl,
                           @Value("${toss.failUrl}") String failUrl,
