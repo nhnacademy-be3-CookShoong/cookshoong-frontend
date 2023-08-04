@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossSecret;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossUrl;
@@ -28,6 +29,7 @@ public class TossConfig {
      * @return              toss 설정 값
      */
     @Bean
+    @Profile("!default")
     public TossProperties tossProperties(@Value("${cookshoong.skm.keyid.toss}") String tossKeyid,
                           @Value("${toss.successUrl}") String successUrl,
                           @Value("${toss.failUrl}") String failUrl,
