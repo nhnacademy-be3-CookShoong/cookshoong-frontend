@@ -82,7 +82,7 @@ public class MainViewController {
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
         }
-        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
+        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategoriesForCustomer();
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),

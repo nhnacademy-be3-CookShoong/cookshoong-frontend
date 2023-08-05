@@ -186,13 +186,28 @@ public class StoreAdapter {
     }
 
     /**
-     * 모든 카테고리 리스트 조회.
+     * 사업자 : 모든 카테고리 리스트 조회.
      *
      * @return the list
      */
     public ResponseEntity<List<SelectAllCategoriesResponseDto>> fetchAllCategories() {
         ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/categories",
+                GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+        return responseEntity;
+    }
+
+    /**
+     * 고객 : 모든 카테고리 리스트 조회.
+     *
+     * @return the list
+     */
+    public ResponseEntity<List<SelectAllCategoriesResponseDto>> fetchAllCategoriesForCustomer() {
+        ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/stores/categories",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {

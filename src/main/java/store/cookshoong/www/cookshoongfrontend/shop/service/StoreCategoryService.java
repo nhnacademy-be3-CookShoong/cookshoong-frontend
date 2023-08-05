@@ -27,4 +27,13 @@ public class StoreCategoryService {
         }
         return response.getBody();
     }
+
+    public List<SelectAllCategoriesResponseDto> selectAllCategoriesForCustomer(){
+        ResponseEntity<List<SelectAllCategoriesResponseDto>> response =
+            storeAdapter.fetchAllCategoriesForCustomer();
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new SelectCategoriesFailException(response.getStatusCode());
+        }
+        return response.getBody();
+    }
 }
