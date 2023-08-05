@@ -94,6 +94,8 @@ public class MainViewController {
         return "index/index";
     }
 
+
+
     /**
      * 매장 검색 랜딩 페이지 맵핑.
      *

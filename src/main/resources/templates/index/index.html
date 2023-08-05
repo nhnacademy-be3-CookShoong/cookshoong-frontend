@@ -150,8 +150,9 @@
             <section class="container mt-4 mb-2 bg-white">
                 <div class="tab-content w-100 border-0">
                     <div class="tab-pane fade show active" id="c1">
+
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1"
+                            <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2"
                                  th:each="search, i:${searchStores}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
@@ -181,16 +182,16 @@
                                 </button>
                             </div>
                         </div>
+
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${allStore}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2" th:each="store, i:${allStore}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="${store.savedName}"
-                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
-                                             style="width: 130px; height:100px;">
+                                        <img th:src="${store.savedName}" style="object-fit: cover; width: 130px; height: 110px;"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
@@ -214,9 +215,10 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="tab-pane fade" th:id="'c'+${c.index + 2}" th:each="category, c : ${categories}">
                         <div class="row ml-1 mr-1 mt-1 mb-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="search, i:${searchStores}">
+                            <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2" th:each="search, i:${searchStores}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 ml-1 mr-1 mt-1 mb-1 w-100 bg-white"
                                         th:onclick="'window.location.href=\'/index/store/' + ${search.id} + '\''"
                                         style="border-radius: 1rem">
@@ -253,9 +255,8 @@
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="${store.getSavedName()}"
-                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
-                                             style="width: 130px">
+                                        <img th:src="${store.getSavedName()}" style="object-fit: cover; width: 130px; height: 110px;"
+                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>

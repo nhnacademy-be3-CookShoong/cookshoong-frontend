@@ -14,7 +14,7 @@
         <div class="content-wrapper">
             <form id="addCart" th:action="@{/index/store/menu/cart}" method="POST">
 
-                <input type="hidden" name="accountId"  th:value="${accountId}">
+                <input type="hidden" name="accountId" th:value="${accountId}">
                 <input type="hidden" name="storeId" th:value="${storeId}">
                 <input type="hidden" name="storeName" th:value="${storeName}">
                 <input type="hidden" name="menu.menuId" th:value="${menu.id}">
@@ -23,20 +23,33 @@
                 <input type="hidden" name="menu.menuPrice" th:value="${menu.price}">
 
                 <section class="container">
-                    <div class="card">
+                    <div class="card border-bottom-0">
                         <div class="card-body" style="height: 300px">
-                            <div class="bg-box" style="background-color: #28282b; text-align: center;">
+                            <div class="bg-box p-3" style="background-color: #ffffff; text-align: center;">
                                 <img th:src="${menu.getSavedName()}" onerror="this.onerror=null;
                             this.src='/assets/images/nodata.png';" style="width: 100%;">
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menu.name}"></h1>
-                    </div>
-                    <div class="card">
-                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                            <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menu.price}"></span> 원</h3>
+                    <div class="card border-top-0 border-bottom-0">
+                        <h1 class="card-header font-weight-bold border-0 bg-white" style="font-size: 35px;"
+                            th:text="${menu.name}"></h1>
+                        <div class="m-3 d-flex justify-content-between">
+                            <h2 class="font-weight-bold ml-2" style="font-size: 20px;">
+                                <span class="m-0 p-0 border-0"
+                                      style="font-size: 30px;"
+                                      th:name="menuPrice"
+                                      th:text="${menu.price}">
+                                </span>
+                                <span class="m-0 p-0 border-0"
+                                      style="font-size: 20px;"
+                                      th:text="' 원'">
+                                </span>
+                            </h2>
+                        </div>
+                        <div class="ml-3 mr-3 d-flex justify-content-between">
+                            <h4 class="font-weight-bold ml-2" style="color: dimgrey"
+                                th:utext="${menu.description}"></h4>
                         </div>
                     </div>
                     <div class="card">
@@ -60,24 +73,35 @@
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                            <h3 class="font-weight-bold">수량입력</h3>
+                            <h3 class="font-weight-bold">수량</h3>
                             <div>
-                                <h4>입력: <input type="text" id="count" name="count" th:value="1" style="text-align: center; font-size: 1.2rem; font-weight: bold; width: 100px;" class="border-0"></h4>
+                                <h4>
+                                    <input type="text" id="count" name="count" th:value="1"
+                                           style="text-align: end; font-size: 1.2rem; font-weight: bold; width: 40px;"
+                                           class="border-0">
+                                    <span th:text="' 개'" style="font-size: 15px; font-weight: bold"></span>
+                                </h4>
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                            <h3 class="font-weight-bold">가격</h3>
+                            <h3 class="font-weight-bold">합계</h3>
                             <div>
-                                <h2 class="font-weight-bold">가격 : <span style="font-size: 25px; color: orange;"> 14000</span> 원</h2>
+                                <span class="font-weight-bold" th:id="totalPrice" th:text="${menu.price}" style="font-size: 25px; color: orange"></span>
+                                <span th:text="' 원'" style="font-size: 15px; font-weight: bold"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="ml-3 mt-3 mb-3 d-flex justify-content-end mr-4">
-                            <button class="btn btn-info mr-2" type="submit">메뉴 담기</button>
-                        </div>
+                    <div class="card border-0">
+                        <button class="btn btn-warning" type="submit"
+                                style="font-size: 20px;
+                                font-weight: bold;
+                                color: white;
+                                border-top-left-radius: 0px;
+                                border-top-right-radius: 0px;">
+                            메뉴 담기
+                        </button>
                     </div>
                 </section>
             </form>
@@ -85,6 +109,8 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
+
+
 <script>
 
     const addCart = document.getElementById('addCart');
@@ -176,5 +202,37 @@
         addCart.submit();
     })
 </script>
+
+
+<script>
+    let menuPrice = document.getElementsByName("menuPrice"),
+        menuPriceValue = parseInt(menuPrice[0].textContent);
+    let radios = document.querySelectorAll('input[type="radio"]');
+    let counts = document.querySelector('input[id="count"]');
+
+    // 라디오 버튼 클릭 이벤트와 count 값 변경 이벤트에 대한 함수를 바인딩합니다.
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].onclick = updateTotal;
+    }
+    counts.oninput = updateTotal;
+
+    function updateTotal() {
+        let total = 0;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                let price = document.getElementById('optionsPrice' + radios[i].value);
+                total += parseInt(price.value);
+            }
+        }
+        let countValue = parseInt(counts.value);
+        if (!isNaN(countValue) && countValue > 0) {
+            total = (total + menuPriceValue) * countValue;
+        }
+        document.getElementById('totalPrice').textContent = total  + '';
+    }
+
+</script>
+
+
 </body>
 </html>
