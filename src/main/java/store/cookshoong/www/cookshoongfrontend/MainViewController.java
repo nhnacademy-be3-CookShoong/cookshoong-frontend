@@ -28,6 +28,7 @@ import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
@@ -37,6 +38,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionR
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
@@ -58,6 +60,7 @@ public class MainViewController {
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
+    private final StoreCategoryService storeCategoryService;
     private final CartService cartService;
     private static final String CART = "cartKey=";
     private static final String NO_MENU = "NO_KEY";
@@ -79,11 +82,12 @@ public class MainViewController {
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
         }
-
+        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
             .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
                 ArrayList::new));
+        model.addAttribute("categories", categories);
         model.addAttribute("allStore", distinctStores);
         model.addAttribute("stores", stores);
 
