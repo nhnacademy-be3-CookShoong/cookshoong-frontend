@@ -128,7 +128,7 @@
                                 <div class="form-group">
                                     <label>메뉴 그룹</label>
                                     <div class="row">
-                                        <div class="col-sm-3" th:each="menuGroup, i:${menuGroups}">
+                                        <div class="col-sm-4" th:each="menuGroup, i:${menuGroups}">
                                             <label class="custom-checkbox">
                                                 <input type="checkbox" name="menuGroups" th:value="${menuGroup.id}"
                                                        th:text="${menuGroup.name}"
@@ -141,7 +141,7 @@
                                 <div class="form-group">
                                     <label>옵션 그룹</label>
                                     <div class="row">
-                                        <div class="col-sm-3" th:each="optionGroup, i:${optionGroups}">
+                                        <div class="col-sm-4" th:each="optionGroup, i:${optionGroups}">
                                             <label class="custom-checkbox">
                                                 <input type="checkbox" name="optionGroups" th:value="${optionGroup.id}"
                                                        th:text="${optionGroup.name}">
@@ -380,8 +380,14 @@
             initialEditType: 'wysiwyg',
             previewStyle: 'vertical',
             height: '300px',
-            initialValue: description
+            initialValue: description,
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
         });
+
 
         document.querySelector('#submitButton').addEventListener('click', function () {
             let editorContent = editor.getHTML();

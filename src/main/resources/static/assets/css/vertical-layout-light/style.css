@@ -11113,7 +11113,7 @@ textarea.is-invalid.tt-hint {
 }
 
 .btn.disabled, .btn:disabled {
-    opacity: 0.65;
+    opacity: 0.50;
 }
 
 a.btn.disabled,
@@ -11524,11 +11524,12 @@ fieldset:disabled a.btn {
 .btn-outline-warning {
     color: #ff8300;
     border-color: #ff8300;
+    opacity: 0.9;
 }
 
 .btn-outline-warning:hover {
-    color: #212529;
-    background-color: #ff8300;
+    color: #ffffff;
+    background: linear-gradient(50deg, #e8610d, #ff8300);
     border-color: #ff8300;
 }
 
