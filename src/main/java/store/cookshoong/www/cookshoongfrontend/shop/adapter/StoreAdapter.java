@@ -192,7 +192,7 @@ public class StoreAdapter {
      */
     public ResponseEntity<List<SelectAllCategoriesResponseDto>> fetchAllCategories() {
         ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/categories",
+            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/stores/categories",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
