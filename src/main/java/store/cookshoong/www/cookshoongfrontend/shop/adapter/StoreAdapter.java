@@ -71,8 +71,8 @@ public class StoreAdapter {
      * @param storeImage            the store image
      * @return the response entity
      */
-    public ResponseEntity<Void> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
-                                                   MultipartFile businessLicense, MultipartFile storeImage
+    public ResponseEntity<String> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
+                                                     MultipartFile businessLicense, MultipartFile storeImage
     ) {
 
         URI uri = UriComponentsBuilder
@@ -91,8 +91,8 @@ public class StoreAdapter {
         RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.post(uri)
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .body(mapRequest);
-        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
-        });
+
+        return restTemplate.exchange(request, String.class);
     }
 
     /**
