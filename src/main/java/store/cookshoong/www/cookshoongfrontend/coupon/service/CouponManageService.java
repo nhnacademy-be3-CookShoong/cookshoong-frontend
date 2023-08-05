@@ -74,10 +74,9 @@ public class CouponManageService {
     /**
      * 쿠폰 발급.
      *
-     * @param accountId                     the account id
      * @param createProvideCouponRequestDto the create provide coupon request dto
      */
-    public void createProvideCoupon(Long accountId, CreateProvideCouponRequestDto createProvideCouponRequestDto) {
-        couponManageAdapter.executeProvideCoupon(accountId, createProvideCouponRequestDto);
+    public void createProvideCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        couponManageAdapter.executeProvideCoupon(createProvideCouponRequestDto);
     }
 }

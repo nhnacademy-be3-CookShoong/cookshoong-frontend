@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import store.cookshoong.www.cookshoongfrontend.payment.adapter.RefundTypeAdapter;
+import store.cookshoong.www.cookshoongfrontend.payment.adapter.paymentbackapi.RefundTypeAdapter;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 

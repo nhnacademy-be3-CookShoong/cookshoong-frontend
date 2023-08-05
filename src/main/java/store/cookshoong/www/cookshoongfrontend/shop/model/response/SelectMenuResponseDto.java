@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,6 @@ public class SelectMenuResponseDto {
     private String savedName;
     private Integer cookingTime;
     private BigDecimal earningRate;
+    private List<Long> menuGroups;
+    private List<Long> optionGroups;
 }

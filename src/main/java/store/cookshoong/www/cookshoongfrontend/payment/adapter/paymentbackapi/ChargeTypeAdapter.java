@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.payment.adapter;
+package store.cookshoong.www.cookshoongfrontend.payment.adapter.paymentbackapi;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -19,7 +19,7 @@ import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeR
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 
 /**
- * 환불 타입과 결제 타입에 대한 Adapter.
+ * 결제 타입에 대한 Adapter.
  *
  * @author jeongjewan
  * @since 2023.07.07
@@ -44,6 +44,7 @@ public class ChargeTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("charges")
+            .pathSegment("charge-type")
             .build().toUri();
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
@@ -55,7 +56,7 @@ public class ChargeTypeAdapter {
      * 해당 아이디에 대한 결제 타입을 조회하는 메서드.
      *
      * @param chargeTypeId        결제 타입 아이디
-     * @return          해당되는 결제 타입을 반환
+     * @return                    해당되는 결제 타입을 반환
      */
     public TypeResponseDto fetchChargeType(String chargeTypeId) {
 
@@ -64,6 +65,7 @@ public class ChargeTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("charges")
+            .pathSegment("charge-type")
             .pathSegment("{chargeTypeId}")
             .buildAndExpand(chargeTypeId)
             .toUri();
@@ -86,6 +88,7 @@ public class ChargeTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("charges")
+            .pathSegment("charge-type")
             .build().toUri();
 
         ResponseEntity<List<TypeResponseDto>> exchange =
@@ -106,6 +109,7 @@ public class ChargeTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("charges")
+            .pathSegment("charge-type")
             .pathSegment("{id}")
             .buildAndExpand(id)
             .toUri();

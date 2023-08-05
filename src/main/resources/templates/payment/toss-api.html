@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+</head>
+<body>
+<h1>토스 결제 테스트</h1>
+
+<div class="card-columns">
+    <div>
+        <button type="button"
+                th:onclick="paymentButton('CARD', [[${toss}]], [[${order}]])" id="card">
+            <span class="text">토스결제</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    function paymentButton(method, toss, order) {
+
+        var tossPayments = TossPayments(toss.clientId)
+        tossPayments.requestPayment(method, {
+            amount: order.amount,
+            orderId: order.orderId,
+            orderName: order.orderName,
+            successUrl: toss.successUrl,
+            failUrl: toss.failUrl
+        })
+    }
+</script>
+</body>
+</html>

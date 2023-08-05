@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.payment.adapter;
+package store.cookshoong.www.cookshoongfrontend.payment.adapter.paymentbackapi;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -44,6 +44,7 @@ public class RefundTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("refunds")
+            .pathSegment("refund-type")
             .build().toUri();
 
         HttpEntity<CreateTypeRequestDto> httpEntity = new HttpEntity<>(createTypeRequestDto);
@@ -64,6 +65,7 @@ public class RefundTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("refunds")
+            .pathSegment("refund-type")
             .pathSegment("{chargeTypeId}")
             .buildAndExpand(refundTypeId)
             .toUri();
@@ -86,6 +88,7 @@ public class RefundTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("refunds")
+            .pathSegment("refund-type")
             .build().toUri();
 
         ResponseEntity<List<TypeResponseDto>> exchange =
@@ -106,6 +109,7 @@ public class RefundTypeAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("refunds")
+            .pathSegment("refund-type")
             .pathSegment("{id}")
             .buildAndExpand(id)
             .toUri();

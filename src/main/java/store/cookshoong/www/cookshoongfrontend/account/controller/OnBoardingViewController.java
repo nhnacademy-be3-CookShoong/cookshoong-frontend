@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
+import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 로그인, 회원가입 등 인증을 위한 컨트롤러.
@@ -26,6 +30,8 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 public class OnBoardingViewController {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
+    private final AccountIdAware accountIdAware;
+    private final StoreService storeService;
 
     @GetMapping("/sign-up-choice")
     public String getSignUpChoicePage() {
@@ -81,5 +87,31 @@ public class OnBoardingViewController {
 
         accountService.requestAccountRegistration(userType, signUpRequestDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/dormancy")
+    public String getDormancyAccount() {
+        return "account/dormancy";
+    }
+
+    /**
+     * 휴면상태인 회원을 활성상태로 바꿔주는 엔드포인트.
+     *
+     * @return the account active
+     */
+    @GetMapping("/dormancy/active")
+    public String getAccountActive() {
+        Long accountId = accountIdAware.getAccountId();
+        accountService.updateAccountStatus(accountId, "ACTIVE");
+        return "redirect:/";
+    }
+
+    @GetMapping("/my-page")
+    public String getMyPage(Model model) {
+            Long accountId = accountIdAware.getAccountId();
+            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+            model.addAttribute("businessStoreList", businessStoreList);
+
+        return "account/my-page";
     }
 }

@@ -264,16 +264,14 @@ public class CouponManageAdapter {
     /**
      * 쿠폰 발급.
      *
-     * @param accountId                     the account id
      * @param createProvideCouponRequestDto the create provide coupon request dto
      */
-    public void executeProvideCoupon(Long accountId, CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+    public void executeProvideCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
         restTemplate.exchange(
             UriComponentsBuilder
                 .fromUriString(apiProperties.getGatewayUrl())
-                .path("/api/coupon/issue")
-                .pathSegment("account/{accountId}")
-                .buildAndExpand(accountId)
+                .path("/api/coupon/provide")
+                .build()
                 .toUri(),
             HttpMethod.POST,
             new HttpEntity<>(createProvideCouponRequestDto),

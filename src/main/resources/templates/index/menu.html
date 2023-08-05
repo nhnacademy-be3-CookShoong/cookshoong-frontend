@@ -8,6 +8,7 @@
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
@@ -16,35 +17,37 @@
                 <input type="hidden" name="accountId"  th:value="${accountId}">
                 <input type="hidden" name="storeId" th:value="${storeId}">
                 <input type="hidden" name="storeName" th:value="${storeName}">
-                <input type="hidden" name="menu.menuId" th:value="${menuInfo.id}">
-                <input type="hidden" name="menu.menuName" th:value="${menuInfo.name}">
-                <input type="hidden" name="menu.menuImage" th:value="${menuInfo.savedName}">
-                <input type="hidden" name="menu.menuPrice" th:value="${menuInfo.price}">
+                <input type="hidden" name="menu.menuId" th:value="${menu.id}">
+                <input type="hidden" name="menu.menuName" th:value="${menu.name}">
+                <input type="hidden" name="menu.menuImage" th:value="${menu.savedName}">
+                <input type="hidden" name="menu.menuPrice" th:value="${menu.price}">
+
                 <section class="container">
                     <div class="card">
                         <div class="card-body" style="height: 300px">
                             <div class="bg-box" style="background-color: #28282b; text-align: center;">
-                                <img th:src="|/images/${menuInfo.getSavedName()}|" onerror="this.onerror=null; this.src='/assets/images/nodata.png';" style="width: 350px;">
+                                <img th:src="${menu.getSavedName()}" onerror="this.onerror=null;
+                            this.src='/assets/images/nodata.png';" style="width: 100%;">
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                        <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menuInfo.name}"></h1>
+                        <h1 class="card-header font-weight-bold border-0 bg-white" th:text="${menu.name}"></h1>
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
-                            <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menuInfo.price}"></span> 원</h3>
+                            <h3 class="font-weight-bold">가격 : <span style="font-size: 20px;" th:text="${menu.price}"></span> 원</h3>
                         </div>
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3">
-                            <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
-                            <div class="row">
+                            <div class="row" th:each="optionGroup, i:${optionGroups}">
+                                <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${optionsInfo}">
+                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${options}" th:if="${option.optionGroupId==optionGroup.id}">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="'optionsRadios'+${option.id}" th:id="'optionsRadio-'+${option.id}" th:value="${option.id}" th:text="${option.name}">
+                                                <input type="radio" class="form-check-input" th:name="'optionsRadios'+${optionGroup.id}" th:id="'optionsRadio-'+${option.id}" th:value="${option.id}" th:text="${option.name}">
                                             </label>
                                             <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
                                             <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
@@ -86,7 +89,16 @@
 
     const addCart = document.getElementById('addCart');
 
-    addCart.addEventListener("submit", function () {
+    addCart.addEventListener("submit", function (e) {
+
+        e.preventDefault();
+        const cartStoreId = [[${cartStoreId}]];
+        const storeId = [[${storeId}]];
+
+        if (cartStoreId !== null && cartStoreId !== storeId) {
+            alert("매장이 달라서 장바구니에 담을 수 없습니다.");
+            return;
+        }
 
         const radioButtons = document.querySelectorAll("input[type='radio']:checked");
         console.log("RadioButtons:" + radioButtons.item(0));
@@ -161,6 +173,7 @@
             addCart.appendChild(optionNameHiddenInput);
             addCart.appendChild(optionPriceHiddenInput);
         }
+        addCart.submit();
     })
 </script>
 </body>

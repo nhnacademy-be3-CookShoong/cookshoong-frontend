@@ -8,6 +8,7 @@
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
@@ -226,9 +227,9 @@
                                         style="border-radius: 1rem">
                                     <div class="col-sm-6 col-6 p-1 align-content-start text-md-center"
                                          style="max-width: 150px">
-                                        <img th:src="|/images/${store.getSavedName()}|"
+                                        <img th:src="${store.savedName}"
                                              onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
-                                             style="width: 130px">
+                                             style="width: 130px; height:100px;">
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
@@ -949,5 +950,6 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
+
 </body>
 </html>

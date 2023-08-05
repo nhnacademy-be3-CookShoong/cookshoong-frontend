@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
     <title>Untitled</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="src/main/resources/static/assets/css/vertical-layout-light/custom.css">
 </head>
 
 <body layout:fragment="content">
@@ -113,7 +115,6 @@
                                     </table>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>

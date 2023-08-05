@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.CreateTypeRequestDto;
-import store.cookshoong.www.cookshoongfrontend.payment.model.request.ModifyTypeRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TypeResponseDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.ChargeTypeService;
 
@@ -46,7 +45,7 @@ public class ChargeTypeController {
 
         model.addAttribute("chargeTypes", chargeTypes);
 
-        model.addAttribute("url", "charge-type");
+        model.addAttribute("url", "charges");
 
         return "payment/charge-type-form";
     }
@@ -64,7 +63,7 @@ public class ChargeTypeController {
                                        BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("url", "charge-type");
+            model.addAttribute("url", "charges");
             return "payment/charge-type-form";
         }
 
