@@ -1,13 +1,17 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
+import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterStoreFailureException;
+import store.cookshoong.www.cookshoongfrontend.shop.exception.SelectStoreFailException;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.UpdateStatusFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
@@ -62,12 +66,16 @@ public class StoreService {
      * @param businessLicense       the business license
      * @param storeImage            the store image
      */
-    public void createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
-                            MultipartFile businessLicense,
-                            MultipartFile storeImage) {
-        storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
-    }
+    public String createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
+                              MultipartFile businessLicense,
+                              MultipartFile storeImage) {
+        ResponseEntity<String> response = storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
 
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RegisterStoreFailureException(response.getStatusCode());
+        }
+        return Objects.requireNonNull(response.getHeaders().getLocation()).getPath();
+    }
 
     /**
      * 사용자 : 매장 조회 메서드.
@@ -76,7 +84,11 @@ public class StoreService {
      * @return the select store for user response dto
      */
     public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
-        return storeAdapter.fetchStoreForUser(storeId);
+        ResponseEntity<SelectStoreForUserResponseDto> response = storeAdapter.fetchStoreForUser(storeId);
+        if(!response.getStatusCode().is2xxSuccessful()){
+            throw new SelectStoreFailException(response.getStatusCode());
+        }
+        return response.getBody();
     }
 
     /**
@@ -85,7 +97,11 @@ public class StoreService {
      * @return the list
      */
     public List<SelectAllBanksResponseDto> selectAllBanks() {
-        return storeAdapter.fetchAllBanks();
+        ResponseEntity<List<SelectAllBanksResponseDto>> response = storeAdapter.fetchAllBanks();
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new SelectStoreFailException(response.getStatusCode());
+        }
+        return response.getBody();
     }
 
 
@@ -96,7 +112,11 @@ public class StoreService {
      * @return the rest response page
      */
     public List<SelectAllStoresResponseDto> selectStores(Long accountId) {
-        return storeAdapter.fetchAllStores(accountId);
+        ResponseEntity<List<SelectAllStoresResponseDto>> response = storeAdapter.fetchAllStores(accountId);
+        if(!response.getStatusCode().is2xxSuccessful()){
+            throw new SelectStoreFailException(response.getStatusCode());
+        }
+        return response.getBody();
     }
 
     /**
@@ -130,6 +150,10 @@ public class StoreService {
      * @return 매장 정보 조회 dto
      */
     public SelectStoreInfoResponseDto selectStoreInfo(Long accountId, Long storeId) {
-        return storeAdapter.fetchStoreInfo(accountId, storeId);
+        ResponseEntity<SelectStoreInfoResponseDto> response = storeAdapter.fetchStoreInfo(accountId, storeId);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new SelectStoreFailException(response.getStatusCode());
+        }
+        return response.getBody();
     }
 }
