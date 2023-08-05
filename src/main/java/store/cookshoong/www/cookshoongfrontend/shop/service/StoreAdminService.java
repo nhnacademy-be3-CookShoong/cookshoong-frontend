@@ -2,9 +2,11 @@ package store.cookshoong.www.cookshoongfrontend.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.AdminAdapter;
+import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBankRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateCategoriesRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMerchantRequestDto;
@@ -41,7 +43,10 @@ public class StoreAdminService {
      * @param bankRequestDto the bank request dto
      */
     public void createBank(CreateBankRequestDto bankRequestDto) {
-        adminAdapter.executeCreateBank(bankRequestDto);
+        ResponseEntity<Void> response = adminAdapter.executeCreateBank(bankRequestDto);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new RegisterFailureException(response.getStatusCode());
+        }
     }
 
     /**
@@ -51,7 +56,7 @@ public class StoreAdminService {
      * @return the rest response page
      */
     public RestResponsePage<SelectAllMerchantsResponseDto> selectAllMerchants(Pageable pageable) {
-        return adminAdapter.fetchMerchantsPage(pageable);
+        return  adminAdapter.fetchMerchantsPage(pageable);
     }
 
     /**
@@ -60,7 +65,11 @@ public class StoreAdminService {
      * @param createMerchantRequestDto the create merchant request dto
      */
     public void createMerchant(CreateMerchantRequestDto createMerchantRequestDto) {
-        adminAdapter.executeCreateMerchant(createMerchantRequestDto);
+        ResponseEntity<Void> response = adminAdapter.executeCreateMerchant(createMerchantRequestDto);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new RegisterFailureException(response.getStatusCode());
+        }
+
     }
 
     /**
@@ -88,7 +97,10 @@ public class StoreAdminService {
      * @param categoriesRequestDto the categories request dto
      */
     public void createCategory(CreateCategoriesRequestDto categoriesRequestDto) {
-        adminAdapter.executeCreateCategories(categoriesRequestDto);
+        ResponseEntity<Void> response = adminAdapter.executeCreateCategories(categoriesRequestDto);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new RegisterFailureException(response.getStatusCode());
+        }
     }
 
     /**
@@ -108,6 +120,9 @@ public class StoreAdminService {
      */
     public void updateCategory(UpdateCategoryRequestDto updateCategoryRequestDto,
                                String code) {
-        adminAdapter.changeCategory(updateCategoryRequestDto, code);
+        ResponseEntity<Void> response = adminAdapter.changeCategory(updateCategoryRequestDto, code);
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new RegisterFailureException(response.getStatusCode());
+        }
     }
 }

@@ -17,7 +17,7 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 public class CartService {
 
     private final CartAdapter cartAdapter;
-
+    private static final String CART = "cartKey=";
     /**
      * 회원이 장바구니에 메뉴를 담는 메서드.
      *
@@ -93,7 +93,7 @@ public class CartService {
      */
     public List<CartRedisDto> selectCartMenuAll(String cartKey) {
 
-        return cartAdapter.fetchCartMenuAll(cartKey);
+        return cartAdapter.fetchCartMenuAll(CART + cartKey);
     }
 
     /**

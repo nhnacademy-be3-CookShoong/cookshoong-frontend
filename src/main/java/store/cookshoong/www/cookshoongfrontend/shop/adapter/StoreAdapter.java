@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -53,14 +52,14 @@ public class StoreAdapter {
      *
      * @return the list
      */
-    public List<SelectAllBanksResponseDto> fetchAllBanks() {
-        HttpEntity<List<SelectAllBanksResponseDto>> httpEntity =
+    public ResponseEntity<List<SelectAllBanksResponseDto>> fetchAllBanks() {
+        ResponseEntity<List<SelectAllBanksResponseDto>> response =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/banks",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
                 });
-        return httpEntity.getBody();
+        return response;
     }
 
     /**
@@ -72,8 +71,8 @@ public class StoreAdapter {
      * @param storeImage            the store image
      * @return the response entity
      */
-    public ResponseEntity<Void> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
-                                                   MultipartFile businessLicense, MultipartFile storeImage
+    public ResponseEntity<String> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
+                                                     MultipartFile businessLicense, MultipartFile storeImage
     ) {
 
         URI uri = UriComponentsBuilder
@@ -92,8 +91,8 @@ public class StoreAdapter {
         RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.post(uri)
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .body(mapRequest);
-        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
-        });
+
+        return restTemplate.exchange(request, String.class);
     }
 
     /**
@@ -166,7 +165,7 @@ public class StoreAdapter {
      * @param storeId 매장 아이디
      * @return response select store for user response dto
      */
-    public SelectStoreForUserResponseDto fetchStoreForUser(Long storeId) {
+    public ResponseEntity<SelectStoreForUserResponseDto> fetchStoreForUser(Long storeId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -181,11 +180,9 @@ public class StoreAdapter {
             .accept(MediaType.APPLICATION_JSON)
             .build();
 
-        ResponseEntity<SelectStoreForUserResponseDto> response
-            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
-        });
 
-        return response.getBody();
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
@@ -193,14 +190,14 @@ public class StoreAdapter {
      *
      * @return the list
      */
-    public List<SelectAllCategoriesResponseDto> fetchAllCategories() {
+    public ResponseEntity<List<SelectAllCategoriesResponseDto>> fetchAllCategories() {
         ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
             restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/categories",
                 GET,
                 null,
                 new ParameterizedTypeReference<>() {
                 });
-        return responseEntity.getBody();
+        return responseEntity;
     }
 
     /**
@@ -209,15 +206,13 @@ public class StoreAdapter {
      * @param accountId the account id
      * @return the rest response page
      */
-    public List<SelectAllStoresResponseDto> fetchAllStores(Long accountId) {
-        ResponseEntity<List<SelectAllStoresResponseDto>> responseEntity =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                }
-            );
-        return responseEntity.getBody();
+    public ResponseEntity<List<SelectAllStoresResponseDto>> fetchAllStores(Long accountId) {
+        return restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/" + accountId + "/stores",
+            GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            }
+        );
     }
 
     /**
@@ -263,7 +258,7 @@ public class StoreAdapter {
      * @param storeId   the store id
      * @return 해당 매장 정보
      */
-    public SelectStoreInfoResponseDto fetchStoreInfo(Long accountId, Long storeId) {
+    public ResponseEntity<SelectStoreInfoResponseDto> fetchStoreInfo(Long accountId, Long storeId) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
@@ -282,6 +277,6 @@ public class StoreAdapter {
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
 
-        return response.getBody();
+        return response;
     }
 }

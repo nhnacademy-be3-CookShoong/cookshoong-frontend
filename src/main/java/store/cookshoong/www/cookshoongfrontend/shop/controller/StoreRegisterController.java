@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 /**
  * 매장 등록 페이지 컨트롤러.
  *
- * @author papel (윤동현)
+ * @author papel, seongyeon (윤동현, 유승연)
  * @since 2023.07.09
  */
 @Controller
@@ -74,13 +75,12 @@ public class StoreRegisterController {
 
         Long accountId = accountIdAware.getAccountId();
 
-        storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("createStoreRequestDto", createStoreRequestDto);
             return "store/register/store-register";
         }
-        return "redirect:/stores";
+        String storePath = storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
+        return "redirect:"+storePath;
     }
 
 
