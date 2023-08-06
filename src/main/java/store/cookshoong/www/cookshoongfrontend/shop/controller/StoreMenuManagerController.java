@@ -20,6 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStor
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
@@ -52,9 +53,11 @@ public class StoreMenuManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
-            Long accountId = accountIdAware.getAccountId();
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+        String storeName = storeService.selectStoreInfo(accountId, storeId).getStoreName();
+        model.addAttribute("storeName", storeName);
 
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);

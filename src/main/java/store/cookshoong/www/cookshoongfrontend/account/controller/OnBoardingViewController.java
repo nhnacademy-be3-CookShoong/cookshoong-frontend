@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
-import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpReque
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 로그인, 회원가입 등 인증을 위한 컨트롤러.
@@ -31,7 +28,6 @@ public class OnBoardingViewController {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
     private final AccountIdAware accountIdAware;
-    private final StoreService storeService;
 
     @GetMapping("/sign-up-choice")
     public String getSignUpChoicePage() {
@@ -106,12 +102,4 @@ public class OnBoardingViewController {
         return "redirect:/";
     }
 
-    @GetMapping("/my-page")
-    public String getMyPage(Model model) {
-            Long accountId = accountIdAware.getAccountId();
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
-
-        return "account/my-page";
-    }
 }
