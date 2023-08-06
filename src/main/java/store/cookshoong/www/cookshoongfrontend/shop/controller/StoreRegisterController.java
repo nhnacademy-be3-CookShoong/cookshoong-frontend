@@ -20,6 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreSta
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerchantsResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.MerchantService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
@@ -51,6 +52,10 @@ public class StoreRegisterController {
         List<SelectAllMerchantsResponseDto> merchants = merchantService.selectAllMerchants();
         List<SelectAllCategoriesResponseDto> storeCategories = storeCategoryService.selectAllCategories();
         List<SelectAllBanksResponseDto> banks = storeService.selectAllBanks();
+
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
 
         model.addAttribute("banks", banks);
         model.addAttribute("merchants", merchants);

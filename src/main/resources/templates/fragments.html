@@ -184,6 +184,59 @@
     </div>
 </header>
 
+<header th:fragment="business-register-header" class="hero_area header_section" style="background: #161d3d">
+    <div class="row justify-content-between">
+
+        <div>
+            <a href="/">
+                <img src="/assets/images/shoong.png" alt="" style="height: 65px">
+            </a>
+        </div>
+
+        <div class="navbar navbar-expand-lg" sec:authorize="!isAuthenticated()">
+            <div class="navbar-toggler">
+                <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
+                </a>
+                <a th:href="@{/login}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                </a>
+            </div>
+            <div class="navbar-toggler-ex">
+                <a th:href="@{/sign-up}" style="color: white; font-size: 0.85rem" class="mr-2">회원가입
+                </a>
+                <a th:href="@{/login}" style="color: white; font-size: 0.85rem" class="mr-2">로그인
+                </a>
+            </div>
+        </div>
+
+        <div class="navbar navbar-expand-lg" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
+            <div class="navbar-toggler">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                </a>
+            </div>
+            <div class="navbar-toggler-ex">
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">쿡슝관리
+                </a>
+                <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
+                </a>
+                <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                </a>
+                <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
+                </a>
+                <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
 <nav th:fragment="business-site-nav" class="sidebar sidebar-offcanvas">
     <ul class="nav">
         <li class="nav-item">

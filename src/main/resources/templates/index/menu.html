@@ -74,13 +74,15 @@
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
                             <h3 class="font-weight-bold">수량</h3>
-                            <div>
+                            <div class="row">
+                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="decrement()" style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;" th:text="'-'"></button>
                                 <h4>
-                                    <input type="text" id="count" name="count" th:value="1"
-                                           style="text-align: end; font-size: 1.2rem; font-weight: bold; width: 40px;"
+                                    <input type="text" id="count" name="count" th:value="1" readonly
+                                           style="text-align: center; font-size: 1.2rem; font-weight: bold; width: 60px; padding-top: 3px;"
                                            class="border-0">
-                                    <span th:text="' 개'" style="font-size: 15px; font-weight: bold"></span>
+                                    <span th:text="''" style="font-size: 15px; font-weight: bold"></span>
                                 </h4>
+                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="increment()" style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;" th:text="'+'"></button>
                             </div>
                         </div>
                     </div>
@@ -109,7 +111,6 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
-
 
 <script>
 
@@ -200,9 +201,9 @@
             addCart.appendChild(optionPriceHiddenInput);
         }
         addCart.submit();
+
     })
 </script>
-
 
 <script>
     let menuPrice = document.getElementsByName("menuPrice"),
@@ -231,8 +232,23 @@
         document.getElementById('totalPrice').textContent = total  + '';
     }
 
+    function decrement() {
+        let countElement = document.getElementById('count');
+        let count = countElement.value;
+        if (count > 1) {
+            count--;
+            countElement.value = count;
+        }
+        updateTotal();
+    }
+
+    function increment() {
+        let countElement = document.getElementById('count');
+        let count = countElement.value
+        count++;
+        countElement.value = count;
+        updateTotal();
+    }
 </script>
-
-
 </body>
 </html>

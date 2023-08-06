@@ -12,11 +12,10 @@
 </head>
 
 <body layout:fragment="content">
-<header th:replace="fragments :: business-site-header"></header>
+<header th:replace="fragments :: business-register-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div class="container-fluid page-body-wrapper">
-    <nav th:replace="fragments :: business-site-nav"></nav>
-    <div class="main-panel">
+    <div class="main-panel w-100">
         <div class="content-wrapper">
             <div class="row">
                 <form class="col-12 p-0" th:action="@{/store-register}" th:object="${createStoreRequestDto}"
@@ -61,8 +60,8 @@
                                 </div>
 
                                 <div class="form-group"><label class="form-label">은행명</label>
-                                    <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="bankCode" name="bankCode"
+                                    <div class="input-group col-xs-12 mb-2">
+                                        <select class="form-control w-100" id="bankCode" name="bankCode" style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;"
                                                 th:field="*{bankCode}">
                                             <option value="">은행을 선택해주세요</option>
                                             <option th:each="bank : ${banks}" th:value="${bank.getBankTypeCode()}"
@@ -108,7 +107,7 @@
                                 </div>
 
                                 <div class="form-group"><label>영업점 주소</label>
-                                    <div class="input-group col-xs-12">
+                                    <div class="input-group col-xs-12 mb-2">
                                         <input type="text" class="form-control" id="mainPlace" name="mainPlace"
                                                th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">
                                         <button class="btn btn-info" onclick="execDaumPostcode()" type="button">
@@ -130,7 +129,7 @@
 
                                 <div class="form-group"><label class="form-label">가맹점 상호명</label>
                                     <div class="input-group col-xs-12">
-                                        <select class="js-example-basic-single w-100" id="merchantId" name="merchantId"
+                                        <select class="form-control w-100" id="merchantId" name="merchantId" style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;"
                                                 th:field="*{merchantId}">
                                             <option value="">가맹점을 선택해주세요</option>
                                             <option th:each="merchant : ${merchants}" th:value="${merchant.id}"
@@ -174,8 +173,8 @@
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <button class="btn btn-info mr-2" type="submit" id="submitButton">영업점 신규 등록</button>
-                                <button class="btn btn-light">취소</button>
+                                <button class="btn btn-info m-0" type="submit" id="submitButton">영업점 신규 등록</button>
+                                <button class="btn btn-light m-0">취소</button>
                             </div>
                         </div>
                     </div>
@@ -224,6 +223,7 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const editor = new toastui.Editor({
+        initialEditType: 'wysiwyg',
         el: document.querySelector('#editor'),
         previewStyle: 'vertical',
         height: '500px',
