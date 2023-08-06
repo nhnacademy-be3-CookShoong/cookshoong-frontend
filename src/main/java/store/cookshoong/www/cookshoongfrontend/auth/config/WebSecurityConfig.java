@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoundHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
@@ -39,6 +40,7 @@ public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2AccountNotFoundHandler oAuth2AccountNotFoundHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
     private final List<OAuth2UserService<OAuth2UserRequest, OAuth2User>> oAuth2UserServiceList;
     private final ClientRegistrationRepository clientRegistrationRepository;
@@ -74,6 +76,8 @@ public class WebSecurityConfig {
             .authorizationEndpoint(c -> c.authorizationRequestResolver(authorizationRequestResolver))
             .userInfoEndpoint(c -> c.userService(new DelegatingOAuth2UserService<>(oAuth2UserServiceList)))
             .successHandler(oAuth2LoginSuccessHandler)
+            .failureHandler(oAuth2AccountNotFoundHandler);
+
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)

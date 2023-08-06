@@ -59,6 +59,19 @@ public class OnBoardingViewController {
     }
 
     /**
+     * OAuth2 회원가입 양식을 나타내는 페이지.
+     *
+     * @param model   View 로 보낼 데이터
+     * @param request the request
+     * @return 회원가입 폼 뷰
+     */
+    @SuppressWarnings({"checkstyle:AbbreviationAsWordInName", "checkstyle:LocalVariableName"})
+    @GetMapping("/sign-up-oauth2")
+    public String getOAuth2CustomerSignUpForm(Model model, HttpServletRequest request, HttpSession session) throws JsonProcessingException {
+        return "account/register-form-oauth2";
+    }
+
+    /**
      * 회원가입 처리 요청.
      *
      * @param signUpRequestDto 회원가입 요청데이터
