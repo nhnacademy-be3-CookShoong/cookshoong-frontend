@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Map;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,6 +50,12 @@ public class OAuth2Config {
         return oAuth2Properties;
     }
 
+    /**
+     * OAuth2 공급자 객체들을 저장하고 있는 빈을 등록하는 메서드.
+     *
+     * @param registrations the registrations
+     * @return the client registration repository
+     */
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository(List<ClientRegistration> registrations) {
         return new InMemoryClientRegistrationRepository(registrations);
@@ -77,6 +84,13 @@ public class OAuth2Config {
             .build();
     }
 
+
+    /**
+     * OAuth2 공급자들의 정보를 저장하고 있는 빈을 등록하는 메서드.
+     *
+     * @param clientRegistrationRepository the client registration repository
+     * @return the o auth 2 authorized client service
+     */
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
@@ -100,10 +114,21 @@ public class OAuth2Config {
         private String baseUri;
         private Map<String, String> clientSecrets;
 
+        /**
+         * return base uri.
+         *
+         * @return the base uri
+         */
         public String getBaseUri() {
             return baseUri;
         }
 
+        /**
+         * return client secret of.
+         *
+         * @param registrationId the registration id
+         * @return the client secret of
+         */
         public String getClientSecretOf(String registrationId) {
             return clientSecrets.get(registrationId);
         }

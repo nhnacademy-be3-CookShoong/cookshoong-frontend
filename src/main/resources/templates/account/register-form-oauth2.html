@@ -13,6 +13,7 @@
     <script src="/assets/js/form-validation.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
+    <script src="/assets/js/account/account.js"></script>
 </head>
 
 <body>
@@ -27,6 +28,87 @@
                         </div>
                         <h6 class="font-weight-light">30초 회원가입</h6>
                         <h4 class="font-weight-light">with Payco</h4>
+                        <!--                        <h4 th:text="'with' + ${oauth2Provider}"></h4>-->
+                        <form class="pt-3 needs-validation" id="signUpForm" th:action="@{/sign-up-oauth2}"
+                              th:object="${oAuth2SignUpRequestDto.signUpRequestDto}" method="post">
+                            <div class="form-group">
+                                <label for="name">* 본인식별을 위해 필요해요</label>
+                                <input type="text"
+                                       class="form-control form-control-lg" id="name"
+                                       th:field="*{name}" placeholder="이름" required>
+                                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</p>
+
+                                <label for="nickname">* 다른사람들에게 보여질 이름이에요</label>
+                                <input type="text" class="form-control form-control-lg" id="nickname"
+                                       th:field="*{nickname}" th:value="*{nickname}" placeholder="닉네임" required>
+                                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">nickname Error</p>
+
+                                <label for="email">* 매장소식을 전해드리기 위해 필요해요</label>
+                                <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                       th:field="*{email}" th:value="*{email}" placeholder="you@example.com" required>
+                                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
+
+                                <label for="birthday">* 생일쿠폰 지급을 위해 필요해요</label>
+                                <input type="date" class="form-control form-control-lg" id="birthday" name="birthday"
+                                       th:field="*{birthday}" th:value="*{birthday}" placeholder="생년월일" required>
+                                <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">birthday Error</p>
+
+                                <label for="phoneNumber">* 주문현황을 알려드리기 위해 필요해요</label>
+                                <input type="text" class="form-control form-control-lg" id="phoneNumber"
+                                       name="phoneNumber" th:field="*{phoneNumber}" th:value="*{phoneNumber}"
+                                       placeholder="전화번호" required>
+                                <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">phoneNumber
+                                    Error</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="mainPlace">* 주변 매장을 검색하기 위해 필요해요</label>
+                                <div class="flex-container">
+                                    <input type="text" class="form-control form-control-lg address-inputField"
+                                           id="mainPlace"
+                                           name="createAccountAddressRequestDto.mainPlace"
+                                           th:field="*{createAccountAddressRequestDto.mainPlace}"
+                                           th:value="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소"
+                                           readonly required>
+                                    <button class="btn btn-outline-warning" onclick="execDaumPostcode()" type="button">
+                                        주소 검색
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" id="detailPlace"
+                                       name="createAccountAddressRequestDto.detailPlace"
+                                       th:field="*{createAccountAddressRequestDto.detailPlace}"
+                                       th:value="*{createAccountAddressRequestDto.detailPlace}" placeholder="서브 주소">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" id="alias"
+                                       name="createAccountAddressRequestDto.alias"
+                                       th:field="*{createAccountAddressRequestDto.alias}"
+                                       th:value="*{createAccountAddressRequestDto.alias}" placeholder="별칭" required>
+                            </div>
+                            <input type="hidden" id="latitude" name="createAccountAddressRequestDto.latitude"
+                                   th:field="*{createAccountAddressRequestDto.latitude}">
+                            <input type="hidden" id="longitude" name="createAccountAddressRequestDto.longitude"
+                                   th:field="*{createAccountAddressRequestDto.longitude}">
+                            <div class="mb-4">
+                                <div class="form-check form-check-warning">
+                                    <label class="form-check-label text-muted">
+                                        <input type="checkbox" class="form-check-input">
+                                        I agree to all Terms & Conditions
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-up-btn"
+                                        type="submit">가입 완료
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="/assets/js/off-canvas.js"></script>

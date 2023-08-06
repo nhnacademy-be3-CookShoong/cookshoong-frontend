@@ -33,6 +33,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
  * @author koesnam (추만석)
  * @since 2023.07.13
  */
+@SuppressWarnings("checkstyle:MemberName")
 @EnableWebSecurity(debug = true)
 @EnableMethodSecurity
 @RequiredArgsConstructor
@@ -60,7 +61,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
             .mvcMatchers(PERMIT_ALL_PATTERNS).permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().hasAnyRole("ADMIN", "BUSINESS", "CUSTOMER");
 
         http.formLogin()
             .loginPage("/login-page")
@@ -68,6 +69,7 @@ public class WebSecurityConfig {
             .passwordParameter("password")
             .loginProcessingUrl("/login")
             .successHandler(loginSuccessHandler);
+
 
         http.oauth2Login()
             .loginPage("/login-page")
@@ -88,10 +90,13 @@ public class WebSecurityConfig {
 
         http.sessionManagement()
             .sessionFixation()
-            .newSession();
+            .newSession()
+            .maximumSessions(1);
 
         http.httpBasic()
             .disable();
+
+        // TODO: csrf 적용 시키기
         http.csrf()
             .disable();
         return http.build();
@@ -115,7 +120,7 @@ public class WebSecurityConfig {
     @Bean
     static RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_BUSINESS > ROLE_CUSTOMER");
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_BUSINESS > ROLE_CUSTOMER > ROLE_DORMANCY");
         return roleHierarchy;
     }
 
