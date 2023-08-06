@@ -8,7 +8,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.OAuth2AccountNotFoundException;
-import store.cookshoong.www.cookshoongfrontend.auth.util.AttributeConverter;
 
 /**
  * OAuth2 로그인을 했으나 기존 회원이 아닐 때 회원가입 페이지로 보내는 핸들러.
