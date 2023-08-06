@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
@@ -30,8 +32,10 @@ public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
-    private static final String[] PERMIT_ALL_PATTERNS = { "/health-check/**", "/login-page", "/sign-up",
-        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**"};
+    private final ClientRegistrationRepository clientRegistrationRepository;
+    private final OAuth2AuthorizedClientService authorizedClientService;
+    private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
+        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2"};
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -53,6 +57,10 @@ public class WebSecurityConfig {
             .loginProcessingUrl("/login")
             .successHandler(loginSuccessHandler);
 
+        http.oauth2Login()
+            .loginPage("/login-page")
+            .clientRegistrationRepository(clientRegistrationRepository)
+            .authorizedClientService(authorizedClientService)
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
