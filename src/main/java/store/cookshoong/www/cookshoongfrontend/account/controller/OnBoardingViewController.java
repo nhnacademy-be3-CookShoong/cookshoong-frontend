@@ -161,13 +161,4 @@ public class OnBoardingViewController {
         accountService.updateAccountStatus(accountId, "ACTIVE");
         return "redirect:/";
     }
-
-    @GetMapping("/my-page")
-    public String getMyPage(Model model) {
-        Long accountId = accountIdAware.getAccountId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
-
-        return "account/my-page";
-    }
 }
