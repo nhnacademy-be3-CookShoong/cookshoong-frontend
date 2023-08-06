@@ -17,4 +17,9 @@ import lombok.NoArgsConstructor;
 public class CouponTypeCashVo implements CouponTypeResponse {
     private int discountAmount;
     private int minimumOrderPrice;
+
+    @Override
+    public int getDiscountPrice(int totalPrice) {
+        return Math.max(0, totalPrice - discountAmount);
+    }
 }

@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.coupon.adapter;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCo
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 
@@ -277,5 +279,30 @@ public class CouponManageAdapter {
             new HttpEntity<>(createProvideCouponRequestDto),
             new ParameterizedTypeReference<>() {
             });
+    }
+
+    /**
+     * 소유한 쿠폰 목록 확인.
+     *
+     * @param pageable the pageable
+     * @return the page
+     */
+    public Page<SelectOwnCouponResponseDto> fetchOwnCoupons(Long accountId, Pageable pageable, Boolean usable,
+                                                            Long storeId) {
+        ResponseEntity<RestResponsePage<SelectOwnCouponResponseDto>> response = restTemplate.exchange(
+            RestResponsePage.pageableToParameter(
+                UriComponentsBuilder
+                    .fromUriString(apiProperties.getGatewayUrl())
+                    .path("/api/coupon/search")
+                    .pathSegment("{accountId}")
+                    .queryParamIfPresent("usable", Optional.ofNullable(usable))
+                    .queryParamIfPresent("storeId", Optional.ofNullable(storeId))
+                    .buildAndExpand(accountId), pageable),
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+
+        return response.getBody();
     }
 }

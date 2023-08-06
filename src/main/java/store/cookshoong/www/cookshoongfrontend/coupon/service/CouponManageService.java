@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.coupon.adapter.CouponManageAdapter;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 
 /**
@@ -78,5 +81,10 @@ public class CouponManageService {
      */
     public void createProvideCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
         couponManageAdapter.executeProvideCoupon(createProvideCouponRequestDto);
+    }
+
+    public Page<SelectOwnCouponResponseDto> selectOwnCoupons(Long accountId, Pageable pageable, Boolean usable,
+                                                             Long storeId) {
+        return couponManageAdapter.fetchOwnCoupons(accountId, pageable, usable, storeId);
     }
 }

@@ -1,15 +1,26 @@
 package store.cookshoong.www.cookshoongfrontend.payment.controller;
 
+import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
+import store.cookshoong.www.cookshoongfrontend.order.model.request.CreateOrderRequestDto;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.CreateOrderResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
+import store.cookshoong.www.cookshoongfrontend.payment.model.request.PaymentPageRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreatePartialRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.OrderCompletionInfo;
@@ -27,23 +38,42 @@ import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
 @RequestMapping("/payments")
 @RequiredArgsConstructor
 public class PaymentController {
-
+    private final AccountIdAware accountIdAware;
     private final TossProperties tossProperties;
     private final PaymentService paymentService;
+    private final OrderService orderService;
+    private final CartService cartService;
 
     /**
      * 주문에서 결제로 넘어오는 페이지.
      *
-     * @param model         HTML 로 보낼 데이터
-     * @return              결제 페이지 반
+     * @param paymentPageRequestDto the payment page request dto
+     * @param model                 HTML 로 보낼 데이터
+     * @param httpSession           the http session
+     * @return 결제 페이지 반
      */
-    @GetMapping
-    public String getPaymentPage(Model model) {
+    @PostMapping
+    public String getPaymentPage(PaymentPageRequestDto paymentPageRequestDto, Model model, HttpSession httpSession) {
+        UUID orderCode = UUID.randomUUID();
 
-        //TODO 추후 주문 코드로 주문에서 결제로 넘어온 데이터 Dto 에 맞게 가져오기
+        String cartKey = accountIdAware.getAccountId().toString();
+        List<CartRedisDto> cartRedis = cartService.selectCartMenuAll(cartKey);
+        CartRedisDto cartRedisDto = cartRedis.get(0);
+        String orderName = cartRedisDto.getMenu().getMenuName();
+
+        Integer totalCount = cartRedis.stream()
+            .map(CartRedisDto::getCount)
+            .reduce(Integer::sum)
+            .orElseThrow(RuntimeException::new);
+
+        if (1 < totalCount) {
+            orderName += " 외 " + (totalCount - 1) + "개";
+        }
+
         OrderCompletionInfo orderCompletionInfo = new OrderCompletionInfo(
-            UUID.randomUUID(), "맛난 후라이드 외2개", 48000L);
+            orderCode, orderName, (long) paymentPageRequestDto.getPrice());
 
+        httpSession.setAttribute("paymentPageRequestDto", paymentPageRequestDto);
 
         model.addAttribute("order", orderCompletionInfo);
         model.addAttribute("toss", tossProperties.tossPaymentsDto());
@@ -54,25 +84,23 @@ public class PaymentController {
     /**
      * 구매자가 인증을 성공적으로 마치면 가맹점이 설정한 성공 URL 로 리다이텍트 되는 Controller 메서드.
      *
-     * @param paymentKey        결제 인증 후 전달되는 결제 Key
-     * @param orderId           결제 인증 후 전달되는 주문 아이디
-     * @param amount            결제 인증 후 전달되는 결제할 금액
-     * @return                  회원 주문 조회 페이지로 반환
+     * @param paymentKey            결제 인증 후 전달되는 결제 Key
+     * @param orderId               결제 인증 후 전달되는 주문 아이디
+     * @param amount                결제 인증 후 전달되는 결제할 금액
+     * @param paymentPageRequestDto the payment page request dto
+     * @return 회원 주문 조회 페이지로 반환
      */
     @GetMapping("/toss/success")
     public String getAuthenticationSuccess(@RequestParam String paymentKey,
                                            @RequestParam UUID orderId,
-                                           @RequestParam Long amount) {
+                                           @RequestParam Long amount,
+                                           @SessionAttribute PaymentPageRequestDto paymentPageRequestDto) {
+        CreateOrderRequestDto createOrderRequestDto = new CreateOrderRequestDto(orderId, paymentPageRequestDto);
 
-        // 주문 페이지에서 redis에 storeId, memo. issueCouponCode, pointAmount 저장 (만료시간 2시간 정도)
-        // 주문 생성 RestTemplate 보내고, 응답에 총 가격이 있어야 함
+        createOrderRequestDto.setAccountId(accountIdAware.getAccountId());
+        CreateOrderResponseDto createOrderResponseDto = orderService.createService(createOrderRequestDto);
 
-        // 주문 생성 후 결제 인증된 금액과 주문에 대한 금액 검증 -> 이후에 토스 승인으로 넘어간다.
-        paymentService.verifyPayment(1000L, amount);
-
-        // 카드사에서 인증이 성공된거고, 개발자 입장에서 요청만 끝난거라
-        // 실제 구매자의 결제를 마무리 하기 위해서 승인 단계를 거쳐야 한다.
-        // 인증된 결제를 카드사에 승인해달라는 요청 service -> 승인이 되어여 가맹점은 상품이나 서비스를 제공
+        paymentService.verifyPayment((long) createOrderResponseDto.getTotalPrice(), amount);
         paymentService.createApproveTossPayment(paymentKey, amount, orderId);
 
         //TODO 추후 사용자 주문조회 페이지가 만들어지면 그쪽으로 Redirect
@@ -82,8 +110,8 @@ public class PaymentController {
     /**
      * 해당 주문에 대한 전액활불을 해주는 Controller.
      *
-     * @param refundRequestDto      전액환불에 필요한 정보
-     * @return                      주문 목록으로 반환
+     * @param refundRequestDto 전액환불에 필요한 정보
+     * @return 주문 목록으로 반환
      */
     @GetMapping("/refund")
     public String getPaymentFullRefund(@Valid CreateFullRefundRequestDto refundRequestDto) {
@@ -99,8 +127,8 @@ public class PaymentController {
     /**
      * 해당 주문에 대한 부분활불을 해주는 Controller.
      *
-     * @param partialRefundRequestDto       부분환불에 필요한 정보
-     * @return                              주문 목록으로 반환
+     * @param partialRefundRequestDto 부분환불에 필요한 정보
+     * @return 주문 목록으로 반환
      */
     @GetMapping("/refund/partial")
     public String getPaymentPartialRefund(@Valid CreatePartialRefundRequestDto partialRefundRequestDto) {

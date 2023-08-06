@@ -17,5 +17,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = CouponTypePercentVo.class, name = "percent")
 })
 public interface CouponTypeResponse {
-
+    int getDiscountPrice(int totalPrice);
 }
