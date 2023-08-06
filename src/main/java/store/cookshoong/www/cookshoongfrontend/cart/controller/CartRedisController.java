@@ -38,7 +38,6 @@ public class CartRedisController {
     private final CartService cartService;
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountIdAware accountIdAware;
-    private static final String CART = "cartKey=";
     private static final String NO_MENU = "NO_KEY";
 
     /**
@@ -53,21 +52,22 @@ public class CartRedisController {
         Long accountId = accountIdAware.getAccountId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
-
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
-        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(1L);
-        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(1L);
 
-        if (!cartService.existMenuInCartRedis(CART + accountIdAware.getAccountId(), NO_MENU)) {
+
+        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             int totalPrice = cartService.calculateTotalPrice(cartItems);
+            Long storeId = cartItems.get(0).getStoreId();
+            List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
+            List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
             String storeName = cartItems.get(0).getStoreName();
+            model.addAttribute("options", options);
+            model.addAttribute("optionGroups", optionGroups);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("storeName", storeName);
         }
 
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("options", options);
-        model.addAttribute("optionGroups", optionGroups);
 
         return "cart/cart-list";
     }
@@ -84,7 +84,7 @@ public class CartRedisController {
     public ResponseEntity<Void> putCartMenuAll(@PathVariable String menuKey,
                                                 @RequestBody List<CartOptionDto> cartOptionDto) {
 
-        CartRedisDto cart = cartService.selectCartMenu(CART + accountIdAware.getAccountId(), menuKey);
+        CartRedisDto cart = cartService.selectCartMenu(String.valueOf(accountIdAware.getAccountId()), menuKey);
         List<CartOptionDto> optionDtoList = new ArrayList<>();
 
         if (cartOptionDto.size() == 0) {
@@ -96,7 +96,7 @@ public class CartRedisController {
         cart.getOptions().clear();
         cart.getOptions().addAll(cartOptionDto);
 
-        cartService.modifyCartMenu(CART + accountIdAware.getAccountId(), menuKey, cart);
+        cartService.modifyCartMenu(String.valueOf(accountIdAware.getAccountId()), menuKey, cart);
 
         return ResponseEntity.ok().build();
     }
@@ -110,7 +110,7 @@ public class CartRedisController {
     @PutMapping("/menu-count-up/{menuKey}")
     public String putCartMenuIncrement(@PathVariable String menuKey) {
 
-        cartService.modifyCartMenuIncrement(CART + accountIdAware.getAccountId(), menuKey);
+        cartService.modifyCartMenuIncrement(String.valueOf(accountIdAware.getAccountId()), menuKey);
 
         return "redirect:/carts";
     }
@@ -124,7 +124,7 @@ public class CartRedisController {
     @PutMapping("/menu-count-down/{menuKey}")
     public String putCartMenuDecrement(@PathVariable String menuKey) {
 
-        cartService.modifyCartMenuDecrement(CART + accountIdAware.getAccountId(), menuKey);
+        cartService.modifyCartMenuDecrement(String.valueOf(accountIdAware.getAccountId()), menuKey);
 
         return "redirect:/carts";
     }
@@ -138,7 +138,7 @@ public class CartRedisController {
     @DeleteMapping("/menu-delete/{menuKey}")
     public String deleteCartMenu(@PathVariable String menuKey) {
 
-        cartService.removeCartMenu(CART + accountIdAware.getAccountId(), menuKey);
+        cartService.removeCartMenu(String.valueOf(accountIdAware.getAccountId()), menuKey);
 
         return "redirect:/carts";
     }
@@ -151,7 +151,7 @@ public class CartRedisController {
     @DeleteMapping("/menu-del-all")
     public String deleteCartMenuAll() {
 
-        cartService.removeCartMenuAll(CART + accountIdAware.getAccountId());
+        cartService.removeCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
 
         return "redirect:/carts";
     }
