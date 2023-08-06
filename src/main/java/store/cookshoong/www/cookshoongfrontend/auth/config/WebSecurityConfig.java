@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.auth.config;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -14,9 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.DelegatingOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
 
@@ -32,7 +38,9 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
 public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
+    private final List<OAuth2UserService<OAuth2UserRequest, OAuth2User>> oAuth2UserServiceList;
     private final ClientRegistrationRepository clientRegistrationRepository;
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final OAuth2AuthorizationRequestResolver authorizationRequestResolver;
@@ -64,6 +72,8 @@ public class WebSecurityConfig {
             .clientRegistrationRepository(clientRegistrationRepository)
             .authorizedClientService(authorizedClientService)
             .authorizationEndpoint(c -> c.authorizationRequestResolver(authorizationRequestResolver))
+            .userInfoEndpoint(c -> c.userService(new DelegatingOAuth2UserService<>(oAuth2UserServiceList)))
+            .successHandler(oAuth2LoginSuccessHandler)
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
