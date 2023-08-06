@@ -24,9 +24,6 @@ import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final TokenManagementService tokenManagementService;
-    private final CartService cartService;
-    private static final String CART = "cartKey=";
-    private static final String NO_MENU = "NO_KEY";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -48,15 +45,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                 jwtAuthentication.setAuthenticated(false);
                 throw new DisabledException("탈퇴한 회원입니다");
             case "ACTIVE": default:
-                Long accountId = JwtResolver.resolveRefreshToken(refreshToken).getAccountId();
-                // TODO: 장바구니 확인 없으면 빈 객체 생성 1. redis 장바구니 확인 -> 2. DB 장바구니 확인 후 Redis 저장 -> 3. 둘다 없으면 빈 장바구니 생성
-                if (cartService.existKeyInCartRedis(CART + accountId)) {
-                    break;
-                } else if (cartService.hashDbCart(accountId)) {
-                    cartService.createDbUploadRedis(CART + accountId, accountId);
-                } else {
-                    cartService.createEmptyCart(CART + accountId, NO_MENU);
-                }
         }
 
         jwtAuthentication.eraseRefreshToken();
