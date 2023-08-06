@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +64,6 @@ public class MainViewController {
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
     private final CartService cartService;
-    private static final String CART = "cartKey=";
     private static final String NO_MENU = "NO_KEY";
 
     /**
@@ -160,10 +161,11 @@ public class MainViewController {
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
-        if (!cartService.existMenuInCartRedis(CART + accountIdAware.getAccountId(), NO_MENU)) {
-
+        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
+        } else {
+            model.addAttribute("cartStoreId", storeId);
         }
 
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
@@ -188,11 +190,18 @@ public class MainViewController {
      * @return                  해당 매장으로 반환
      */
     @PostMapping("/index/store/menu/cart")
-    public String postCreateCart(CartRedisDto cartRedisDto) {
+    public String postCreateCart(@Valid CartRedisDto cartRedisDto,
+                                 BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+
+            return "index/menu";
+        }
+
+        cartRedisDto.setAccountId(accountIdAware.getAccountId());
 
         cartService.createCart(
-            CART + accountIdAware.getAccountId(), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
+            String.valueOf(accountIdAware.getAccountId()), cartRedisDto.generateUniqueHashKey(), cartRedisDto);
 
         return "redirect:/index/store/" + cartRedisDto.getStoreId();
     }
