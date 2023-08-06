@@ -58,12 +58,19 @@
                                 <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${options}" th:if="${option.optionGroupId==optionGroup.id}">
+                                        <div class="form-check d-flex justify-content-between pr-3"
+                                             th:each="option, i:${options}"
+                                             th:if="${option.optionGroupId==optionGroup.id}">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" th:name="'optionsRadios'+${optionGroup.id}" th:id="'optionsRadio-'+${option.id}" th:value="${option.id}" th:text="${option.name}">
+                                                <input type="radio" class="form-check-input"
+                                                       th:name="'optionsRadios'+${optionGroup.id}"
+                                                       th:id="'optionsRadio-'+${option.id}" th:value="${option.id}"
+                                                       th:text="${option.name}">
                                             </label>
-                                            <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
-                                            <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
+                                            <input type="hidden" th:id="'optionName'+${option.id}" name="optionName"
+                                                   th:value="${option.name}">
+                                            <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice"
+                                                   th:value="${option.price}">
                                             <span th:text="${option.price}+'원'"></span>
                                         </div>
                                     </div>
@@ -75,14 +82,18 @@
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
                             <h3 class="font-weight-bold">수량</h3>
                             <div class="row">
-                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="decrement()" style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;" th:text="'-'"></button>
+                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="decrement()"
+                                        style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;"
+                                        th:text="'-'"></button>
                                 <h4>
                                     <input type="text" id="count" name="count" th:value="1" readonly
                                            style="text-align: center; font-size: 1.2rem; font-weight: bold; width: 60px; padding-top: 3px;"
                                            class="border-0">
                                     <span th:text="''" style="font-size: 15px; font-weight: bold"></span>
                                 </h4>
-                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="increment()" style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;" th:text="'+'"></button>
+                                <button class="btn btn-outline-warning p-0 m-0" type="button" onclick="increment()"
+                                        style="width: 30px; height: 30px; font-size: 20px; font-weight: bold; border-radius: 15px;"
+                                        th:text="'+'"></button>
                             </div>
                         </div>
                     </div>
@@ -90,7 +101,8 @@
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
                             <h3 class="font-weight-bold">합계</h3>
                             <div>
-                                <span class="font-weight-bold" th:id="totalPrice" th:text="${menu.price}" style="font-size: 25px; color: orange"></span>
+                                <span class="font-weight-bold" th:id="totalPrice" th:text="${menu.price}"
+                                      style="font-size: 25px; color: orange"></span>
                                 <span th:text="' 원'" style="font-size: 15px; font-weight: bold"></span>
                             </div>
                         </div>
@@ -113,9 +125,7 @@
 <footer th:replace="fragments :: site-footer"></footer>
 
 <script>
-
     const addCart = document.getElementById('addCart');
-
     addCart.addEventListener("submit", function (e) {
 
         e.preventDefault();
@@ -200,9 +210,10 @@
             addCart.appendChild(optionNameHiddenInput);
             addCart.appendChild(optionPriceHiddenInput);
         }
-        addCart.submit();
 
+        addCart.submit();
     })
+
 </script>
 
 <script>
@@ -229,7 +240,7 @@
         if (!isNaN(countValue) && countValue > 0) {
             total = (total + menuPriceValue) * countValue;
         }
-        document.getElementById('totalPrice').textContent = total  + '';
+        document.getElementById('totalPrice').textContent = total + '';
     }
 
     function decrement() {
