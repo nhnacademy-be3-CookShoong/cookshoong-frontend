@@ -94,8 +94,9 @@
                                 <div class="form-group">
                                     <label>그룹</label>
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <select name="optionGroup">
+                                        <div class="input-group">
+                                            <select name="optionGroup" class="form-control w-100"
+                                                    style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;">
                                                 <option value="">-- 선택 --</option>
                                                 <option th:each="optionGroup, i : ${optionGroups}"
                                                         th:value="${optionGroup.id}"

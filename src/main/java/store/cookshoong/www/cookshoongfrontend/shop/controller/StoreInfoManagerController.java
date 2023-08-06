@@ -44,10 +44,11 @@ public class StoreInfoManagerController {
         @PathVariable("storeId") Long storeId,
         Model model) {
 
-            Long accountId = accountIdAware.getAccountId();
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
-
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+        String storeName = storeService.selectStoreInfo(accountId, storeId).getStoreName();
+        model.addAttribute("storeName", storeName);
         SelectStoreInfoResponseDto storeInfo = storeService.selectStoreInfo(accountId, storeId);
         model.addAttribute("storeInfo", storeInfo);
 

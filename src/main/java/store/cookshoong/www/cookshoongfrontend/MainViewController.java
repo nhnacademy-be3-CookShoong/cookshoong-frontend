@@ -112,7 +112,9 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
+        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
+        model.addAttribute("categories", categories);
         model.addAttribute("searchStores", searchedStores);
 
         return "index/index";
