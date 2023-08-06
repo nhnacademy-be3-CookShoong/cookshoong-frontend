@@ -21,10 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CartOptionDto {
 
-    @NotNull
     private Long optionId;
-    @NotBlank
     private String optionName;
-    @NotNull
     private int optionPrice;
 }
