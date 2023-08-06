@@ -13,6 +13,7 @@
     <script src="/assets/js/form-validation.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
+<!--    TODO : OAuth2 회원가입시 비밀번호 변경못하게 Javascript 작성 -->
 </head>
 
 <body>
@@ -26,10 +27,11 @@
                             <img src="/assets/images/shoong_orange.png" alt="logo">
                         </div>
                         <h4>New here?</h4>
-                        <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-                        <form class="pt-3 needs-validation" th:action="@{/sign-up(userType=${userType})}" th:object="${signUpRequestDto}" method="post">
+                        <h6 class="font-weight-light">30초 회원가입!</h6>
+                        <h4 th:if="${oauth2Provider != null}" th:text="'with ' + ${oauth2Provider}"></h4>
+                        <form class="pt-3 needs-validation" id="signUpForm" th:action="@{/sign-up(userType=${userType})}" th:object="${signUpRequestDto}" method="post">
                             <div class="form-group" >
-                                <input type="text" class="form-control form-control-lg" id="loginId" name="loginId"
+                                <input type="text" class="form-control form-control-lg"
                                        th:field="*{loginId}" placeholder="아이디" required>
                                 <div class="invalid-feedback">
                                     <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></p>
@@ -37,32 +39,34 @@
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control form-control-lg" id="password"
-                                       name="password" th:field="*{password}" placeholder="패스워드" required>
+                                       th:field="*{password}" placeholder="비밀번호"
+                                       th:readonly="${oauth2Provider != null ? 'readonly': false}"
+                                       th:style="${oauth2Provider != null ? 'background-color:grey':''}" required>
                                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</p>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-lg" id="name" name="name"
+                                <input type="text" class="form-control form-control-lg"
                                        th:field="*{name}" placeholder="이름" required>
                                 <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</p>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-lg" id="nickname" name="nickname"
-                                       th:field="*{nickname}" placeholder="닉네임" required>
+                                       th:field="*{nickname}"  th:value="*{nickname}" placeholder="닉네임" required>
                                 <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">nickname Error</p>
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-lg" id="email" name="email"
-                                       th:field="*{email}" placeholder="you@example.com" required>
+                                       th:field="*{email}"  th:value="*{email}" placeholder="you@example.com" required>
                                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
                             </div>
                             <div class="form-group">
                                 <input type="date" class="form-control form-control-lg" id="birthday" name="birthday"
-                                       th:field="*{birthday}" placeholder="생년월일" required>
+                                       th:field="*{birthday}"  th:value="*{birthday}" placeholder="생년월일" required>
                                 <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">birthday Error</p>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-lg" id="phoneNumber"
-                                       name="phoneNumber" th:field="*{phoneNumber}" placeholder="전화번호" required>
+                                       name="phoneNumber" th:field="*{phoneNumber}"  th:value="*{phoneNumber}" placeholder="전화번호" required>
                                 <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">phoneNumber
                                     Error</p>
                             </div>
@@ -70,7 +74,7 @@
                                 <div class="flex-container">
                                     <input type="text" class="form-control form-control-lg address-inputField" id="mainPlace"
                                            name="createAccountAddressRequestDto.mainPlace"
-                                           th:field="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소">
+                                           th:field="*{createAccountAddressRequestDto.mainPlace}"  th:value="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소" readonly required>
                                     <button class="btn btn-outline-warning" onclick="execDaumPostcode()" type="button">
                                         주소 검색
                                     </button>
@@ -79,12 +83,12 @@
                             <div class="form-group">
                                 <input class="form-control form-control-lg" type="text" id="detailPlace"
                                        name="createAccountAddressRequestDto.detailPlace"
-                                       th:field="*{createAccountAddressRequestDto.detailPlace}" placeholder="서브 주소">
+                                       th:field="*{createAccountAddressRequestDto.detailPlace}" th:value="*{createAccountAddressRequestDto.detailPlace}" placeholder="서브 주소">
                             </div>
                             <div class="form-group">
                                 <input class="form-control form-control-lg" type="text" id="alias"
                                        name="createAccountAddressRequestDto.alias"
-                                       th:field="*{createAccountAddressRequestDto.alias}" placeholder="별칭">
+                                       th:field="*{createAccountAddressRequestDto.alias}"  th:value="*{createAccountAddressRequestDto.alias}" placeholder="별칭" required>
                             </div>
                             <input type="hidden" id="latitude" name="createAccountAddressRequestDto.latitude"
                                    th:field="*{createAccountAddressRequestDto.latitude}">
