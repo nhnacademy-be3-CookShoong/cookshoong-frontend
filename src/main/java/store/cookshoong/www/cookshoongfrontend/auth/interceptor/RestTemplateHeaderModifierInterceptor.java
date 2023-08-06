@@ -7,7 +7,6 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 
 /**
  * RestTemplate 을 통해 API 를 호출하기전 인증 헤더를 달아주기 위한 인터셉터.
@@ -37,6 +36,6 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
     }
 
     private static boolean isNotAuthenticated(SecurityContext context) {
-        return context == null || !(context.getAuthentication() instanceof JwtAuthentication);
+        return context == null || context.getAuthentication() == null;
     }
 }

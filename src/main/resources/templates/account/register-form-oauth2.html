@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OAuth2 회원가입</title>
+    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
+
+    <script src="/assets/js/form-validation.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
+</head>
+
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                        <div class="brand-logo">
+                            <img src="/assets/images/shoong_orange.png" alt="logo">
+                        </div>
+                        <h6 class="font-weight-light">30초 회원가입</h6>
+                        <h4 class="font-weight-light">with Payco</h4>
+</div>
+<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/assets/js/off-canvas.js"></script>
+<script src="/assets/js/hoverable-collapse.js"></script>
+<script src="/assets/js/template.js"></script>
+<script src="/assets/js/settings.js"></script>
+<script src="/assets/js/todolist.js"></script>
+<script>
+    const geocoder = new daum.maps.services.Geocoder();
+
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                document.getElementById("mainPlace").value = data.address;
+                geocoder.addressSearch(data.address, function (results, status) {
+                    if (status === daum.maps.services.Status.OK) {
+                        const result = results[0];
+                        const lat = result.y;
+                        const lng = result.x;
+                        document.getElementById("latitude").value = lat;
+                        document.getElementById("longitude").value = lng;
+                    }
+                });
+            }
+        }).open()
+    }
+</script>
+</body>
+
+</html>

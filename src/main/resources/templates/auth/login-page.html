@@ -44,15 +44,18 @@
                   </div>
                   <a href="#" class="auth-link text-black">Forgot password?</a>
                 </div>
-                <div class="mb-2">
-                  <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                    <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
-                  </button>
-                </div>
-                <div class="text-center mt-4 font-weight-normal">
-                  Don't have an account? <a th:href="@{/sign-up}" class="text-warning">회원 가입</a>
-                </div>
               </form>
+              <hr>
+              <div class="mb-2">
+                <form th:action="@{/oauth2/authorization/payco}" method="post">
+                  <button type="submit" class="btn btn-block btn-outline-payco auth-form-btn">
+                    <span style="font-weight: 900">PAYCO</span> 로그인
+                  </button>
+                </form>
+              </div>
+              <div class="text-center mt-4 font-weight-normal">
+                Don't have an account? <a th:href="@{/sign-up}" class="text-warning">회원 가입</a>
+              </div>
             </div>
           </div>
         </div>
@@ -67,3 +70,5 @@
   <script src="/assets/js/todolist.js"></script>
 </body>
 </html>
+
+

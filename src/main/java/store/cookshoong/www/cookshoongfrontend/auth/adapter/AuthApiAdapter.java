@@ -6,6 +6,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -45,6 +46,28 @@ public class AuthApiAdapter {
 
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
         return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * OAuth2 에서 건네받은 회원식별자를 통해 인증서버에서 토큰을 얻어내는 메서드.
+     *
+     * @param nameAttributeKey the name attribute key
+     * @return the response entity
+     */
+    @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+    public ResponseEntity<AuthenticationResponseDto> sendOAuthUserId(String provider, String nameAttributeKey) {
+        URI uri = UriComponentsBuilder.fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("auth")
+            .pathSegment("login")
+            .pathSegment("oauth2")
+            .build()
+            .toUri();
+
+        RequestEntity<Void> retrieveRequest = RequestEntity.get(uri)
+            .header("X-Account-Code", nameAttributeKey)
+            .header("X-Provider", provider)
+            .build();
+        return restTemplate.exchange(retrieveRequest, new ParameterizedTypeReference<>() {});
     }
 
     /**
