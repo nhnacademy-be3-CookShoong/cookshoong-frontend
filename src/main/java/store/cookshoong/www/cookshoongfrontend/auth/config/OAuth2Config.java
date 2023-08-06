@@ -68,10 +68,11 @@ public class OAuth2Config {
      * @return the client registration
      */
     @Bean
-    public ClientRegistration paycoClient(OAuth2Properties oAuth2Properties) {
+    public ClientRegistration paycoClient(OAuth2Properties oAuth2Properties,
+                                          @Value("${cookshoong.oauth2.payco.clientId}") String clientId) {
         return ClientRegistration.withRegistrationId("payco")
             .clientName("Payco")
-            .clientId("3RDHlYSDk3YqKuIscCG_Jta")
+            .clientId(clientId)
             .clientSecret(oAuth2Properties.getClientSecretOf("payco"))
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
