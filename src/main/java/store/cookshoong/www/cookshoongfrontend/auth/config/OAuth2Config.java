@@ -12,8 +12,11 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import store.cookshoong.www.cookshoongfrontend.auth.resolver.CustomOAuth2AuthorizationRequestResolver;
 import store.cookshoong.www.cookshoongfrontend.common.service.SKMService;
 
 /**
@@ -78,6 +81,20 @@ public class OAuth2Config {
     public OAuth2AuthorizedClientService authorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
     }
+
+    /**
+     * Payco 로그인시 Payco 에서 요구하는 파라미터들을 추가해주기 위해 커스텀한 RequestResolver 빈을 등록하는 메서드.
+     *
+     * @param clientRegistrationRepository the client registration repository
+     * @return the o auth 2 authorization request resolver
+     */
+    @Bean
+    public OAuth2AuthorizationRequestResolver oAuth2AuthorizationRequestResolver(ClientRegistrationRepository clientRegistrationRepository) {
+        return new CustomOAuth2AuthorizationRequestResolver(
+            new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository,
+                "/oauth2/authorization"));
+    }
+
     @Setter
     private static class OAuth2Properties {
         private String baseUri;

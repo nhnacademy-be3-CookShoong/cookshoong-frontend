@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.SecurityFilterChain;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
@@ -34,6 +35,7 @@ public class WebSecurityConfig {
     private final TokenInvalidationHandler tokenInvalidationHandler;
     private final ClientRegistrationRepository clientRegistrationRepository;
     private final OAuth2AuthorizedClientService authorizedClientService;
+    private final OAuth2AuthorizationRequestResolver authorizationRequestResolver;
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
         "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2"};
 
@@ -61,6 +63,7 @@ public class WebSecurityConfig {
             .loginPage("/login-page")
             .clientRegistrationRepository(clientRegistrationRepository)
             .authorizedClientService(authorizedClientService)
+            .authorizationEndpoint(c -> c.authorizationRequestResolver(authorizationRequestResolver))
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
