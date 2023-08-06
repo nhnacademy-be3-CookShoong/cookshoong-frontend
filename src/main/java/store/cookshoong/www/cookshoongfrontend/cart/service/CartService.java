@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.cart.adapter.CartAdapter;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 
 /**
@@ -93,7 +94,7 @@ public class CartService {
      * @param cartKey       redis key
      * @return              장바구니 담긴 모든 메뉴 수량 반환
      */
-    public Long selectCartMenuCountAll(String cartKey) {
+    public CartMenuCountDto selectCartMenuCountAll(String cartKey) {
 
         return cartAdapter.fetchCartMenuCountAll(CART + cartKey);
     }
