@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.cart.model.vo;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,12 +24,12 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CartRedisDto {
 
-    @NotNull
     private Long accountId;
     @NotNull
     private Long storeId;
     @NotBlank
     private String storeName;
+    @Valid
     private CartMenuDto menu;
     private List<CartOptionDto> options;
     private Long createTimeMillis;

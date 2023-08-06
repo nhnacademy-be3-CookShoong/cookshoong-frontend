@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.payment.controller;
 
 import java.util.UUID;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
+import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
+import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreatePartialRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.OrderCompletionInfo;
+import store.cookshoong.www.cookshoongfrontend.payment.model.response.TossPaymentKeyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
 
 /**
@@ -55,10 +59,17 @@ public class PaymentController {
      * @param amount            결제 인증 후 전달되는 결제할 금액
      * @return                  회원 주문 조회 페이지로 반환
      */
-    @GetMapping("/success")
+    @GetMapping("/toss/success")
     public String getAuthenticationSuccess(@RequestParam String paymentKey,
                                            @RequestParam UUID orderId,
                                            @RequestParam Long amount) {
+
+        // 주문 페이지에서 redis에 storeId, memo. issueCouponCode, pointAmount 저장 (만료시간 2시간 정도)
+        // 주문 생성 RestTemplate 보내고, 응답에 총 가격이 있어야 함
+
+        // 주문 생성 후 결제 인증된 금액과 주문에 대한 금액 검증 -> 이후에 토스 승인으로 넘어간다.
+        paymentService.verifyPayment(1000L, amount);
+
         // 카드사에서 인증이 성공된거고, 개발자 입장에서 요청만 끝난거라
         // 실제 구매자의 결제를 마무리 하기 위해서 승인 단계를 거쳐야 한다.
         // 인증된 결제를 카드사에 승인해달라는 요청 service -> 승인이 되어여 가맹점은 상품이나 서비스를 제공
@@ -68,4 +79,40 @@ public class PaymentController {
         return "redirect:/";
     }
 
+    /**
+     * 해당 주문에 대한 전액활불을 해주는 Controller.
+     *
+     * @param refundRequestDto      전액환불에 필요한 정보
+     * @return                      주문 목록으로 반환
+     */
+    @GetMapping("/refund")
+    public String getPaymentFullRefund(@Valid CreateFullRefundRequestDto refundRequestDto) {
+
+        TossPaymentKeyResponseDto paymentKey = paymentService.selectTossPaymentKey(refundRequestDto.getOrderId());
+
+        paymentService.createCancelTossPayment(paymentKey.getPaymentKey(), refundRequestDto);
+
+        // 추후 환불 후 사장님 주문 내역 페이지 반환
+        return "/";
+    }
+
+    /**
+     * 해당 주문에 대한 부분활불을 해주는 Controller.
+     *
+     * @param partialRefundRequestDto       부분환불에 필요한 정보
+     * @return                              주문 목록으로 반환
+     */
+    @GetMapping("/refund/partial")
+    public String getPaymentPartialRefund(@Valid CreatePartialRefundRequestDto partialRefundRequestDto) {
+
+        paymentService.isRefundAmountExceedsChargedAmount(
+            partialRefundRequestDto.getChargeCode(), partialRefundRequestDto.getCancelAmount());
+
+        TossPaymentKeyResponseDto paymentKey =
+            paymentService.selectTossPaymentKey(partialRefundRequestDto.getOrderId());
+
+        paymentService.createPartialCancelTossPayment(paymentKey.getPaymentKey(), partialRefundRequestDto);
+        // 추후 환불 후 사장님 주문 내역 페이지 반환
+        return "/";
+    }
 }

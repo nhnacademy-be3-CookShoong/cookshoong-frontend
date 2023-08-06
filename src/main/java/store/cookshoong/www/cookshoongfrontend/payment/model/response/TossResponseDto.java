@@ -25,7 +25,7 @@ public class TossResponseDto {
     private Receipt receipt;
     private EasyPay easyPay;
     private Failure failure;
-    private Cancle[] cancles;
+    private Cancel[] cancels;
 
     /**
      * 카드로 결제하면 제공되는 카드 관련 정보입니다.
@@ -35,7 +35,7 @@ public class TossResponseDto {
     public static class Card {
         private Long amount;
         private String issuerCode;
-        private String acuirerCode;
+        private String acquirerCode;
         private String number;
         private String installmentPlanMonths;
         private String cardType;
@@ -58,7 +58,7 @@ public class TossResponseDto {
     public static class EasyPay {
         private String provider;
         private Long amount;
-        private Long discountAcount;
+        private Long discountAmount;
     }
 
     /**
@@ -76,10 +76,10 @@ public class TossResponseDto {
      */
     @Getter
     @Setter
-    public static class Cancle {
-        private Long cancleAmount;
-        private String cancleReason;
-        private String cancleAt;
+    public static class Cancel {
+        private Long cancelAmount;
+        private String cancelReason;
+        private String cancelAt;
         private String refundableAmount;
     }
 }

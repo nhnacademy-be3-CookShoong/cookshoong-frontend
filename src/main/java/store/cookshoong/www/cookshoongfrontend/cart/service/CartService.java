@@ -18,6 +18,7 @@ public class CartService {
 
     private final CartAdapter cartAdapter;
     private static final String CART = "cartKey=";
+
     /**
      * 회원이 장바구니에 메뉴를 담는 메서드.
      *
@@ -27,28 +28,7 @@ public class CartService {
      */
     public void createCart(String cartKey, String menuKey, CartRedisDto cartRedisDto) {
 
-        cartAdapter.executeCart(cartKey, menuKey, cartRedisDto);
-    }
-
-    /**
-     * DB 장바구니 정보를 Redis 에 저장하는 메서드.
-     *
-     * @param accountId      회원 아이디
-     */
-    public void createDbUploadRedis(String cartKey, Long accountId) {
-
-        cartAdapter.executeDbUploadRedis(cartKey, accountId);
-    }
-
-    /**
-     * 빈 장바구니를 만드는 메서드.
-     *
-     * @param cartKey       redis key
-     * @param noKey         redis hashKey
-     */
-    public void createEmptyCart(String cartKey, String noKey) {
-
-        cartAdapter.executeEmptyCart(cartKey, noKey);
+        cartAdapter.executeCart(CART + cartKey, menuKey, cartRedisDto);
     }
 
     /**
@@ -60,7 +40,7 @@ public class CartService {
      */
     public void modifyCartMenu(String cartKey, String menuKey, CartRedisDto cartRedisDto) {
 
-        cartAdapter.changeCartMenu(cartKey, menuKey, cartRedisDto);
+        cartAdapter.changeCartMenu(CART + cartKey, menuKey, cartRedisDto);
     }
 
     /**
@@ -71,7 +51,7 @@ public class CartService {
      */
     public void modifyCartMenuIncrement(String cartKey, String menuKey) {
 
-        cartAdapter.changeCartMenuIncrement(cartKey, menuKey);
+        cartAdapter.changeCartMenuIncrement(CART + cartKey, menuKey);
     }
 
     /**
@@ -82,7 +62,7 @@ public class CartService {
      */
     public void modifyCartMenuDecrement(String cartKey, String menuKey) {
 
-        cartAdapter.changeCartMenuDecrement(cartKey, menuKey);
+        cartAdapter.changeCartMenuDecrement(CART + cartKey, menuKey);
     }
 
     /**
@@ -104,7 +84,7 @@ public class CartService {
      */
     public CartRedisDto selectCartMenu(String cartKey, String menuKey) {
 
-        return cartAdapter.fetchCartMenu(cartKey, menuKey);
+        return cartAdapter.fetchCartMenu(CART + cartKey, menuKey);
     }
 
     /**
@@ -115,7 +95,7 @@ public class CartService {
      */
     public Long selectCartMenuCountAll(String cartKey) {
 
-        return cartAdapter.fetchCartMenuCountAll(cartKey);
+        return cartAdapter.fetchCartMenuCountAll(CART + cartKey);
     }
 
     /**
@@ -126,7 +106,7 @@ public class CartService {
      */
     public void removeCartMenu(String cartKey, String menuKey) {
 
-        cartAdapter.eraseCartMenu(cartKey, menuKey);
+        cartAdapter.eraseCartMenu(CART + cartKey, menuKey);
     }
 
     /**
@@ -136,18 +116,7 @@ public class CartService {
      */
     public void removeCartMenuAll(String cartKey) {
 
-        cartAdapter.eraseCartMenuAll(cartKey);
-    }
-
-    /**
-     * Redis 장바구니에 redis Key 존재여부 확인하는 메소드.
-     *
-     * @param cartKey       redis Key
-     * @return              존재여부를 반환
-     */
-    public boolean existKeyInCartRedis(String cartKey) {
-
-        return cartAdapter.existKeyInCartRedis(cartKey);
+        cartAdapter.eraseCartMenuAll(CART + cartKey);
     }
 
     /**
@@ -158,18 +127,7 @@ public class CartService {
      */
     public boolean existMenuInCartRedis(String cartKey, String menuKey) {
 
-        return cartAdapter.existMenuInCartRedis(cartKey, menuKey);
-    }
-
-    /**
-     * DB 장바구니에 회원 장바구니 존재여부 확인하는 메소드.
-     *
-     * @param accountId     회원아이디
-     * @return              존재여부를 반환
-     */
-    public boolean hashDbCart(Long accountId) {
-
-        return cartAdapter.hasDbCart(accountId);
+        return cartAdapter.existMenuInCartRedis(CART + cartKey, menuKey);
     }
 
     /**

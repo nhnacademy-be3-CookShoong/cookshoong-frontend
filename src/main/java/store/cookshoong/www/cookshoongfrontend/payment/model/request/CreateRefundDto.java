@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.payment.model.request;
 
+import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,16 +14,14 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class CreatePaymentDto {
+public class CreateRefundDto {
 
-    @NotBlank
-    private String orderId;
-    @NotBlank
-    private String chargedAt;
     @NotNull
-    private Long chargedAmount;
+    private UUID chargeCode;
     @NotBlank
-    private String paymentKey;
+    private String refundAt;
+    @NotNull
+    private Long refundAmount;
     @NotBlank
-    private String paymentType;
+    private String refundType;
 }
