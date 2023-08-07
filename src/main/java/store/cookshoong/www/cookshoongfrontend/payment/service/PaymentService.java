@@ -38,12 +38,14 @@ public class PaymentService {
     /**
      * 구매자가 인증을 성공적으로 마치면 가맹점이 설정한 성공 URL 로 리다이텍트 되는 Controller 메서드.
      *
-     * @param paymentKey        결제 인증 후 전달되는 결제 Key
-     * @param orderId           결제 인증 후 전달되는 주문 아이디
-     * @param amount            결제 인증 후 전달되는 결제할 금액
+     * @param paymentKey 결제 인증 후 전달되는 결제 Key
+     * @param amount     결제 인증 후 전달되는 결제할 금액
+     * @param orderId    결제 인증 후 전달되는 주문 아이디
+     * @param couponCode 사용하는 쿠폰 코드
+     * @param point      사용하는 포인트
      */
     public void createApproveTossPayment(String paymentKey, Long amount,
-                                         UUID orderId) {
+                                         UUID orderId, UUID couponCode, Integer point) {
 
         TossResponseDto tossResponseDto =
             tossPaymentAdapter.requestApproveTossPayment(
@@ -53,7 +55,7 @@ public class PaymentService {
         paymentAdapter.executePayment(new CreatePaymentDto(
                 tossResponseDto.getOrderId(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getTotalAmount(), tossResponseDto.getPaymentKey(),
-                PaymentType.TOSS.getType(), CART + account.getAccountId()));
+                PaymentType.TOSS.getType(), CART + account.getAccountId(), couponCode, point));
     }
 
     /**
