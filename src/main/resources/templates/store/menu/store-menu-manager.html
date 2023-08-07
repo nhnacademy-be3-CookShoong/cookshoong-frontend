@@ -89,7 +89,8 @@
                                 <div class="form-group">
                                     <label>적립률</label>
                                     <input class="form-control" type="text" name="earningRate"
-                                           placeholder="메뉴 적립률">
+                                           placeholder="메뉴 적립률" oninput="validateMenuEarningRate(this)" value="0.0">
+                                    <p id="errorText" style="color: red; display: none;">0.0보다 적거나 9.9보다 큰 값을 입력할 수 없습니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +102,7 @@
                                 <div class="form-group">
                                     <label>조리 시간</label>
                                     <input class="form-control" type="text" name="cookingTime"
-                                           placeholder="메뉴 이름">
+                                           placeholder="숫자만 입력해주세요." >
                                 </div>
 
                                 <div class="form-group">
@@ -243,7 +244,9 @@
                                                       th:text="${menu.cookingTime} + '분'"></span></p>
                                             <div class="pt-2">
                                                 <p class="font-weight-bold" style="font-size: 1.3rem"
-                                                   th:text="${menu.price} + ' 원'"></p>
+                                                  th:if="${menu.price >= 1000}" th:text="${#numbers.formatInteger(menu.price,3,'COMMA')} + ' 원'"></p>
+                                                <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                   th:if="${menu.price < 1000}" th:text="${menu.price} + ' 원'"></p>
                                             </div>
                                             <div class="pt-1" style="width: 200px;">
                                                 <span th:utext="${menu.description}"></span>
@@ -310,6 +313,24 @@
         if (selectedCategories.length > checkMaximum) {
             this.checked = false;
             alert("최대 3개의 그룹만 선택할 수 있습니다.");
+        }
+    }
+</script>
+<script>
+    function validateMenuEarningRate(input) {
+        const menuEarningRate = parseFloat(input.value);
+        const errorText = document.getElementById('errorText');
+
+        if (isNaN(menuEarningRate) || menuEarningRate < 0.0 || menuEarningRate > 9.9) {
+            errorText.style.display = 'block';
+        } else {
+            errorText.style.display = 'none';
+        }
+        window.onload = function(){
+            const menuEarningRateInput = document.getElementById('earningRate');
+            if (menuEarningRateInput.value.trim() === ""){
+                menuEarningRateInput.value = "0.0";
+            }
         }
     }
 </script>
