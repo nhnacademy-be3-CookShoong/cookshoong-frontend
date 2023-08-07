@@ -18,8 +18,4 @@ public class LocalFileService implements FileUtils{
         return LocationCode.LOCAL_S.getVariable();
     }
 
-    @Override
-    public String getImageSrc(String savedPath) {
-        return "/images/local?imageName="+savedPath;
-    }
 }

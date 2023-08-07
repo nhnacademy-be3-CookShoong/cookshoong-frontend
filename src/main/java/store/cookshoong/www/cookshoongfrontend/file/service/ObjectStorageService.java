@@ -18,8 +18,4 @@ public class ObjectStorageService implements FileUtils{
         return LocationCode.OBJECT_S.getVariable();
     }
 
-    @Override
-    public String getImageSrc(String savedPath) {
-        return savedPath;
-    }
 }

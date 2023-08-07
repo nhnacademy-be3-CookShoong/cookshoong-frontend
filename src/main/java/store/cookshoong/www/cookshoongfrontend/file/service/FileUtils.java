@@ -14,5 +14,4 @@ public interface FileUtils {
         return locationType.equals(getStorageType());
     }
 
-    String getImageSrc(String savedPath);
 }
