@@ -1,10 +1,4 @@
 'use strict'
-
-function doLogout(){
-    let form = document.getElementsByName("csrf-form");
-    form[0].submit();
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     const now_utc = Date.now()
     const timeOff = new Date().getTimezoneOffset() * 60000;
