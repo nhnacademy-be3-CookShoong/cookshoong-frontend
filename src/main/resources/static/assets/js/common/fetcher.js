@@ -22,20 +22,5 @@ function sendDataWithCsrfToken(url, redirectUrl, data, method) {
 }
 
 function justSendCsrfToken(url, redirectUrl) {
-    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const headers = {
-        'Content-Type': 'application/json'
-    };
-    headers[csrfHeader] = csrfToken;
-    console.log("url " + url);
-    fetch(url, {
-        method: 'POST',
-        headers: headers
-    })
-        .then(async response => {
-            if (response.ok) {
-                window.location.href = redirectUrl;
-            }
-        })
+    return sendDataWithCsrfToken(url, redirectUrl, null, 'POST')
 }
