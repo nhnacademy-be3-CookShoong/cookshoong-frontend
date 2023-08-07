@@ -21,6 +21,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
+import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoundHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
@@ -47,8 +49,10 @@ public class WebSecurityConfig {
     private final ClientRegistrationRepository clientRegistrationRepository;
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final OAuth2AuthorizationRequestResolver authorizationRequestResolver;
+    private final DormancyAccountFilter dormancyAccountFilter = new DormancyAccountFilter();
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
-        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2"};
+        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2",
+        "/logout"};
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -61,6 +65,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
             .mvcMatchers(PERMIT_ALL_PATTERNS).permitAll()
+            .mvcMatchers("/dormancy/**").hasAnyRole("DORMANCY")
             .anyRequest().hasAnyRole("ADMIN", "BUSINESS", "CUSTOMER");
 
         http.formLogin()
@@ -93,11 +98,11 @@ public class WebSecurityConfig {
             .newSession()
             .maximumSessions(1);
 
-        http.httpBasic()
-            .disable();
+        http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
-        // TODO: csrf 적용 시키기
-        http.csrf()
+        http.csrf();
+
+        http.httpBasic()
             .disable();
         return http.build();
     }

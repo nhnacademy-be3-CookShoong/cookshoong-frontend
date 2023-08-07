@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.account.model.request;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,7 @@ public class SignUpRequestDto {
     @NotBlank
     @Pattern(regexp = RegularExpressions.NUMBER_ONLY, message = ValidationFailureMessages.NUMBER_ONLY)
     private String phoneNumber;
+    @Valid
     @NotNull
     @Setter
     private CreateAccountAddressRequestDto createAccountAddressRequestDto;

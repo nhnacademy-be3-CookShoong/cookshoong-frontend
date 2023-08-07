@@ -109,7 +109,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accessToken, refreshToken, status, authorities);
+        return Objects.hash(accessToken, status, authorities);
     }
 
     @Override

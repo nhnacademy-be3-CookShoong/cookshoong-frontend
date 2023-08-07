@@ -25,7 +25,17 @@
                         <form class="pt-3" th:action="@{/dormancy/active}" method="get">
                             <h3>마지막 로그인으로부터 30일 지난 계정은 자동으로 휴면 계정이 됩니다.</h3>
                             <div class="mt-3">
-                                <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-in-btn" type="submit">휴면 해제</button>
+                                <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-in-btn"
+                                        type="submit">휴면 해제
+                                </button>
+                            </div>
+                        </form>
+                        <form class="pt-3" th:action="@{/logout}" method="post">
+                            <div class="mt-3">
+                                <button style="background-color: rgba(242,130,18,0.57); border-color: rgba(242,130,18,0.57);"
+                                        class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-in-btn"
+                                        type="submit">로그아웃
+                                </button>
                             </div>
                         </form>
                     </div>

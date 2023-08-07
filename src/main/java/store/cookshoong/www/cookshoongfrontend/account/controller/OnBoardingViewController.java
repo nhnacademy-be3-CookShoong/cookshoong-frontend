@@ -157,6 +157,6 @@ public class OnBoardingViewController {
     public String getAccountActive() {
         Long accountId = accountIdAware.getAccountId();
         accountService.updateAccountStatus(accountId, "ACTIVE");
-        return "redirect:/";
+        return "redirect:/logout";
     }
 }

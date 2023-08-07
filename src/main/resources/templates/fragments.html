@@ -12,7 +12,6 @@
 
 <header th:fragment="user-site-header" class="hero_area header_section">
     <div class="row justify-content-between" style="flex-wrap: nowrap">
-
         <div>
             <a href="/">
                 <img src="/assets/images/shoong.png" alt="" style="height: 65px;">
@@ -45,7 +44,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -57,7 +56,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -172,7 +171,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -184,7 +183,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -247,7 +246,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -259,7 +258,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -377,7 +376,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -389,7 +388,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a th:href="@{/logout}" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
