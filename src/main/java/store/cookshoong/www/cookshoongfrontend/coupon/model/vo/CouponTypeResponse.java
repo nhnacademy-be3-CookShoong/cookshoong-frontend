@@ -18,4 +18,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public interface CouponTypeResponse {
     int getDiscountPrice(int totalPrice);
+
+    int getMinimumOrderPrice();
 }

@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.payment.model.request;
 
+import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,8 @@ public class CreatePaymentDto {
     private String paymentType;
     @NotBlank
     private String cartKey;
+
+    private UUID couponCode;
+
+    private Integer point;
 }

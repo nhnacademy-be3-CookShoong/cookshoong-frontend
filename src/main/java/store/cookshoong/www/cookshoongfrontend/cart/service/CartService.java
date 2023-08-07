@@ -148,6 +148,6 @@ public class CartService {
     }
 
     public boolean isCartIsEmpty(String cartKey) {
-        return existMenuInCartRedis(CART + cartKey, NO_MENU);
+        return existMenuInCartRedis(cartKey, NO_MENU);
     }
 }
