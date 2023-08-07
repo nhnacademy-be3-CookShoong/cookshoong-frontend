@@ -25,4 +25,6 @@ public class CreatePaymentDto {
     private String paymentKey;
     @NotBlank
     private String paymentType;
+    @NotBlank
+    private String cartKey;
 }
