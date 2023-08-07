@@ -32,8 +32,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if (jwtAuthentication.getStatus().equals("DORMANCY")) {
             response.sendRedirect("/dormancy");
+        } else {
+            response.sendRedirect("/");
         }
-        response.sendRedirect("/");
     }
-
 }

@@ -30,6 +30,7 @@ public class TokenInvalidationHandler implements LogoutSuccessHandler {
             response.sendRedirect("/login-page");
             return;
         }
+
         String accessToken = authentication.getName();
         tokenManagementService.invalidate(accessToken);
         response.sendRedirect("/login-page");
