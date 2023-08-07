@@ -17,6 +17,6 @@ public class SelectStoresKeywordSearchResponseDto {
     private Long id;
     private String name;
     private String description;
-    private String saved_name;
+    private String savedName;
     private List<String> categories;
 }

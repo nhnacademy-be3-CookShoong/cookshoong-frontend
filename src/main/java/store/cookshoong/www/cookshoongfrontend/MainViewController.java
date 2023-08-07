@@ -1,14 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toCollection;
-
 import java.net.MalformedURLException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +23,7 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
@@ -39,7 +31,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionG
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
@@ -74,7 +65,7 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping({"", "/index"})
-    public String getIndexByDistance(Pageable pageable, Principal principal, Model model) {
+    public String getIndex(Pageable pageable, Principal principal, Model model) {
         Long addressId = 1L;
 
         if (principal != null) {
@@ -83,19 +74,14 @@ public class MainViewController {
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
         }
+
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
-        RestResponsePage<SelectStoresNotOutedResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
-        List<SelectStoresNotOutedResponseDto> distinctStores = stores.stream()
-            .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(SelectStoresNotOutedResponseDto::getId))),
-                ArrayList::new));
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         model.addAttribute("categories", categories);
-        model.addAttribute("allStore", distinctStores);
         model.addAttribute("stores", stores);
 
         return "index/index";
     }
-
-
 
     /**
      * 매장 검색 랜딩 페이지 맵핑.
@@ -109,13 +95,14 @@ public class MainViewController {
     public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
 
         Long accountId = accountIdAware.getAccountId();
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
-        RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, pageable);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
         model.addAttribute("categories", categories);
-        model.addAttribute("searchStores", searchedStores);
+        model.addAttribute("stores", searchedStores);
 
         return "index/index";
     }

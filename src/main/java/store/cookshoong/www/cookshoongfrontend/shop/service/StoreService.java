@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class StoreService {
      * @param pageable  페이지 파라미터
      * @return the rest response page
      */
-    public RestResponsePage<SelectStoresNotOutedResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresNotOuted(Long addressId, Pageable pageable) {
         return storeAdapter.fetchStoresNotOuted(addressId, pageable);
     }
 
@@ -53,8 +54,8 @@ public class StoreService {
      * @param pageable 페이지 파라미터
      * @return the rest response page
      */
-    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Pageable pageable) {
-        return storeAdapter.fetchStoresByKeyword(keyword, pageable);
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByKeyword(String keyword, Long addressId, Pageable pageable) {
+        return storeAdapter.fetchStoresByKeyword(keyword, addressId, pageable);
     }
 
 

@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -102,25 +103,24 @@ public class StoreAdapter {
      * @param pageable  페이지 파라미터
      * @return response rest response page
      */
-    public RestResponsePage<SelectStoresNotOutedResponseDto> fetchStoresNotOuted(Long addressId, Pageable pageable) {
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresNotOuted(Long addressId, Pageable pageable) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
-            .pathSegment("accounts")
-            .pathSegment("customer")
-            .pathSegment("{addressId}")
-            .pathSegment("stores")
+            .pathSegment("store")
+            .pathSegment("list")
+            .queryParam("addressId", addressId)
             .queryParam("page", pageable.getPageNumber())
             .queryParam("size", pageable.getPageSize())
-            .buildAndExpand(addressId)
+            .build()
             .toUri();
 
         RequestEntity<Void> request = RequestEntity.get(uri)
             .accept(MediaType.APPLICATION_JSON)
             .build();
 
-        ResponseEntity<RestResponsePage<SelectStoresNotOutedResponseDto>> response
+        ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> response
             = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
 
@@ -134,7 +134,7 @@ public class StoreAdapter {
      * @param pageable 페이지 파라미터
      * @return response rest response page
      */
-    public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresByKeyword(String keyword, Pageable pageable) {
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresByKeyword(String keyword, Long addressId, Pageable pageable) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -142,6 +142,7 @@ public class StoreAdapter {
             .pathSegment("store")
             .pathSegment("search")
             .queryParam("keyword", keyword)
+            .queryParam("addressId", addressId)
             .queryParam("page", pageable.getPageNumber())
             .queryParam("size", pageable.getPageSize())
             .build()
