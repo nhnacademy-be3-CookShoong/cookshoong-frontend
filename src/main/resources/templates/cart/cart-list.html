@@ -171,11 +171,15 @@
             }
         }
 
+        const csrfToken = `[[${_csrf.token}]]`;
+        const csrfHeader = `[[${_csrf.headerName}]]`;
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        headers[csrfHeader] = csrfToken;
         fetch(`/carts/modify-menu/` + menuKey, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: headers,
             body: JSON.stringify(cartOptionDto),
         })
             .then(async response => {

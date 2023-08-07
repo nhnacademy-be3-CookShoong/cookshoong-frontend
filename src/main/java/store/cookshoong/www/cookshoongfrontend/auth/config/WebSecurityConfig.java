@@ -100,8 +100,9 @@ public class WebSecurityConfig {
 
         http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
-        // TODO: csrf 적용 시키기
-        http.csrf()
+        http.csrf();
+
+        http.httpBasic()
             .disable();
         return http.build();
     }
