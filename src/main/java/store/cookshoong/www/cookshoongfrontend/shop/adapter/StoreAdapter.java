@@ -3,7 +3,6 @@ package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +14,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
@@ -31,12 +28,11 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStor
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 
 
 /**
  * 매장의 Adapter.
- * 매장 등록, 3km이내 리스트 조회, 사용자 입장에서의 매장 조회, 사장님의 모든 매장 리스트, 매장 상태 변경.
+ * 매장 등록, 3km 이내 리스트 조회, 사용자 입장에서의 매장 조회, 사장님의 모든 매장 리스트, 매장 상태 변경.
  * 모든 카테고리 리스트 조회, 매장 상태 리스트
  *
  * @author papel (윤동현), seongyeon (유승연)
@@ -54,27 +50,23 @@ public class StoreAdapter {
      * @return the list
      */
     public ResponseEntity<List<SelectAllBanksResponseDto>> fetchAllBanks() {
-        ResponseEntity<List<SelectAllBanksResponseDto>> response =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/banks",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
-        return response;
+
+        return restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/accounts/banks",
+            GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
     }
 
     /**
      * 매장을 등록하는 메서드.
      *
-     * @param accountId             회원아이디
-     * @param createStoreRequestDto 사업자가 매장을 등록하는 Dto
-     * @param businessLicense       the business license
-     * @param storeImage            the store image
+     * @param accountId  회원아이디
+     * @param mapRequest the map request
      * @return the response entity
      */
-    public ResponseEntity<String> executeCreateStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
-                                                     MultipartFile businessLicense, MultipartFile storeImage
-    ) {
+    public ResponseEntity<String> executeCreateStore(Long accountId,
+                                                     MultiValueMap<String, Object> mapRequest) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -82,12 +74,9 @@ public class StoreAdapter {
             .pathSegment("accounts")
             .pathSegment("{accountId}")
             .pathSegment("stores")
+            .queryParam("storedAt", LocationCode.OBJECT_S.getVariable())
             .buildAndExpand(accountId)
             .toUri();
-        MultiValueMap<String, Object> mapRequest = new LinkedMultiValueMap<>();
-        mapRequest.add("requestDto", createStoreRequestDto);
-        mapRequest.add("businessLicense", businessLicense.getResource());
-        mapRequest.add("storeImage", storeImage.getResource());
 
         RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.post(uri)
             .contentType(MediaType.MULTIPART_FORM_DATA)
@@ -108,8 +97,8 @@ public class StoreAdapter {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
-            .pathSegment("store")
-            .pathSegment("list")
+            .pathSegment("stores")
+            .pathSegment("search")
             .queryParam("addressId", addressId)
             .queryParam("page", pageable.getPageNumber())
             .queryParam("size", pageable.getPageSize())
@@ -139,8 +128,9 @@ public class StoreAdapter {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
-            .pathSegment("store")
+            .pathSegment("stores")
             .pathSegment("search")
+            .pathSegment("keyword")
             .queryParam("keyword", keyword)
             .queryParam("addressId", addressId)
             .queryParam("page", pageable.getPageNumber())
@@ -192,13 +182,11 @@ public class StoreAdapter {
      * @return the list
      */
     public ResponseEntity<List<SelectAllCategoriesResponseDto>> fetchAllCategories() {
-        ResponseEntity<List<SelectAllCategoriesResponseDto>> responseEntity =
-            restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/stores/categories",
-                GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
-        return responseEntity;
+        return restTemplate.exchange(apiProperties.getGatewayUrl() + "/api/stores/categories",
+            GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
     }
 
     /**
@@ -274,10 +262,7 @@ public class StoreAdapter {
             .accept(MediaType.APPLICATION_JSON)
             .build();
 
-        ResponseEntity<SelectStoreInfoResponseDto> response
-            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
-
-        return response;
     }
 }

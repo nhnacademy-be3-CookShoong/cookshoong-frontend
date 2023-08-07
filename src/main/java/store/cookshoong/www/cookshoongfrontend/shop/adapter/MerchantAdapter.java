@@ -14,7 +14,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerc
 /**
  * 가맹점 Adapter.
  *
- * @author seungyeon
+ * @author seungyeon (유승연)
  * @since 2023.07.14
  */
 @Component
