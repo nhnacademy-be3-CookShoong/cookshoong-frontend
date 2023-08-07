@@ -29,4 +29,8 @@ public class SelectStoreInfoResponseDto {
     private String bankCode;
     private String bankAccountNumber;
     private String pathName;
+    private String locationType;
+    private String domainName;
+    private Integer minimumOrderPrice;
+    private Integer deliveryCost;
 }

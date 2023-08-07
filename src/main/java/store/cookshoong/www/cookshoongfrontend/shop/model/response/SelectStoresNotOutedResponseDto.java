@@ -23,4 +23,8 @@ public class SelectStoresNotOutedResponseDto {
     private BigDecimal longitude;
     private String category;
     private String savedName;
+    private String locationType;
+    private String domainName;
+    private Integer minimumOrderPrice;
+    private Integer deliveryCost;
 }
