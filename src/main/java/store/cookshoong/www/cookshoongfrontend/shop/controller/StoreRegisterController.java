@@ -1,7 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
-import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -41,26 +41,30 @@ public class StoreRegisterController {
     private final AccountIdAware accountIdAware;
 
 
-    /**
-     * 매장 등록 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.09
-     */
-    @GetMapping("/store-register")
-    public String getSelectStore(CreateStoreRequestDto createStoreRequestDto, Model model) {
+    private void registerFormData(Model model, CreateStoreRequestDto createStoreRequestDto) {
         List<SelectAllMerchantsResponseDto> merchants = merchantService.selectAllMerchants();
         List<SelectAllCategoriesResponseDto> storeCategories = storeCategoryService.selectAllCategories();
         List<SelectAllBanksResponseDto> banks = storeService.selectAllBanks();
-
-        Long accountId = accountIdAware.getAccountId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
-
         model.addAttribute("banks", banks);
         model.addAttribute("merchants", merchants);
         model.addAttribute("categories", storeCategories);
         model.addAttribute("createStoreRequestDto", createStoreRequestDto);
+    }
+
+    /**
+     * 매장 등록 페이지를 맵핑.
+     *
+     * @param createStoreRequestDto the create store request dto
+     * @param model                 the model
+     * @return the select store
+     */
+    @GetMapping("/store-register")
+    public String getSelectStore(CreateStoreRequestDto createStoreRequestDto, Model model) {
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
+        registerFormData(model, createStoreRequestDto);
         return "store/register/store-register";
     }
 
@@ -68,6 +72,12 @@ public class StoreRegisterController {
     /**
      * 매장 등록 요청을 맵핑.
      *
+     * @param createStoreRequestDto the create store request dto
+     * @param bindingResult         the binding result
+     * @param model                 the model
+     * @param businessLicense       the business license
+     * @param storeImage            the store image
+     * @return the string
      * @author papel
      * @since 2023.07.09
      */
@@ -78,18 +88,25 @@ public class StoreRegisterController {
         @RequestPart("businessLicense") MultipartFile businessLicense,
         @RequestPart("storeImage") MultipartFile storeImage) {
 
-        Long accountId = accountIdAware.getAccountId();
+        if (bindingResult.hasErrors() || Objects.isNull(businessLicense)) {
+            registerFormData(model, createStoreRequestDto);
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("createStoreRequestDto", createStoreRequestDto);
             return "store/register/store-register";
         }
+        Long accountId = accountIdAware.getAccountId();
         String storePath = storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
-        return "redirect:"+storePath;
+        return "redirect:" + storePath;
     }
 
-
-
+    /**
+     * Patch store status string.
+     *
+     * @param storeId       the store id
+     * @param updateStatus  the update status
+     * @param bindingResult the binding result
+     * @param model         the model
+     * @return the string
+     */
     @PatchMapping("/stores/{storeId}/status")
     public String patchStoreStatus(@PathVariable("storeId") Long storeId,
                                    @Valid @ModelAttribute("updateStatus") UpdateStoreStatusRequestDto updateStatus,
