@@ -2,9 +2,8 @@ package store.cookshoong.www.cookshoongfrontend.auth.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.Base64Utils;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.InvalidAccessTokenException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
@@ -17,7 +16,8 @@ import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedRefreshToken;
  * @since 2023.07.16
  */
 public class JwtResolver {
-    private JwtResolver() {}
+    private JwtResolver() {
+    }
 
 
     public static ParsedAccessToken resolveAccessToken(String accessToken) {
@@ -56,8 +56,11 @@ public class JwtResolver {
      * @param token the token
      * @return the list
      */
-    public static List<GrantedAuthority> convertToRole(String token) {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + resolveToken(token, ParsedAccessToken.class)
-            .getAuthority()));
+    public static Set<GrantedAuthority> convertToRole(String token) {
+        return CustomAuthorityUtils.createAuthoritySet("ROLE_" + resolveAccessToken(token).getAuthority());
+    }
+
+    public static String convertToStatus(String refreshToken) {
+        return resolveRefreshToken(refreshToken).getStatus();
     }
 }

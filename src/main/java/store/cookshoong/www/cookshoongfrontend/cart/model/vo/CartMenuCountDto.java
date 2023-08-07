@@ -1,7 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.cart.model.vo;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Redis 장바구니에 담기는 수에 대한 Dto.
@@ -10,9 +11,7 @@ import lombok.Getter;
  * @since 2023.07.23
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartMenuCountDto {
-
     private Long count;
-
 }

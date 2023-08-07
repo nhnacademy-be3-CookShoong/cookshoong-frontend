@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.cart.adapter.CartAdapter;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 
 /**
@@ -18,6 +19,7 @@ public class CartService {
 
     private final CartAdapter cartAdapter;
     private static final String CART = "cartKey=";
+    private static final String NO_MENU = "NO_KEY";
 
     /**
      * 회원이 장바구니에 메뉴를 담는 메서드.
@@ -93,7 +95,7 @@ public class CartService {
      * @param cartKey       redis key
      * @return              장바구니 담긴 모든 메뉴 수량 반환
      */
-    public Long selectCartMenuCountAll(String cartKey) {
+    public CartMenuCountDto selectCartMenuCountAll(String cartKey) {
 
         return cartAdapter.fetchCartMenuCountAll(CART + cartKey);
     }
@@ -143,5 +145,9 @@ public class CartService {
             totalPrice += menuPrice;
         }
         return totalPrice;
+    }
+
+    public boolean isCartIsEmpty(String cartKey) {
+        return existMenuInCartRedis(CART + cartKey, NO_MENU);
     }
 }

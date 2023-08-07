@@ -177,7 +177,7 @@ public class CartAdapter {
      * @param cartKey       redis key
      * @return              장바구니에 담긴 모든 메뉴 수량을 반환
      */
-    public Long fetchCartMenuCountAll(String cartKey) {
+    public CartMenuCountDto fetchCartMenuCountAll(String cartKey) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -191,7 +191,7 @@ public class CartAdapter {
         ResponseEntity<CartMenuCountDto> exchange =
             restTemplate.exchange(uri, GET, null, new ParameterizedTypeReference<>() {});
 
-        return Objects.requireNonNull(exchange.getBody()).getCount();
+        return exchange.getBody();
     }
 
     /**

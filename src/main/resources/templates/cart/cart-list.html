@@ -118,8 +118,7 @@
                                 <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="(${totalPrice} != null ? ${#numbers.formatInteger(totalPrice, 3, 'COMMA')} : '0') + '원'"></h4>
 
                                 <div class="d-flex justify-content-center">
-                                    <form>
-                                        <input class="btn" style="width: 150px; background: #ffa636" type="submit" th:value="주문하기">
+                                    <button class="btn" style="width: 150px; background: #ffa636" th:onclick="location.href='/order'">주문하기</button>
                                     </form>
                                 </div>
                             </div>

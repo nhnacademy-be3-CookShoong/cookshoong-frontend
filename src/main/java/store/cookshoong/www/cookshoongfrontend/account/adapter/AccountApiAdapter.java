@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.AccountStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.UpdateAccountStatusResponseDto;
@@ -33,7 +34,7 @@ public class AccountApiAdapter {
      * @param signUpRequestDto the sign up request dto
      * @return the response entity
      */
-    public ResponseEntity<Void> executeRegistration(String authorityCode, SignUpRequestDto signUpRequestDto) {
+    public ResponseEntity<Void> executeAccountRegistration(String authorityCode, SignUpRequestDto signUpRequestDto) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .path(ACCOUNT_API_PREFIX)
@@ -44,6 +45,27 @@ public class AccountApiAdapter {
         RequestEntity<SignUpRequestDto> request = RequestEntity.post(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(signUpRequestDto);
+
+        return restTemplate.exchange(request, Void.class);
+    }
+
+    /**
+     * BackEnd 서버로 OAuth2 회원등록을 요청하는 메서드.
+     *
+     * @param oAuth2SignUpRequestDto the oauth2 sign up request dto
+     * @return the response entity
+     */
+    public ResponseEntity<Void> executeOAuth2AccountRegistration(OAuth2SignUpRequestDto oAuth2SignUpRequestDto) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path(ACCOUNT_API_PREFIX)
+            .pathSegment("oauth2")
+            .build()
+            .toUri();
+
+        RequestEntity<OAuth2SignUpRequestDto> request = RequestEntity.post(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(oAuth2SignUpRequestDto);
 
         return restTemplate.exchange(request, Void.class);
     }

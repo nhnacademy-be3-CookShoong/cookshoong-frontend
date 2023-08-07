@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.account.model.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.Email;
@@ -7,8 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,10 +26,12 @@ import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailure
  * @since 2023/07/04
  */
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class SignUpRequestDto {
     @NotBlank
-    @Length(min = 1, max = 30)
+    @Length(min = 1, max = 100)
     private String loginId;
     @NotBlank
     private String password;
@@ -56,6 +61,7 @@ public class SignUpRequestDto {
         this.password = encodedPassword;
     }
 
+    @JsonIgnore
     public boolean isAddressEmpty() {
         return Objects.isNull(createAccountAddressRequestDto);
     }
