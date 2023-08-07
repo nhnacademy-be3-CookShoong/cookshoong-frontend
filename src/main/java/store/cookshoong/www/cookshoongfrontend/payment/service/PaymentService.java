@@ -5,6 +5,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.payment.adapter.paymentapi.TossPaymentAdapter;
 import store.cookshoong.www.cookshoongfrontend.payment.adapter.paymentbackapi.PaymentAdapter;
 import store.cookshoong.www.cookshoongfrontend.payment.exception.PaymentAmountMismatchException;
@@ -31,6 +32,8 @@ public class PaymentService {
 
     private final TossPaymentAdapter tossPaymentAdapter;
     private final PaymentAdapter paymentAdapter;
+    private final AccountIdAware account;
+    private static final String CART = "cartKey=";
 
     /**
      * 구매자가 인증을 성공적으로 마치면 가맹점이 설정한 성공 URL 로 리다이텍트 되는 Controller 메서드.
@@ -50,7 +53,7 @@ public class PaymentService {
         paymentAdapter.executePayment(new CreatePaymentDto(
                 tossResponseDto.getOrderId(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getTotalAmount(), tossResponseDto.getPaymentKey(),
-                PaymentType.TOSS.getType()));
+                PaymentType.TOSS.getType(), CART + account.getAccountId()));
     }
 
     /**
