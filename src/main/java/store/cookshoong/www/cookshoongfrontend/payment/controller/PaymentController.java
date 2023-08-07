@@ -101,7 +101,8 @@ public class PaymentController {
         CreateOrderResponseDto createOrderResponseDto = orderService.createService(createOrderRequestDto);
 
         paymentService.verifyPayment((long) createOrderResponseDto.getTotalPrice(), amount);
-        paymentService.createApproveTossPayment(paymentKey, amount, orderId);
+        paymentService.createApproveTossPayment(paymentKey, amount, orderId, paymentPageRequestDto.getCouponCode(),
+            paymentPageRequestDto.getPoint());
 
         //TODO 추후 사용자 주문조회 페이지가 만들어지면 그쪽으로 Redirect
         return "redirect:/";
