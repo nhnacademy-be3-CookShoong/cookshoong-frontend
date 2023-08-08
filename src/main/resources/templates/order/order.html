@@ -92,7 +92,7 @@
                                 <p>Coupon Discount: <span id="discountValue"></span></p>
 
                                 <div class="d-flex justify-content-center">
-                                    <form id="paymentForm" action="/payments" method="post">
+                                    <form id="paymentForm" th:action="@{/payments}" method="post">
                                         <button id="orderButton" class="btn" th:storeId="${storeId}" th:totalPrice="${totalPrice}" th:onclick="payment(this.getAttribute('storeId'), this.getAttribute('totalPrice'))" style="width: 150px; background: #ffa636" th:text="결제하기"></button>
                                     </form>
                                 </div>
@@ -152,13 +152,13 @@
 
         const hiddenInputMainPlace = document.createElement("input");
         hiddenInputMainPlace.type = "hidden";
-        hiddenInputMainPlace.name = "place";
+        hiddenInputMainPlace.name = "mainPlace";
         hiddenInputMainPlace.value = mainPlace;
         document.getElementById("paymentForm").appendChild(hiddenInputMainPlace);
 
         const hiddenInputDetailPlace = document.createElement("input");
         hiddenInputDetailPlace.type = "hidden";
-        hiddenInputDetailPlace.name = "place";
+        hiddenInputDetailPlace.name = "detailPlace";
         hiddenInputDetailPlace.value = detailPlace;
         document.getElementById("paymentForm").appendChild(hiddenInputDetailPlace);
 
