@@ -9,7 +9,7 @@ import store.cookshoong.www.cookshoongfrontend.common.exception.NotFoundExceptio
  * @since 2023.08.08
  */
 public class LocationTypeNotFoundException extends NotFoundException {
-    public LocationTypeNotFoundException(String message){
+    public LocationTypeNotFoundException(){
         super("저장소 타입");
     }
 }
