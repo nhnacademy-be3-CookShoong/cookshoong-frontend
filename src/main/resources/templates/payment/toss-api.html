@@ -1,26 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"  lang="en">
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>결제</title>
     <script src="https://js.tosspayments.com/v1/payment"></script>
+    <link rel="stylesheet" href="/assets/css/vertical-layout-light/payment.css">
 </head>
-<body>
-<h1>토스 결제 테스트</h1>
 
-<div class="card-columns">
-    <div>
-        <button type="button"
-                th:onclick="paymentButton('CARD', [[${toss}]], [[${order}]])" id="card">
-            <span class="text">토스결제</span>
-        </button>
+<body layout:fragment="content">
+<header th:replace="fragments :: user-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+
+<div class="container-fluid page-body-wrapper">
+    <div class="content-wrapper">
+        <section class="payment-container">
+            <div class="payment-header">
+                <h1>결제</h1>
+            </div>
+            <div class="payment-card">
+                <div class="payment-card-header">
+                    <h2 class="payment-title">주문 정보</h2>
+                </div>
+                <div class="card-body">
+                    <div class="details">
+                        <div class="detail-row">
+                            <h4 class="detail-label">주문상품</h4>
+                            <h5 class="detail-value" th:text="${order.getOrderName()}"></h5>
+                        </div>
+                        <hr>
+                        <div class="detail-row">
+                            <h4 class="detail-label">배송지</h4>
+                            <h5 class="detail-value" th:text="${order.mainPlace} + ' ' + ${order.detailPlace}">
+                            </h5>
+                        </div>
+                        <hr>
+                        <div class="detail-row">
+                            <h4 class="detail-label">요청사항</h4>
+                            <h5 class="detail-value" th:text="${order.memo}">
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer payment-methods">
+                    <button type="button"
+                            th:onclick="paymentButton('CARD', [[${toss}]], [[${order}]])" id="card2">
+                        <span class="text">카드결제</span>
+                    </button>
+                    <button type="button" disabled
+                            th:onclick="paymentButton('EASY', [[${toss}]], [[${order}]])" id="easy">
+                        <span class="text">간편결제</span>
+                    </button>
+                    <button type="button" disabled
+                            th:onclick="paymentButton('PHONE', [[${toss}]], [[${order}]])" id="phone">
+                        <span class="text">휴대폰결제</span>
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
+<footer th:replace="fragments :: site-footer"></footer>
 <script>
     function paymentButton(method, toss, order) {
-
-        var tossPayments = TossPayments(toss.clientId)
+        const tossPayments = TossPayments(toss.clientId)
         tossPayments.requestPayment(method, {
             amount: order.amount,
             orderId: order.orderId,

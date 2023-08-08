@@ -71,7 +71,9 @@ public class PaymentController {
         }
 
         OrderCompletionInfo orderCompletionInfo = new OrderCompletionInfo(
-            orderCode, orderName, (long) paymentPageRequestDto.getPrice());
+            orderCode, orderName, (long) paymentPageRequestDto.getPrice(),
+            paymentPageRequestDto.getMainPlace(), paymentPageRequestDto.getDetailPlace(),
+            paymentPageRequestDto.getMemo());
 
         httpSession.setAttribute("paymentPageRequestDto", paymentPageRequestDto);
 
