@@ -107,8 +107,6 @@ public class MainViewController {
         return "index/index";
     }
 
-
-
     /**
      * 매장 페이지 맵핑.
      *
