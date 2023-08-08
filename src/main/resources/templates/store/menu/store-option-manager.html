@@ -188,7 +188,10 @@
                                         <h3 class="font-weight-bold" th:text="${option.name}"></h3>
                                         <div class="pt-2">
                                             <p class="font-weight-bold" style="font-size: 1.3rem"
-                                               th:text="${option.price} + ' 원'"><span
+                                               th:if="${option.price >=1000}" th:text="${#numbers.formatInteger(option.price,3,'COMMA')} + ' 원'"><span
+                                                    style="font-size: 1.2rem"></span></p>
+                                            <p class="font-weight-bold" style="font-size: 1.3rem"
+                                               th:if="${option.price < 1000}" th:text="${option.price} + ' 원'"><span
                                                     style="font-size: 1.2rem"></span></p>
                                         </div>
                                     </div>

@@ -8,6 +8,6 @@ package store.cookshoong.www.cookshoongfrontend.common.exception;
  */
 public abstract class NotFoundException extends RuntimeException {
     protected NotFoundException(String message) {
-        super(message);
+        super("존재하지 않는 "+message+" 입니다.");
     }
 }

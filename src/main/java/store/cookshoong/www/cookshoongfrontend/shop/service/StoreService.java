@@ -1,6 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import store.cookshoong.www.cookshoongfrontend.file.model.FileDomain;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterStoreFailureException;
@@ -22,7 +24,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStor
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreForUserResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresKeywordSearchResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoresNotOutedResponseDto;
 
 /**
  * 매장 등록 및 조회 서비스.
@@ -70,7 +71,16 @@ public class StoreService {
     public String createStore(Long accountId, CreateStoreRequestDto createStoreRequestDto,
                               MultipartFile businessLicense,
                               MultipartFile storeImage) {
-        ResponseEntity<String> response = storeAdapter.executeCreateStore(accountId, createStoreRequestDto, businessLicense, storeImage);
+
+        MultiValueMap<String, Object> fileMap = new LinkedMultiValueMap<>();
+        fileMap.add("requestDto", createStoreRequestDto);
+        fileMap.add(FileDomain.BUSINESS_INFO_IMAGE.getVariable(), businessLicense.getResource());
+
+        if(Objects.nonNull(storeImage)){
+            fileMap.add(FileDomain.STORE_IMAGE.getVariable(), storeImage.getResource());
+        }
+
+        ResponseEntity<String> response = storeAdapter.executeCreateStore(accountId, fileMap);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RegisterStoreFailureException(response.getStatusCode());

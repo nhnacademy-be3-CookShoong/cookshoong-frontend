@@ -26,4 +26,6 @@ public class SelectMenuResponseDto {
     private BigDecimal earningRate;
     private List<Long> menuGroups;
     private List<Long> optionGroups;
+    private String locationType;
+    private String domainName;
 }

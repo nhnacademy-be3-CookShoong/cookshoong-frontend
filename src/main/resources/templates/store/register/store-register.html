@@ -42,7 +42,7 @@
                                     <input class="form-control" type="text" id="businessLicenseNumber"
                                            name="businessLicenseNumber"
                                            th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
-                                           placeholder="사업자 등록번호">
+                                           placeholder="'-'은 제외하고 입력해주세요.">
                                 </div>
 
                                 <div class="form-group">
@@ -70,7 +70,7 @@
                                     </div>
                                     <input class="form-control" type="text"
                                            id="bankAccount" name="bankAccount"
-                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="계좌 번호">
+                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="'-'은 제외하고 입력해주세요.">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                     <input class="form-control" type="text" id="phoneNumber"
                                            name="phoneNumber"
                                            th:field="*{phoneNumber}" th:value="*{phoneNumber}"
-                                           placeholder="영업점 전화번호">
+                                           placeholder="'-'은 제외하고 입력해주세요.">
                                 </div>
 
                                 <div class="form-group"><label>영업점 주소</label>
@@ -139,9 +139,23 @@
                                 </div>
                                 <div class="form-group"><label for="earningRate">적립률</label>
                                     <input class="form-control" type="text" id="earningRate" name="earningRate"
-                                           th:field="*{earningRate}" th:value="*{earningRate}" placeholder="적립률">
+                                           th:field="*{earningRate}" th:value="*{earningRate}" placeholder="0.0 ~ 9.9까지 입력 가능합니다."
+                                            oninput="validateEarningRate(this)">
+                                    <p id="errorText" style="color: red; display: none;">0.0보다 적거나 9.9보다 큰 값을 입력할 수 없습니다.</p>
                                 </div>
-                                <div class="form-group"><label class="form-label" for="storeCategories">카테고리</label>
+                                <div class="form-group"><label for="minimumOrderPrice">최소주문금액</label>
+                                    <input class="form-control" type="text" id="minimumOrderPrice" name="minimumOrderPrice"
+                                           th:field="*{minimumOrderPrice}" th:value="*{minimumOrderPrice}" placeholder="숫자만 입력하세요."
+                                           oninput="validateMinimumOrderPrice(this)">
+                                    <p id="errorText-minimumOrderPrice" style="color: red; display: none;">0보다 작은 값을 적을 수 없습니다.</p>
+                                </div>
+                                <div class="form-group"><label for="deliveryCost">기본 배달비</label>
+                                    <input class="form-control" type="text" id="deliveryCost" name="deliveryCost"
+                                           th:field="*{deliveryCost}" th:value="*{deliveryCost}" placeholder="숫자만 입력하세요."
+                                           oninput="validateDeliveryCost(this)">
+                                    <p id="errorText-deliveryCost" style="color: red; display: none;">4000원보다 적을 수 없습니다.</p>
+                                </div>
+                                <div class="form-group"><label class="form-label" for="storeCategories">카테고리 (1 ~ 3개까지 입력 가능합니다.)</label>
                                     <div class="row">
                                         <div class="col-sm-3" th:each="category : ${categories}"  id="storeCategories">
                                             <label class="custom-checkbox">
@@ -184,6 +198,55 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
+<script>
+    function validateEarningRate(input) {
+        const earningRate = parseFloat(input.value);
+        const errorText = document.getElementById('errorText');
+
+        if (isNaN(earningRate) || earningRate < 0.0 || earningRate > 9.9) {
+            errorText.style.display = 'block';
+        } else {
+            errorText.style.display = 'none';
+        }
+    }
+
+    function validateMinimumOrderPrice(input) {
+        const minimumOrderPrice = parseFloat(input.value);
+        const errorText = document.getElementById('errorText-minimumOrderPrice');
+
+        if (isNaN(minimumOrderPrice) || minimumOrderPrice < 0) {
+            errorText.style.display = 'block';
+        } else {
+            errorText.style.display = 'none';
+        }
+    }
+
+    function validateDeliveryCost(input) {
+        const deliveryCost = parseFloat(input.value);
+        const errorText = document.getElementById('errorText-deliveryCost');
+
+        if (isNaN(deliveryCost) || deliveryCost < 4000) {
+            errorText.style.display = 'block';
+        } else {
+            errorText.style.display = 'none';
+        }
+    }
+
+    window.onload = function(){
+        const deliveryCostInput = document.getElementById('deliveryCost');
+        const earningRateInput = document.getElementById('earningRate');
+        const minimumOrderPriceInput = document.getElementById('minimumOrderPrice')
+        if (earningRateInput.value.trim() === ""){
+            earningRateInput.value = "0.0";
+        }
+        if(minimumOrderPriceInput.value.trim() === ""){
+            minimumOrderPriceInput.value = 0;
+        }
+        if(deliveryCostInput.value.trim() === ""){
+            deliveryCostInput.value = 4000;
+        }
+    }
+</script>
 <script>
     var mapContainer = document.getElementById('map');
     var mapOption = {

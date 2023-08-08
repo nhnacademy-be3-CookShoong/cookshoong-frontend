@@ -5,6 +5,7 @@
        layout:decorate="~{config}">
 <head>
     <title>Untitled</title>
+
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
@@ -56,24 +57,6 @@
                             <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
                                 <span th:text="${storeInfo.getPhoneNumber()}" id="phoneNumber"></span>
                             </div>
-
-                            <!--                            <div class="form-group"><label>영업점 주소</label>-->
-                            <!--                                <div class="input-group col-xs-12">-->
-                            <!--                                    <input type="text" class="form-control" id="mainPlace" name="mainPlace"-->
-                            <!--                                           th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">-->
-                            <!--                                    <button class="btn btn-info" onclick="execDaumPostcode()" type="button">-->
-                            <!--                                        주소 검색-->
-                            <!--                                    </button>-->
-                            <!--                                </div>-->
-                            <!--                                <input class="form-control" type="text" id="detailPlace"-->
-                            <!--                                       name="detailPlace"-->
-                            <!--                                       th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">-->
-
-                            <!--                                <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">-->
-                            <!--                                <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">-->
-
-                            <!--                                <div id="map" style="width: auto; height: 300px; margin-top: 10px;"></div>-->
-                            <!--                            </div>-->
                             <div class="form-group">
                                 <label>영업점 주소</label>
                                 <div th:text="${storeInfo.getMainPlace()}+ ' '+ ${storeInfo.getDetailPlace()}"></div>
@@ -87,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>가게 설명</label>
-                                    <span th:text="${storeInfo.getDescription()}"></span>
+                                    <span th:utext="${storeInfo.getDescription()}"></span>
                                 </div>
                             </div>
                             매장 대표사진

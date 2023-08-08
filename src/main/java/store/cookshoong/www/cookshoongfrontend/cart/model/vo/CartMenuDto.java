@@ -29,4 +29,7 @@ public class CartMenuDto {
     private String menuImage;
     @NotNull
     private int menuPrice;
+
+    private String locationType;
+    private String domainName;
 }

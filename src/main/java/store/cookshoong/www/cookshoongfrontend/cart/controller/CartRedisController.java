@@ -17,6 +17,7 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
+import store.cookshoong.www.cookshoongfrontend.file.service.FileUtilResolver;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
@@ -41,10 +42,10 @@ public class CartRedisController {
     private static final String NO_MENU = "NO_KEY";
 
     /**
-     *  회원 장바구니에 담겨있는 메뉴를 보여주는 Controller.
+     * 회원 장바구니에 담겨있는 메뉴를 보여주는 Controller.
      *
-     * @param model     HTML 로 보낼 데이터
-     * @return          회원이 담은 장바구니 페이지로 반환
+     * @param model HTML 로 보낼 데이터
+     * @return 회원이 담은 장바구니 페이지로 반환
      */
     @GetMapping
     public String getCartMenuAll(Model model) {
@@ -78,11 +79,11 @@ public class CartRedisController {
      *
      * @param menuKey       redis Key
      * @param cartOptionDto 장바구니에 담길 객체
-     * @return              수정이 잘 이루어지면 Ok 를 반환
+     * @return 수정이 잘 이루어지면 Ok 를 반환
      */
     @PutMapping("/modify-menu/{menuKey}")
     public ResponseEntity<Void> putCartMenuAll(@PathVariable String menuKey,
-                                                @RequestBody List<CartOptionDto> cartOptionDto) {
+                                               @RequestBody List<CartOptionDto> cartOptionDto) {
 
         CartRedisDto cart = cartService.selectCartMenu(String.valueOf(accountIdAware.getAccountId()), menuKey);
         List<CartOptionDto> optionDtoList = new ArrayList<>();
@@ -104,8 +105,8 @@ public class CartRedisController {
     /**
      * 메뉴에 대한 수량을 증가시키는 Controller.
      *
-     * @param menuKey       redis hashKey
-     * @return              수량 변경 후 장바구니 페이지로 Redirect
+     * @param menuKey redis hashKey
+     * @return 수량 변경 후 장바구니 페이지로 Redirect
      */
     @PutMapping("/menu-count-up/{menuKey}")
     public String putCartMenuIncrement(@PathVariable String menuKey) {
@@ -118,8 +119,8 @@ public class CartRedisController {
     /**
      * 메뉴에 대한 수량을 감소시키는 Controller.
      *
-     * @param menuKey       redis hashKey
-     * @return              수량 변경 후 장바구니 페이지로 Redirect
+     * @param menuKey redis hashKey
+     * @return 수량 변경 후 장바구니 페이지로 Redirect
      */
     @PutMapping("/menu-count-down/{menuKey}")
     public String putCartMenuDecrement(@PathVariable String menuKey) {
@@ -132,8 +133,8 @@ public class CartRedisController {
     /**
      * 장바구니에 담긴 해당 메뉴를 삭제하는 Controller.
      *
-     * @param menuKey       redis Key
-     * @return              메뉴 삭제 후 장바구니 페이지로 Redirect
+     * @param menuKey redis Key
+     * @return 메뉴 삭제 후 장바구니 페이지로 Redirect
      */
     @DeleteMapping("/menu-delete/{menuKey}")
     public String deleteCartMenu(@PathVariable String menuKey) {
@@ -146,7 +147,7 @@ public class CartRedisController {
     /**
      * 장바구니에 담긴 모든 메뉴를 삭제하는 Controller.
      *
-     * @return              모든 메뉴 삭제 후 장바구니 페이지로 Redirect
+     * @return 모든 메뉴 삭제 후 장바구니 페이지로 Redirect
      */
     @DeleteMapping("/menu-del-all")
     public String deleteCartMenuAll() {

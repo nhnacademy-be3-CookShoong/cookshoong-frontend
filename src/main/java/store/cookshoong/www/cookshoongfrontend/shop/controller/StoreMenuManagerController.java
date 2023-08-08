@@ -20,7 +20,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStor
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
@@ -60,8 +59,10 @@ public class StoreMenuManagerController {
         model.addAttribute("storeName", storeName);
 
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
+
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
+
 
         model.addAttribute("storeId", storeId);
         model.addAttribute("menus", menus);
