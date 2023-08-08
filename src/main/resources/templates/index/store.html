@@ -28,6 +28,10 @@
                     <div class="card border-0 flex-fill">
                         <span class="card-header font-weight-bold border-0 bg-white" style="font-size: 40px;"
                               th:text="${store.storeName}"></span>
+                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <strong th:text="'가게 상태 : '"></strong>
+                            <strong th:text="${store.storeStatus}" style="color: red;"></strong>
+                        </p>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>배달 시간 : </strong>60분</p>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>배달 비용 : </strong>4000원</p>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>최소 주문 : </strong>15000원</p>
