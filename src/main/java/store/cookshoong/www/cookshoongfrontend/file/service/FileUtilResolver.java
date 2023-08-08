@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class FileUtilResolver {
-    private final List<FileUtils> fileUtils;
+    private final List<FileUtils> fileUtilList;
 
     public FileUtils getFileService(String locationType){
-        return fileUtils.stream()
-            .filter(fileUtils1 -> fileUtils1.matchStorageType(locationType))
+        return fileUtilList.stream()
+            .filter(fileUtils -> fileUtils.matchStorageType(locationType))
             .findAny()
-            .orElse(fileUtils.get(0));
+            .orElse(fileUtilList.get(0));
     }
 }
