@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card border-0">
+                    <div class="card border-0" th:if="${storeStatus == '영업중'}">
                         <button class="btn btn-warning" type="submit"
                                 style="font-size: 20px;
                                 font-weight: bold;
@@ -114,6 +114,16 @@
                                 border-top-left-radius: 0px;
                                 border-top-right-radius: 0px;">
                             메뉴 담기
+                        </button>
+                    </div>
+                    <div class="card border-0" th:if="${storeStatus != '영업중'}">
+                        <button class="btn btn-warning" type="submit" disabled
+                                style="font-size: 20px;
+                                font-weight: bold;
+                                color: white;
+                                border-top-left-radius: 0px;
+                                border-top-right-radius: 0px;">
+                            매장이 영업중이 아닙니다
                         </button>
                     </div>
                 </section>
@@ -147,7 +157,6 @@
             console.log("ID:" + optionId);
             console.log("NAME:" + optionName);
             console.log("PRICE:" + optionPrice);
-
 
             const optionIdHiddenInput = document.createElement("input");
             optionIdHiddenInput.type = "hidden";
@@ -184,7 +193,6 @@
             console.log("ID:" + optionId);
             console.log("NAME:" + optionName);
             console.log("PRICE:" + optionPrice);
-
 
             const optionIdHiddenInput = document.createElement("input");
             optionIdHiddenInput.type = "hidden";

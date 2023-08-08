@@ -26,4 +26,5 @@ public class SelectStoreForUserResponseDto {
     private List<SelectProvableStoreCouponPolicyResponseDto> provableCouponPolicies;
     private String locationType;
     private String domainName;
+    private String storeStatus;
 }
