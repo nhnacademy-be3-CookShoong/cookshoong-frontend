@@ -32,10 +32,23 @@
                             <strong th:text="'가게 상태 : '"></strong>
                             <strong th:text="${store.storeStatus}" style="color: red;"></strong>
                         </p>
-                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>배달 시간 : </strong>60분</p>
-                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>배달 비용 : </strong>4000원</p>
-                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>최소 주문 : </strong>15000원</p>
-                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;"><strong>가게 위치 : </strong>400m</p>
+                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <strong>최소 주문 : </strong>
+                            <strong th:text="${store.minimumOrderPrice} + '원'"></strong>
+                        </p>
+                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <strong>배달 시간 : </strong>
+                            <strong th:text="${store.deliveryTime} + '분'"></strong>
+                        </p>
+                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <strong>배달 비용 : </strong>
+                            <strong th:text="${store.totalDeliveryCost} + '원'"></strong>
+                            <span th:text="' (기본 배달 비용 : ' + ${store.deliveryCost} + '원)'"></span>
+                        </p>
+                        <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <strong>가게 위치 : </strong>
+                            <strong th:text="${store.distance} + 'm'"></strong>
+                        </p>
                         <span class="m-3 pt-1 pb-1"
                               style="height: auto; padding-left: 1.25rem; padding-right: 1.25rem; border-radius: 1rem; background-color: whitesmoke"
                               th:utext="${store.description}">
@@ -56,13 +69,15 @@
 
                 <div class="card">
                     <div class="row p-2">
-                        <div th:each="policy : ${store.provableCouponPolicies}" class="col-12 col-xl-4" style="max-width: 400px;">
+                        <div th:each="policy : ${store.provableCouponPolicies}" class="col-12 col-xl-4"
+                             style="max-width: 400px;">
                             <div class="w-100">
                                 <form th:action="@{/coupon/provide}" th:method="post">
                                     <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2"
                                             th:data-policy-id="${policy.couponPolicyId}" type="submit"
                                             style="border-radius: 6px; border-width: 6px; height: 160px;">
-                                        <div class="col-sm-12 text-left notification-container" style="font-size: 20px; font-weight: bold"
+                                        <div class="col-sm-12 text-left notification-container"
+                                             style="font-size: 20px; font-weight: bold"
                                              th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
 
                                             <div th:case="CouponTypeCashVo">
@@ -88,7 +103,8 @@
                                                 </div>
                                             </div>
 
-                                            <input type="hidden" name="couponPolicyId" th:value="${policy.couponPolicyId}">
+                                            <input type="hidden" name="couponPolicyId"
+                                                   th:value="${policy.couponPolicyId}">
                                         </div>
                                     </button>
                                 </form>

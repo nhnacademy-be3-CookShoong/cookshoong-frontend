@@ -156,7 +156,7 @@ public class StoreAdapter {
      * @param storeId 매장 아이디
      * @return response select store for user response dto
      */
-    public ResponseEntity<SelectStoreForUserResponseDto> fetchStoreForUser(Long storeId) {
+    public ResponseEntity<SelectStoreForUserResponseDto> fetchStoreForUser(Long addressId, Long storeId) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -164,6 +164,7 @@ public class StoreAdapter {
             .pathSegment("stores")
             .pathSegment("{storeId}")
             .pathSegment("info")
+            .queryParam("addressId", addressId)
             .buildAndExpand(storeId)
             .toUri();
 

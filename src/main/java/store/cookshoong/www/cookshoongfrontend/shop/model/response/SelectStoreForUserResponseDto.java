@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableStoreCouponPolicyResponseDto;
 
 /**
@@ -22,9 +23,14 @@ public class SelectStoreForUserResponseDto {
     private String mainPlace;
     private String detailPlace;
     private String description;
-    private String savedName;
-    private List<SelectProvableStoreCouponPolicyResponseDto> provableCouponPolicies;
+    private Integer minimumOrderPrice;
+    private Integer deliveryCost;
     private String locationType;
     private String domainName;
+    private String savedName;
+    private List<SelectProvableStoreCouponPolicyResponseDto> provableCouponPolicies;
     private String storeStatus;
+    private Integer distance;
+    private Integer totalDeliveryCost;
+    private Integer deliveryTime;
 }
