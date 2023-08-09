@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.request.UpdateAccountInfoRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
@@ -105,7 +106,6 @@ public class OnBoardingViewController {
     @PostMapping("/sign-up")
     public String postSignUpForm(@RequestParam String userType, @Valid SignUpRequestDto signUpRequestDto,
                                  BindingResult bindingResult, Model model) {
-        // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
         if (!userType.equals("cus") && !userType.equals("biz")) {
             return "redirect:/sign-up-choice";
         }
@@ -124,7 +124,6 @@ public class OnBoardingViewController {
     @PostMapping("/sign-up-oauth2")
     public String postOAuth2SignUpForm(@Valid OAuth2SignUpRequestDto oAuth2SignUpRequestDto,
                                        BindingResult bindingResult, Model model, HttpSession session) throws JsonProcessingException {
-        // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
         if (bindingResult.hasErrors()) {
             model.addAttribute("oAuth2SignUpRequestDto", oAuth2SignUpRequestDto);
             return "account/register-form-oauth2";
