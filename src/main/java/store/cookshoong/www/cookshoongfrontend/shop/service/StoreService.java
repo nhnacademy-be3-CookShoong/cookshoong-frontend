@@ -94,8 +94,8 @@ public class StoreService {
      * @param storeId 매장 아이디
      * @return the select store for user response dto
      */
-    public SelectStoreForUserResponseDto selectStoreForUser(Long storeId) {
-        ResponseEntity<SelectStoreForUserResponseDto> response = storeAdapter.fetchStoreForUser(storeId);
+    public SelectStoreForUserResponseDto selectStoreForUser(Long addressId, Long storeId) {
+        ResponseEntity<SelectStoreForUserResponseDto> response = storeAdapter.fetchStoreForUser(addressId, storeId);
         if(!response.getStatusCode().is2xxSuccessful()){
             throw new SelectStoreFailException(response.getStatusCode());
         }

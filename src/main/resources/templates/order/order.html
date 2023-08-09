@@ -35,6 +35,11 @@
                                         <span class="font-weight-bold" th:utext="${item.menuOptName}" style="font-size: 1.2rem"></span>
                                     </div>
                                     <div class="text-right">
+                                        <form th:action="@{/carts/menu-delete/{menuKey}(menuKey=${item.hashKey})}" th:method="DELETE" class="mb-3 mr-2">
+                                            <button class="btn m-0 p-0" style="color: #000000" type="submit">
+                                                <i class="mdi mdi-close"></i>
+                                            </button>
+                                        </form>
                                         <span class="p-2 font-weight-bold" th:text="${#numbers.formatInteger(item.totalMenuPrice,3,'COMMA')}+'원'" style="font-size: 1.1rem">
                                         </span>
                                     </div>
@@ -45,6 +50,11 @@
                                          th:onclick="'window.location.href=\'/index/store/' + ${item.storeId} + '\''">
                                         <img style="border-radius: 3px; object-fit: cover; width: 100px; height: 100px;" th:src="${item.menu.menuImage}"
                                              onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="mb-3">
+                                            <span class="menu-count" th:text="${item.count} + 'EA'"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +110,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -118,10 +118,11 @@ public class MainViewController {
     public String getIndexStore(@PathVariable("storeId") Long storeId, Model model) {
 
         Long accountId = accountIdAware.getAccountId();
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
-        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
+        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
 
@@ -146,6 +147,7 @@ public class MainViewController {
                                Model model) {
 
         Long accountId = accountIdAware.getAccountId();
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
@@ -157,7 +159,7 @@ public class MainViewController {
             model.addAttribute("cartStoreId", storeId);
         }
 
-        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(storeId);
+        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
@@ -221,39 +223,6 @@ public class MainViewController {
     }
 
     /**
-     * 매장 주문 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-order-manager")
-    public String getStoreOrderManager() {
-        return "store-order-manager";
-    }
-
-    /**
-     * 매장 배송 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-delivery-manager")
-    public String getStoreDeliveryManager() {
-        return "store-delivery-manager";
-    }
-
-    /**
-     * 매장 결제 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-charge-manager")
-    public String getStoreChargeManager() {
-        return "store-charge-manager";
-    }
-
-    /**
      * 매장 쿠폰 관리 페이지를 맵핑.
      *
      * @author papel
@@ -262,28 +231,6 @@ public class MainViewController {
     @GetMapping("stores/{storeId}/store-coupon-manager")
     public String getStoreCouponManager(@PathVariable Long storeId) {
         return CouponManageInStoreController.redirectStoreCouponIndex(storeId);
-    }
-
-    /**
-     * 매장 포인트 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-point-manager")
-    public String getStorePointManager() {
-        return "store-point-manager";
-    }
-
-    /**
-     * 매장 리뷰 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-review-manager")
-    public String getStoreReviewManager() {
-        return "store-review-manager";
     }
 
     /**
