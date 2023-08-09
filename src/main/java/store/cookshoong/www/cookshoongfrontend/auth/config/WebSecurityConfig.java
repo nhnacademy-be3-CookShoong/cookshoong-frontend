@@ -36,7 +36,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
  * @since 2023.07.13
  */
 @SuppressWarnings("checkstyle:MemberName")
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {

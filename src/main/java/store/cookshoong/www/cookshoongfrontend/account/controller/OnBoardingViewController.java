@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
-import store.cookshoong.www.cookshoongfrontend.account.model.request.UpdateAccountInfoRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccountAddressRequestDto;
