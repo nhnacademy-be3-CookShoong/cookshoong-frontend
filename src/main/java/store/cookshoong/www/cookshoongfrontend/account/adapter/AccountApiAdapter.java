@@ -113,4 +113,26 @@ public class AccountApiAdapter {
 
         return restTemplate.exchange(request, UpdateAccountStatusResponseDto.class);
     }
+
+
+    /**
+     * loginId를 통해 회원존재여부를 확인하는 메서드.
+     *
+     * @param loginId the login id
+     * @return the response entity
+     */
+    public ResponseEntity<Void> fetchAccountExistence(String loginId) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path(ACCOUNT_API_PREFIX)
+            .pathSegment("login-id-exists")
+            .pathSegment("{loginId}")
+            .buildAndExpand(loginId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .build();
+
+        return restTemplate.exchange(request, Void.class);
+    }
 }
