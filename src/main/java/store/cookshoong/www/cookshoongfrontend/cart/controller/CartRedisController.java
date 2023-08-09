@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.cart.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,6 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
-import store.cookshoong.www.cookshoongfrontend.file.service.FileUtilResolver;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
@@ -39,7 +40,6 @@ public class CartRedisController {
     private final CartService cartService;
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountIdAware accountIdAware;
-    private static final String NO_MENU = "NO_KEY";
 
     /**
      * 회원 장바구니에 담겨있는 메뉴를 보여주는 Controller.

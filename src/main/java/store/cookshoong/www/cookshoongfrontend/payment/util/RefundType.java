@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 public enum RefundType {
 
-    FULL("full"),
-    PARTIAL("partial");
+    FULL("FULL"),
+    PARTIAL("PARTIAL");
     RefundType(String type) {
         this.type = type;
     }
