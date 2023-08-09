@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.request.UpdateAccountInfoRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.AccountInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.AccountStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.UpdateAccountStatusResponseDto;
@@ -137,6 +138,28 @@ public class AccountApiAdapter {
 
         return restTemplate.exchange(request, Void.class);
     }
+
+    /**
+     * 마이페이지에서 보이는 정보에 대한 수정을 요청하는 메서드.
+     *
+     * @param accountId                   the account id
+     * @param updateAccountInfoRequestDto the update account info request dto
+     */
+    public void executeChangeMyPageInfo(Long accountId, UpdateAccountInfoRequestDto updateAccountInfoRequestDto) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path(ACCOUNT_API_PREFIX)
+            .pathSegment("{accountId}")
+            .buildAndExpand(accountId)
+            .toUri();
+
+        RequestEntity<UpdateAccountInfoRequestDto> request = RequestEntity.put(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(updateAccountInfoRequestDto);
+
+        restTemplate.exchange(request, Void.class);
+    }
+
     /**
      * 회원의 모든 정보에 대한 조회를 요청하는 메서드.
      *
