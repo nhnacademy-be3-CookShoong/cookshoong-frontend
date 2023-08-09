@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.account.adapter.AccountApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.account.exception.RegisterFailureException;
 import store.cookshoong.www.cookshoongfrontend.account.exception.UpdateAccountStatusFailureException;
@@ -70,6 +71,18 @@ public class AccountService {
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new UpdateAccountStatusFailureException();
+        }
+    }
+
+    public boolean selectLoginIdExists(String loginId) {
+        try {
+            accountApiAdapter.fetchAccountExistence(loginId);
+            return true;
+        } catch (HttpClientErrorException e) {
+            if (e.getRawStatusCode() == 404) {
+                return false;
+            }
+            throw e;
         }
     }
 }

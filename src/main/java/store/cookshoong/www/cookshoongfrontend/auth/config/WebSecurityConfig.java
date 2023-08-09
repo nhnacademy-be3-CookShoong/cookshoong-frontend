@@ -52,7 +52,7 @@ public class WebSecurityConfig {
     private final DormancyAccountFilter dormancyAccountFilter = new DormancyAccountFilter();
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
         "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2",
-        "/logout"};
+        "/logout", "/proxy/**"};
 
     /**
      * 시큐리티 필터 체인 설정빈.
