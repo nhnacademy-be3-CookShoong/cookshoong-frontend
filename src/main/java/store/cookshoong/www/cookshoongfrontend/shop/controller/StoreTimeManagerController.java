@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.time.LocalDate;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,9 +10,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBusinessHourRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateHolidayRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectBusinessHourResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectHolidayResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreTimeManagerService;
 
 /**
@@ -23,7 +31,9 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreTimeManagerServ
 @RequiredArgsConstructor
 public class StoreTimeManagerController {
 
+    private final StoreService storeService;
     private final StoreTimeManagerService storeTimeManagerService;
+    private final AccountIdAware accountIdAware;
 
     /**
      * 매장 영업시간 관리 페이지를 맵핑.
@@ -32,11 +42,25 @@ public class StoreTimeManagerController {
      * @since 2023.07.10
      */
     @GetMapping("/stores/{storeId}/store-time-manager")
-    public String getSelectStoreTimeManager(@ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
-                                            @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
-                                            Model model) {
-        model.addAttribute("createBusinessHourRequestDto", createBusinessHourRequestDto);
-        model.addAttribute("createHolidayRequestDto", createHolidayRequestDto);
+    public String getSelectStoreTimeManager(
+        @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
+        @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
+        @PathVariable("storeId") Long storeId,
+        Model model) {
+
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+        String storeName = storeService.selectStoreInfo(accountId, storeId).getStoreName();
+        model.addAttribute("storeName", storeName);
+
+        List<SelectBusinessHourResponseDto> businessHourList = storeTimeManagerService.selectBusinessHours(storeId);
+        List<SelectHolidayResponseDto> holidayList = storeTimeManagerService.selectHolidays(storeId);
+
+        model.addAttribute("nowTime", LocalDate.now());
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("businessHours", businessHourList);
+        model.addAttribute("holidays", holidayList);
         return "store/info/store-time-manager";
     }
 
@@ -46,11 +70,13 @@ public class StoreTimeManagerController {
      * @author papel
      * @since 2023.07.10
      */
-    @PostMapping("/store-time-manager-businesshour")
-    public String postCreateBusinessHour(@Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
-                                    BindingResult bindingResult) {
-        storeTimeManagerService.createBusinessHour(1L, createBusinessHourRequestDto);
-        return "redirect:/";
+    @PostMapping("/stores/{storeId}/business-hour")
+    public String postCreateBusinessHour(
+        @PathVariable("storeId") Long storeId,
+        @Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
+        BindingResult bindingResult) {
+        storeTimeManagerService.createBusinessHour(storeId, createBusinessHourRequestDto);
+        return "redirect:" + "/stores/" + storeId + "/store-time-manager";
     }
 
     /**
@@ -59,11 +85,13 @@ public class StoreTimeManagerController {
      * @author papel
      * @since 2023.07.10
      */
-    @PostMapping("/store-time-manager-holiday")
-    public String postCreateHoliday(@Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
-                                         BindingResult bindingResult) {
-        storeTimeManagerService.createHoliday(1L, createHolidayRequestDto);
-        return "redirect:/";
+    @PostMapping("/stores/{storeId}/holiday")
+    public String postCreateHoliday(
+        @Valid @ModelAttribute("createHolidayRequestDto") CreateHolidayRequestDto createHolidayRequestDto,
+        @PathVariable("storeId") Long storeId,
+        BindingResult bindingResult) {
+        storeTimeManagerService.createHoliday(storeId, createHolidayRequestDto);
+        return "redirect:" + "/stores/" + storeId + "/store-time-manager";
     }
 
     /**
@@ -72,9 +100,11 @@ public class StoreTimeManagerController {
      * @author papel
      * @since 2023.07.10
      */
-    @DeleteMapping("/store-time-manager-businesshour")
-    public String deleteBusinessHour() {
-        return "redirect:/";
+    @DeleteMapping("/stores/{storeId}/business-hour/{businessHourId}")
+    public String deleteBusinessHour(
+        @PathVariable("storeId") Long storeId, @PathVariable("businessHourId") Long businessHourId) {
+        storeTimeManagerService.deleteBusinessHour(storeId, businessHourId);
+        return "redirect:" + "/stores/" + storeId + "/store-time-manager";
     }
 
     /**
@@ -83,8 +113,10 @@ public class StoreTimeManagerController {
      * @author papel
      * @since 2023.07.10
      */
-    @DeleteMapping("/store-time-manager-holiday")
-    public String deleteHoliday() {
-        return "redirect:/";
+    @DeleteMapping("/stores/{storeId}/holiday/{holidayId}")
+    public String deleteHoliday(
+        @PathVariable("storeId") Long storeId, @PathVariable("holidayId") Long holidayId) {
+        storeTimeManagerService.deleteHoliday(storeId, holidayId);
+        return "redirect:" + "/stores/" + storeId + "/store-time-manager";
     }
 }

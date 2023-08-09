@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <title>Untitled</title>
+</head>
+<body layout:fragment="content">
+<header th:replace="fragments :: mypage-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments :: mypage-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">영업점 메뉴 관리</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">메뉴 관리</h4>
+                            <div class="col-12 grid-margin">
+                                <div class="row border-top pb-3 pt-3 justify-content-between" th:each="menu, i:${menus}">
+                                    <div class="row" style="width: 600px;">
+                                        <div class="align-content-end text-md-center border-info mr-3 mb-2"
+                                             style="max-width: 400px">
+                                            <img th:src="${menu.getSavedName()}"
+                                                 onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                                 style="object-fit: cover; width: 130px; height: 130px;">
+                                        </div>
+                                        <div>
+                                            <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
+                                            <p><i class="mdi mdi mdi-file-powerpoint-box"
+                                                  style="color: orange; font-size: 1.1rem"></i>
+                                                <span class="pr-2" style="font-size: 1.2rem"
+                                                      th:text="${menu.earningRate} + '%'"></span>
+                                                <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
+                                                <span class="pr-2" style="font-size: 1.2rem"
+                                                      th:text="${menu.cookingTime} + '분'"></span></p>
+                                            <div class="pt-2">
+                                                <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                   th:if="${menu.price >= 1000}" th:text="${#numbers.formatInteger(menu.price,3,'COMMA')} + ' 원'"></p>
+                                                <p class="font-weight-bold" style="font-size: 1.3rem"
+                                                   th:if="${menu.price < 1000}" th:text="${menu.price} + ' 원'"></p>
+                                            </div>
+                                            <div class="pt-1" style="width: 200px;">
+                                                <span th:utext="${menu.description}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;" type="button"
+                                                th:id="${menu.id}"
+                                                data-toggle="modal"
+                                                data-target="#menuAdd"
+                                                th:data-targetmenuid="${menu.id}"
+                                                th:data-name="${menu.name}"
+                                                th:data-price="${menu.price}"
+                                                th:data-description="${menu.description}"
+                                                th:data-cookingtime="${menu.cookingTime}"
+                                                th:data-earningrate="${menu.earningRate}"
+                                                th:data-menugroups="${menu.menuGroups}"
+                                                th:data-optiongroups="${menu.optionGroups}"
+                                        >수정
+                                        </button>
+                                        <form th:action="@{'/stores/' + ${storeId} + '/store-menu-manager/' + ${menu.id} }"
+                                              th:method="delete">
+                                            <button class="btn btn-primary m-1" style="width: 85px; height: 40px;" type="submit">
+                                                삭제
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="border-top pt-2 pb-2">
+                                    <div class="col">
+                                        <button class="btn btn-info w-100 mb-1" type="button"
+                                                data-toggle="modal"
+                                                data-target="#menuAdd">추가
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+</body>
+</html>

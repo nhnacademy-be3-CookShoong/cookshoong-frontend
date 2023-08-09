@@ -29,4 +29,13 @@ public class MyPageController {
 
         return "account/my-page";
     }
+
+    @GetMapping("/my-address")
+    public String getMyAddress(Model model) {
+        Long accountId = accountIdAware.getAccountId();
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
+        return "account/my-page";
+    }
 }
