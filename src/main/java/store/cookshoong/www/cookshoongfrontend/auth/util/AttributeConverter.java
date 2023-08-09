@@ -29,7 +29,7 @@ public class AttributeConverter {
         String nickname = attributes.get("nickname") == null ? null : ((String) attributes.get("nickname"));
         String email = attributes.get("email") == null ? null : ((String) attributes.get("email"));
         LocalDate birthday = attributes.get("birthdayMMdd") == null ? null : convertMMddBirthday(attributes.get("birthdayMMdd"));
-        String phoneNumber = attributes.get("mobile") == null ? null : ((String) attributes.get("mobile"));
+        String phoneNumber = attributes.get("mobile") == null ? null : convertKorPhoneNumber((String) attributes.get("mobile"));
         CreateAccountAddressRequestDto address = new CreateAccountAddressRequestDto();
         return new SignUpRequestDto(loginId, password, name, nickname, email, birthday, phoneNumber, address);
     }
@@ -40,5 +40,16 @@ public class AttributeConverter {
         int month = Integer.parseInt(birthday.substring(0, 2));
         int day = Integer.parseInt(birthday.substring(2));
         return LocalDate.of(LocalDate.now().getYear(), month, day);
+    }
+
+    private static String convertKorPhoneNumber(String phoneNumber) {
+        return convertPhoneNumber("82", phoneNumber);
+    }
+
+    private static String convertPhoneNumber(String globalCode, String phoneNumber) {
+        if (!phoneNumber.startsWith(globalCode)) {
+            return phoneNumber;
+        }
+        return phoneNumber.replaceFirst(globalCode, "0");
     }
 }
