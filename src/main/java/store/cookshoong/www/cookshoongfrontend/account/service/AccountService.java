@@ -85,4 +85,17 @@ public class AccountService {
             throw e;
         }
     }
+
+    /**
+     * 마이페이지에서 필요한 정보들을 조회하는 메서드.
+     *
+     * @param accountId the account id
+     * @return the account my page info
+     */
+    public AccountMyPageInfo selectAccountMypageInfo(Long accountId) {
+        return new AccountMyPageInfo(Objects.requireNonNull(accountApiAdapter
+            .fetchAccountMyPageInfo(accountId)
+            .getBody())
+        );
+    }
 }

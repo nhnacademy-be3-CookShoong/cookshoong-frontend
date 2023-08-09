@@ -10,8 +10,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.response.AccountInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.AccountStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.UpdateAccountStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountMyPageInfo;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 
 /**
@@ -134,5 +136,24 @@ public class AccountApiAdapter {
             .build();
 
         return restTemplate.exchange(request, Void.class);
+    }
+    /**
+     * 회원의 모든 정보에 대한 조회를 요청하는 메서드.
+     *
+     * @param accountId the account id
+     * @return the account my page info
+     */
+    public ResponseEntity<AccountInfoResponseDto> fetchAccountMyPageInfo(Long accountId) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .path(ACCOUNT_API_PREFIX)
+            .pathSegment("{accountId}")
+            .buildAndExpand(accountId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .build();
+
+        return restTemplate.exchange(request, AccountInfoResponseDto.class);
     }
 }
