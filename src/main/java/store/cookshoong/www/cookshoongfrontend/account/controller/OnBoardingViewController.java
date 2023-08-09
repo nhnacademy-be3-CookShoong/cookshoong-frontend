@@ -105,7 +105,6 @@ public class OnBoardingViewController {
     @PostMapping("/sign-up")
     public String postSignUpForm(@RequestParam String userType, @Valid SignUpRequestDto signUpRequestDto,
                                  BindingResult bindingResult, Model model) {
-        // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
         if (!userType.equals("cus") && !userType.equals("biz")) {
             return "redirect:/sign-up-choice";
         }
@@ -124,7 +123,6 @@ public class OnBoardingViewController {
     @PostMapping("/sign-up-oauth2")
     public String postOAuth2SignUpForm(@Valid OAuth2SignUpRequestDto oAuth2SignUpRequestDto,
                                        BindingResult bindingResult, Model model, HttpSession session) throws JsonProcessingException {
-        // TODO: 폼 작성에 회원ID 중복여부 체크 필요.
         if (bindingResult.hasErrors()) {
             model.addAttribute("oAuth2SignUpRequestDto", oAuth2SignUpRequestDto);
             return "account/register-form-oauth2";

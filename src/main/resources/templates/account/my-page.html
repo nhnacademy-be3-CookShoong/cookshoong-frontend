@@ -4,13 +4,77 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>Untitled</title>
+    <title>마이페이지</title>
+    <script src="/assets/js/account/my-page.js"></script>
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: mypage-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: mypage-site-nav"></nav>
+    <div class="main-panel w-100">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <form class="col-12 p-0" th:action="@{/my-page}" th:object="${updateAccountInfoRequestDto}" method="post">
+                        <div class="card">
+                            <div style="display: inline-block" class="card-body">
+                                <h1 class="font-weight-bold"
+                                    th:text="${accountInfo.rank + ' 등급 '}"></h1>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="flex-container">
+                                    <h4 class="card-title flex-1">회원 정보 </h4>
+                                    <button style="display: none" class="btn btn-inverse-warning" id="update-account-info-btn" type="submit">
+                                        저장
+                                    </button>
+                                </div>
+                                <div class="form-group"><label for="loginId">아이디</label>
+                                    <input type="text" class="form-control" id="loginId"
+                                           th:value="${accountInfo.loginId}"
+                                           readonly>
+                                </div>
+                                <div class="form-group"><label for="name">이름</label>
+                                    <input type="text" class="form-control form-control-lg" id="name"
+                                           th:value="${accountInfo.name}" placeholder="이름" readonly>
+                                </div>
+                                <div class="form-group"><label for="nickname">닉네임</label>
+                                    <input type="text" class="form-control form-control-lg modifiable-element" id="nickname"
+                                           name="nickname"
+                                           th:value="${accountInfo.nickname}" placeholder="닉네임 (30글자 이내)"
+                                           required>
+                                    <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">
+                                        nickname Error</p>
+                                </div>
+                                <div class="form-group"><label for="email">이메일</label>
+                                    <input type="email" class="form-control form-control-lg modifiable-element" id="email" name="email"
+                                           th:value="${accountInfo.email}"
+                                           placeholder="you@example.com"
+                                           required>
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
+                                </div>
+                                <div class="form-group"><label for="birthday">생일</label>
+                                    <input type="date" class="form-control form-control-lg" id="birthday"
+                                           name="birthday" th:value="${accountInfo.birthday}"
+                                           placeholder="생년월일" readonly>
+                                </div>
+                                <div class="form-group"><label for="phoneNumber">전화번호</label>
+                                    <input type="text" class="form-control form-control-lg modifiable-element" id="phoneNumber"
+                                           name="phoneNumber"
+                                           th:value="${accountInfo.phoneNumber}"
+                                           placeholder="전화번호 ('-' 제외)" required>
+                                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+                                        phoneNumber Error</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
 </body>
