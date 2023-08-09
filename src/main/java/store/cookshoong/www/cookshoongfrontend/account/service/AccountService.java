@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.account.service;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +9,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.account.adapter.AccountApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.account.exception.RegisterFailureException;
 import store.cookshoong.www.cookshoongfrontend.account.exception.UpdateAccountStatusFailureException;
+import store.cookshoong.www.cookshoongfrontend.account.model.request.UpdateAccountInfoRequestDto;
+import store.cookshoong.www.cookshoongfrontend.account.model.vo.AccountMyPageInfo;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.OAuth2SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.request.SignUpRequestDto;
 import store.cookshoong.www.cookshoongfrontend.account.model.response.UpdateAccountStatusResponseDto;
@@ -74,6 +77,12 @@ public class AccountService {
         }
     }
 
+    /**
+     * 로그인 아이디 기준으로 존재여부를 확인하는 메서드.
+     *
+     * @param loginId the login id
+     * @return the boolean
+     */
     public boolean selectLoginIdExists(String loginId) {
         try {
             accountApiAdapter.fetchAccountExistence(loginId);
@@ -84,5 +93,22 @@ public class AccountService {
             }
             throw e;
         }
+    }
+
+    /**
+     * 마이페이지에서 필요한 정보들을 조회하는 메서드.
+     *
+     * @param accountId the account id
+     * @return the account my page info
+     */
+    public AccountMyPageInfo selectAccountMypageInfo(Long accountId) {
+        return new AccountMyPageInfo(Objects.requireNonNull(accountApiAdapter
+            .fetchAccountMyPageInfo(accountId)
+            .getBody())
+        );
+    }
+
+    public void updateAccountMyPageInfo(Long accountId, UpdateAccountInfoRequestDto updateAccountInfoRequestDto) {
+        accountApiAdapter.executeChangeMyPageInfo(accountId, updateAccountInfoRequestDto);
     }
 }

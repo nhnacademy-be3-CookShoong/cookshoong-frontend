@@ -36,12 +36,15 @@ public class OAuth2SignUpRequestDto {
     public void updateIfAbsent(SignUpRequestDto updatedSignUpRequestDto) {
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         Map<String, Object> signUpRequestDtoMap = objectMapper.convertValue(this.signUpRequestDto,
-            new TypeReference<HashMap<String, Object>>() {});
+            new TypeReference<HashMap<String, Object>>() {
+            });
         Map<String, Object> updatedSignUpRequestDtoMap = objectMapper.convertValue(updatedSignUpRequestDto,
-            new TypeReference<HashMap<String, Object>>() {});
+            new TypeReference<HashMap<String, Object>>() {
+            });
 
         updatedSignUpRequestDtoMap.forEach((field, value) -> {
-            if (signUpRequestDtoMap.get(field) == null || field.equals("createAccountAddressRequestDto")) {
+            if (signUpRequestDtoMap.get(field) == null || field.equals("birthday")
+                || field.equals("createAccountAddressRequestDto")) {
                 signUpRequestDtoMap.put(field, value);
             }
         });
