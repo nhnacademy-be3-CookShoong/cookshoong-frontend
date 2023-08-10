@@ -140,3 +140,23 @@
     background-color: #fa2828;
     border-color: #fa2828;
 }
+
+.cart button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ffa636;
+    color: #504c4c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.odd-cart-item {
+    background-color: #e8eff9; /* Replace with your desired color */
+}
+
+.cart-item {
+    margin-bottom: 10px; /* 원하는 크기로 조정하세요 */
+}
