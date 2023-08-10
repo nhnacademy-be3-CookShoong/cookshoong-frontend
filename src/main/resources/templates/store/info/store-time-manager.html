@@ -14,131 +14,97 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <form class="col-12 p-0" th:action="@{/store-time-manager-businesshour}"
-                      th:object="${createBusinessHourRequestDto}" method="post">
-
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h1 class="font-weight-bold">영업시간 관리 페이지</h1>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">영업시간 관리 페이지</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">영업시간 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 pr-0">요일</th>
+                                        <th class="pl-0 pr-0">영업시작<br>시각</th>
+                                        <th class="pl-0 pr-0">영업종료<br>시각</th>
+                                        <th class="pl-0 pr-0">영업시간 삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="businessHour, i:${businessHours}">
+                                        <td class="pl-0 pr-0">
+                                            <span th:text="${businessHour.dayCodeName}"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0">
+                                            <span th:text="${businessHour.openHour}"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0">
+                                            <span th:text="${businessHour.closeHour}"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0" style="width: 150px;">
+                                            <form th:action="@{'/stores/'+${storeId}+'/business-hour/' + ${businessHour.id } }"
+                                                  th:method="delete">
+                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">영업시간 관리</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>요일</th>
-                                            <th>영업시작시</th>
-                                            <th>영업종료시</th>
-                                            <th>영업시간 삭제</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>월요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>화요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>수요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>목요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>금요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>토요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>일요일</td>
-                                            <td>09:00 시</td>
-                                            <td>21:00 시</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <form class="col-12 p-0" th:action="@{'/stores/'+ ${storeId} + '/business-hour'}"
+                              th:object="${createBusinessHourRequestDto}"
+                              method="post">
                             <div class="card-body">
                                 <h4 class="card-title">영업시간 추가</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>요일</th>
-                                            <th>영업시작시</th>
-                                            <th>영업종료시</th>
+                                            <th class="pl-0 pr-0">요일</th>
+                                            <th class="pl-0 pr-0">영업시작<br>시각</th>
+                                            <th class="pl-0 pr-0">영업종료<br>시각</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>
-                                                <select class="js-example-basic-single w-100" name="dayCodeName">
-                                                    <option value="">요일 선택</option>
-                                                    <option value="월요일">월요일</option>
-                                                    <option value="화요일">화요일</option>
-                                                    <option value="수요일">수요일</option>
-                                                    <option value="목요일">목요일</option>
-                                                    <option value="금요일">금요일</option>
-                                                    <option value="토요일">토요일</option>
-                                                    <option value="일요일">일요일</option>
-                                                </select>
-                                            </td>
-                                            <td>
+                                            <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control" name="openHour">
+                                                        <select class="form-control w-100" style="color: black"
+                                                                name="dayCodeName">
+                                                            <option value="">요일 선택</option>
+                                                            <option value="월요일">월요일</option>
+                                                            <option value="화요일">화요일</option>
+                                                            <option value="수요일">수요일</option>
+                                                            <option value="목요일">목요일</option>
+                                                            <option value="금요일">금요일</option>
+                                                            <option value="토요일">토요일</option>
+                                                            <option value="일요일">일요일</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control" name="closeHour">
+                                                        <input type="time" class="form-control p-1" name="openHour">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="pl-1 pr-1">
+                                                <div class="form-group">
+                                                    <div class="input-group col-xs-12">
+                                                        <input type="time" class="form-control p-1" name="closeHour">
                                                     </div>
                                                 </div>
                                             </td>
@@ -146,101 +112,92 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <button class="btn btn-info w-100 mt-2" type="submit">영업시간 추가</button>
                             </div>
-                            <button class="btn btn-info mr-2" type="submit">영업시간 추가</button>
-                        </div>
+                        </form>
                     </div>
-                </form>
-                <form class="col-12 p-0" th:action="@{/store-time-manager-holiday}"
-                      th:object="${createHolidayRequestDto}" method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">휴무일 관리</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>상태</th>
-                                            <th>휴무시작일</th>
-                                            <th>휴무종료일</th>
-                                            <th>휴무일 취소</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <tr>
-                                            <td>완료</td>
-                                            <td>2023 년 2 월 10 일</td>
-                                            <td>2023 년 2 월 11 일</td>
-                                            <td></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>완료</td>
-                                            <td>2023 년 3 월 10 일</td>
-                                            <td>2023 년 3 월 11 일</td>
-                                            <td></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>완료</td>
-                                            <td>2023 년 3 월 10 일</td>
-                                            <td>2023 년 3 월 11 일</td>
-                                            <td></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>예정</td>
-                                            <td>2023 년 4 월 10 일</td>
-                                            <td>2023 년 4 월 11 일</td>
-                                            <td>
-                                                <button class="btn btn-info mr-2" type="submit">휴무일 취소</button>
-                                            </td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">휴무일 관리</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 pr-0">상태</th>
+                                        <th class="pl-0 pr-0">휴무시작<br>일자</th>
+                                        <th class="pl-0 pr-0">휴무종료<br>일자</th>
+                                        <th class="pl-0 pr-0">휴무일 취소</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="holiday, i:${holidays}">
+                                        <td class="pl-0 pr-0">
+                                            <span th:if="${holiday.holidayStartDate.isAfter(nowTime)}" th:text="'예정'"></span>
+                                            <span th:if="${holiday.holidayEndDate.isBefore(nowTime)}" th:text="'완료'"></span>
+                                            <span th:if="${!holiday.holidayStartDate.isAfter(nowTime) and !holiday.holidayEndDate.isBefore(nowTime)}" th:text="'진행중'"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0">
+                                            <span th:text="${holiday.holidayStartDate}"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0">
+                                            <span th:text="${holiday.holidayEndDate}"></span>
+                                        </td>
+                                        <td class="pl-0 pr-0" style="width: 150px;">
+                                            <form th:action="@{'/stores/'+${storeId}+'/holiday/' + ${holiday.id } }"
+                                                  th:method="delete">
+                                                <button th:disabled="${!holiday.holidayStartDate.isAfter(nowTime)}"
+                                                        class="btn btn-info mr-2" type="submit">휴무일 취소</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <form class="col-12 p-0" th:action="@{'/stores/'+ ${storeId} + '/holiday'}"
+                              th:object="${createHolidayRequestDto}" method="post">
                             <div class="card-body">
                                 <h4 class="card-title">휴무일 추가</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>휴무시작일</th>
-                                            <th>휴무종료일</th>
+                                            <th class="pl-0 pr-0">휴무시작<br>일자</th>
+                                            <th class="pl-0 pr-0">휴무종료<br>일자</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>
+                                            <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="date" class="form-control" name="holidayStartDate">
+                                                        <input type="date" class="form-control p-1"
+                                                               name="holidayStartDate">
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="date" class="form-control" name="holidayEndDate">
+                                                        <input type="date" class="form-control p-1"
+                                                               name="holidayEndDate">
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
+                                <button class="btn btn-info w-100 mt-2" type="submit">휴무일 추가</button>
                             </div>
-                            <button class="btn btn-info mr-2" type="submit">휴무일 추가</button>
-                        </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

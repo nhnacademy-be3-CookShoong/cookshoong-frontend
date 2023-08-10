@@ -59,10 +59,8 @@ public class StoreMenuManagerController {
         model.addAttribute("storeName", storeName);
 
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
-
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
-
 
         model.addAttribute("storeId", storeId);
         model.addAttribute("menus", menus);
