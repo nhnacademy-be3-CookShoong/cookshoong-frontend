@@ -50,8 +50,8 @@ public class MyPageController {
     public String postMyPage(@Valid UpdateAccountInfoRequestDto updateAccountInfoRequestDto, BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(updateAccountInfoRequestDto);
-            return "/my-page";
+            model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
+            return "account/my-page";
         }
         accountService.updateAccountMyPageInfo(accountIdAware.getAccountId(), updateAccountInfoRequestDto);
         return "redirect:/my-page";
