@@ -43,15 +43,12 @@ public class MyPageController {
      *
      * @param updateAccountInfoRequestDto the update account info request dto
      * @param bindingResult               the binding result
-     * @param model                       the model
      * @return the string
      */
     @PostMapping("/my-page")
-    public String postMyPage(@Valid UpdateAccountInfoRequestDto updateAccountInfoRequestDto, BindingResult bindingResult,
-                             Model model) {
+    public String postMyPage(@Valid UpdateAccountInfoRequestDto updateAccountInfoRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
-            return "account/my-page";
+            return "redirect:/my-page";
         }
         accountService.updateAccountMyPageInfo(accountIdAware.getAccountId(), updateAccountInfoRequestDto);
         return "redirect:/my-page";
