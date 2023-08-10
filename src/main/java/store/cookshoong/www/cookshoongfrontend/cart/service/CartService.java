@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.cart.service;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +21,6 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 public class CartService {
 
     private final CartAdapter cartAdapter;
-    private static final String CART = "cartKey=";
-    private static final String NO_MENU = "NO_KEY";
 
     /**
      * 회원이 장바구니에 메뉴를 담는 메서드.

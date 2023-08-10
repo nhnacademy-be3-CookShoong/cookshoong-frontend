@@ -11,9 +11,9 @@ import lombok.Getter;
 @Getter
 public enum PaymentType {
 
-    TOSS("toss"),
-    PAYCO("payco"),
-    KAKAO("kakao");
+    TOSS("TOSS"),
+    PAYCO("PAYCO"),
+    NPAY("NPAY");
 
     PaymentType(String type) {
         this.type = type;
