@@ -47,7 +47,6 @@ public class AddressController {
         @ModelAttribute("address") CreateAccountAddressRequestDto createAccountAddressRequestDto,
         Model model) {
 
-
         AddressResponseDto address =
             accountAddressService.selectAccountAddressRenewalAt(account.getAccountId());
 
@@ -62,54 +61,4 @@ public class AddressController {
         return "address/kakao-maps";
     }
 
-    /**
-     * 회원이 주소를 등록하는 메서드.
-     *
-     * @param createAccountAddressRequestDto    회원이 주소를 등록하는 Dto
-     * @param bindingResult                     입력에 대한 검증 결과
-     * @param model                             HTML 로 보낼 데이터
-     * @return                                  현제 주소 등록 페이지로 반환
-     */
-    @PostMapping
-    public String postDoCreateAccountAddress(
-        @ModelAttribute("address") @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("url", "maps");
-            return "address/kakao-maps";
-        }
-
-        accountAddressService.createAccountAddress(account.getAccountId(), createAccountAddressRequestDto);
-
-        return "redirect:/accounts/addresses/maps";
-    }
-
-    /**
-     * 회원이 선택한 주소에 대해 갱신 날짜를 업데이트.
-     *
-     * @param id                        주소 아이디
-     * @return                          현재 주소 등록 페이지로 반환
-     */
-    @PatchMapping("/{id}/select")
-    public String patchSelectAccountAddress(@PathVariable Long id) {
-
-        accountAddressService.updateSelectAccountAddressRenewalAt(account.getAccountId(), id);
-
-        return "redirect:/accounts/addresses/maps";
-    }
-
-    /**
-     * 회원이 등록한 주소를 삭제하는 메서드.
-     *
-     * @param id        주소 아이디
-     * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
-     */
-    @DeleteMapping("/{id}/delete")
-    public String deleteDeleteAccountAddress(@PathVariable Long id) {
-
-        accountAddressService.removeAccountAddress(account.getAccountId(), id);
-
-        return "redirect:/accounts/addresses/maps";
-    }
 }
