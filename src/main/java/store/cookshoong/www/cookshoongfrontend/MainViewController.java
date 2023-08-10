@@ -223,17 +223,6 @@ public class MainViewController {
     }
 
     /**
-     * 매장 쿠폰 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("stores/{storeId}/store-coupon-manager")
-    public String getStoreCouponManager(@PathVariable Long storeId) {
-        return CouponManageInStoreController.redirectStoreCouponIndex(storeId);
-    }
-
-    /**
      * 시스템 관리자를 위한 뷰 페이지를 맵핑.
      *
      * @author koesnam
