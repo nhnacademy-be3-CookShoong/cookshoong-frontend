@@ -9,14 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerchantsResponseDto;
@@ -97,30 +94,4 @@ public class StoreRegisterController {
         String storePath = storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
         return "redirect:" + storePath;
     }
-
-    /**
-     * Patch store status string.
-     *
-     * @param storeId       the store id
-     * @param updateStatus  the update status
-     * @param bindingResult the binding result
-     * @param model         the model
-     * @return the string
-     */
-    @PatchMapping("/stores/{storeId}/status")
-    public String patchStoreStatus(@PathVariable("storeId") Long storeId,
-                                   @Valid @ModelAttribute("updateStatus") UpdateStoreStatusRequestDto updateStatus,
-                                   BindingResult bindingResult,
-                                   Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("UpdateStoreStatusRequestDto", updateStatus);
-            return "redirect:/stores";
-        }
-        Long accountId = accountIdAware.getAccountId();
-
-        storeService.updateStatus(accountId, storeId, updateStatus);
-        return "redirect:/stores";
-    }
-
-
 }

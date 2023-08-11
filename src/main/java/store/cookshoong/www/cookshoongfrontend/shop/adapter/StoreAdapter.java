@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
 
@@ -17,9 +18,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
+import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreCategoryRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreInfoRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreManagerRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreStatusRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
@@ -265,5 +269,127 @@ public class StoreAdapter {
 
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
+    }
+
+    public ResponseEntity<Void> changeStoreManagerInfo(Long accountId, Long storeId, UpdateStoreManagerRequestDto requestDto) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("managerInfo")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+        RequestEntity<UpdateStoreManagerRequestDto> request = RequestEntity.patch(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(requestDto);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
+
+    public ResponseEntity<Void> changeStoreInfo(Long accountId, Long storeId, UpdateStoreInfoRequestDto requestDto) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("storeInfo")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+        RequestEntity<UpdateStoreInfoRequestDto> request = RequestEntity.patch(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(requestDto);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
+
+    public ResponseEntity<Void> changeStoreCategoryInfo(Long accountId, Long storeId, UpdateStoreCategoryRequestDto requestDto) {
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("categoryInfo")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+        RequestEntity<UpdateStoreCategoryRequestDto> request = RequestEntity.patch(uri)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(requestDto);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
+
+    public ResponseEntity<Void> changeStoreImage(Long accountId,
+                                                 Long storeId,
+                                                 MultiValueMap<String, Object> mapRequest) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("storeImage")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+
+        RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.patch(uri)
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(mapRequest);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
+    public ResponseEntity<Void> eraseStoreImage(Long accountId,
+                                                 Long storeId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("storeImage")
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+
+        return restTemplate.exchange(uri,
+            DELETE,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    public ResponseEntity<Void> changeStoreStatus(Long accountId,
+                                                Long storeId, String option) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("status")
+            .queryParam("option", option)
+            .buildAndExpand(accountId, storeId)
+            .toUri();
+
+        return restTemplate.exchange(uri,
+            PATCH,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
     }
 }

@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,6 @@ public class SelectStoreInfoResponseDto {
     private String domainName;
     private Integer minimumOrderPrice;
     private Integer deliveryCost;
+    private String storeStatus;
+    private List<SelectStoreCategoriesDto> storeCategories;
 }
