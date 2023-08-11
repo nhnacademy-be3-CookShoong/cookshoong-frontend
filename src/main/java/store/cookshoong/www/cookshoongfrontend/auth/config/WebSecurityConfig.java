@@ -75,7 +75,6 @@ public class WebSecurityConfig {
             .loginProcessingUrl("/login")
             .successHandler(loginSuccessHandler);
 
-
         http.oauth2Login()
             .loginPage("/login-page")
             .clientRegistrationRepository(clientRegistrationRepository)
