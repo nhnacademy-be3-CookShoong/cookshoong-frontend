@@ -361,7 +361,6 @@ public class StoreAdapter {
             .pathSegment("stores")
             .pathSegment("{storeId}")
             .pathSegment("storeImage")
-            .pathSegment("delete")
             .buildAndExpand(accountId, storeId)
             .toUri();
 
