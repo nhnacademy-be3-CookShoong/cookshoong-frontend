@@ -100,6 +100,14 @@ public class MainViewController {
         return "index/index";
     }
 
+    /**
+     * 매장 기본 랜딩 페이지 페이지 호출 컨트롤러.
+     *
+     * @param addressId  the addressId
+     * @param page       the page
+     * @param size       the size
+     * @return the index
+     */
     @GetMapping("/index/page")
     public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresNotOuted(
         @RequestParam("addressId") Long addressId,
@@ -136,6 +144,15 @@ public class MainViewController {
         return "index/index";
     }
 
+    /**
+     * 매장 검색 랜딩 페이지 페이지 호출 컨트롤러.
+     *
+     * @param keyword    the keywordText
+     * @param addressId  the addressId
+     * @param page       the page
+     * @param size       the size
+     * @return the index
+     */
     @GetMapping("/index/search/page")
     public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresByKeyword(
         @RequestParam("keyword") String keyword,
