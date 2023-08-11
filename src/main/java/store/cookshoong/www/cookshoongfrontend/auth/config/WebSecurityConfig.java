@@ -95,8 +95,7 @@ public class WebSecurityConfig {
 
         http.sessionManagement()
             .sessionFixation()
-            .newSession()
-            .maximumSessions(1);
+            .newSession();
 
         http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
