@@ -116,7 +116,7 @@ public class PaymentController {
      * @param refundRequestDto 전액환불에 필요한 정보
      * @return 주문 목록으로 반환
      */
-    @GetMapping("/refund")
+    @PostMapping("/refund")
     public String getPaymentFullRefund(@Valid CreateFullRefundRequestDto refundRequestDto) {
 
         TossPaymentKeyResponseDto paymentKey = paymentService.selectTossPaymentKey(refundRequestDto.getOrderId());
@@ -133,7 +133,7 @@ public class PaymentController {
      * @param partialRefundRequestDto 부분환불에 필요한 정보
      * @return 주문 목록으로 반환
      */
-    @GetMapping("/refund/partial")
+    @PostMapping("/refund/partial")
     public String getPaymentPartialRefund(@Valid CreatePartialRefundRequestDto partialRefundRequestDto) {
 
         paymentService.isRefundAmountExceedsChargedAmount(
