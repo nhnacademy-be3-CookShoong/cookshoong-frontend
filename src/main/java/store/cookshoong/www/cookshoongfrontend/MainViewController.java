@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
@@ -9,8 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,15 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
-import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.CommonAccount;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
-import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
@@ -62,7 +63,7 @@ public class MainViewController {
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
     private final CartService cartService;
-    private static final String NO_MENU = "NO_KEY";
+    private static final Long DEFAULT_ADDRESS_ID = 1L;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
@@ -71,9 +72,9 @@ public class MainViewController {
      * @param model    the model
      * @return the index
      */
-    @GetMapping({"", "/index"})
-    public String getIndex(Pageable pageable, Principal principal, Model model) {
-        Long addressId = 1L;
+    @GetMapping
+    public String getIndex(@PageableDefault Pageable pageable, Principal principal, Model model) {
+        Long addressId = DEFAULT_ADDRESS_ID;
 
         if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
@@ -89,13 +90,31 @@ public class MainViewController {
                 model.addAttribute("businessStoreList", businessStoreList);
             }
         }
-
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         model.addAttribute("categories", categories);
+        model.addAttribute("addressId", addressId);
         model.addAttribute("stores", stores);
 
         return "index/index";
+    }
+
+    /**
+     * 매장 기본 랜딩 페이지 페이지 호출 컨트롤러.
+     *
+     * @param addressId  the addressId
+     * @param page       the page
+     * @param size       the size
+     * @return the index
+     */
+    @GetMapping("/index/page")
+    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresNotOuted(
+        @RequestParam("addressId") Long addressId,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
+        return ResponseEntity.ok(stores);
     }
 
     /**
@@ -107,7 +126,7 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping("/index/search")
-    public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
+    public String getIndexByKeyword(@PageableDefault Pageable pageable, @RequestParam("keyword") String keywordText,  Model model) {
 
         Long accountId = accountIdAware.getAccountId();
         Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
@@ -117,9 +136,31 @@ public class MainViewController {
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
         model.addAttribute("categories", categories);
+        model.addAttribute("addressId", addressId);
+        model.addAttribute("keywordText", keywordText);
         model.addAttribute("stores", searchedStores);
 
         return "index/index";
+    }
+
+    /**
+     * 매장 검색 랜딩 페이지 페이지 호출 컨트롤러.
+     *
+     * @param keyword    the keywordText
+     * @param addressId  the addressId
+     * @param page       the page
+     * @param size       the size
+     * @return the index
+     */
+    @GetMapping("/index/search/page")
+    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresByKeyword(
+        @RequestParam("keyword") String keyword,
+        @RequestParam("addressId") Long addressId,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresByKeyword(keyword, addressId, pageable);
+        return ResponseEntity.ok(stores);
     }
 
     /**
