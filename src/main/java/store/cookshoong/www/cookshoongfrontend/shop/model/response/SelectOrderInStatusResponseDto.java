@@ -20,4 +20,6 @@ public class SelectOrderInStatusResponseDto {
     private List<SelectOrderDetailMenuResponseDto> selectOrderDetails;
     private String memo;
     private UUID chargeCode;
+    private int chargedAmount;
+    private String paymentKey;
 }
