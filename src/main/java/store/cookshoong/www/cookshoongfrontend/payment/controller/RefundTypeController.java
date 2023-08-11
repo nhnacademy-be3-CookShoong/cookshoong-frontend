@@ -45,7 +45,7 @@ public class RefundTypeController {
 
         model.addAttribute("refundTypes", refundTypes);
 
-        model.addAttribute("url", "refund-type");
+        model.addAttribute("url", "refunds");
 
         return "payment/refund-type-form";
     }
@@ -63,7 +63,7 @@ public class RefundTypeController {
                                        BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("url", "refund-type");
+            model.addAttribute("url", "refunds");
             return "payment/refund-type-form";
         }
 

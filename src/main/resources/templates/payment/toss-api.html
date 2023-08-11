@@ -13,6 +13,8 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
+
 
 <div class="container-fluid page-body-wrapper">
     <div class="content-wrapper">
@@ -40,6 +42,12 @@
                         <div class="detail-row">
                             <h4 class="detail-label">요청사항</h4>
                             <h5 class="detail-value" th:text="${order.memo}">
+                            </h5>
+                        </div>
+                        <hr>
+                        <div class="detail-row">
+                            <h4 class="detail-label">가격</h4>
+                            <h5 class="detail-value" th:text="${#numbers.formatInteger(order.amount,3,'COMMA')}+'원'">
                             </h5>
                         </div>
                     </div>

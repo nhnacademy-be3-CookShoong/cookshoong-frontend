@@ -19,4 +19,5 @@ public class AccountAddressResponseDto {
     private Long id;
     private String alias;
     private String mainPlace;
+    private String detailPlace;
 }

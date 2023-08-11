@@ -66,7 +66,7 @@ public class RefundTypeAdapter {
             .pathSegment("payments")
             .pathSegment("refunds")
             .pathSegment("refund-type")
-            .pathSegment("{chargeTypeId}")
+            .pathSegment("{refundTypeId}")
             .buildAndExpand(refundTypeId)
             .toUri();
 

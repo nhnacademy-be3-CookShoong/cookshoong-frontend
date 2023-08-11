@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.auth.util;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,5 +18,10 @@ public class CustomAuthorityUtils {
 
     public static Set<GrantedAuthority> createAuthoritySet(String... authorities) {
         return new HashSet<>(AuthorityUtils.createAuthorityList(authorities));
+    }
+
+    public static boolean match(String target, Collection<? extends GrantedAuthority> authorities) {
+        return authorities.stream()
+            .anyMatch(auth -> auth.getAuthority().equals(target));
     }
 }

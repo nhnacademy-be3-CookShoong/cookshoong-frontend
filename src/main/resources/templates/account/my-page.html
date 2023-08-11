@@ -10,13 +10,16 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: mypage-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
+
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: mypage-site-nav"></nav>
     <div class="main-panel w-100">
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-12 grid-margin stretch-card">
-                    <form class="col-12 p-0" th:action="@{/my-page}" th:object="${updateAccountInfoRequestDto}" method="post">
+                    <form class="col-12 p-0" th:action="@{/my-page}" th:object="${updateAccountInfoRequestDto}"
+                          method="post">
                         <div class="card">
                             <div style="display: inline-block" class="card-body">
                                 <h1 class="font-weight-bold"
@@ -27,7 +30,8 @@
                             <div class="card-body">
                                 <div class="flex-container">
                                     <h4 class="card-title flex-1">회원 정보 </h4>
-                                    <button style="display: none" class="btn btn-inverse-warning" id="update-account-info-btn" type="submit">
+                                    <button style="display: none" class="btn btn-inverse-warning"
+                                            id="update-account-info-btn" type="submit">
                                         저장
                                     </button>
                                 </div>
@@ -38,20 +42,25 @@
                                 </div>
                                 <div class="form-group"><label for="name">이름</label>
                                     <input type="text" class="form-control form-control-lg" id="name"
+                                           pattern="^[가-힇a-zA-Z\w]{1,30}$" title="공백없이 한글자 이상이여야합니다."
                                            th:value="${accountInfo.name}" placeholder="이름" readonly>
                                 </div>
                                 <div class="form-group"><label for="nickname">닉네임</label>
-                                    <input type="text" class="form-control form-control-lg modifiable-element" id="nickname"
+                                    <input type="text" class="form-control form-control-lg modifiable-element"
+                                           id="nickname"
                                            name="nickname"
                                            th:value="${accountInfo.nickname}" placeholder="닉네임 (30글자 이내)"
+                                           pattern="^[가-힇a-zA-Z\w]{1,30}$" title="공백없이 한글자 이상 30글자이하로 작성해주세요."
                                            required>
                                     <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">
                                         nickname Error</p>
                                 </div>
                                 <div class="form-group"><label for="email">이메일</label>
-                                    <input type="email" class="form-control form-control-lg modifiable-element" id="email" name="email"
+                                    <input type="email" class="form-control form-control-lg modifiable-element"
+                                           id="email" name="email"
                                            th:value="${accountInfo.email}"
                                            placeholder="you@example.com"
+                                           pattern="[a-zA-Z0-9]+[@][a-zA-0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*"
                                            required>
                                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
                                 </div>
@@ -61,8 +70,9 @@
                                            placeholder="생년월일" readonly>
                                 </div>
                                 <div class="form-group"><label for="phoneNumber">전화번호</label>
-                                    <input type="text" class="form-control form-control-lg modifiable-element" id="phoneNumber"
-                                           name="phoneNumber"
+                                    <input type="text" class="form-control form-control-lg modifiable-element"
+                                           id="phoneNumber"
+                                           name="phoneNumber" pattern="^010[0-9]{8}" title="'-' 를 제외하고 휴대폰번호를 입력해주세요."
                                            th:value="${accountInfo.phoneNumber}"
                                            placeholder="전화번호 ('-' 제외)" required>
                                     <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">

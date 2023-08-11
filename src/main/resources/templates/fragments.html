@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
+    <script src="/assets/js/common/fetcher.js"></script>
 </head>
 
 <body>
-
 <header th:fragment="user-site-header" class="hero_area header_section">
     <div class="row justify-content-between" style="flex-wrap: nowrap">
         <div>
@@ -17,6 +17,7 @@
                 <img src="/assets/images/shoong.png" alt="" style="height: 65px;">
             </a>
         </div>
+
 
         <div class="pt-1">
             <div class="navbar navbar-expand-lg" sec:authorize="!isAuthenticated()">
@@ -36,6 +37,8 @@
 
             <div class="navbar navbar-expand-lg justify-content-end" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
                 <div class="navbar-toggler">
+                    <a th:href="@{/my-address}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-library-books" type="button" data-toggle="modal" data-target="#addressList">
+                    </a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
                     </a>
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
@@ -44,10 +47,12 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
+                    <a th:href="@{/my-address}" style="color: white; font-size: 0.85rem" class="mr-2" type="button" data-toggle="modal" data-target="#addressList">주소설정
+                    </a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">쿡슝관리
                     </a>
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
@@ -56,7 +61,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -68,6 +73,43 @@
         </div>
     </div>
 </header>
+
+<div th:fragment="all-address-list" class="modal fade" id="addressList">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-lg-12 grid-margin stretch-card p-0">
+                    <div class="card rounded">
+                        <div class="row p-1 justify-content-between">
+                            <div class="p-3">
+                                <span class="card-title" style="font-size: 1.8rem">주소 설정</span>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center text-right pr-3">
+                                <div class="btn-box">
+                                    <a href="/my-address" class="btn btn-outline-warning p-2">
+                                        주소등록
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-1" th:each="address, i:${accountAddresses}"  th:unless="${accountAddresses == null}">
+                            <form th:action="@{'/my-address/' + ${address.id} + '/index'}" th:method="PATCH">
+                                <button  class="row border-top border-bottom border-left border-right w-100 bg-white mt-1 mb-1"
+                                         style="border-radius: 1rem">
+                                    <div class="col-12 p-1 m-1 text-left">
+                                        <h4 class="font-weight-bold" th:text="${address.getAlias()}" style="font-size: 1.2rem"></h4>
+                                        <span th:text="${address.getMainPlace()}"></span>
+                                        <span th:text="${address.getDetailPlace()}"></span>
+                                    </div>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div th:fragment="business-store-list" class="modal fade" id="storeList">
     <div class="modal-dialog">
@@ -88,19 +130,37 @@
                             </div>
                         </div>
                         <div class="card-body p-1">
-                            <div class="col-12" th:each="businessStore, i:${businessStoreList}">
-                                <button class="row border-top border-bottom border-left border-right w-100 bg-white mt-1 mb-1"
+                            <div class="col-12 row w-100 p-3 mb-3 border-left border-right border-top border-bottom" th:each="businessStore, i:${businessStoreList}">
+                                <button class="row border-0 flex-fill bg-white mt-1 mb-1"
                                         th:onclick="'window.location.href=\'/stores/' + ${businessStore.storeId} + '/store-info-manager' + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-12 p-1 m-1 text-left">
+                                    <div class="col-8 p-1 m-1 text-left">
                                         <h4 class="font-weight-bold" th:text="${businessStore.storeName}" style="font-size: 1.2rem"></h4>
                                         <span th:text="${businessStore.storeMainAddress}"></span>
                                         <span th:text="${businessStore.storeDetailAddress}"></span>
                                     </div>
-                                    <div class="col-12 p-1 m-1 text-right">
-                                        <span th:text="${businessStore.storeStatus}"></span>
-                                    </div>
                                 </button>
+                                <div class="col-4 p-1 m-1 text-right" th:if="${businessStore.storeStatus != '폐업'}">
+                                    <button th:if="${businessStore.storeStatus == '영업중'}"
+                                            th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'CLOSE\')'"
+                                            class="btn btn-outline-primary">
+                                        휴식시작
+                                    </button>
+                                    <button th:unless="${businessStore.storeStatus == '영업중'}"
+                                            th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'OPEN\')'"
+                                            class="btn btn-inverse-primary">
+                                        영업시작
+                                    </button>
+                                    <script>
+                                        function storeStatusChange(storeId, optionName) {
+                                            const url = `/stores/` + storeId + `/status?option=`+optionName;
+                                            const data = null;
+                                            const method = "PATCH";
+
+                                            sendDataWithCsrfToken(url, "/", data, method);
+                                        }
+                                    </script>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -171,7 +231,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -183,7 +243,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -246,7 +306,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
@@ -258,7 +318,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -368,6 +428,8 @@
 
             <div class="navbar navbar-expand-lg justify-content-end" sec:authorize="isAuthenticated() && hasRole('CUSTOMER')">
                 <div class="navbar-toggler">
+                    <a th:href="@{/my-address}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-library-books" type="button" data-toggle="modal" data-target="#addressList">
+                    </a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-laptop-windows">
                     </a>
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
@@ -376,10 +438,12 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-human-greeting">
                     </a>
-                    <a href="" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
                     </a>
                 </div>
                 <div class="navbar-toggler-ex">
+                    <a th:href="@{/my-address}" style="color: white; font-size: 0.85rem" class="mr-2" type="button" data-toggle="modal" data-target="#addressList">주소설정
+                    </a>
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}" style="color: white; font-size: 0.85rem" class="mr-2">쿡슝관리
                     </a>
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem" class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
@@ -388,7 +452,7 @@
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
-                    <a href="/" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
+                    <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem" class="mr-2">로그아웃
                     </a>
                 </div>
             </div>
@@ -505,6 +569,15 @@
         </div>
     </div>
 </footer>
-</body>
+<script>
+    function toggleStoreStatus(storeId) {
+        const toggleButton = document.querySelector(`input[data-storeid='${storeId}']`);
+        const url = `/stores/${storeId}/status?option=${toggleButton.checked ? 'CLOSE' : 'ACTIVE'}`;
+        const data = null;
+        const method = "PATCH";
 
+        sendDataWithCsrfToken(url, "/", data, method);
+    }
+</script>
+</body>
 </html>

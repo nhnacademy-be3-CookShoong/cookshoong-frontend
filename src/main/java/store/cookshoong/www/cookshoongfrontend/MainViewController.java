@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend;
 import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.CommonAccount;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
+import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
@@ -71,11 +77,19 @@ public class MainViewController {
     public String getIndex(@PageableDefault Pageable pageable, Principal principal, Model model) {
         Long addressId = 1L;
 
-        if (principal != null) {
+        if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
+
+            List<AccountAddressResponseDto> accountAddresses =
+                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+            model.addAttribute("accountAddresses", accountAddresses);
+
+            if (CustomAuthorityUtils.match("ROLE_BUSINESS", ((JwtAuthentication) principal).getAuthorities())) {
+                List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+                model.addAttribute("businessStoreList", businessStoreList);
+            }
         }
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
@@ -148,6 +162,11 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
@@ -178,6 +197,11 @@ public class MainViewController {
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
@@ -204,8 +228,8 @@ public class MainViewController {
     /**
      * 장바구니에 메뉴 등록.
      *
-     * @param cartRedisDto      장바구니에 담기 정보
-     * @return                  해당 매장으로 반환
+     * @param cartRedisDto 장바구니에 담기 정보
+     * @return 해당 매장으로 반환
      */
     @PostMapping("/index/store/menu/cart")
     public String postCreateCart(@Valid CartRedisDto cartRedisDto,
@@ -246,17 +270,6 @@ public class MainViewController {
     @GetMapping("/store-merchant-manager")
     public String getMerchantManager() {
         return "store/info/store-merchant-manager";
-    }
-
-    /**
-     * 매장 쿠폰 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("stores/{storeId}/store-coupon-manager")
-    public String getStoreCouponManager(@PathVariable Long storeId) {
-        return CouponManageInStoreController.redirectStoreCouponIndex(storeId);
     }
 
     /**

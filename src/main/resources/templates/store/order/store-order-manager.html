@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <title>StoreOrder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <script src="/assets/js/common/fetcher.js"></script>
+</head>
+<body layout:fragment="content">
+<header th:replace="fragments :: business-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments :: business-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">영업점 주문 관리</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card" th:each="order, i:${orders}">
+                    <div class="card">
+                        <div class="card-body row border-top pt-3 pb-3 justify-content-between">
+                            <h4 class="card-title">주소</h4>
+                            <div>
+                                <h4 th:text="${order.getOrderStatusCode()}"></h4>
+                            </div>
+                            <div class="col-12">
+                                <div class="row border-top pt-3 pb-3 justify-content-between" >
+                                    <div style="width: 600px;">
+                                        <div th:each="orderMenu:${order.getSelectOrderDetails()}">
+                                            <h3 th:text="${orderMenu.getMenuName()} + ' ' + ${orderMenu.getCount()} + '개'"></h3>
+                                            <div th:each="option:${orderMenu.getSelectOrderDetailMenuOptions()}">
+                                                <p th:text="'- ' + ${option.getOptionName()}"></p>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 th:text="${order.getMemo()}"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="justify-content-around row">
+                            <div class="col-6">
+                                <div th:if="${order.getOrderStatusCode() == 'COOKING'}">
+                                    <button class="btn btn-info col-12" th:onclick="setStatusCode([[${order.orderCode}]], 'DELIVER')">배달 시작</button>
+                                </div>
+                                <div th:unless="${order.getOrderStatusCode() == 'COOKING'}">
+                                    <button class="btn btn-info col-12" th:onclick="setStatusCode([[${order.orderCode}]], 'COOKING')">수락</button>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-warning col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], 'FOOD_OUT')">재료소진</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], 'ORD_FLOOD')">주문폭주</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+<data id="path" th:value="${#request.getServletPath()}"></data>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+function setStatusCode(orderCode, statusCode) {
+
+    const path = document.getElementById("path").value;
+    const data = {
+        orderCode: orderCode,
+        statusCode: statusCode
+    };
+    const method = "PATCH";
+
+    sendDataWithCsrfToken("/stores/order/status", path, data, method);
+}
+
+function refundAndSetStatusCode(orderCode, chargeCode, statusCode) {
+
+    const data = {
+        orderId: orderCode,
+        chargeCode: chargeCode,
+        cancelReason: statusCode
+    };
+    const method = "POST";
+
+    sendDataWithCsrfToken("/stores/order/refund", null, data, method);
+    setStatusCode(orderCode, statusCode);
+}
+</script>
+</body>
+</html>

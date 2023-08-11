@@ -43,6 +43,11 @@ public class MyPageController {
      */
     @GetMapping("/my-page")
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
         return "account/my-page";
@@ -53,15 +58,12 @@ public class MyPageController {
      *
      * @param updateAccountInfoRequestDto the update account info request dto
      * @param bindingResult               the binding result
-     * @param model                       the model
      * @return the string
      */
     @PostMapping("/my-page")
-    public String postMyPage(@Valid UpdateAccountInfoRequestDto updateAccountInfoRequestDto, BindingResult bindingResult,
-                             Model model) {
+    public String postMyPage(@Valid UpdateAccountInfoRequestDto updateAccountInfoRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(updateAccountInfoRequestDto);
-            return "/my-page";
+            return "redirect:/my-page";
         }
         accountService.updateAccountMyPageInfo(accountIdAware.getAccountId(), updateAccountInfoRequestDto);
         return "redirect:/my-page";
@@ -122,6 +124,20 @@ public class MyPageController {
         accountAddressService.updateSelectAccountAddressRenewalAt(accountIdAware.getAccountId(), addressId);
 
         return "redirect:/my-address";
+    }
+
+    /**
+     * 메인화면에서 주소를 선택할 때 메인 페이지로 돌아오는 메스드.
+     *
+     * @param addressId                 주소 아이디
+     * @return                          현재 주소 등록 페이지로 반환
+     */
+    @PatchMapping("my-address/{addressId}/index")
+    public String patchIndexSelectAccountAddress(@PathVariable Long addressId) {
+
+        accountAddressService.updateSelectAccountAddressRenewalAt(accountIdAware.getAccountId(), addressId);
+
+        return "redirect:/";
     }
 
     /**
