@@ -95,16 +95,13 @@ public class StoreInfoManagerController {
      * @param storeId                      the store id
      * @param updateStoreManagerRequestDto the update store manager request dto
      * @param bindingResult                the binding result
-     * @param model                        the model
      * @return the string
      */
     @PatchMapping("/stores/{storeId}/store-info-manager/managerInfo")
     public String patchStoreBusinessInfo(@PathVariable("storeId") Long storeId,
                                          @Valid @ModelAttribute("updateStoreManagerInfo") UpdateStoreManagerRequestDto updateStoreManagerRequestDto,
-                                         BindingResult bindingResult,
-                                         Model model) {
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("updateStoreManagerInfo", updateStoreManagerRequestDto);
             return "redirect:/stores/" + storeId + "/store-info-manager";
         }
         Long accountId = accountIdAware.getAccountId();
@@ -118,16 +115,13 @@ public class StoreInfoManagerController {
      * @param storeId                   the store id
      * @param updateStoreInfoRequestDto the update store info request dto
      * @param bindingResult             the binding result
-     * @param model                     the model
      * @return the string
      */
     @PatchMapping("/stores/{storeId}/store-info-manager/storeInfo")
     public String patchStoreInfo(@PathVariable("storeId") Long storeId,
                                  @Valid @ModelAttribute("updateStoreInfoRequestDto") UpdateStoreInfoRequestDto updateStoreInfoRequestDto,
-                                 BindingResult bindingResult,
-                                 Model model) {
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("updateStoreInfoRequestDto", updateStoreInfoRequestDto);
             return "redirect:/stores/" + storeId + "/store-info-manager";
         }
         Long accountId = accountIdAware.getAccountId();
@@ -141,16 +135,13 @@ public class StoreInfoManagerController {
      * @param storeId             the store id
      * @param updateStoreCategory the update store category
      * @param bindingResult       the binding result
-     * @param model               the model
      * @return the string
      */
     @PatchMapping("/stores/{storeId}/store-info-manager/categoryInfo")
     public String patchStoreCategoryInfo(@PathVariable("storeId") Long storeId,
                                          @Valid @ModelAttribute("updateStoreCategory") UpdateStoreCategoryRequestDto updateStoreCategory,
-                                         BindingResult bindingResult,
-                                         Model model) {
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("updateStoreCategory", updateStoreCategory);
             return "redirect:/stores/" + storeId + "/store-info-manager";
         }
         Long accountId = accountIdAware.getAccountId();
