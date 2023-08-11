@@ -17,6 +17,8 @@ import lombok.Getter;
 public class CreateRefundDto {
 
     @NotNull
+    private UUID orderCode;
+    @NotNull
     private UUID chargeCode;
     @NotBlank
     private String refundAt;

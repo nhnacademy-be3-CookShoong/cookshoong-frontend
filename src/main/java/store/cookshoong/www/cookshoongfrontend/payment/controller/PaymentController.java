@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
@@ -41,6 +43,7 @@ public class PaymentController {
     private final AccountIdAware accountIdAware;
     private final TossProperties tossProperties;
     private final PaymentService paymentService;
+    private final AccountAddressService accountAddressService;
     private final OrderService orderService;
     private final CartService cartService;
 
@@ -74,6 +77,12 @@ public class PaymentController {
             orderCode, orderName, (long) paymentPageRequestDto.getPrice(),
             paymentPageRequestDto.getMainPlace(), paymentPageRequestDto.getDetailPlace(),
             paymentPageRequestDto.getMemo());
+
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
 
         httpSession.setAttribute("paymentPageRequestDto", paymentPageRequestDto);
 

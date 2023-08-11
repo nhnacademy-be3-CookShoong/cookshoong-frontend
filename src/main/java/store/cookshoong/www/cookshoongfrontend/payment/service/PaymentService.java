@@ -70,7 +70,7 @@ public class PaymentService {
             tossPaymentAdapter.requestCancelTossPayment(paymentKey, refundRequestDto.getCancelReason());
 
         paymentAdapter.executeRefund(
-            new CreateRefundDto(
+            new CreateRefundDto(refundRequestDto.getOrderId(),
                 refundRequestDto.getChargeCode(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getCancels()[0].getCancelAmount(), RefundType.FULL.getType()));
     }
@@ -88,7 +88,8 @@ public class PaymentService {
                 refundRequestDto.getCancelReason(), refundRequestDto.getCancelAmount());
 
         paymentAdapter.executeRefund(
-            new CreateRefundDto(refundRequestDto.getChargeCode(), tossResponseDto.getApprovedAt(),
+            new CreateRefundDto(refundRequestDto.getOrderId(),
+                refundRequestDto.getChargeCode(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getCancels()[0].getCancelAmount(), RefundType.PARTIAL.getType()));
     }
 

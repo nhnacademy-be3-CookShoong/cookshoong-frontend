@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
@@ -39,6 +41,7 @@ public class CartRedisController {
     private final StoreService storeService;
     private final CartService cartService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
 
     /**
@@ -56,6 +59,11 @@ public class CartRedisController {
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
 
 
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             int totalPrice = cartService.calculateTotalPrice(cartItems);
             Long storeId = cartItems.get(0).getStoreId();
@@ -63,6 +71,7 @@ public class CartRedisController {
             List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
             String storeName = cartItems.get(0).getStoreName();
             model.addAttribute("options", options);
+            model.addAttribute("storeId", storeId);
             model.addAttribute("optionGroups", optionGroups);
             model.addAttribute("totalPrice", totalPrice);
             model.addAttribute("storeName", storeName);

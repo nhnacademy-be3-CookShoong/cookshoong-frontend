@@ -20630,13 +20630,13 @@ code {
 
 .btn-inverse-info:hover {
     color: #ffffff;
-    background-color: #2b80ff;
-    border-color: #2b80ff;
+    background-color: #7186fa;
+    border-color: #7186fa;
 }
 
-.btn-inverse-info.focus, .btn-inverse-info:focus {
-    box-shadow: 0 0 0 3px rgba(43, 128, 255, 0.5);
-}
+/*.btn-inverse-info.focus, .btn-inverse-info:focus {*/
+/*    box-shadow: 0 0 0 3px rgba(43, 128, 255, 0.5);*/
+/*}*/
 
 .btn-inverse-info.disabled, .btn-inverse-info:disabled {
     color: #2b80ff;

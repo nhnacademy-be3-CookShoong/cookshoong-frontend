@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.CommonAccount;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
@@ -70,12 +72,17 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping({"", "/index"})
-    public String getIndex(Pageable pageable, Principal principal,  Model model) {
+    public String getIndex(Pageable pageable, Principal principal, Model model) {
         Long addressId = 1L;
 
         if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
+
+            List<AccountAddressResponseDto> accountAddresses =
+                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+            model.addAttribute("accountAddresses", accountAddresses);
 
             if (CustomAuthorityUtils.match("ROLE_BUSINESS", ((JwtAuthentication) principal).getAuthorities())) {
                 List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
@@ -130,6 +137,11 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
@@ -159,6 +171,11 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             Long cartStoreId = cartItems.get(0).getStoreId();
