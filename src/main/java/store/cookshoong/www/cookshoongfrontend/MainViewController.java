@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,8 +67,8 @@ public class MainViewController {
      * @param model    the model
      * @return the index
      */
-    @GetMapping({"", "/index"})
-    public String getIndex(Pageable pageable, Principal principal, Model model) {
+    @GetMapping("")
+    public String getIndex(@PageableDefault Pageable pageable, Principal principal, Model model) {
         Long addressId = 1L;
 
         if (principal != null) {
@@ -74,13 +77,23 @@ public class MainViewController {
             List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
             model.addAttribute("businessStoreList", businessStoreList);
         }
-
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
         model.addAttribute("categories", categories);
+        model.addAttribute("addressId", addressId);
         model.addAttribute("stores", stores);
 
         return "index/index";
+    }
+
+    @GetMapping("/index/page")
+    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresNotOuted(
+        @RequestParam("addressId") Long addressId,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
+        return ResponseEntity.ok(stores);
     }
 
     /**
@@ -92,7 +105,7 @@ public class MainViewController {
      * @return the index
      */
     @GetMapping("/index/search")
-    public String getIndexByKeyword(@RequestParam("keyword") String keywordText, Pageable pageable, Model model) {
+    public String getIndexByKeyword(@PageableDefault Pageable pageable, @RequestParam("keyword") String keywordText,  Model model) {
 
         Long accountId = accountIdAware.getAccountId();
         Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
@@ -102,9 +115,22 @@ public class MainViewController {
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
         model.addAttribute("categories", categories);
+        model.addAttribute("addressId", addressId);
+        model.addAttribute("keywordText", keywordText);
         model.addAttribute("stores", searchedStores);
 
         return "index/index";
+    }
+
+    @GetMapping("/index/search/page")
+    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresByKeyword(
+        @RequestParam("keyword") String keyword,
+        @RequestParam("addressId") Long addressId,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresByKeyword(keyword, addressId, pageable);
+        return ResponseEntity.ok(stores);
     }
 
     /**
