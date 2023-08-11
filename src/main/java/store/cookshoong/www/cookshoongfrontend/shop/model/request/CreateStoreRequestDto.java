@@ -28,7 +28,6 @@ public class CreateStoreRequestDto {
 
     private Long merchantId;
     @NotBlank
-    @Pattern(regexp = RegularExpressions.NUMBER_ONLY, message = ValidationFailureMessages.NUMBER_ONLY)
     private String businessLicenseNumber;
     @NotBlank
     @Pattern(regexp = RegularExpressions.LETTER_ONLY, message = ValidationFailureMessages.LETTER_ONLY)
@@ -37,10 +36,10 @@ public class CreateStoreRequestDto {
     private LocalDate openingDate;
     @NotBlank
     private String storeName;
-    @NotBlank
+
     @Pattern(regexp = RegularExpressions.MAIN_DETAIL_ADDRESS, message = ValidationFailureMessages.MAIN_DETAIL_ADDRESS)
     private String mainPlace;
-    @NotBlank
+
     @Pattern(regexp = RegularExpressions.MAIN_DETAIL_ADDRESS, message = ValidationFailureMessages.MAIN_DETAIL_ADDRESS)
     private String detailPlace;
     @NotNull
@@ -48,28 +47,25 @@ public class CreateStoreRequestDto {
     @NotNull
     private BigDecimal longitude;
     @NotBlank
-    @Pattern(regexp = RegularExpressions.NUMBER_ONLY, message = ValidationFailureMessages.NUMBER_ONLY)
     private String phoneNumber;
 
     private String description;
 
     @DecimalMin(value = "0.0")
     @DecimalMax("9.9")
-    @NotBlank
     private BigDecimal earningRate;
 
-    @PositiveOrZero
-    @NotBlank
+    @Min(0)
+    @NotNull
     private Integer minimumOrderPrice;
 
     @Min(4000)
-    @NotBlank
+    @NotNull
     private Integer deliveryCost;
     @NotNull
     private List<String> storeCategories;
     @NotBlank
     private String bankCode;
     @NotBlank
-    @Pattern(regexp = RegularExpressions.NUMBER_ONLY, message = ValidationFailureMessages.NUMBER_ONLY)
     private String bankAccount;
 }
