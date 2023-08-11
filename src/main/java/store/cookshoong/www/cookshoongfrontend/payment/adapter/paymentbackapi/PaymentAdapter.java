@@ -80,9 +80,8 @@ public class PaymentAdapter {
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("api")
             .pathSegment("payments")
-            .pathSegment("charges")
             .pathSegment("{orderCode}")
-            .pathSegment("select-payment")
+            .pathSegment("select-paymentKey")
             .buildAndExpand(orderCode)
             .toUri();
 
