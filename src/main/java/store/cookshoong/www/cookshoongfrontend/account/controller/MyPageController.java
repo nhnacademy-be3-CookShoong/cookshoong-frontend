@@ -43,6 +43,11 @@ public class MyPageController {
      */
     @GetMapping("/my-page")
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
         return "account/my-page";
@@ -119,6 +124,20 @@ public class MyPageController {
         accountAddressService.updateSelectAccountAddressRenewalAt(accountIdAware.getAccountId(), addressId);
 
         return "redirect:/my-address";
+    }
+
+    /**
+     * 메인화면에서 주소를 선택할 때 메인 페이지로 돌아오는 메스드.
+     *
+     * @param addressId                 주소 아이디
+     * @return                          현재 주소 등록 페이지로 반환
+     */
+    @PatchMapping("my-address/{addressId}/index")
+    public String patchIndexSelectAccountAddress(@PathVariable Long addressId) {
+
+        accountAddressService.updateSelectAccountAddressRenewalAt(accountIdAware.getAccountId(), addressId);
+
+        return "redirect:/";
     }
 
     /**
