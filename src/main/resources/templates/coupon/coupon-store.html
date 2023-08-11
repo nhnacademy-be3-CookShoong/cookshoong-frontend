@@ -1,44 +1,15 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en" data-bss-forced-theme="light" xmlns:th="http://www.thymeleaf.org">
-
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Coupon-Create</title>
-    <link rel="stylesheet" href="/assets/vendors/typicons.font/font/typicons.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/responsive.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.png"/>
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
+    <title>Untitled</title>
 </head>
+<body layout:fragment="content">
+<header th:replace="fragments :: business-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
 
-<body>
-<div class="hero_area">
-    <div class="bg-box">
-        <img src="/assets/images/hero-bg.jpg" alt="">
-    </div>
-    <!-- header section starts -->
-    <header class="header_section">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a class="navbar-brand" href="index">
-                    <span>
-                    CookShoong
-                    </span>
-                </a>
-                <button class="navbar-toggler d-lg-none" type="button"
-                        data-toggle="offcanvas">
-                    <span class="typcn typcn-th-menu"></span>
-                </button>
-            </nav>
-        </div>
-    </header>
-    <!-- end header section -->
-</div>
 <div class="modal fade" id="couponPolicyAdd">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -68,7 +39,7 @@
                 <div class="card border-top-0">
                     <div class="tab-content p-0 m-0">
                         <div class="tab-pane fade show active col-12 stretch-card" id="coupon1">
-                            <form class="col-12 p-0" th:action="@{|/coupon/stores/${storeId}/cash|}" method="post">
+                            <form class="col-12 p-0" th:action="@{|/stores/${storeId}/store-coupon-manager/cash|}" method="post">
                                 <div class="card border-top-0">
                                     <div class="card-body">
 
@@ -108,7 +79,7 @@
                                 <div class="col-12 grid-margin stretch-card">
                                     <div class="card">
                                         <div class="card-body">
-                                            <button class="btn btn-info mr-2" type="submit">옵션 신규 등록
+                                            <button class="btn btn-info mr-2" type="submit">쿠폰 정책 신규 등록
                                             </button>
                                             <button class="btn btn-light" data-dismiss="modal">취소</button>
                                         </div>
@@ -117,7 +88,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade col-12 stretch-card" id="coupon2">
-                            <form class="col-12 p-0" th:action="@{|/coupon/stores/${storeId}/percent|}" method="post">
+                            <form class="col-12 p-0" th:action="@{|/stores/${storeId}/store-coupon-manager/percent|}" method="post">
                                 <div class="card border-top-0">
                                     <div class="card-body">
                                         <h4 class="card-title">쿠폰 정보</h4>
@@ -161,7 +132,7 @@
                                 <div class="col-12 grid-margin stretch-card">
                                     <div class="card">
                                         <div class="card-body">
-                                            <button class="btn btn-info mr-2" type="submit">옵션 신규 등록
+                                            <button class="btn btn-info mr-2" type="submit">쿠폰 정책 신규 등록
                                             </button>
                                             <button class="btn btn-light" data-dismiss="modal">취소</button>
                                         </div>
@@ -198,14 +169,14 @@
                                          th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
                                         <div th:case="CouponTypeCashVo">
                                             <h3 class="font-weight-bold pt-2"
-                                                th:text="${policy.couponTypeResponse.discountAmount} + '원 할인 쿠폰'"></h3>
-                                            <p th:text="'최소주문금액 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원'"></p>
+                                                th:text="${#numbers.formatInteger(policy.couponTypeResponse.discountAmount, 0, 'COMMA')} + '원 할인 쿠폰'"></h3>
+                                            <p th:text="'최소주문금액 ' + ${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
                                         </div>
                                         <div th:case="CouponTypePercentVo">
                                             <h3 class="font-weight-bold pt-2"
                                                 th:text="${policy.couponTypeResponse.rate} + '% 할인 쿠폰'"></h3>
-                                            <p th:text="'최소주문금액 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원'"></p>
-                                            <p th:text="'최대 ' + ${policy.couponTypeResponse.maximumDiscountAmount} + '원까지'"></p>
+                                            <p th:text="'최소주문금액 ' + ${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
+                                            <p th:text="'최대 ' + ${#numbers.formatInteger(policy.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원까지'"></p>
                                         </div>
                                         <div th:case="*">
                                             <p th:text="${policy.couponTypeResponse}"></p>
@@ -213,8 +184,8 @@
                                         <h4 class="font-weight-bold pt-2" th:text="${policy.name}"></h4>
                                         <p th:text="${policy.description}"></p>
                                         <p th:text="'발급 후 사용 가능 기간: ' + ${policy.usagePeriod} + '일'"></p>
-                                        <p th:text="'남은 수량: ' + ${policy.unclaimedCouponCount}"></p>
-                                        <p th:text="'전체 발행 수량: ' + ${policy.issueCouponCount}"></p>
+                                        <p th:text="'남은 수량: ' + ${#numbers.formatInteger(policy.unclaimedCouponCount, 0, 'COMMA')}"></p>
+                                        <p th:text="'전체 발행 수량: ' + ${#numbers.formatInteger(policy.issueCouponCount, 0, 'COMMA')}"></p>
                                     </div>
                                     <div class="col-sm-2" style="text-align: right">
                                         <button class="btn btn-info mb-1" style="width: 85px"
@@ -233,7 +204,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <form class="col-12 p-0"
-                                                          th:action="@{|/coupon/stores/${storeId}/issue|}"
+                                                          th:action="@{|/stores/${storeId}/store-coupon-manager/issue|}"
                                                           th:method="post">
                                                         <div class="col-12 grid-margin stretch-card">
                                                             <div class="card">
@@ -260,7 +231,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <form class="col-12 p-0"
-                                                          th:action="@{|/coupon/stores/${storeId}/policies/${policy.id}|}"
+                                                          th:action="@{|/stores/${storeId}/store-coupon-manager/policies/${policy.id}|}"
                                                           th:method="delete">
                                                         <div class="col-12 grid-margin stretch-card">
                                                             <div class="card">
@@ -295,25 +266,25 @@
                             th:with="start=${(policies.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
                             last=(${start + (buttonNumber - 1) < policies.totalPages ? start + (buttonNumber - 1) : policies.totalPages})">
                             <li>
-                                <a th:href="@{|/coupon/stores/${storeId}|(page=1, size=${policies.size})}" aria-label="First">
+                                <a th:href="@{|/stores/${storeId}/store-coupon-manager|(page=1, size=${policies.size})}" aria-label="First">
                                     <span aria-hidden="true">First</span>
                                 </a>
                             </li>
                             <li th:class="${policies.first} ? 'disabled'">
-                                <a th:href="${policies.first} ? '#' :@{|/coupon/stores/${storeId}|(page=${policies.number}, size=${policies.size})}" aria-label="Previous">
+                                <a th:href="${policies.first} ? '#' :@{|/stores/${storeId}/store-coupon-manager|(page=${policies.number}, size=${policies.size})}" aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
                             </li>
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == policies.number + 1} ? 'active'">
-                                <a th:text="${page}" th:href="@{|/coupon/stores/${storeId}|(page=${page}, size=${policies.size})}"></a>
+                                <a th:text="${page}" th:href="@{|/stores/${storeId}/store-coupon-manager|(page=${page}, size=${policies.size})}"></a>
                             </li>
                             <li th:class="${policies.last} ? 'disabled'">
-                                <a th:href="${policies.last} ? '#' :@{|/coupon/stores/${storeId}|(page=${policies.number + 2}, size=${policies.size})}">
+                                <a th:href="${policies.last} ? '#' :@{|/stores/${storeId}/store-coupon-manager|(page=${policies.number + 2}, size=${policies.size})}">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{|/coupon/stores/${storeId}|(page=${policies.totalPages}, size=${policies.size})}" aria-label="Last">
+                                <a th:href="@{|/stores/${storeId}/store-coupon-manager|(page=${policies.totalPages}, size=${policies.size})}" aria-label="Last">
                                     <span aria-hidden="true">Last</span>
                                 </a>
                             </li>
@@ -326,25 +297,7 @@
 </div>
 
 <footer th:replace="fragments :: site-footer"></footer>
-
-<script src="/assets/vendors/js/vendor.bundle.base.js"></script>
-<script src="/assets/js/off-canvas.js"></script>
-<script src="/assets/js/hoverable-collapse.js"></script>
-<script src="/assets/js/template.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
-<script src="/assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
-<script src="/assets/vendors/select2/select2.min.js"></script>
-<script src="/assets/js/file-upload.js"></script>
-<script src="/assets/js/typeahead.js"></script>
-<script src="/assets/js/select2.js"></script>
-<script>
-    window.onload = function () {
-        window.scrollTo(0, 0);
-    }
-</script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 </body>
 
 </html>

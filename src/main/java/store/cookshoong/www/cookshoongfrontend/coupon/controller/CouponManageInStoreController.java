@@ -25,9 +25,10 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/coupon/stores/{storeId}")
+@RequestMapping("/stores/{storeId}/store-coupon-manager")
 public class CouponManageInStoreController {
-    private static final String REDIRECT_STORE_COUPON_INDEX = "redirect:/coupon/stores/";
+    private static final String REDIRECT_STORE_COUPON_INDEX_HEAD = "redirect:/stores/";
+    private static final String REDIRECT_STORE_COUPON_INDEX_TAIL = "/store-coupon-manager";
     private final CouponManageService couponManageService;
 
     @ModelAttribute
@@ -102,6 +103,7 @@ public class CouponManageInStoreController {
     @PostMapping("/issue")
     public String postCouponIssue(CreateIssueCouponRequestDto createIssueCouponRequestDto,
                                   @ModelAttribute Long storeId) {
+        createIssueCouponRequestDto.setIssueMethod(CreateIssueCouponRequestDto.IssueMethod.NORMAL);
         couponManageService.createIssueCoupon(createIssueCouponRequestDto);
         return redirectStoreCouponIndex(storeId);
     }
@@ -113,6 +115,6 @@ public class CouponManageInStoreController {
      * @return the string
      */
     public static String redirectStoreCouponIndex(Long storeId) {
-        return REDIRECT_STORE_COUPON_INDEX + storeId;
+        return REDIRECT_STORE_COUPON_INDEX_HEAD + storeId + REDIRECT_STORE_COUPON_INDEX_TAIL;
     }
 }

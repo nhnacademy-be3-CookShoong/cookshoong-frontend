@@ -13,7 +13,7 @@ function sendDataWithCsrfToken(url, redirectUrl, data, method) {
     })
         .then(async response => {
             if (response.ok) {
-                if (window.location.href !== null) {
+                if (redirectUrl !== null) {
                     window.location.href = redirectUrl;
                 }
                 return response;
