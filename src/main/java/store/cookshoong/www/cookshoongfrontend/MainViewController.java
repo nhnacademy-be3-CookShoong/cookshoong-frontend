@@ -79,17 +79,15 @@ public class MainViewController {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
 
-            if (CustomAuthorityUtils.match("ROLE_BUSINESS", ((JwtAuthentication) principal).getAuthorities())) {
-                List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-                model.addAttribute("businessStoreList", businessStoreList);
-            }
-            List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-            model.addAttribute("businessStoreList", businessStoreList);
-
             List<AccountAddressResponseDto> accountAddresses =
                 accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
 
             model.addAttribute("accountAddresses", accountAddresses);
+
+            if (CustomAuthorityUtils.match("ROLE_BUSINESS", ((JwtAuthentication) principal).getAuthorities())) {
+                List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+                model.addAttribute("businessStoreList", businessStoreList);
+            }
         }
 
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
