@@ -65,6 +65,7 @@ public class TossPaymentAdapter {
         final String url = UriComponentsBuilder.newInstance()
             .scheme("https")
             .host("api.tosspayments.com")
+            .path("/v1/payments/")
             .path(paymentKey)
             .path("/cancel")
             .build().toUriString();
@@ -89,6 +90,7 @@ public class TossPaymentAdapter {
         final String url = UriComponentsBuilder.newInstance()
             .scheme("https")
             .host("api.tosspayments.com")
+            .path("/v1/payments/")
             .path(paymentKey)
             .path("/cancel")
             .build().toUriString();
