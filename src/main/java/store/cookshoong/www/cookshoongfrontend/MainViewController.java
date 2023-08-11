@@ -1,5 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
@@ -23,15 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
-import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.CommonAccount;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
-import store.cookshoong.www.cookshoongfrontend.coupon.controller.CouponManageInStoreController;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
@@ -64,7 +63,7 @@ public class MainViewController {
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
     private final CartService cartService;
-    private static final String NO_MENU = "NO_KEY";
+    private static final Long DEFAULT_ADDRESS_ID = 1L;
 
     /**
      * 매장 기본 랜딩 페이지 맵핑.
@@ -73,9 +72,9 @@ public class MainViewController {
      * @param model    the model
      * @return the index
      */
-    @GetMapping("")
+    @GetMapping
     public String getIndex(@PageableDefault Pageable pageable, Principal principal, Model model) {
-        Long addressId = 1L;
+        Long addressId = DEFAULT_ADDRESS_ID;
 
         if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
