@@ -6,8 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Untitled</title>
+    <script src="/assets/js/common/fetcher.js"></script>
 </head>
+<style>
 
+</style>
 <body>
 
 <header th:fragment="user-site-header" class="hero_area header_section">
@@ -88,19 +91,37 @@
                             </div>
                         </div>
                         <div class="card-body p-1">
-                            <div class="col-12" th:each="businessStore, i:${businessStoreList}">
-                                <button class="row border-top border-bottom border-left border-right w-100 bg-white mt-1 mb-1"
+                            <div class="col-12 row w-100 p-3 mb-3 border-left border-right border-top border-bottom" th:each="businessStore, i:${businessStoreList}">
+                                <button class="row border-0 flex-fill bg-white mt-1 mb-1"
                                         th:onclick="'window.location.href=\'/stores/' + ${businessStore.storeId} + '/store-info-manager' + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-12 p-1 m-1 text-left">
+                                    <div class="col-8 p-1 m-1 text-left">
                                         <h4 class="font-weight-bold" th:text="${businessStore.storeName}" style="font-size: 1.2rem"></h4>
                                         <span th:text="${businessStore.storeMainAddress}"></span>
                                         <span th:text="${businessStore.storeDetailAddress}"></span>
                                     </div>
-                                    <div class="col-12 p-1 m-1 text-right">
-                                        <span th:text="${businessStore.storeStatus}"></span>
-                                    </div>
                                 </button>
+                                <div class="col-4 p-1 m-1 text-right" th:if="${businessStore.storeStatus != '폐업'}">
+                                    <button th:if="${businessStore.storeStatus == '영업중'}"
+                                            th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'CLOSE\')'"
+                                            class="btn btn-outline-primary">
+                                        휴식시작
+                                    </button>
+                                    <button th:unless="${businessStore.storeStatus == '영업중'}"
+                                            th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'OPEN\')'"
+                                            class="btn btn-inverse-primary">
+                                        영업시작
+                                    </button>
+                                    <script>
+                                        function storeStatusChange(storeId, optionName) {
+                                            const url = `/stores/` + storeId + `/status?option=`+optionName;
+                                            const data = null;
+                                            const method = "PATCH";
+
+                                            sendDataWithCsrfToken(url, "/", data, method);
+                                        }
+                                    </script>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -505,6 +526,15 @@
         </div>
     </div>
 </footer>
-</body>
+<script>
+    function toggleStoreStatus(storeId) {
+        const toggleButton = document.querySelector(`input[data-storeid='${storeId}']`);
+        const url = `/stores/${storeId}/status?option=${toggleButton.checked ? 'CLOSE' : 'ACTIVE'}`;
+        const data = null;
+        const method = "PATCH";
 
+        sendDataWithCsrfToken(url, "/", data, method);
+    }
+</script>
+</body>
 </html>
