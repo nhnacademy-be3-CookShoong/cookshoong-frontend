@@ -28,6 +28,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoun
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
+import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 
 /**
  * 인증과 권한 기반으로 요청들을 검증을 하기 위한 시큐리티 설정 클래스.
@@ -87,7 +88,7 @@ public class WebSecurityConfig {
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
-            .deleteCookies("SESSION")
+            .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
             .logoutSuccessHandler(tokenInvalidationHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);
