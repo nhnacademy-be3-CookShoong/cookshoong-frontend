@@ -1,7 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.auth.repository;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Component;
-import store.cookshoong.www.cookshoongfrontend.auth.entity.RefreshToken;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,10 @@ import java.util.Optional;
  * @since 2023.08.11
  */
 @Component
+@RequiredArgsConstructor
 public class RefreshTokenManager implements CookieManager {
     public static final String REFRESH_TOKEN_COOKIE_NAME = "CRT";
+    private final TextEncryptor encryptor;
 
     /**
      * 리프레쉬 토큰을 쿠키에 저장한다.
@@ -26,12 +30,23 @@ public class RefreshTokenManager implements CookieManager {
      * @param refreshToken the refresh token
      */
     public void save(HttpServletResponse response, RefreshToken refreshToken) {
-        Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken.getRawRefreshToken());
+        Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, encryptor.encrypt(refreshToken.getRawRefreshToken()));
         cookie.setHttpOnly(true);
         cookie.setSecure(System.getProperty("spring.profiles.active").equals("prod"));
         cookie.setPath("/");
-        cookie.setMaxAge(Math.toIntExact(refreshToken.getExpireTime()));
+        cookie.setMaxAge(Math.toIntExact(refreshToken.getTimeToLive()));
         CookieManager.super.save(response, cookie);
+    }
+
+    /**
+     * 리프레쉬 토큰을 유효기간이 있는 객체로 변환한다.
+     * CRT(Cookshoong Refresh Token)
+     *
+     * @param request the request
+     * @return the optional
+     */
+    public RefreshToken convertRefreshToken(HttpServletRequest request) {
+        return RefreshToken.createRefreshToken(extractRefreshToken(request));
     }
 
     /**
@@ -41,13 +56,10 @@ public class RefreshTokenManager implements CookieManager {
      * @param request the request
      * @return the optional
      */
-    public RefreshToken extractRefreshToken(HttpServletRequest request) {
+    public String extractRefreshToken(HttpServletRequest request) {
         Optional<Cookie> cookie = extractCookieByName(request, REFRESH_TOKEN_COOKIE_NAME);
-        if (cookie.isEmpty()) {
-            return null;
-        }
-        String rawRefreshToken = cookie.get().getValue();
-        return RefreshToken.createRefreshToken(rawRefreshToken);
+        return cookie.map(value -> encryptor.decrypt(value.getValue()))
+            .orElse(null);
     }
 
     /**
@@ -57,7 +69,7 @@ public class RefreshTokenManager implements CookieManager {
      * @return the optional
      */
     public RefreshToken getCurrentRefreshToken() {
-        return extractRefreshToken(CookieManager.getRequest());
+        return convertRefreshToken(CookieManager.getRequest());
     }
 
     public boolean isExists(HttpServletRequest request) {
