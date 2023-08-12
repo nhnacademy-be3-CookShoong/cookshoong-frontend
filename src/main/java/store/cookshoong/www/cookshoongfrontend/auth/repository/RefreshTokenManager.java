@@ -1,14 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.auth.repository;
 
-import java.util.Optional;
+import org.springframework.stereotype.Component;
+import store.cookshoong.www.cookshoongfrontend.auth.entity.RefreshToken;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.ResponseCookie;
-import org.springframework.stereotype.Component;
-import store.cookshoong.www.cookshoongfrontend.auth.entity.RefreshToken;
+import java.util.Optional;
 
 
 /**
@@ -34,8 +32,6 @@ public class RefreshTokenManager implements CookieManager {
         cookie.setPath("/");
         cookie.setMaxAge(Math.toIntExact(refreshToken.getExpireTime()));
         CookieManager.super.save(response, cookie);
-        ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, refreshToken.getRawRefreshToken())
-            .build();
     }
 
     /**
