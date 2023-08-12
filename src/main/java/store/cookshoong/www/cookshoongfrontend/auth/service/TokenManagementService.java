@@ -3,7 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
-import store.cookshoong.www.cookshoongfrontend.auth.entity.RefreshToken;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
@@ -32,18 +32,24 @@ public class TokenManagementService {
      * @param accessToken the access token
      * @return the boolean
      */
-    public boolean isAccessTokenAlive(String accessToken) {
+    public boolean isTimeToLiveUnderFiveMinutes(String accessToken) {
         ParsedAccessToken parsedAccessToken = JwtResolver.resolveAccessToken(accessToken);
         Long expiredTime = Long.valueOf(parsedAccessToken.getExp());
         Long now = new Date().toInstant().getEpochSecond();
-        return expiredTime - now < 5 * Times.MINUTE;
+        int ttl = (int) (expiredTime - now);
+        return ttl <= 5 * Times.MINUTE;
     }
 
     /**
      * 리프레쉬 토큰을 통해 새로운 토큰을 요청하는 메서드.
      */
     public AuthenticationResponseDto reissueToken() {
-        return authApiAdapter.executeTokenRenewal()
+        RefreshToken refreshToken = getRefreshToken();
+        return sendRefreshTokenForRenewal(refreshToken);
+    }
+
+    private AuthenticationResponseDto sendRefreshTokenForRenewal(RefreshToken refreshToken) {
+        return authApiAdapter.executeTokenRenewal(refreshToken.getRawRefreshToken())
             .getBody();
     }
 

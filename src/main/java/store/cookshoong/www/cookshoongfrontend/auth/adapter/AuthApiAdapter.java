@@ -1,16 +1,19 @@
 package store.cookshoong.www.cookshoongfrontend.auth.adapter;
 
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.auth.model.request.LoginRequestDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
-
-import java.net.URI;
 
 /**
  * Auth 관련된 API 호출을 하기 위한 클래스.
@@ -96,7 +99,7 @@ public class AuthApiAdapter {
      *
      * @return the response entity
      */
-    public ResponseEntity<AuthenticationResponseDto> executeTokenRenewal() {
+    public ResponseEntity<AuthenticationResponseDto> executeTokenRenewal(String refreshToken) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("auth")
@@ -104,7 +107,11 @@ public class AuthApiAdapter {
             .build()
             .toUri();
 
-        return restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
+        HttpHeaders cookieHeader = new HttpHeaders();
+        cookieHeader.add("Cookie", "CRT=" + refreshToken);
+        HttpEntity<Void> request = new HttpEntity<>(cookieHeader);
+
+        return restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
         });
     }
 }
