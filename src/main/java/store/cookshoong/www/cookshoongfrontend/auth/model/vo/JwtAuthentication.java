@@ -30,17 +30,17 @@ public class JwtAuthentication implements Authentication {
      * @param accessToken the access token
      */
     public JwtAuthentication(String accessToken, String refreshToken) {
-        this.authorities = JwtResolver.convertToRole(accessToken);
+        this.authorities = JwtResolver.obtainRole(accessToken);
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.status = JwtResolver.convertToStatus(refreshToken);
+        this.status = JwtResolver.obtainStatus(refreshToken);
         this.setAuthenticated(true);
         afterPropertiesSet();
     }
 
     private void afterPropertiesSet() {
         Assert.notNull(accessToken, "인증된 토큰은 필요합니다.");
-        Assert.notNull(refreshToken, "인증 토큰이 발급되었다면 갱신 토큰도 발급됩니다.");
+        Assert.notNull(refreshToken, "인증 성공시에만 갱신 토큰을 가지게 됩니다.");
         Assert.notNull(status, "회원 상태는 없을 수 없습니다.");
         if (status.equals("WITHDRAWAL")) {
             throw new DisabledException("탈퇴한 회원입니다.");
