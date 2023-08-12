@@ -27,7 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException {
         JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
         String refreshToken = jwtAuthentication.getRefreshToken();
-        tokenManagementService.saveRefreshToken(refreshToken);
+        tokenManagementService.saveRefreshToken(response, refreshToken);
         jwtAuthentication.eraseRefreshToken();
 
         if (jwtAuthentication.getStatus().equals("DORMANCY")) {
