@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.order.adapter.OrderAdapter;
 import store.cookshoong.www.cookshoongfrontend.order.model.request.CreateOrderRequestDto;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.CreateOrderResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
 
 /**
  * 주문 서비스.
@@ -25,5 +26,9 @@ public class OrderService {
      */
     public CreateOrderResponseDto createService(CreateOrderRequestDto createOrderRequestDto) {
         return orderAdapter.executeOrder(createOrderRequestDto);
+    }
+
+    public SelectOrderPossibleResponseDto isOrderPossible(Long storeId, Long accountId) {
+        return orderAdapter.fetchOrderPossible(storeId, accountId);
     }
 }
