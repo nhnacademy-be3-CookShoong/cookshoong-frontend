@@ -29,6 +29,10 @@ public class CartRedisDto {
     private Long storeId;
     @NotBlank
     private String storeName;
+    @NotNull
+    private Integer deliveryCost;
+    @NotNull
+    private Integer minimumOrderPrice;
     @Valid
     private CartMenuDto menu;
     private List<CartOptionDto> options;
