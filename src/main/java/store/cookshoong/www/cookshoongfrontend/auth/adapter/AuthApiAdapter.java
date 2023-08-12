@@ -1,19 +1,16 @@
 package store.cookshoong.www.cookshoongfrontend.auth.adapter;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.auth.model.request.LoginRequestDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
+
+import java.net.URI;
 
 /**
  * Auth 관련된 API 호출을 하기 위한 클래스.
@@ -45,7 +42,8 @@ public class AuthApiAdapter {
             .toUri();
 
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
-        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
@@ -67,7 +65,8 @@ public class AuthApiAdapter {
             .header("X-Account-Code", nameAttributeKey)
             .header("X-Provider", provider)
             .build();
-        return restTemplate.exchange(retrieveRequest, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(retrieveRequest, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
@@ -88,16 +87,16 @@ public class AuthApiAdapter {
         authorizationHeader.setBearerAuth(accessToken);
         HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
 
-        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {});
+        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
      * 토큰 재발급을 위해 리프레쉬 토큰을 인증 서버로 보내는 메서드.
      *
-     * @param refreshToken the refresh token
      * @return the response entity
      */
-    public ResponseEntity<AuthenticationResponseDto> sendRefreshToken(String refreshToken) {
+    public ResponseEntity<AuthenticationResponseDto> executeTokenRenewal() {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("auth")
@@ -105,10 +104,7 @@ public class AuthApiAdapter {
             .build()
             .toUri();
 
-        HttpHeaders authorizationHeader = new HttpHeaders();
-        authorizationHeader.setBearerAuth(refreshToken);
-        HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
-
-        return restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
+        });
     }
 }
