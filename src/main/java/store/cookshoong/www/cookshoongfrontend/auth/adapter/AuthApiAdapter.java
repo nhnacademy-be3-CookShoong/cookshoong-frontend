@@ -45,7 +45,8 @@ public class AuthApiAdapter {
             .toUri();
 
         HttpEntity<LoginRequestDto> body = new HttpEntity<>(loginRequestDto);
-        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(uri, HttpMethod.POST, body, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
@@ -67,7 +68,8 @@ public class AuthApiAdapter {
             .header("X-Account-Code", nameAttributeKey)
             .header("X-Provider", provider)
             .build();
-        return restTemplate.exchange(retrieveRequest, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(retrieveRequest, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
@@ -88,16 +90,16 @@ public class AuthApiAdapter {
         authorizationHeader.setBearerAuth(accessToken);
         HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
 
-        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {});
+        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+        });
     }
 
     /**
      * 토큰 재발급을 위해 리프레쉬 토큰을 인증 서버로 보내는 메서드.
      *
-     * @param refreshToken the refresh token
      * @return the response entity
      */
-    public ResponseEntity<AuthenticationResponseDto> sendRefreshToken(String refreshToken) {
+    public ResponseEntity<AuthenticationResponseDto> executeTokenRenewal(String refreshToken) {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("auth")
@@ -105,10 +107,11 @@ public class AuthApiAdapter {
             .build()
             .toUri();
 
-        HttpHeaders authorizationHeader = new HttpHeaders();
-        authorizationHeader.setBearerAuth(refreshToken);
-        HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
+        HttpHeaders cookieHeader = new HttpHeaders();
+        cookieHeader.add("Cookie", "CRT=" + refreshToken);
+        HttpEntity<Void> request = new HttpEntity<>(cookieHeader);
 
-        return restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {});
+        return restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+        });
     }
 }
