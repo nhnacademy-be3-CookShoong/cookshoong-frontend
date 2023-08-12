@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import store.cookshoong.www.cookshoongfrontend.common.property.RedisProperties;
 import store.cookshoong.www.cookshoongfrontend.common.service.SKMService;
 
@@ -18,7 +17,6 @@ import store.cookshoong.www.cookshoongfrontend.common.service.SKMService;
  * @author koesnam (추만석)
  * @since 2023.07.17
  */
-@EnableRedisRepositories
 @Configuration
 public class RedisConfig {
 
@@ -38,8 +36,8 @@ public class RedisConfig {
      */
     @Bean
     @Profile("!default")
-    public RedisConnectionFactory tokenRedisConnectionFactory(RedisProperties redisProperties,
-                                                              @Value("${spring.redis.database}") Integer database) {
+    public RedisConnectionFactory authRedisConnectionFactory(RedisProperties redisProperties,
+                                                             @Value("${spring.redis.database}") Integer database) {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(redisProperties.getHost());
         configuration.setPort(redisProperties.getPort());
