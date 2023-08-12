@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
@@ -18,6 +19,8 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 
 /**
  * 주문 controller.
@@ -33,6 +36,7 @@ public class OrderController {
     private final CartService cartService;
     private final AccountAddressService addressService;
     private final CouponManageService couponManageService;
+    private final OrderService orderService;
 
     /**
      * 주문 페이지 엔드포인트.
@@ -50,7 +54,14 @@ public class OrderController {
         }
 
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(cartKey);
+        Long storeId = cartItems.get(0).getStoreId();
+
+        if (!orderService.isOrderPossible(storeId, accountId).isOrderPossible()) {
+            return "redirect:/carts";
+        }
+
         model.addAttribute("cartItems", cartItems);
+        model.addAttribute("storeId", storeId);
 
         String storeName = cartItems.get(0).getStoreName();
         model.addAttribute("storeName", storeName);
@@ -63,9 +74,6 @@ public class OrderController {
         AddressResponseDto addressResponseDto = addressService.selectAccountAddressRenewalAt(accountId);
         model.addAttribute("mainPlace", addressResponseDto.getMainPlace());
         model.addAttribute("detailPlace", addressResponseDto.getDetailPlace());
-
-        Long storeId = cartItems.get(0).getStoreId();
-        model.addAttribute("storeId", storeId);
 
         // 매장 배달비
         // 장바구니 금액과 배달비는 따로 해야한다, 쿠폰은 장바구니 금액애만 적용이 되어야 하므로
