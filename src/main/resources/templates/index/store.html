@@ -3,9 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-<head>
-    <title>Untitled</title>
-</head>
+
 <body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
@@ -15,7 +13,7 @@
     <div class="landing-panel">
         <div class="content-wrapper">
             <section class="container">
-                <div class="row flex-xl-nowrap" style="border: 1px solid #e7eaed;">
+                <div class="row flex--nowrap" style="border: 1px solid #e7eaed;">
                     <div class="card border-0" style="width: 200px; height: 200px;">
                         <div class="card-body">
                             <div class="bg-box p-4 text-center" style="background-color: #ffffff;">
@@ -27,7 +25,7 @@
 
                         </div>
                     </div>
-                    <div class="card border-0 flex-fill">
+                    <div class="card border-0 flex-fill" style="max-width: 900px;">
                         <span class="card-header font-weight-bold border-0 bg-white" style="font-size: 40px;"
                               th:text="${store.storeName}"></span>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
