@@ -17,7 +17,9 @@
             <form id="addCart" th:action="@{/index/store/menu/cart}" method="POST">
 
                 <input type="hidden" name="storeId" th:value="${storeId}">
-                <input type="hidden" name="storeName" th:value="${storeName}">
+                <input type="hidden" name="storeName" th:value="${store.storeName}">
+                <input type="hidden" name="deliveryCost" th:value="${store.deliveryCost}">
+                <input type="hidden" name="minimumOrderPrice" th:value="${store.minimumOrderPrice}">
                 <input type="hidden" name="menu.menuId" th:value="${menu.id}">
                 <input type="hidden" name="menu.menuName" th:value="${menu.name}">
                 <input type="hidden" name="menu.menuImage" th:value="${menu.savedName}">
@@ -108,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card border-0" th:if="${storeStatus == '영업중'}">
+                    <div class="card border-0" th:if="${store.storeStatus == '영업중'}">
                         <button class="btn btn-warning" type="submit"
                                 style="font-size: 20px;
                                 font-weight: bold;
@@ -118,7 +120,7 @@
                             메뉴 담기
                         </button>
                     </div>
-                    <div class="card border-0" th:if="${storeStatus != '영업중'}">
+                    <div class="card border-0" th:if="${store.storeStatus != '영업중'}">
                         <button class="btn btn-warning" type="submit" disabled
                                 style="font-size: 20px;
                                 font-weight: bold;
