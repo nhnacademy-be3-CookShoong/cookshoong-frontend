@@ -47,19 +47,19 @@
                                     </div>
                                 </div>
                                 <div class="p-1 m-3 border-top border-bottom border-left border-right" id="reviewBox" style="display: none;">
-                                    <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
+                                    <div class="row pl-3 pr-3 pt-1 pb-1 m-0" id="rating-container">
                                         <strong class="pt-3 mr-2" style="font-size: 20px;" th:text="'별점 : '"></strong>
-                                        <strong class="pt-3 mr-2" style="font-size: 20px;" th:text="'5.0'"></strong>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0"
-                                              style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0"
-                                              style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0"
-                                              style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0"
-                                              style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0"
-                                              style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <strong class="pt-3 mr-2" style="font-size: 20px;" id="rating-text">0.0</strong>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
                                     </div>
                                     <div class="p-3" id="editor">
                                     </div>
@@ -114,6 +114,24 @@
     </div>
 </div>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    document.querySelectorAll('.star-btn').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const rating = (index + 1); // 별점 계산
+            document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
+
+            // 모든 버튼을 초기 상태로 리셋
+            document.querySelectorAll('.star-btn').forEach(btn => {
+                btn.className = "typcn typcn-star-outline p-0 m-1 border-0 star-btn";
+            });
+
+            // 선택한 버튼과 이전 버튼을 채운 상태로 변경
+            for(let i = 0; i <= index; i++) {
+                document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
+            }
+        });
+    });
+</script>
 <script>
     const editor = new toastui.Editor({
         initialEditType: 'wysiwyg',
