@@ -93,9 +93,9 @@
                             </div>
                         </div>
                         <div class="card-body p-1" th:each="address, i:${accountAddresses}"  th:unless="${accountAddresses == null}">
-                            <form th:action="@{'/my-address/' + ${address.id} + '/index'}" th:method="PATCH">
-                                <button  class="row border-top border-bottom border-left border-right w-100 bg-white mt-1 mb-1"
-                                         style="border-radius: 1rem">
+                            <form th:action="@{'/my-address/' + ${address.id} + '/index'}" th:method="PATCH" th:with="one=${i.index==0? 'first-address' : ''}">
+                                <button th:class="'row border-top border-bottom border-left border-right w-100 mt-1 mb-1 ' + ${one}"
+                                        style="border-radius: 1rem">
                                     <div class="col-12 p-1 m-1 text-left">
                                         <h4 class="font-weight-bold" th:text="${address.getAlias()}" style="font-size: 1.2rem"></h4>
                                         <span th:text="${address.getMainPlace()}"></span>
@@ -364,7 +364,7 @@
                 <ul class="flex-column nav sub-menu">
                     <li><a class="nav-link nav-link-item" href="store-order-manager">주문 관리</a></li>
                     <li><a class="nav-link nav-link-item" href="store-delivery-manager">배송 관리</a></li>
-                    <li><a class="nav-link nav-link-item" href="store-charge-manager">결제 관리</a></li>
+                    <li><a class="nav-link nav-link-item" href="store-payment-manager">결제 관리</a></li>
                 </ul>
             </div>
         </li>
