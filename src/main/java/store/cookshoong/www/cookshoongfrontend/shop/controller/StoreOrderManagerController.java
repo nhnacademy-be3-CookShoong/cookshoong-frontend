@@ -67,9 +67,7 @@ public class StoreOrderManagerController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/stores/order/refund")
     public void postRefundInOrder(@RequestBody CreateFullRefundRequestDto createFullRefundRequestDto) {
-        TossPaymentKeyResponseDto paymentKey =
-            paymentService.selectTossPaymentKey(createFullRefundRequestDto.getOrderId());
 
-        paymentService.createCancelTossPayment(paymentKey.getPaymentKey(), createFullRefundRequestDto);
+        paymentService.createCancelTossPayment(createFullRefundRequestDto);
     }
 }
