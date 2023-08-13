@@ -30,7 +30,8 @@
                                 <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
                                     <strong style="font-size: 20px;" th:text="'드래곤 스테이크 전문점'"></strong>
                                     <div class="p-0 m-0">
-                                        <button class="btn btn-danger font-weight-bold p-2" th:text="'리뷰 남기기'" onclick="showEditor()"></button>
+                                        <button class="btn btn-danger font-weight-bold p-2" th:text="'리뷰 남기기'"
+                                                onclick="showEditor()"></button>
                                     </div>
                                 </div>
                                 <div class="pl-3 pr-3 pt-1 pb-3 m-0">
@@ -46,30 +47,54 @@
                                             </span>
                                     </div>
                                 </div>
-                                <div class="p-1 m-3 border-top border-bottom border-left border-right" id="reviewBox" style="display: none;">
-                                    <div class="row pl-3 pr-3 pt-1 pb-1 m-0" id="rating-container">
-                                        <strong class="pt-3 mr-2" style="font-size: 20px;" th:text="'별점 : '"></strong>
-                                        <strong class="pt-3 mr-2" style="font-size: 20px;" id="rating-text">0.0</strong>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
-                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
-                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
-                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
-                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
-                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                <form class="col-12 p-0" th:action="@{'/review/'}"
+                                      th:object="${createReviewRequestDto}"
+                                      method="post" enctype="multipart/form-data">
+
+                                    <div class="p-1 m-3 border-top border-bottom border-left border-right"
+                                         id="reviewBox" style="display: none;">
+                                        <input type="hidden" name="orderCode" th:value="'1'">
+                                        <input type="hidden" name="rating" id="rating" th:value="'1.0'">
+                                        <input type="hidden" name="content" id="content" th:value="'맛있게 먹었습니다.'">
+
+                                        <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
+                                            <strong class="mr-4" style="padding-top: 0.75rem; font-size: 20px;"
+                                                    th:text="'별점'"></strong>
+                                            <strong class="mr-2" style="padding-top: 0.75rem; font-size: 20px;"
+                                                    id="rating-text">1.0</strong>
+                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn" type="button"
+                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                            <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn" type="button"
+                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                            <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn" type="button"
+                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                            <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn" type="button"
+                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                            <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn" type="button"
+                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        </div>
+
+                                        <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
+                                        <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
+                                            <input type="file" name="menuImage" class="file-upload-default"
+                                                   accept="image/png,image/jpg">
+                                            <div class="input-group col-xs-12">
+                                                <input type="text" class="form-control file-upload-info" disabled
+                                                       id="menuImage"
+                                                       placeholder="사진 리뷰 이미지">
+                                                <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-info"
+                                                    type="button">이미지 찾기</button></span>
+                                            </div>
+                                        </div>
+                                        <div class=" pl-3 pr-3 pt-2 pb-1 m-0">
+                                            <button class="btn btn-danger font-weight-bold p-2"
+                                                    th:text="'리뷰 등록하기'"
+                                                    id="submitButton">
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="p-3" id="editor">
-                                    </div>
-                                    <div class="pl-3 pr-3 pt-1 pb-1">
-                                        <button class="btn btn-danger font-weight-bold p-2"
-                                                th:text="'리뷰 등록하기'"
-                                                id="submitButton">
-                                        </button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -99,12 +124,16 @@
                                 <div class="pl-3 pr-3 pt-1 pb-3 m-0">
                                     <span th:text="'사장님이 맛있고, 음식이 친절해요. 또 시킬꺼야. 월요일도 시키고 화요일도 시키고 수요일도 시키고 목요일도 시키고 금요일도 시키고 토요일도 시키고 일요일도 시킬꺼야. 계속 시킬꺼야. 사장님 조아. 피자 조아.'"></span>
                                 </div>
+                                <div class="pl-3 pr-3 pt-1 pb-3 m-0 w-100">
+                                    <img src="/assets/images/shoong.png" alt="" style="background-color: orange; max-width: 400px;">
+                                </div>
                                 <div class="pl-3 pr-3 pt-1 pb-3 m-0">
                                             <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
                                             border-left border-right border-top border-bottom font-weight-bold"
                                                   style="border-radius: 6px; background-color: #ffb429"
                                                   th:text="'드래곤 스테이크 허니 콤보'"></span>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -119,6 +148,7 @@
         button.addEventListener('click', () => {
             const rating = (index + 1); // 별점 계산
             document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
+            document.getElementById('rating').value = rating.toFixed(1);
 
             // 모든 버튼을 초기 상태로 리셋
             document.querySelectorAll('.star-btn').forEach(btn => {
@@ -126,7 +156,7 @@
             });
 
             // 선택한 버튼과 이전 버튼을 채운 상태로 변경
-            for(let i = 0; i <= index; i++) {
+            for (let i = 0; i <= index; i++) {
                 document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
             }
         });
@@ -147,7 +177,7 @@
 
     document.querySelector('#submitButton').addEventListener('click', function () {
         let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
+        document.querySelector('#content').value = editorContent;
     });
 </script>
 <footer th:replace="fragments :: site-footer"></footer>

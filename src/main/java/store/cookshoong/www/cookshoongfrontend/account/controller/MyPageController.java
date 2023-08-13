@@ -154,17 +154,4 @@ public class MyPageController {
         return "redirect:/my-address";
     }
 
-    /**
-     * 회원 리뷰 페이지 진입.
-     *
-     */
-    @GetMapping("/my-review")
-    public String getMyReview(Model model) {
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
-
-        model.addAttribute("accountAddresses", accountAddresses);
-        model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
-        return "account/my-review";
-    }
 }
