@@ -23,8 +23,11 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
-import store.cookshoong.www.cookshoongfrontend.auth.hanlder.*;
-import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginFailureHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoundHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 
 /**
@@ -38,7 +41,6 @@ import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManag
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailureHandler loginFailureHandler;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
@@ -89,8 +91,6 @@ public class WebSecurityConfig {
             .clearAuthentication(true)
             .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
             .logoutSuccessHandler(tokenInvalidationHandler);
-
-        http.authenticationProvider(jwtAuthenticationProvider);
 
         http.sessionManagement()
             .sessionFixation()
