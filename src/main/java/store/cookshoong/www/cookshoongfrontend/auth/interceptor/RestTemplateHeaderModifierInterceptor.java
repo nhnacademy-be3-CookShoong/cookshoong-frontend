@@ -22,17 +22,13 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
         throws IOException {
         SecurityContext context = SecurityContextHolder.getContext();
-        if (isNotAuthenticated(context) || isReissueRequest(request)) {
+        if (isNotAuthenticated(context)) {
             return execution.execute(request, body);
         }
 
         String accessToken = context.getAuthentication().getName();
         request.getHeaders().setBearerAuth(accessToken);
         return execution.execute(request, body);
-    }
-
-    private boolean isReissueRequest(HttpRequest request) {
-        return request.getURI().getPath().equals("/auth/reissue");
     }
 
     private static boolean isNotAuthenticated(SecurityContext context) {

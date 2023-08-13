@@ -23,11 +23,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
-import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
-import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoundHandler;
-import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2LoginSuccessHandler;
-import store.cookshoong.www.cookshoongfrontend.auth.hanlder.TokenInvalidationHandler;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.*;
 import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationProvider;
+import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 
 /**
  * 인증과 권한 기반으로 요청들을 검증을 하기 위한 시큐리티 설정 클래스.
@@ -42,6 +40,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.provider.JwtAuthenticationPr
 public class WebSecurityConfig {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailureHandler loginFailureHandler;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final OAuth2AccountNotFoundHandler oAuth2AccountNotFoundHandler;
     private final TokenInvalidationHandler tokenInvalidationHandler;
@@ -73,8 +72,8 @@ public class WebSecurityConfig {
             .usernameParameter("loginId")
             .passwordParameter("password")
             .loginProcessingUrl("/login")
-            .successHandler(loginSuccessHandler);
-
+            .successHandler(loginSuccessHandler)
+            .failureHandler(loginFailureHandler);
 
         http.oauth2Login()
             .loginPage("/login-page")
@@ -88,7 +87,7 @@ public class WebSecurityConfig {
         http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
-            .deleteCookies("SESSION")
+            .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
             .logoutSuccessHandler(tokenInvalidationHandler);
 
         http.authenticationProvider(jwtAuthenticationProvider);

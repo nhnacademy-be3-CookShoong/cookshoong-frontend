@@ -1,15 +1,10 @@
 package store.cookshoong.www.cookshoongfrontend.account.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import store.cookshoong.www.cookshoongfrontend.auth.entity.RefreshToken;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedRefreshToken;
-import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepository;
-import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
+import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementService;
 
 /**
  * Json Web Token 으로부터 accountId를 가져오는 방식을 정의하는 클래스.
@@ -20,20 +15,12 @@ import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 @Component
 @RequiredArgsConstructor
 public class JwtAccountIdAware implements AccountIdAware {
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final TokenManagementService tokenManagementService;
 
     @Override
     public Long getAccountId() {
-        RefreshToken refreshToken = refreshTokenRepository.findById(getJti())
-            .orElseThrow(() -> new InsufficientAuthenticationException("인증되지 않은 사용자입니다."));
-        ParsedRefreshToken parsedRefreshToken = JwtResolver.resolveToken(refreshToken.getRawRefreshToken(),
-            ParsedRefreshToken.class);
-
+        RefreshToken refreshToken = tokenManagementService.getRefreshToken();
+        ParsedRefreshToken parsedRefreshToken = refreshToken.parse();
         return parsedRefreshToken.getAccountId();
-    }
-
-    private String getJti() {
-        JwtAuthentication authentication = (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        return JwtResolver.resolveToken(authentication.getName(), ParsedAccessToken.class).getJti();
     }
 }
