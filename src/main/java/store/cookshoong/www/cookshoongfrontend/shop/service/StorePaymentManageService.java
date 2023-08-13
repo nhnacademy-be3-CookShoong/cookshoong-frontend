@@ -19,6 +19,13 @@ public class StorePaymentManageService {
 
     private final StoreOrderAdapter storeOrderAdapter;
 
+    /**
+     * 주문이 완료된 건들에 대해 모두 가져오는 메서드.
+     *
+     * @param storeId       매장 아이디
+     * @param pageable      페이징 처리
+     * @return              모든 완료된 주문
+     */
     public Page<SelectOrderInStatusResponseDto> selectOrderInComplete(Long storeId, Pageable pageable) {
 
         return storeOrderAdapter.fetchOrderInComplete(storeId, pageable);
