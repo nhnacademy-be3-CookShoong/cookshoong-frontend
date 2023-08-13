@@ -58,10 +58,10 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-warning col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], 'FOOD_OUT')">재료소진</button>
+                                <button class="btn btn-warning col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'FOOD_OUT')">재료소진</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-primary col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], 'ORD_FLOOD')">주문폭주</button>
+                                <button class="btn btn-primary col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'ORD_FLOOD')">주문폭주</button>
                             </div>
                         </div>
                     </div>
@@ -86,11 +86,12 @@ function setStatusCode(orderCode, statusCode) {
     sendDataWithCsrfToken("/stores/order/status", path, data, method);
 }
 
-function refundAndSetStatusCode(orderCode, chargeCode, statusCode) {
+function refundAndSetStatusCode(orderCode, chargeCode, paymentKey, statusCode) {
 
     const data = {
         orderId: orderCode,
         chargeCode: chargeCode,
+        paymentKEy: paymentKey,
         cancelReason: statusCode
     };
     const method = "POST";
