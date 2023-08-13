@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.order.model.request.CreateOrderRequestDto;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.CreateOrderResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
 
 /**
  * 주문 어뎁터.
@@ -39,6 +40,28 @@ public class OrderAdapter {
                 .toUri(),
             HttpMethod.POST,
             new HttpEntity<>(createOrderRequestDto),
+            new ParameterizedTypeReference<>() {
+            });
+
+        return response.getBody();
+    }
+
+    /**
+     * 주문 가능한 지 여부를 파악.
+     *
+     * @param storeId   the store id
+     * @param accountId the account id
+     * @return the select order possible response dto
+     */
+    public SelectOrderPossibleResponseDto fetchOrderPossible(Long storeId, Long accountId) {
+        ResponseEntity<SelectOrderPossibleResponseDto> response = restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/orders/{storeId}/possible/{accountId}")
+                .buildAndExpand(storeId, accountId)
+                .toUri(),
+            HttpMethod.GET,
+            null,
             new ParameterizedTypeReference<>() {
             });
 

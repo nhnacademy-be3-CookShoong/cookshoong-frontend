@@ -19,7 +19,7 @@ public class CouponTypeCashVo implements CouponTypeResponse {
     private int minimumOrderPrice;
 
     @Override
-    public int getDiscountPrice(int totalPrice) {
-        return Math.max(0, totalPrice - discountAmount);
+    public int getDiscountAmount(int totalPrice) {
+        return discountAmount;
     }
 }
