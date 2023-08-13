@@ -22,6 +22,8 @@ public class CreateOrderRequestDto implements Serializable {
     private Long accountId;
     private Long storeId;
     private String memo;
+    private String deliveryAddress;
+    private int deliveryCost;
     private UUID issueCouponCode;
     private Integer pointAmount;
 
@@ -37,5 +39,7 @@ public class CreateOrderRequestDto implements Serializable {
         this.memo = paymentPageRequestDto.getMemo();
         this.issueCouponCode = paymentPageRequestDto.getCouponCode();
         this.pointAmount = paymentPageRequestDto.getPoint();
+        this.deliveryAddress = paymentPageRequestDto.getMainPlace() + " " + paymentPageRequestDto.getDetailPlace();
+        this.deliveryCost = paymentPageRequestDto.getDeliveryCost();
     }
 }
