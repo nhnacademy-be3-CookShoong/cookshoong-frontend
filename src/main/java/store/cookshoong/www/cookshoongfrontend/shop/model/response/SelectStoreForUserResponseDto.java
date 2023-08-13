@@ -3,7 +3,6 @@ package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
-import lombok.Setter;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableStoreCouponPolicyResponseDto;
 
 /**

@@ -1,10 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.review.model.request;
 
 import javax.validation.constraints.NotBlank;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 사용자 리뷰 작성.
