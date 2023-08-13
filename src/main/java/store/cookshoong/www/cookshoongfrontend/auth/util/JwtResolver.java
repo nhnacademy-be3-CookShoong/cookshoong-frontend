@@ -56,11 +56,11 @@ public class JwtResolver {
      * @param token the token
      * @return the list
      */
-    public static Set<GrantedAuthority> convertToRole(String token) {
+    public static Set<GrantedAuthority> obtainRole(String token) {
         return CustomAuthorityUtils.createAuthoritySet("ROLE_" + resolveAccessToken(token).getAuthority());
     }
 
-    public static String convertToStatus(String refreshToken) {
+    public static String obtainStatus(String refreshToken) {
         return resolveRefreshToken(refreshToken).getStatus();
     }
 }

@@ -232,8 +232,7 @@ public class MainViewController {
 
         model.addAttribute("accountId", accountIdAware.getAccountId());
         model.addAttribute("storeId", storeId);
-        model.addAttribute("storeName", store.getStoreName());
-        model.addAttribute("storeStatus", store.getStoreStatus());
+        model.addAttribute("store", store);
         model.addAttribute("menu", menu);
         model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("options", options);
