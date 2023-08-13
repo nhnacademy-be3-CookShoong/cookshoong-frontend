@@ -22,4 +22,6 @@ public class PaymentPageRequestDto implements Serializable {
     private String memo;
     private UUID couponCode;
     private Integer point;
+    private Integer deliveryCost;
+    private Integer discountAmount;
 }

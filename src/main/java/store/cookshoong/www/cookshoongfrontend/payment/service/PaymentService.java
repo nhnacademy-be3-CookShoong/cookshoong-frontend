@@ -45,7 +45,7 @@ public class PaymentService {
      * @param point      사용하는 포인트
      */
     public void createApproveTossPayment(String paymentKey, Long amount,
-                                         UUID orderId, UUID couponCode, Integer point) {
+                                         UUID orderId, UUID couponCode, Integer point, Integer discountAmount) {
 
         TossResponseDto tossResponseDto =
             tossPaymentAdapter.requestApproveTossPayment(
@@ -55,7 +55,7 @@ public class PaymentService {
         paymentAdapter.executePayment(new CreatePaymentDto(
                 tossResponseDto.getOrderId(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getTotalAmount(), tossResponseDto.getPaymentKey(),
-                PaymentType.TOSS.getType(), CART + account.getAccountId(), couponCode, point));
+                PaymentType.TOSS.getType(), CART + account.getAccountId(), couponCode, point, discountAmount));
     }
 
     /**
