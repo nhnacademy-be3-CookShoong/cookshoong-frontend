@@ -163,7 +163,7 @@
                                                  style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
                                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                             <img th:src="'/assets/images/notready.png'"
-                                                 th:if="${store.storeStatus == 'CLOSE'}"
+                                                 th:if="${store.storeStatus == 'CLOSE' || store.storeStatus == 'BREAK_TIME'}"
                                                  style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;">
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@
                                                  style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
                                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                             <img th:src="'/assets/images/notready.png'"
-                                                 th:if="${store.storeStatus == 'CLOSE'}"
+                                                 th:if="${store.storeStatus == 'CLOSE' || store.storeStatus == 'BREAK_TIME'}"
                                                  style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;">
                                         </div>
                                     </div>
@@ -397,7 +397,7 @@
                                          style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
                                          onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                     <img src="/assets/images/notready.png"
-                                         ${store.storeStatus === 'CLOSE' ? 'style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;"' : 'style="display:none;"'}>
+                                         ${store.storeStatus === 'BREAK_TIME' || store.storeStatus === 'CLOSE' ? 'style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;"' : 'style="display:none;"'}>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-6 p-1" style="text-align: start">
@@ -455,7 +455,7 @@
                                          style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
                                          onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                     <img src="/assets/images/notready.png"
-                                         ${store.storeStatus === 'CLOSE' ? 'style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;"' : 'style="display:none;"'}>
+                                         ${store.storeStatus === 'BREAK_TIME' || store.storeStatus === 'CLOSE' ? 'style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;"' : 'style="display:none;"'}>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-6 p-1" style="text-align: start">

@@ -196,8 +196,6 @@
                                         <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}"
                                                th:value="${updateStoreInfoRequestDto.longitude}">
 
-                                        <div class="input-group" id="map"
-                                             style="width: auto; height: 300px; margin-top: 10px;"></div>
                                     </div>
                                     <div class="form-group"><label for="earningRate">적립률</label>
                                         <input class="form-control" type="text" id="earningRate" name="earningRate"
@@ -229,7 +227,7 @@
                                     <div class="form-group">
                                         <label>가게 설명</label>
                                         <input type="text" id="description" name="description" hidden="hidden"
-                                               th:field="*{description}" th:value="${updateStoreInfoRequestDto.description}">
+                                               th:field="*{description}">
                                         <div id="editor"></div>
                                     </div>
                                     <div class="modal-footer">
