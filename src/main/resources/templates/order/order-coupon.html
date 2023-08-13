@@ -12,11 +12,11 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <div th:if="${ownCoupons.content == null || ownCoupons.content.isEmpty()}">
-                    <p>쿠폰 없음</p>
+                <div class="justify-content-center flex-container" th:if="${ownCoupons.content == null || ownCoupons.content.isEmpty()}">
+                    <h1>사용 가능한 쿠폰이 없습니다.</h1>
                 </div>
                 <div th:unless="${coupon == null}" class="col-12 grid-margin" th:each="coupon, i:${ownCoupons.content}">
-                    <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2" th:couponCode="${coupon.issueCouponCode}" th:discount="${coupon.couponTypeResponse.getDiscountPrice(totalPrice)}"
+                    <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2" th:couponCode="${coupon.issueCouponCode}" th:discount="${coupon.couponTypeResponse.getDiscountAmount(totalPrice)}"
                             th:disabled="${totalPrice < coupon.couponTypeResponse.getMinimumOrderPrice()}"
                             th:onclick="couponButtonEvent(this.getAttribute('couponCode'), this.getAttribute('discount'))">
 
@@ -82,7 +82,6 @@
             </ul>
         </nav>
     </div>
-
 <script th:inline="javascript">
     function couponButtonEvent(selectCouponCode, discount) {
         window.opener.setCoupon(selectCouponCode, discount);
