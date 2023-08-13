@@ -20,9 +20,7 @@ public class CouponTypePercentVo implements CouponTypeResponse {
     private int maximumDiscountAmount;
 
     @Override
-    public int getDiscountPrice(int totalPrice) {
-        int discount = Math.min(totalPrice / 100 * rate, getMaximumDiscountAmount());
-        int discountPrice = totalPrice - discount;
-        return Math.max(0, discountPrice);
+    public int getDiscountAmount(int totalPrice) {
+        return Math.min(totalPrice / 100 * rate, getMaximumDiscountAmount());
     }
 }

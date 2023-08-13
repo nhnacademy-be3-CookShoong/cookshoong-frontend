@@ -3,9 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-<head>
-    <title>Untitled</title>
-</head>
+
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
@@ -30,7 +28,7 @@
                                 <a class="nav-link active" href="#coupon1" data-toggle="tab">금액 쿠폰</a>
                             </li>
                             <li class="nav-item flex-grow-1" style="text-align: center">
-                                <a class="nav-link" href="#coupon2" data-toggle="tab">포인트 쿠폰</a>
+                                <a class="nav-link" href="#coupon2" data-toggle="tab">퍼센트 쿠폰</a>
                             </li>
                         </ul>
                     </div>

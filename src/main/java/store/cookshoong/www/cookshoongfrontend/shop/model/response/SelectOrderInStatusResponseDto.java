@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -16,10 +17,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectOrderInStatusResponseDto {
     private UUID orderCode;
-    private String orderStatusCode;
+    private String orderStatusDescription;
     private List<SelectOrderDetailMenuResponseDto> selectOrderDetails;
     private String memo;
     private UUID chargeCode;
     private int chargedAmount;
     private String paymentKey;
+    private LocalDateTime orderedAt;
+    private String deliveryAddress;
 }

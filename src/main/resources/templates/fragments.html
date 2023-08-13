@@ -134,22 +134,31 @@
                                 <button class="row border-0 flex-fill bg-white mt-1 mb-1"
                                         th:onclick="'window.location.href=\'/stores/' + ${businessStore.storeId} + '/store-info-manager' + '\''"
                                         style="border-radius: 1rem">
-                                    <div class="col-8 p-1 m-1 text-left">
+                                    <div class="col-11 p-1 m-1 text-left">
+                                        <h6 th:if="${businessStore.storeStatus == 'CLOSE'}" style="color: orangered;">매장 오픈시 중단해제를 눌러주세요.</h6>
                                         <h4 class="font-weight-bold" th:text="${businessStore.storeName}" style="font-size: 1.2rem"></h4>
                                         <span th:text="${businessStore.storeMainAddress}"></span>
                                         <span th:text="${businessStore.storeDetailAddress}"></span>
                                     </div>
                                 </button>
-                                <div class="col-4 p-1 m-1 text-right" th:if="${businessStore.storeStatus != '폐업'}">
-                                    <button th:if="${businessStore.storeStatus == '영업중'}"
+                                <div class="col-4 p-1 m-1 text-right">
+                                    <button th:if="${businessStore.storeStatus == 'OPEN'}"
                                             th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'CLOSE\')'"
-                                            class="btn btn-outline-primary">
-                                        휴식시작
+                                            class="btn btn-outline-reddit">
+                                        강제휴식
                                     </button>
-                                    <button th:unless="${businessStore.storeStatus == '영업중'}"
+                                    <button th:if="${businessStore.storeStatus == 'CLOSE'}"
                                             th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'OPEN\')'"
-                                            class="btn btn-inverse-primary">
-                                        영업시작
+                                            class="btn btn-inverse-warning">
+                                        중단해제
+                                    </button>
+                                    <button th:if="${businessStore.storeStatus == 'BREAK_TIME'}"
+                                            class="btn btn-light">
+                                        브레이크
+                                    </button>
+                                    <button th:if="${businessStore.storeStatus == 'OUTED'}"
+                                            class="btn btn-dark">
+                                        선택불가
                                     </button>
                                     <script>
                                         function storeStatusChange(storeId, optionName) {
@@ -157,6 +166,14 @@
                                             const data = null;
                                             const method = "PATCH";
 
+                                            if (optionName === 'CLOSE'){
+                                                if (confirm("강제휴식에 들어갑니다. 수동으로 해제하지 않으시면 자동으로 매장이 열리지 않습니다.")){
+                                                    sendDataWithCsrfToken(url, "/", data, method);
+                                                }
+                                                else{
+                                                    return;
+                                                }
+                                            }
                                             sendDataWithCsrfToken(url, "/", data, method);
                                         }
                                     </script>
@@ -497,10 +514,10 @@
                 class="menu-title">주문 및 리뷰 내역</span><i class="menu-arrow"></i></a>
             <div class="collapse" id="mypage-history">
                 <ul class="flex-column nav sub-menu">
-                    <li><a class="nav-link nav-link-item" href="store-order-manager">주문 내역</a></li>
+                    <li><a class="nav-link nav-link-item" href="/my-order">주문 내역</a></li>
                 </ul>
                 <ul class="flex-column nav sub-menu">
-                    <li><a class="nav-link nav-link-item" href="store-order-manager">리뷰 내역</a></li>
+                    <li><a class="nav-link nav-link-item" href="/my-review">리뷰 내역</a></li>
                 </ul>
             </div>
         </li>

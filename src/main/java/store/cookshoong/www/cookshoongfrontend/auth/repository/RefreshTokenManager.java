@@ -32,7 +32,7 @@ public class RefreshTokenManager implements CookieManager {
     public void save(HttpServletResponse response, RefreshToken refreshToken) {
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE_NAME, encryptor.encrypt(refreshToken.getRawRefreshToken()));
         cookie.setHttpOnly(true);
-        cookie.setSecure(System.getProperty("spring.profiles.active").equals("prod"));
+        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(Math.toIntExact(refreshToken.getTimeToLive()));
         CookieManager.super.save(response, cookie);

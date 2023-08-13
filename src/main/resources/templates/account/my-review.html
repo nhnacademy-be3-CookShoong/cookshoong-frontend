@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+</head>
+<body layout:fragment="content">
+<header th:replace="fragments :: mypage-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments :: mypage-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">나의 리뷰</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">리뷰 작성 가능한 주문</h4>
+                            <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                    <strong style="font-size: 20px;" th:text="'드래곤 스테이크 전문점'"></strong>
+                                    <div class="p-0 m-0">
+                                        <button class="btn btn-danger font-weight-bold p-2" th:text="'리뷰 남기기'" onclick="showEditor()"></button>
+                                    </div>
+                                </div>
+                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                    <p th:text="'배달 완료'"></p>
+                                    <p th:text="'2023년 8월 13일 주문'" style="color: grey"></p>
+                                </div>
+                                <div class="row">
+                                    <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
+                                            border-left border-right border-top border-bottom font-weight-bold"
+                                                  style="border-radius: 6px; background-color: #ffb429"
+                                                  th:text="'드래곤 스테이크 허니 콤보'">
+                                            </span>
+                                    </div>
+                                </div>
+                                <div class="p-1 m-3 border-top border-bottom border-left border-right" id="reviewBox" style="display: none;">
+                                    <div class="row pl-3 pr-3 pt-1 pb-1 m-0" id="rating-container">
+                                        <strong class="pt-3 mr-2" style="font-size: 20px;" th:text="'별점 : '"></strong>
+                                        <strong class="pt-3 mr-2" style="font-size: 20px;" id="rating-text">0.0</strong>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                        <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                    </div>
+                                    <div class="p-3" id="editor">
+                                    </div>
+                                    <div class="pl-3 pr-3 pt-1 pb-1">
+                                        <button class="btn btn-danger font-weight-bold p-2"
+                                                th:text="'리뷰 등록하기'"
+                                                id="submitButton">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">내가 작성한 리뷰</h4>
+                            <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                    <strong style="font-size: 20px;" th:text="'드래곤 스테이크 전문점'"></strong>
+                                    <span th:text="'3일 전'" style="color: grey"></span>
+                                </div>
+                                <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
+                                    <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="'5.0'"></strong>
+                                    <span class="typcn typcn-star-full-outline"
+                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span class="typcn typcn-star-full-outline"
+                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span class="typcn typcn-star-full-outline"
+                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span class="typcn typcn-star-full-outline"
+                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span class="typcn typcn-star-full-outline"
+                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                </div>
+                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                    <span th:text="'사장님이 맛있고, 음식이 친절해요. 또 시킬꺼야. 월요일도 시키고 화요일도 시키고 수요일도 시키고 목요일도 시키고 금요일도 시키고 토요일도 시키고 일요일도 시킬꺼야. 계속 시킬꺼야. 사장님 조아. 피자 조아.'"></span>
+                                </div>
+                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
+                                            border-left border-right border-top border-bottom font-weight-bold"
+                                                  style="border-radius: 6px; background-color: #ffb429"
+                                                  th:text="'드래곤 스테이크 허니 콤보'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    document.querySelectorAll('.star-btn').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const rating = (index + 1); // 별점 계산
+            document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
+
+            // 모든 버튼을 초기 상태로 리셋
+            document.querySelectorAll('.star-btn').forEach(btn => {
+                btn.className = "typcn typcn-star-outline p-0 m-1 border-0 star-btn";
+            });
+
+            // 선택한 버튼과 이전 버튼을 채운 상태로 변경
+            for(let i = 0; i <= index; i++) {
+                document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
+            }
+        });
+    });
+</script>
+<script>
+    const editor = new toastui.Editor({
+        initialEditType: 'wysiwyg',
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        height: '200px',
+        placeholder: '리뷰에 답변해주세요.'
+    });
+
+    function showEditor() {
+        document.getElementById('reviewBox').style.display = 'block';
+    }
+
+    document.querySelector('#submitButton').addEventListener('click', function () {
+        let editorContent = editor.getHTML();
+        document.querySelector('#description').value = editorContent;
+    });
+</script>
+<footer th:replace="fragments :: site-footer"></footer>
+</body>
+
+</html>
