@@ -133,7 +133,6 @@ public class PaymentController {
         model.addAttribute("code", code);
         model.addAttribute("message", message);
 
-        // 추후 환불 후 사장님 주문 내역 페이지 반환
         return "payment/error/toss-error";
     }
 
@@ -150,9 +149,6 @@ public class PaymentController {
 
         paymentService.createCancelTossPayment(refundRequestDto);
 
-        model.addAttribute("isCheck", false);
-
-        // 추후 환불 후 사장님 주문 내역 페이지 반환
         return "redirect:/stores/" + storeId + "/store-payment-manager";
     }
 
@@ -166,18 +162,11 @@ public class PaymentController {
     public String getPaymentPartialRefund(@PathVariable Long storeId, Model model,
                                           @Valid CreatePartialRefundRequestDto partialRefundRequestDto) {
 
-        boolean isCheck = paymentService.isRefundAmountExceedsChargedAmountCheck(
+        paymentService.isRefundAmountExceedsChargedAmountVerify(
             partialRefundRequestDto.getChargeCode(), partialRefundRequestDto.getCancelAmount());
 
-        if (isCheck) {
-
-            model.addAttribute("isCheck", true);
-            return "redirect:/stores/" + storeId + "/store-payment-manager";
-        }
-
         paymentService.createPartialCancelTossPayment(partialRefundRequestDto);
-        model.addAttribute("isCheck", false);
-        // 추후 환불 후 사장님 주문 내역 페이지 반환
+
         return "redirect:/stores/" + storeId + "/store-payment-manager";
     }
 }
