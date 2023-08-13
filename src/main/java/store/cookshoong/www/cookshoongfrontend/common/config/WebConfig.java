@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.interceptor.TokenReissueInterceptor;
-import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenRepository;
 import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementService;
 
 /**
