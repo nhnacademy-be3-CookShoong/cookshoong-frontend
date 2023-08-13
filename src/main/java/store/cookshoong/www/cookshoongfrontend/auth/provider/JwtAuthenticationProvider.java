@@ -31,10 +31,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         AuthenticationResponseDto authenticationResponseDto = this.authenticate(loginId, password);
 
-        Assert.notNull(authenticationResponseDto, "인증 성공시 토큰이 없을 수 없습니다.");
+        Assert.notNull(authenticationResponseDto, "인증 성공시 토큰을 담은 응답이 없을 수 없습니다.");
         String accessToken = authenticationResponseDto.getAccessToken();
         String refreshToken = authenticationResponseDto.getRefreshToken();
-
+        Assert.notNull(accessToken, "인증 성공시 액세스 토큰이 없을 수 없습니다.");
+        Assert.notNull(refreshToken, "인증 성공시 리프레쉬 토큰이 없을 수 없습니다.");
         return new JwtAuthentication(accessToken, refreshToken);
     }
 
@@ -50,7 +51,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             return authApiAdapter.sendAuthentication(loginId, password)
                 .getBody();
         } catch (HttpClientErrorException e) {
-            throw new BadCredentialsException("아이디 또는 비밀번호를 잘못 입력했습니다.");
+            if (e.getStatusCode().is4xxClientError()) {
+                throw new BadCredentialsException("아이디 또는 비밀번호를 잘못 입력했습니다.");
+            }
+            throw e;
         } catch (Exception e) {
             throw new AuthenticationServiceException("인증 서버 오류");
         }

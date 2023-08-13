@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
@@ -64,6 +65,7 @@ public class TokenManagementService {
     }
 
     public void saveRefreshToken(HttpServletResponse response, String refreshToken) {
+        Assert.notNull(refreshToken, "리프레쉬토큰 값이 없으면 안됩니다.");
         refreshTokenManager.save(response, RefreshToken.createRefreshToken(refreshToken));
     }
 
