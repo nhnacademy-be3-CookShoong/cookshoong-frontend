@@ -61,13 +61,13 @@ public class PaymentService {
     /**
      * 주문에 대한 전액 환불.
      *
-     * @param paymentKey        paymentKey
      * @param refundRequestDto  취소 사유에 대한 Dto
      */
-    public void createCancelTossPayment(String paymentKey, CreateFullRefundRequestDto refundRequestDto) {
+    public void createCancelTossPayment(CreateFullRefundRequestDto refundRequestDto) {
 
         TossResponseDto tossResponseDto =
-            tossPaymentAdapter.requestCancelTossPayment(paymentKey, refundRequestDto.getCancelReason());
+            tossPaymentAdapter.requestCancelTossPayment(
+                refundRequestDto.getPaymentKey(), refundRequestDto.getCancelReason());
 
         paymentAdapter.executeRefund(
             new CreateRefundDto(refundRequestDto.getOrderId(),
@@ -78,16 +78,15 @@ public class PaymentService {
     /**
      * 주문에 대한 부분 환불.
      *
-     * @param paymentKey        paymentKey
      * @param refundRequestDto  취소 사유와 환분에 데한 Dto
      */
-    public void createPartialCancelTossPayment(String paymentKey, CreatePartialRefundRequestDto refundRequestDto) {
+    public void createPartialCancelTossPayment(CreatePartialRefundRequestDto refundRequestDto) {
 
         TossResponseDto tossResponseDto =
-            tossPaymentAdapter.requestPartialCancelTossPayment(paymentKey,
+            tossPaymentAdapter.requestPartialCancelTossPayment(refundRequestDto.getPaymentKey(),
                 refundRequestDto.getCancelReason(), refundRequestDto.getCancelAmount());
 
-        paymentAdapter.executeRefund(
+        paymentAdapter.executeRefundPartial(
             new CreateRefundDto(refundRequestDto.getOrderId(),
                 refundRequestDto.getChargeCode(), tossResponseDto.getApprovedAt(),
                 tossResponseDto.getCancels()[0].getCancelAmount(), RefundType.PARTIAL.getType()));
@@ -119,12 +118,24 @@ public class PaymentService {
     }
 
     /**
+     * 환불 금액이 결제 금액을 넘어가는지 확인하는 메서드.
+     *
+     * @param chargeCode        결제 코드
+     * @param refundAmount      결제 금액
+     * @return                  넘어가면 true, 그렇지 않으면 false
+     */
+    public boolean isRefundAmountExceedsChargedAmountCheck(UUID chargeCode, Integer refundAmount) {
+
+        return paymentAdapter.fetchIsRefundAmountExceedsChargedAmount(chargeCode, refundAmount);
+    }
+
+    /**
      * 환불 금액이 결제 금액을 넘어가는지 검증하는 메서드.
      *
      * @param chargeCode        결제 코드
      * @param refundAmount      환불 금액
      */
-    public void isRefundAmountExceedsChargedAmount(UUID chargeCode, Integer refundAmount) {
+    public void isRefundAmountExceedsChargedAmountVerify(UUID chargeCode, Integer refundAmount) {
 
         if (paymentAdapter.fetchIsRefundAmountExceedsChargedAmount(chargeCode, refundAmount)) {
             throw new RefundAmountExceedsChargedAmountException();

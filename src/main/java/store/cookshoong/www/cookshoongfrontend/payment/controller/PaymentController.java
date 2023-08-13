@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,20 +121,39 @@ public class PaymentController {
     }
 
     /**
+     * 결제 및 환불에 대한 실패 Controller.
+     *
+     * @return 주문 목록으로 반환
+     */
+    @PostMapping("/toss/fail")
+    public String getPaymentFail(@RequestParam String code,
+                                 @RequestParam String message,
+                                 Model model) {
+
+        model.addAttribute("code", code);
+        model.addAttribute("message", message);
+
+        // 추후 환불 후 사장님 주문 내역 페이지 반환
+        return "payment/error/toss-error";
+    }
+
+    /**
      * 해당 주문에 대한 전액활불을 해주는 Controller.
      *
      * @param refundRequestDto 전액환불에 필요한 정보
      * @return 주문 목록으로 반환
      */
-    @PostMapping("/refund")
-    public String getPaymentFullRefund(@Valid CreateFullRefundRequestDto refundRequestDto) {
+    @PostMapping("/refund/{storeId}")
+    public String getPaymentFullRefund(@PathVariable Long storeId, Model model,
+                                       @Valid CreateFullRefundRequestDto refundRequestDto) {
 
-        TossPaymentKeyResponseDto paymentKey = paymentService.selectTossPaymentKey(refundRequestDto.getOrderId());
 
-        paymentService.createCancelTossPayment(paymentKey.getPaymentKey(), refundRequestDto);
+        paymentService.createCancelTossPayment(refundRequestDto);
+
+        model.addAttribute("isCheck", false);
 
         // 추후 환불 후 사장님 주문 내역 페이지 반환
-        return "/";
+        return "redirect:/stores/" + storeId + "/store-payment-manager";
     }
 
     /**
@@ -142,17 +162,22 @@ public class PaymentController {
      * @param partialRefundRequestDto 부분환불에 필요한 정보
      * @return 주문 목록으로 반환
      */
-    @PostMapping("/refund/partial")
-    public String getPaymentPartialRefund(@Valid CreatePartialRefundRequestDto partialRefundRequestDto) {
+    @PostMapping("/refund/partial/{storeId}")
+    public String getPaymentPartialRefund(@PathVariable Long storeId, Model model,
+                                          @Valid CreatePartialRefundRequestDto partialRefundRequestDto) {
 
-        paymentService.isRefundAmountExceedsChargedAmount(
+        boolean isCheck = paymentService.isRefundAmountExceedsChargedAmountCheck(
             partialRefundRequestDto.getChargeCode(), partialRefundRequestDto.getCancelAmount());
 
-        TossPaymentKeyResponseDto paymentKey =
-            paymentService.selectTossPaymentKey(partialRefundRequestDto.getOrderId());
+        if (isCheck) {
 
-        paymentService.createPartialCancelTossPayment(paymentKey.getPaymentKey(), partialRefundRequestDto);
+            model.addAttribute("isCheck", true);
+            return "redirect:/stores/" + storeId + "/store-payment-manager";
+        }
+
+        paymentService.createPartialCancelTossPayment(partialRefundRequestDto);
+        model.addAttribute("isCheck", false);
         // 추후 환불 후 사장님 주문 내역 페이지 반환
-        return "/";
+        return "redirect:/stores/" + storeId + "/store-payment-manager";
     }
 }
