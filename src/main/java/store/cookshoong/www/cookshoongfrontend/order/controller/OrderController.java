@@ -21,6 +21,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCo
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
+import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
 
 /**
  * 주문 controller.
@@ -37,6 +38,7 @@ public class OrderController {
     private final AccountAddressService addressService;
     private final CouponManageService couponManageService;
     private final OrderService orderService;
+    private final PointService pointService;
 
     /**
      * 주문 페이지 엔드포인트.
@@ -66,6 +68,9 @@ public class OrderController {
         String storeName = cartItems.get(0).getStoreName();
         model.addAttribute("storeName", storeName);
 
+        Integer deliveryCost = cartItems.get(0).getDeliveryCost();
+        model.addAttribute("deliveryCost", deliveryCost);
+
         int totalPrice = cartService.calculateTotalPrice(cartItems);
         model.addAttribute("totalPrice", totalPrice);
 
@@ -75,8 +80,8 @@ public class OrderController {
         model.addAttribute("mainPlace", addressResponseDto.getMainPlace());
         model.addAttribute("detailPlace", addressResponseDto.getDetailPlace());
 
-        // 매장 배달비
-        // 장바구니 금액과 배달비는 따로 해야한다, 쿠폰은 장바구니 금액애만 적용이 되어야 하므로
+        int point = pointService.selectPoint(accountId);
+        model.addAttribute("point", point);
 
         return "order/order";
     }
