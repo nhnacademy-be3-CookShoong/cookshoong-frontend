@@ -35,14 +35,15 @@
                                     <input class="form-control" type="text" id="representativeName"
                                            name="representativeName"
                                            th:field="*{representativeName}" th:value="*{representativeName}"
-                                           placeholder="사업자 이름">
+                                           placeholder="사업자 이름" maxlength="20">
                                 </div>
 
                                 <div class="form-group"><label for="storeName">사업자 등록번호</label>
                                     <input class="form-control" type="text" id="businessLicenseNumber"
                                            name="businessLicenseNumber"
                                            th:field="*{businessLicenseNumber}" th:value="*{businessLicenseNumber}"
-                                           placeholder="'-'은 제외하고 입력해주세요.">
+                                           placeholder="'-'은 제외하고 입력해주세요." maxlength="10"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
 
                                 <div class="form-group">
@@ -70,7 +71,8 @@
                                     </div>
                                     <input class="form-control" type="text"
                                            id="bankAccount" name="bankAccount"
-                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="'-'은 제외하고 입력해주세요.">
+                                           th:field="*{bankAccount}" th:value="*{bankAccount}" placeholder="'-'은 제외하고 입력해주세요."
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
                             </div>
                         </div>
@@ -82,7 +84,7 @@
                                 <div class="form-group">
                                     <label for="storeName">영업점 상호명</label>
                                     <input class="form-control" type="text" id="storeName" name="storeName"
-                                           th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명">
+                                           th:field="*{storeName}" th:value="*{storeName}" placeholder="영업점 상호명" maxlength="20">
                                 </div>
 
                                 <div class="form-group">
@@ -103,7 +105,8 @@
                                     <input class="form-control" type="text" id="phoneNumber"
                                            name="phoneNumber"
                                            th:field="*{phoneNumber}" th:value="*{phoneNumber}"
-                                           placeholder="'-'은 제외하고 입력해주세요.">
+                                           placeholder="'-'은 제외하고 입력해주세요." maxlength="12"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
 
                                 <div class="form-group"><label>영업점 주소</label>
@@ -116,7 +119,7 @@
                                     </div>
                                     <input class="form-control" type="text" id="detailPlace"
                                            name="detailPlace"
-                                           th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소">
+                                           th:field="*{detailPlace}" th:value="*{detailPlace}" placeholder="서브 주소" pattern="^[가-힇0-9\w\-\,\(\), ]+$">
 
                                     <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
                                            th:value="*{latitude}">
