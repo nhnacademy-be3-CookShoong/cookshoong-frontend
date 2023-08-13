@@ -3,9 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-<head>
-    <title>Order</title>
-</head>
 
 <body layout:fragment="content">
 <header th:replace="fragments :: mypage-site-header"></header>
@@ -72,7 +69,7 @@
                             </div>
                             <div class="p-3">
                                 <h4 id="mainPlace" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="${mainPlace}"></h4>
-                                <input id="detailPlace" type="text" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:value="${detailPlace}">
+                                <input id="detailPlace" type="text" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2 form-control text-dark" th:value="${detailPlace}">
                             </div>
                         </div>
                     </div>
@@ -85,13 +82,31 @@
                                 <h4 class="card-title" th:text="'요청사항'"></h4>
                             </div>
                             <div class="p-3">
-                                <textarea id="memo" type="text" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2"></textarea>
+                                <textarea id="memo" type="text" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2 form-control text-dark"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button id="couponButton" th:storeId="${storeId}" th:totalPrice = "${totalPrice}" th:onclick="openCoupon(this.getAttribute('storeId'), this.getAttribute('totalPrice'))">쿠폰 선택하기</button>
+                <div class="col-12 grid-margin stretch-card">
+                    <button id="couponButton" class="btn btn-reddit col-12" th:onclick="openCoupon([[${storeId}]], [[${totalPrice}]])">쿠폰 선택하기</button>
+                </div>
+
+
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row justify-content-between mb-2">
+                                <h4 class="card-title" th:text="포인트"></h4>
+                            </div>
+                            <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="('보유 포인트 : ' + ${#numbers.formatInteger(point, 0, 'COMMA')} + 'P')"></h4>
+                            <div class="input-group">
+                                <input id="point" type="number" min="0" th:max="${point}" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2 form-control text-dark" placeholder="사용할 포인트를 입력해주세요">
+                                <button class="btn ml-0 mb-0 mt-2" style="width: 150px; background: #ffa636" th:onclick="setPoint([[${totalPrice}]], [[${point}]])">사용</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
@@ -105,7 +120,7 @@
 
                                 <div class="d-flex justify-content-center">
                                     <form id="paymentForm" th:action="@{/payments}" method="post">
-                                        <button id="orderButton" class="btn" th:storeId="${storeId}" th:totalPrice="${totalPrice}" th:onclick="payment(this.getAttribute('storeId'), this.getAttribute('totalPrice'))" style="width: 150px; background: #ffa636" th:text="결제하기"></button>
+                                        <button id="orderButton" class="btn" th:onclick="payment([[${storeId}]], [[${totalPrice}]])" style="width: 150px; background: #ffa636" th:text="결제하기"></button>
                                     </form>
                                 </div>
                             </div>
@@ -122,6 +137,8 @@
 <script th:inline="javascript">
     let couponCode = null;
     let discountPrice = null;
+    let point = 0;
+
     function setCoupon(selectCouponCode, discount) {
         if (couponCode !== selectCouponCode) {
             couponCode = selectCouponCode;
@@ -137,6 +154,25 @@
         window.open("/order/" + storeId + "/coupon" + "?totalPrice=" + totalPrice,"","width=700px,height=600px,top=200px,left=200px;");
     }
 
+    function setPoint(totalPrice, totalPoint) {
+        totalPoint = 99999;
+        const pointElement = document.getElementById("point");
+        let usePoint = pointElement.value;
+
+        if (usePoint === null || usePoint < 0) {
+            usePoint = 0;
+        }
+
+        usePoint = Math.min(totalPoint, usePoint);
+
+        if (discountPrice !== null) {
+            totalPrice = discountPrice;
+        }
+
+        point = Math.min(totalPrice, usePoint);
+        pointElement.value = point;
+    }
+
     function payment(storeId, totalPrice) {
         let price = totalPrice;
 
@@ -144,9 +180,10 @@
             price = discountPrice;
         }
 
+        point = Math.min(point, price);
+
         const mainPlace = document.getElementById("mainPlace").textContent;
         const detailPlace = document.getElementById("detailPlace").value;
-
         const memo = document.getElementById("memo").value;
 
         const hiddenInputStoreId = document.createElement("input");
@@ -188,10 +225,9 @@
         const hiddenInputPoint = document.createElement("input");
         hiddenInputPoint.type = "hidden";
         hiddenInputPoint.name = "point";
-        hiddenInputPoint.value = "0";
+        hiddenInputPoint.value = point;
         document.getElementById("paymentForm").appendChild(hiddenInputPoint);
 
-        // 폼 제출
         document.getElementById("paymentForm").submit();
     }
 </script>
