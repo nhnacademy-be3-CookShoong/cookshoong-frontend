@@ -102,7 +102,7 @@
                             <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="('보유 포인트 : ' + ${#numbers.formatInteger(point, 0, 'COMMA')} + 'P')"></h4>
                             <div class="input-group">
                                 <input id="point" type="number" min="0" th:max="${point}" style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2 form-control text-dark" placeholder="사용할 포인트를 입력해주세요">
-                                <button class="btn ml-0 mb-0 mt-2" style="width: 150px; background: #ffa636" th:onclick="setPoint([[${totalPrice}]], [[${point}]])">사용</button>
+                                <button class="btn ml-0 mb-0 mt-2" style="width: 150px; background: #ffa636" th:onclick="setPoint([[${point}]])">사용</button>
                             </div>
                         </div>
                     </div>
@@ -112,17 +112,37 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row justify-content-between mb-2">
-                                <h4 class="card-title" th:text="'총 주문 금액'"></h4>
+                                <h4 class="card-title" th:text="'결제'"></h4>
                             </div>
                             <div class="d-flex justify-content-between p-3">
-                                <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="(${totalPrice} != null ? ${#numbers.formatInteger(totalPrice, 3, 'COMMA')} : '0') + '원'"></h4>
-                                <p>Coupon Discount: <span id="discountValue"></span></p>
-
-                                <div class="d-flex justify-content-center">
-                                    <form id="paymentForm" th:action="@{/payments}" method="post">
-                                        <button id="orderButton" class="btn" th:onclick="payment([[${storeId}]], [[${totalPrice}]])" style="width: 150px; background: #ffa636" th:text="결제하기"></button>
-                                    </form>
+                                <div class="flex-fill">
+                                    <div class="row col-12 justify-content-between">
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2">총 주문 금액</h4>
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="(${totalPrice} != null ? ${#numbers.formatInteger(totalPrice, 3, 'COMMA')} : '0') + '원'"></h4>
+                                    </div>
+                                    <div class="row col-12 justify-content-between d-none" id="couponValue">
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2">쿠폰 할인</h4>
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" id="discountCouponValue"></h4>
+                                    </div>
+                                    <div class="row col-12 justify-content-between">
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2">배달팁</h4>
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" th:text="${#numbers.formatInteger(deliveryCost, 0, 'COMMA')} + '원'"></h4>
+                                    </div>
+                                    <div class="row col-12 justify-content-between d-none" id="pointValue">
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2">포인트 할인</h4>
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" id="discountPointValue"></h4>
+                                    </div>
+                                    <hr>
+                                    <div class="row col-12 justify-content-between">
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2">결제 예정 금액</h4>
+                                        <h4 style="font-size:1.3rem;" class="font-weight-bold ml-0 mb-0 mt-2" id="paymentPrice" th:text="${#numbers.formatInteger(totalPrice + deliveryCost, 0, 'COMMA')} + '원'"></h4>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <form id="paymentForm" th:action="@{/payments}" method="post">
+                                    <button id="orderButton" class="btn" th:onclick="payment([[${storeId}]], [[${deliveryCost}]])" style="width: 150px; background: #ffa636" th:text="결제하기"></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -131,31 +151,54 @@
         </div>
     </div>
 </div>
-
+<div th:data-beforeDiscountPrice="${totalPrice + deliveryCost}" id="beforeDiscountPrice"></div>
 <footer th:replace="fragments :: site-footer"></footer>
 
 <script th:inline="javascript">
+    const couponValue = document.getElementById('couponValue');
+    const pointValue = document.getElementById('pointValue');
+    const beforeDiscountPrice = parseInt(document.getElementById('beforeDiscountPrice').getAttribute("data-beforeDiscountPrice"));
+    const paymentPrice = document.getElementById('paymentPrice');
+
     let couponCode = null;
-    let discountPrice = null;
+    let discountAmount = null;
     let point = 0;
+
+    function updatePaymentPrice() {
+        let price = beforeDiscountPrice;
+
+        if (discountAmount !== null) {
+            price -= discountAmount;
+        }
+
+        price -= point;
+
+        paymentPrice.textContent = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+
+        return price;
+    }
 
     function setCoupon(selectCouponCode, discount) {
         if (couponCode !== selectCouponCode) {
             couponCode = selectCouponCode;
-            discountPrice = discount;
+            discountAmount = discount;
+            couponValue.classList.remove('d-none')
+            document.getElementById('discountCouponValue').textContent = '-' + discountAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
         } else {
             couponCode = null;
-            discountPrice = null;
+            discountAmount = null;
+            couponValue.classList.add('d-none')
+            document.getElementById('discountCouponValue').textContent = "";
         }
-        document.getElementById('discountValue').textContent = discountPrice;
+
+        updatePaymentPrice();
     }
 
     function openCoupon(storeId, totalPrice) {
         window.open("/order/" + storeId + "/coupon" + "?totalPrice=" + totalPrice,"","width=700px,height=600px,top=200px,left=200px;");
     }
 
-    function setPoint(totalPrice, totalPoint) {
-        totalPoint = 99999;
+    function setPoint(totalPoint) {
         const pointElement = document.getElementById("point");
         let usePoint = pointElement.value;
 
@@ -165,22 +208,27 @@
 
         usePoint = Math.min(totalPoint, usePoint);
 
-        if (discountPrice !== null) {
-            totalPrice = discountPrice;
+        let price = beforeDiscountPrice;
+
+        if (discountAmount !== null) {
+            price -= discountAmount;
         }
 
-        point = Math.min(totalPrice, usePoint);
+        point = Math.min(price, usePoint);
         pointElement.value = point;
+        document.getElementById('discountPointValue').textContent = '-' + point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
+
+        if (point <= 0) {
+            pointValue.classList.add('d-none')
+        } else {
+            pointValue.classList.remove('d-none')
+        }
+
+        updatePaymentPrice();
     }
 
-    function payment(storeId, totalPrice) {
-        let price = totalPrice;
-
-        if (discountPrice !== null) {
-            price = discountPrice;
-        }
-
-        point = Math.min(point, price);
+    function payment(storeId, deliveryCost) {
+        let price = updatePaymentPrice();
 
         const mainPlace = document.getElementById("mainPlace").textContent;
         const detailPlace = document.getElementById("detailPlace").value;
@@ -227,6 +275,18 @@
         hiddenInputPoint.name = "point";
         hiddenInputPoint.value = point;
         document.getElementById("paymentForm").appendChild(hiddenInputPoint);
+
+        const hiddenDiscountAmount = document.createElement("input");
+        hiddenDiscountAmount.type = "hidden";
+        hiddenDiscountAmount.name = "discountAmount";
+        hiddenDiscountAmount.value = discountAmount;
+        document.getElementById("paymentForm").appendChild(hiddenDiscountAmount);
+
+        const hiddenDeliveryCost = document.createElement("input");
+        hiddenDeliveryCost.type = "hidden";
+        hiddenDeliveryCost.name = "deliveryCost";
+        hiddenDeliveryCost.value = deliveryCost;
+        document.getElementById("paymentForm").appendChild(hiddenDeliveryCost);
 
         document.getElementById("paymentForm").submit();
     }
