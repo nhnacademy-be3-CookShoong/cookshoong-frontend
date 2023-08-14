@@ -34,7 +34,7 @@ public class IssueCouponController {
             createProvideCouponRequestDto.setAccountId(accountIdAware.getAccountId());
             couponManageService.createProvideCoupon(createProvideCouponRequestDto);
         } catch (HttpClientErrorException e) {
-            return e.getMessage();
+            return e.getResponseBodyAsString();
         }
         return "ok";
     }
