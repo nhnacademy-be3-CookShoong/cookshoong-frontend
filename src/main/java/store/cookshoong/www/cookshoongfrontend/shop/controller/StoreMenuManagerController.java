@@ -82,6 +82,9 @@ public class StoreMenuManagerController {
         @Valid @ModelAttribute("createMenuGroupRequestDto") CreateMenuGroupRequestDto createMenuGroupRequestDto,
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+        }
         storeMenuManagerService.createMenuGroup(storeId, createMenuGroupRequestDto);
         return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }
@@ -98,6 +101,9 @@ public class StoreMenuManagerController {
         @PathVariable("storeId") Long storeId,
         BindingResult bindingResult,
         @RequestPart("menuImage") MultipartFile menuImage) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
+        }
         storeMenuManagerService.createMenu(storeId, createMenuRequestDto, menuImage);
         return "redirect:" + "/stores/" + storeId + "/store-menu-manager";
     }

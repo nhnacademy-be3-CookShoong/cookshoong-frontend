@@ -17,7 +17,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRe
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectStoreInfoResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
@@ -73,8 +72,10 @@ public class StoreOptionManagerController {
     @PostMapping("/stores/{storeId}/store-option-group-manager")
     public String postCreateOptionGroup(
         @Valid @ModelAttribute("createOptionGroupRequestDto") CreateOptionGroupRequestDto createOptionGroupRequestDto,
-        @PathVariable("storeId") Long storeId,
-        BindingResult bindingResult) {
+        @PathVariable("storeId") Long storeId, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:" + "/stores/" + storeId + "/store-option-manager";
+        }
         storeOptionManagerService.createOptionGroup(storeId, createOptionGroupRequestDto);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
@@ -88,8 +89,10 @@ public class StoreOptionManagerController {
     @PostMapping("/stores/{storeId}/store-option-manager")
     public String postCreateOption(
         @Valid @ModelAttribute("createOptionRequestDto") CreateOptionRequestDto createOptionRequestDto,
-        @PathVariable("storeId") Long storeId,
-        BindingResult bindingResult) {
+        @PathVariable("storeId") Long storeId, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:" + "/stores/" + storeId + "/store-option-manager";
+        }
         storeOptionManagerService.createOption(storeId, createOptionRequestDto);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
@@ -101,8 +104,8 @@ public class StoreOptionManagerController {
      * @since 2023.07.27
      */
     @DeleteMapping("/stores/{storeId}/store-option-group-manager/{optionGroupId}")
-    public String postDeleteOptionGroup(
-        @PathVariable("storeId") Long storeId, @PathVariable("optionGroupId") Long optionGroupId) {
+    public String postDeleteOptionGroup(@PathVariable("storeId") Long storeId,
+                                        @PathVariable("optionGroupId") Long optionGroupId) {
         storeOptionManagerService.deleteOptionGroup(storeId, optionGroupId);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }
@@ -114,8 +117,7 @@ public class StoreOptionManagerController {
      * @since 2023.07.27
      */
     @DeleteMapping("/stores/{storeId}/store-option-manager/{optionId}")
-    public String postDeleteOption(
-        @PathVariable("storeId") Long storeId, @PathVariable("optionId") Long optionId) {
+    public String postDeleteOption(@PathVariable("storeId") Long storeId, @PathVariable("optionId") Long optionId) {
         storeOptionManagerService.deleteOption(storeId, optionId);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
     }

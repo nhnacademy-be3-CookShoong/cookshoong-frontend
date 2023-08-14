@@ -50,7 +50,7 @@ public class PaymentAdapter {
     }
 
     /**
-     * 결제 취소(환불) & 부분 후 성공한 데이터를 Back API 보내는 메서드.
+     * 결제 취소(환불) 성공한 데이터를 Back API 보내는 메서드.
      *
      * @param createRefundDto       성공한 취소(환불)에 대한 데이터
      */
@@ -61,6 +61,26 @@ public class PaymentAdapter {
             .pathSegment("api")
             .pathSegment("payments")
             .pathSegment("refunds")
+            .build().toUri();
+
+        HttpEntity<CreateRefundDto> httpEntity = new HttpEntity<>(createRefundDto);
+
+        restTemplate.exchange(uri, POST, httpEntity, new ParameterizedTypeReference<>() {});
+    }
+
+    /**
+     * 결제 취소(브븐환불) 성공한 데이터를 Back API 보내는 메서드.
+     *
+     * @param createRefundDto       성공한 취소(환불)에 대한 데이터
+     */
+    public void executeRefundPartial(CreateRefundDto createRefundDto) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("payments")
+            .pathSegment("refunds")
+            .pathSegment("partial")
             .build().toUri();
 
         HttpEntity<CreateRefundDto> httpEntity = new HttpEntity<>(createRefundDto);

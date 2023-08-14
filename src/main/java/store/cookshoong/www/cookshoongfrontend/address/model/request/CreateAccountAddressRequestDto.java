@@ -24,6 +24,7 @@ import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailure
 public class CreateAccountAddressRequestDto {
 
     @NotBlank
+    @Length(min = 1, max = 10)
     private String alias;
 
     @NotBlank

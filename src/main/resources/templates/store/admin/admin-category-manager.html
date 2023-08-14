@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card">
+                <div class="col-12 grid-margin stretch-card" th:if="${categories.totalPages > 0}">
                     <nav aria-label="Page navigation" class="pagination-container">
                         <ul class="pagination"
                             th:with="start=${(categories.pageable.pageNumber/buttonNumber)*buttonNumber + 1},

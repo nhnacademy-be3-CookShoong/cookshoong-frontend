@@ -2,6 +2,7 @@ package store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund
 
 import java.util.UUID;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,12 +16,14 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreatePartialRefundRequestDto {
 
-    @NotBlank
+    @NotNull
     private UUID orderId;
-    @NotBlank
+    @NotNull
     private UUID chargeCode;
     @NotBlank
-    private String cancelReason;
+    private String paymentKey;
     @NotBlank
+    private String cancelReason;
+    @NotNull
     private Integer cancelAmount;
 }

@@ -180,3 +180,7 @@
 .cart-item {
     margin-bottom: 10px; /* 원하는 크기로 조정하세요 */
 }
+
+.first-address {
+    background-color: #ffd4a5; /* 원하는 색상으로 변경 */
+}

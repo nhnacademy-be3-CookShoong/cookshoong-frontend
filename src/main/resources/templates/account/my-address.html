@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label>별칭</label>
                                     <input class="form-control" type="text" id="alias" name="alias"
-                                           placeholder="별칭" pattern="^[가-힇\w]+$" required>
+                                           placeholder="별칭" pattern="^[가-힇\w]+$\, " maxlength="10" required>
                                 </div>
                                 <div class="form-group">
                                     <label>메인 주소</label>
@@ -37,7 +37,7 @@
                                 <div class="form-group">
                                     <label>상세 주소</label>
                                     <input class="form-control" type="text" id="detailAddress" name="detailPlace"
-                                           placeholder="상세 주소" pattern="^[가-힇0-9\w\-\, ]+$" required>
+                                           placeholder="상세 주소" pattern="^[가-힇0-9\w\-\,\(\), ]+$" required>
                                 </div>
                                 <input type="hidden" id="latitudeInput" name="latitude" required>
                                 <input type="hidden" id="longitudeInput" name="longitude" required>
@@ -56,7 +56,7 @@
 
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: mypage-site-nav"></nav>
-    <div class="landing-panel">
+    <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-12 grid-margin stretch-card">
