@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/style.css">
     <link rel="stylesheet" href="/assets/css/vertical-layout-light/custom.css">
+    <link rel="stylesheet" href="/assets/css/validation.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 
     <script src="/assets/js/form-validation.js"></script>
@@ -35,58 +36,60 @@
                             <div class="form-group">
                                 <div class="oauth-info-element-div">
                                     <label for="name">* 본인식별을 위해 필요해요</label>
-                                    <input type="text"
+                                    <input type="text" oninput="makeLetterOnly('name')" minlength="2" maxlength="30"
                                            class="form-control form-control-lg oauth-info-element" id="name"
                                            th:field="*{name}" placeholder="이름" required>
-                                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</p>
+                                    <p class="error-message" th:if="${#fields.hasErrors('name')}"
+                                       th:errors="*{name}"></p>
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="nickname">* 다른사람들에게 보여질 이름이에요</label>
                                     <input type="text" class="form-control form-control-lg oauth-info-element"
-                                           id="nickname"
+                                           id="nickname" minlength="1" maxlength="30"
                                            th:field="*{nickname}" placeholder="닉네임" required>
-                                    <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">nickname
-                                        Error</p>
+                                    <p class="error-message" th:if="${#fields.hasErrors('nickname')}"
+                                       th:errors="*{nickname}"></p>
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="email">* 매장소식을 전해드리기 위해 필요해요</label>
                                     <input type="email" class="form-control form-control-lg oauth-info-element"
-                                           id="email" name="email"
-                                           th:field="*{email}" placeholder="you@example.com"
+                                           id="email" name="email" th:field="*{email}" placeholder="you@example.com"
                                            required>
-                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
+                                    <p class="error-message" th:if="${#fields.hasErrors('email')}"
+                                       th:errors="*{email}"></p>
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="birthday">* 생일쿠폰 지급을 위해 필요해요</label>
                                     <input type="date" class="form-control form-control-lg oauth-info-element"
-                                           id="birthday" name="birthday"
-                                           th:field="*{birthday}" placeholder="생년월일" required>
-                                    <p th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">birthday
-                                        Error</p>
+                                           id="birthday" name="birthday" th:field="*{birthday}" placeholder="생년월일"
+                                           required>
+                                    <p class="error-message" th:if="${#fields.hasErrors('birthday')}"
+                                       th:errors="*{birthday}"></p>
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="phoneNumber">* 주문현황을 알려드리기 위해 필요해요</label>
-                                    <input type="text" class="form-control form-control-lg oauth-info-element"
-                                           id="phoneNumber"
-                                           name="phoneNumber" th:field="*{phoneNumber}"
-                                           placeholder="전화번호" required>
-                                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
-                                        phoneNumber
-                                        Error</p>
+                                    <input type="number" class="form-control form-control-lg" id="phoneNumber"
+                                           name="phoneNumber" th:field="*{phoneNumber}" th:value="*{phoneNumber}"
+                                           minlength="11" maxlength="11" pattern="^010[0-9]{8}$"
+                                           placeholder="전화번호 ('-' 제외)" oninput="makeNumberOnly('phoneNumber')" required>
+                                    <p class="error-message" th:if="${#fields.hasErrors('phoneNumber')}"
+                                       th:errors="*{phoneNumber}"></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="mainPlace">* 주변 매장을 검색하기 위해 필요해요</label>
                                 <div class="flex-container">
                                     <input type="text" class="form-control form-control-lg flex-1"
-                                           id="mainPlace"
-                                           name="createAccountAddressRequestDto.mainPlace"
+                                           id="mainPlace" name="createAccountAddressRequestDto.mainPlace"
                                            th:field="*{createAccountAddressRequestDto.mainPlace}"
                                            th:value="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소"
                                            readonly required>
                                     <button class="btn btn-outline-warning" onclick="execDaumPostcode()" type="button">
                                         주소 검색
                                     </button>
+                                    <p class="error-message"
+                                       th:if="${#fields.hasErrors('createAccountAddressRequestDto.mainPlace')}"
+                                       th:errors="*{createAccountAddressRequestDto.mainPlace}"></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -95,12 +98,18 @@
                                        th:field="*{createAccountAddressRequestDto.detailPlace}"
                                        th:value="*{createAccountAddressRequestDto.detailPlace}" placeholder="서브 주소"
                                        required>
+                                <p class="error-message"
+                                   th:if="${#fields.hasErrors('createAccountAddressRequestDto.detailPlace')}"
+                                   th:errors="*{createAccountAddressRequestDto.detailPlace}"></p>
                             </div>
                             <div class="form-group">
                                 <input class="form-control form-control-lg" type="text" id="alias"
                                        name="createAccountAddressRequestDto.alias"
                                        th:field="*{createAccountAddressRequestDto.alias}"
                                        th:value="*{createAccountAddressRequestDto.alias}" placeholder="별칭" required>
+                                <p class="error-message"
+                                   th:if="${#fields.hasErrors('createAccountAddressRequestDto.alias')}"
+                                   th:errors="*{createAccountAddressRequestDto.alias}"></p>
                             </div>
                             <input type="hidden" id="latitude" name="createAccountAddressRequestDto.latitude"
                                    th:field="*{createAccountAddressRequestDto.latitude}">
@@ -132,6 +141,8 @@
 <script src="/assets/js/template.js"></script>
 <script src="/assets/js/settings.js"></script>
 <script src="/assets/js/todolist.js"></script>
+<script src="/assets/js/account/account.js"></script>
+<script src="/assets/js/account/validation.js"></script>
 <script>
     const geocoder = new daum.maps.services.Geocoder();
 

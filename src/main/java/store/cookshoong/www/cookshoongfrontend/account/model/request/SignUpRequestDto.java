@@ -35,6 +35,7 @@ public class SignUpRequestDto {
     @Length(min = 1, max = 100)
     private String loginId;
     @NotBlank
+    @Length(min = 4)
     private String password;
     @NotBlank
     @Length(min = 2, max = 30)

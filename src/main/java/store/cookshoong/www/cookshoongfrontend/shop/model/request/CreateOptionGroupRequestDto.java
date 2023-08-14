@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.model.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +16,9 @@ import lombok.Getter;
 public class CreateOptionGroupRequestDto {
     @NotBlank
     private String name;
+    @NotNull
     private Integer minSelectCount;
+    @NotNull
     private Integer maxSelectCount;
     private Long targetOptionGroupId;
 }
