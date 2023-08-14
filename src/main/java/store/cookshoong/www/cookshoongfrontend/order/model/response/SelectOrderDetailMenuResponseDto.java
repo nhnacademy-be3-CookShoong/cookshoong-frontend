@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.shop.model.response;
+package store.cookshoong.www.cookshoongfrontend.order.model.response;
 
 import java.util.List;
 import lombok.AccessLevel;
@@ -18,5 +18,7 @@ public class SelectOrderDetailMenuResponseDto {
     private String menuName;
     private int cookingTime;
     private int count;
+    private int cost;
     private List<SelectOrderDetailMenuOptionResponseDto> selectOrderDetailMenuOptions;
+    private int totalCost;
 }

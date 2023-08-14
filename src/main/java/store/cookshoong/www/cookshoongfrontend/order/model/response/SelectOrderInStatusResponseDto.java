@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.shop.model.response;
+package store.cookshoong.www.cookshoongfrontend.order.model.response;
 
 import java.time.LocalDateTime;
 import java.util.List;

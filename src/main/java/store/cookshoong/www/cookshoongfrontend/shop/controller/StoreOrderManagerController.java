@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import store.cookshoong.www.cookshoongfrontend.order.model.request.PatchOrderRequestDto;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderInStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.TossPaymentKeyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.PatchOrderRequestDto;
-import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOrderInStatusResponseDto;
-import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOrderService;
 
 /**
  * 매장 주문 관리 페이지 컨트롤러.
@@ -28,7 +28,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOrderService;
 @Controller
 @RequiredArgsConstructor
 public class StoreOrderManagerController {
-    private final StoreOrderService storeOrderService;
+    private final OrderService orderService;
     private final PaymentService paymentService;
 
     /**
@@ -40,7 +40,7 @@ public class StoreOrderManagerController {
      */
     @GetMapping("/stores/{storeId}/store-order-manager")
     public String selectStoreOrder(@PathVariable Long storeId, Model model) {
-        List<SelectOrderInStatusResponseDto> orders = storeOrderService.selectOrderInProgress(storeId);
+        List<SelectOrderInStatusResponseDto> orders = orderService.selectOrderInProgress(storeId);
         model.addAttribute("orders", orders);
 
         return "store/order/store-order-manager";
@@ -55,7 +55,7 @@ public class StoreOrderManagerController {
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/stores/order/status")
     public void patchStoreOrderStatus(@RequestBody PatchOrderRequestDto patchOrderRequestDto) {
-        storeOrderService.updateStoreOrderStatus(patchOrderRequestDto);
+        orderService.updateStoreOrderStatus(patchOrderRequestDto);
     }
 
     /**

@@ -3,6 +3,8 @@ package store.cookshoong.www.cookshoongfrontend.account.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,13 +21,14 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 
 /**
  * 마이페이지 컨트롤러.
  *
  * @author papel (윤동현), koesnam (추만석)
  * @since 2023.08.06
- *
  */
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class MyPageController {
     private final AccountService accountService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
+    private final OrderService orderService;
 
     /**
      * 회원정보 페이지 진입.
@@ -45,7 +49,7 @@ public class MyPageController {
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
 
         List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
 
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
@@ -72,20 +76,20 @@ public class MyPageController {
     /**
      * 회원이 주소를 등록하는 페이지와 가지고 있는 모든 주소를 보여주는 메서드.
      *
-     * @param createAccountAddressRequestDto    회원이 주소를 등록하는 Dto
-     * @param model                             HTML 로 보낼 데이터
-     * @return                                  회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
+     * @param createAccountAddressRequestDto 회원이 주소를 등록하는 Dto
+     * @param model                          HTML 로 보낼 데이터
+     * @return 회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
     @GetMapping("/my-address")
     public String getMyAddress(
-        @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        Model model) {
+            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
+            Model model) {
 
         AddressResponseDto address =
-            accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
+                accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
 
         List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
 
         model.addAttribute("latitude", address.getLatitude());
         model.addAttribute("longitude", address.getLongitude());
@@ -97,15 +101,15 @@ public class MyPageController {
     /**
      * 회원이 주소를 등록하는 메서드.
      *
-     * @param createAccountAddressRequestDto    회원이 주소를 등록하는 Dto
-     * @param bindingResult                     입력에 대한 검증 결과
-     * @param model                             HTML 로 보낼 데이터
-     * @return                                  현제 주소 등록 페이지로 반환
+     * @param createAccountAddressRequestDto 회원이 주소를 등록하는 Dto
+     * @param bindingResult                  입력에 대한 검증 결과
+     * @param model                          HTML 로 보낼 데이터
+     * @return 현제 주소 등록 페이지로 반환
      */
     @PostMapping("/my-address")
     public String postCreateAccountAddress(
-        @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-        BindingResult bindingResult, Model model) {
+            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
+            BindingResult bindingResult, Model model) {
 
         accountAddressService.createAccountAddress(accountIdAware.getAccountId(), createAccountAddressRequestDto);
 
@@ -115,8 +119,8 @@ public class MyPageController {
     /**
      * 회원이 선택한 주소에 대해 갱신 날짜를 업데이트.
      *
-     * @param addressId                 주소 아이디
-     * @return                          현재 주소 등록 페이지로 반환
+     * @param addressId 주소 아이디
+     * @return 현재 주소 등록 페이지로 반환
      */
     @PatchMapping("my-address/{addressId}")
     public String patchSelectAccountAddress(@PathVariable Long addressId) {
@@ -129,8 +133,8 @@ public class MyPageController {
     /**
      * 메인화면에서 주소를 선택할 때 메인 페이지로 돌아오는 메스드.
      *
-     * @param addressId                 주소 아이디
-     * @return                          현재 주소 등록 페이지로 반환
+     * @param addressId 주소 아이디
+     * @return 현재 주소 등록 페이지로 반환
      */
     @PatchMapping("my-address/{addressId}/index")
     public String patchIndexSelectAccountAddress(@PathVariable Long addressId) {
@@ -143,8 +147,8 @@ public class MyPageController {
     /**
      * 회원이 등록한 주소를 삭제하는 메서드.
      *
-     * @param addressId        주소 아이디
-     * @return          회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
+     * @param addressId 주소 아이디
+     * @return 회원이 주소 등록과 모든 주소를 보여주는 페이지로 반환
      */
     @DeleteMapping("/my-address/{addressId}")
     public String deleteDeleteAccountAddress(@PathVariable Long addressId) {
@@ -154,4 +158,20 @@ public class MyPageController {
         return "redirect:/my-address";
     }
 
+    /**
+     * 내 주문 확인.
+     *
+     * @param pageable the pageable
+     * @param model    the model
+     * @return the my orders
+     */
+    @GetMapping("/my-orders")
+    public String getMyOrders(Pageable pageable, Model model) {
+        Long accountId = accountIdAware.getAccountId();
+        Page<SelectAccountOrderInStatusResponseDto> orders =
+                orderService.selectOwnOrder(accountId, pageable);
+
+        model.addAttribute("orders", orders);
+        return "account/my-orders";
+    }
 }
