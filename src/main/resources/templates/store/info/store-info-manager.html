@@ -79,7 +79,7 @@
                                                name="representativeName"
                                                th:field="*{representativeName}"
                                                th:value="${updateStoreManagerInfo.representativeName}"
-                                               placeholder="사업자 이름">
+                                               placeholder="사업자 이름" pattern="^[가-힣a-zA-Z\s]+$">
                                     </div>
                                     <div class="form-group"><label class="form-label">은행명</label>
                                         <div class="input-group col-xs-12 mb-2">
@@ -91,8 +91,8 @@
                                             </select>
                                         </div>
                                         <input class="form-control" type="text"
-                                               id="bankAccount" name="bankAccount"
-                                               th:field="*{bankAccount}" th:value="${updateStoreManagerInfo.bankAccount}" placeholder="'-'은 제외하고 입력해주세요.">
+                                               id="bankAccount" name="bankAccount" pattern="^[0-9]+$"
+                                               th:field="*{bankAccount}" th:value="${updateStoreManagerInfo.bankAccount}" placeholder="'-'은 제외하고 입력해주세요." oninput="checkInputLength(this, 14)">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -170,14 +170,14 @@
                                       th:method="patch" th:object="${updateStoreInfoRequestDto}">
                                     <div class="form-group">
                                         <label for="storeName">영업점 상호명</label>
-                                        <input class="form-control" type="text" id="storeName" name="storeName"
+                                        <input class="form-control" type="text" id="storeName" name="storeName" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required
                                                th:field="*{storeName}" th:value="${updateStoreInfoRequestDto.storeName}" placeholder="영업점 상호명">
                                     </div>
                                     <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
                                         <input class="form-control" type="text" id="phoneNumber"
                                                name="phoneNumber"
                                                th:field="*{phoneNumber}" th:value="${updateStoreInfoRequestDto.phoneNumber}"
-                                               placeholder="'-'은 제외하고 입력해주세요.">
+                                               placeholder="'-'은 제외하고 입력해주세요." pattern="^[0-9]+$" minlength="10" maxlength="12" required>
                                     </div>
                                     <div class="form-group"><label>영업점 주소</label>
                                         <div class="input-group col-xs-12 mb-2">
@@ -189,7 +189,7 @@
                                         </div>
                                         <input class="form-control" type="text" id="detailPlace"
                                                name="detailPlace"
-                                               th:field="*{detailPlace}" th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소">
+                                               th:field="*{detailPlace}" th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required>
 
                                         <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
                                                th:value="${updateStoreInfoRequestDto.latitude}">
@@ -200,28 +200,28 @@
                                     <div class="form-group"><label for="earningRate">적립률</label>
                                         <input class="form-control" type="text" id="earningRate" name="earningRate"
                                                th:field="*{earningRate}" th:value="${updateStoreInfoRequestDto.earningRate}" placeholder="0.0 ~ 9.9까지 입력 가능합니다."
-                                               oninput="validateEarningRate(this)">
-                                        <p id="errorText" style="color: red; display: none;">0.0보다 적거나 9.9보다 큰 값을 입력할 수 없습니다.</p>
+                                               oninput="validateEarningRate(this)" pattern="^[0-9\.]+$" required>
+                                        <p id="errorText" style="color: red; display: none;" >0.0보다 적거나 9.9보다 큰 값을 입력할 수 없습니다.</p>
                                     </div>
                                     <div class="form-group">
                                         <label>오픈 예정일</label>
                                         <div class="input-group col-xs-12">
                                             <input type="date" class="form-control"
                                                    th:field="*{openingDate}" th:value="${updateStoreInfoRequestDto.openingDate}"
-                                                   id="openingDate" name="openingDate"
+                                                   id="openingDate" name="openingDate" required
                                                    placeholder="오픈 예정일">
                                         </div>
                                     </div>
                                     <div class="form-group"><label for="minimumOrderPrice">최소주문금액</label>
                                         <input class="form-control" type="text" id="minimumOrderPrice" name="minimumOrderPrice"
                                                th:field="*{minimumOrderPrice}" th:value="${updateStoreInfoRequestDto.minimumOrderPrice}" placeholder="숫자만 입력하세요."
-                                               oninput="validateMinimumOrderPrice(this)">
-                                        <p id="errorText-minimumOrderPrice" style="color: red; display: none;">0보다 작은 값을 적을 수 없습니다.</p>
+                                               oninput="validateMinimumOrderPrice(this)" pattern="^[0-9]+$" required>
+                                        <p id="errorText-minimumOrderPrice" style="color: red; display: none;" >0보다 작은 값을 적을 수 없습니다.</p>
                                     </div>
                                     <div class="form-group"><label for="deliveryCost">기본 배달비</label>
                                         <input class="form-control" type="text" id="deliveryCost" name="deliveryCost"
                                                th:field="*{deliveryCost}" th:value="${updateStoreInfoRequestDto.deliveryCost}" placeholder="숫자만 입력하세요."
-                                               oninput="validateDeliveryCost(this)">
+                                               oninput="validateDeliveryCost(this)"  pattern="^[0-9]+$" required>
                                         <p id="errorText-deliveryCost" style="color: red; display: none;">4000원보다 적을 수 없습니다.</p>
                                     </div>
                                     <div class="form-group">
@@ -416,6 +416,11 @@
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
 <script>
+    function checkInputLength(input, maxLength){
+        if (input.value.length > maxLength){
+            input.value = input.value.slice(0,maxLength);
+        }
+    }
     function confirmStoreOuted(storeId) {
         const url = `/stores/`+storeId+`/status?option=OUTED`;
         const data = null;
@@ -456,6 +461,7 @@
         }
     }
 
+
     window.onload = function(){
         const deliveryCostInput = document.getElementById('deliveryCost');
         const earningRateInput = document.getElementById('earningRate');
@@ -486,9 +492,9 @@
     function handleCheckboxClick() {
         let selectedStoreCategories = getSelectedUpdateCategories();
         let checkMaximum = 3;
-        if (selectedStoreCategories.length > checkMaximum) {
+        if (selectedStoreCategories.length > checkMaximum || selectedStoreCategories.length<=0) {
             this.checked = false;
-            alert("최대 3개의 카테고리만 선택할 수 있습니다.");
+            alert("카테고리는 반드시 1개이상, 3개 이하만 선택할 수 있습니다.");
         }
     }
 </script>
@@ -498,6 +504,29 @@
 
     document.getElementById("businessLicenseNumber-read").innerText = formatBusinessLicenseNumber(businessLicenseNumber);
 
+    let phoneNumber = [[${storeInfo.getPhoneNumber()}]];
+    document.getElementById("phoneNumber-read").innerText = formatPhoneNumber(phoneNumber);
+    function formatPhoneNumber(number){
+        if (number.length ===12){
+            return number.substring(0,4)+"-"+number.substring(4,8)+"-"+number.substring(8,12);
+        }else if(number.length ===11){
+            return number.substring(0,3)+"-"+number.substring(3,7)+"-"+number.substring(7);
+        }else if(number.length === 10){
+            return number.substring(0,3)+"-"+number.substring(3,6) +"-"+number.substring(6);
+        }else{
+            return number
+        }
+    }
+    let accountNumber = [[${storeInfo.getBankAccountNumber()}]];
+    document.getElementById("bankAccountNumber-read").innerText = formatBankNumber(accountNumber);
+
+    function formatBankNumber(number){
+        if(number.length === 12){
+            return number.substring(0,3) +"-" +number.substring(3,6)+"-"+number.substring(6);
+        }else{
+            return number.substring(0,5) + "-"+number.substring(5,7)+"-"+number.substring(7);
+        }
+    }
     /* 번호를 ***-**-***** 형태로 변환하는 함수 */
     function formatBusinessLicenseNumber(number) {
         if (number.length !== 10) {

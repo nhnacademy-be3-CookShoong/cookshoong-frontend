@@ -40,7 +40,7 @@
                                 <span class="m-0 p-0 border-0"
                                       style="font-size: 30px;"
                                       th:name="menuPrice"
-                                      th:text="${menu.price}">
+                                      th:text="${menu.price}" id="menuPrice">
                                 </span>
                                 <span class="m-0 p-0 border-0"
                                       style="font-size: 20px;"
@@ -57,28 +57,33 @@
                         <div class="ml-3 mt-3">
                             <div class="row" th:each="optionGroup, i:${optionGroups}">
                                 <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>
+                                <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}"></input>
+                                <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}"></input>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-check d-flex justify-content-between pr-3"
                                              th:each="option, i:${options}"
                                              th:if="${option.optionGroupId==optionGroup.id}">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input"
-                                                       th:name="'optionsRadios'+${optionGroup.id}"
-                                                       th:id="'optionsRadio-'+${option.id}" th:value="${option.id}"
-                                                       th:text="${option.name}">
+                                                <input type="checkbox" class="form-check-input optionsCheckbox"
+                                                       th:name="'optionsCheckbox-'+${optionGroup.id}"
+                                                       th:id="'optionsCheckbox-'+${option.id}" th:value="${option.id}"
+                                                       th:text="${option.name}"
+                                                       onclick="handleOptionCheckboxClick(this)">
                                             </label>
                                             <input type="hidden" th:id="'optionName'+${option.id}" name="optionName"
                                                    th:value="${option.name}">
                                             <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice"
                                                    th:value="${option.price}">
-                                            <span th:text="${option.price}+'원'"></span>
+                                            <span th:text="${#numbers.formatInteger(option.price,0,'COMMA')}+'원'"></span>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
                             <h3 class="font-weight-bold">수량</h3>
@@ -102,9 +107,8 @@
                         <div class="ml-3 mt-3 mb-3 d-flex justify-content-between mr-4">
                             <h3 class="font-weight-bold">합계</h3>
                             <div>
-                                <span class="font-weight-bold" th:id="totalPrice" th:text="${menu.price}"
+                                <span class="font-weight-bold" th:id="totalPrice" th:text="${#numbers.formatInteger(menu.price,0,'COMMA')}+'원'"
                                       style="font-size: 25px; color: orange"></span>
-                                <span th:text="' 원'" style="font-size: 15px; font-weight: bold"></span>
                             </div>
                         </div>
                     </div>
@@ -136,6 +140,7 @@
 <footer th:replace="fragments :: site-footer"></footer>
 
 <script>
+
     const addCart = document.getElementById('addCart');
     addCart.addEventListener("submit", function (e) {
 
@@ -148,47 +153,10 @@
             return;
         }
 
-        const radioButtons = document.querySelectorAll("input[type='radio']:checked");
-        console.log("RadioButtons:" + radioButtons.item(0));
-
-        for (let i = 0; i < radioButtons.length; i++) {
-            const optionId = radioButtons[i].id.split('-')[1];
-            const optionName = document.getElementById('optionName' + optionId).value;
-            const optionPrice = document.getElementById('optionsPrice' + optionId).value;
-
-            console.log("ID:" + optionId);
-            console.log("NAME:" + optionName);
-            console.log("PRICE:" + optionPrice);
-
-            const optionIdHiddenInput = document.createElement("input");
-            optionIdHiddenInput.type = "hidden";
-            optionIdHiddenInput.name = "options[" + i + "].optionId"; // 수정: JavaScript 코드로 변경
-            optionIdHiddenInput.value = optionId;
-
-            const optionNameHiddenInput = document.createElement("input");
-            optionNameHiddenInput.type = "hidden";
-            optionNameHiddenInput.name = "options[" + i + "].optionName"; // 수정: JavaScript 코드로 변경
-            optionNameHiddenInput.value = optionName;
-
-            const optionPriceHiddenInput = document.createElement("input");
-            optionPriceHiddenInput.type = "hidden";
-            optionPriceHiddenInput.name = "options[" + i + "].optionPrice"; // 수정: JavaScript 코드로 변경
-            optionPriceHiddenInput.value = optionPrice;
-
-            console.log("ID:" + optionIdHiddenInput.name);
-            console.log("NAME:" + optionNameHiddenInput.name);
-            console.log("PRICE:" + optionPriceHiddenInput.name);
-
-            addCart.appendChild(optionIdHiddenInput);
-            addCart.appendChild(optionNameHiddenInput);
-            addCart.appendChild(optionPriceHiddenInput);
-        }
-
         const checkBoxButtons = document.querySelectorAll("input[type='checkbox']:checked");
-        console.log("RadioButtons:" + checkBoxButtons.item(0));
 
-        for (let i = 0; i < checkBoxButtons.length; i++) {
-            const optionId = checkBoxButtons[i].id.split('-')[1];
+        for (let j = 0 ; j < checkBoxButtons.length; j++) {
+            const optionId = checkBoxButtons[j].id.split('-')[1];
             const optionName = document.getElementById('optionName' + optionId).value;
             const optionPrice = document.getElementById('optionsPrice' + optionId).value;
 
@@ -198,17 +166,17 @@
 
             const optionIdHiddenInput = document.createElement("input");
             optionIdHiddenInput.type = "hidden";
-            optionIdHiddenInput.name = "options[" + i + "].optionId"; // 수정: JavaScript 코드로 변경
+            optionIdHiddenInput.name = "options[" + j + "].optionId"; // 수정: JavaScript 코드로 변경
             optionIdHiddenInput.value = optionId;
 
             const optionNameHiddenInput = document.createElement("input");
             optionNameHiddenInput.type = "hidden";
-            optionNameHiddenInput.name = "options[" + i + "].optionName"; // 수정: JavaScript 코드로 변경
+            optionNameHiddenInput.name = "options[" + j + "].optionName"; // 수정: JavaScript 코드로 변경
             optionNameHiddenInput.value = optionName;
 
             const optionPriceHiddenInput = document.createElement("input");
             optionPriceHiddenInput.type = "hidden";
-            optionPriceHiddenInput.name = "options[" + i + "].optionPrice"; // 수정: JavaScript 코드로 변경
+            optionPriceHiddenInput.name = "options[" + j + "].optionPrice"; // 수정: JavaScript 코드로 변경
             optionPriceHiddenInput.value = optionPrice;
 
             console.log("ID:" + optionIdHiddenInput.name);
@@ -224,24 +192,61 @@
     })
 
 </script>
-
 <script>
-    let menuPrice = document.getElementsByName("menuPrice"),
-        menuPriceValue = parseInt(menuPrice[0].textContent);
-    let radios = document.querySelectorAll('input[type="radio"]');
+    document.addEventListener(
+        "DOMContentLoaded", () => {
+            document.getElementById("menuPrice").textContent = document.getElementById("menuPrice").textContent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            let checkboxes = document.getElementsByClassName('optionsCheckbox');
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].addEventListener('click', function() {
+                    handleOptionCheckboxClick(this);
+                });
+            }
+        }
+    )
+    function getSelectedOptionCheckbox(boxId) {
+        let categoryCheckboxes = document.getElementsByName('optionsCheckbox-'+boxId);
+        let selectedOptions = [];
+
+        for (let i = 0; i < categoryCheckboxes.length; i++) {
+            if (categoryCheckboxes[i].checked) {
+                console.log(categoryCheckboxes[i]);
+                selectedOptions.push(categoryCheckboxes[i]);
+            }
+        }
+        console.log('length: '+selectedOptions.length);
+
+        return selectedOptions;
+    }
+    function handleOptionCheckboxClick(checkbox) {
+        let optionGroupId = checkbox.name.split("-")[1]
+        let min = document.getElementById('optionGroupMin'+optionGroupId).value;
+        let max = document.getElementById('optionGroupMax'+optionGroupId).value;
+        console.log('min :' + min);
+        console.log('max :' + max);
+        var selectedStoreCategories = getSelectedOptionCheckbox(optionGroupId);
+
+        if (selectedStoreCategories.length>max) {
+            checkbox.checked = false;
+            alert(`옵션은 ${max}개 이하만 선택할 수 있습니다.`);
+        }
+    }
+    let menuPrice = document.getElementsByName("menuPrice");
+    let menuPriceValue = parseInt(menuPrice[0].textContent);
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let counts = document.querySelector('input[id="count"]');
 
-    // 라디오 버튼 클릭 이벤트와 count 값 변경 이벤트에 대한 함수를 바인딩합니다.
-    for (let i = 0; i < radios.length; i++) {
-        radios[i].onclick = updateTotal;
+    for (let j = 0; j < checkboxes.length; j++) {
+        checkboxes[j].onclick = updateTotal;
     }
     counts.oninput = updateTotal;
 
     function updateTotal() {
         let total = 0;
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                let price = document.getElementById('optionsPrice' + radios[i].value);
+        for (let j = 0; j < checkboxes.length; j++) {
+            if (checkboxes[j].checked) {
+                let price = document.getElementById('optionsPrice' + checkboxes[j].value);
                 total += parseInt(price.value);
             }
         }
@@ -249,7 +254,7 @@
         if (!isNaN(countValue) && countValue > 0) {
             total = (total + menuPriceValue) * countValue;
         }
-        document.getElementById('totalPrice').textContent = total + '';
+        document.getElementById('totalPrice').textContent = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원';
     }
 
     function decrement() {
