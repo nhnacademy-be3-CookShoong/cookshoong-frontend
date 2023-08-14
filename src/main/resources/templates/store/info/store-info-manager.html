@@ -79,7 +79,7 @@
                                                name="representativeName"
                                                th:field="*{representativeName}"
                                                th:value="${updateStoreManagerInfo.representativeName}"
-                                               placeholder="사업자 이름" pattern="[가-힣a-zA-Z\s]+">
+                                               placeholder="사업자 이름" pattern="^[가-힣a-zA-Z\s]+$">
                                     </div>
                                     <div class="form-group"><label class="form-label">은행명</label>
                                         <div class="input-group col-xs-12 mb-2">
@@ -91,7 +91,7 @@
                                             </select>
                                         </div>
                                         <input class="form-control" type="text"
-                                               id="bankAccount" name="bankAccount" pattern="[0-9]+"
+                                               id="bankAccount" name="bankAccount" pattern="^[0-9]+$"
                                                th:field="*{bankAccount}" th:value="${updateStoreManagerInfo.bankAccount}" placeholder="'-'은 제외하고 입력해주세요." oninput="checkInputLength(this, 14)">
                                     </div>
                                     <div class="modal-footer">
@@ -170,7 +170,7 @@
                                       th:method="patch" th:object="${updateStoreInfoRequestDto}">
                                     <div class="form-group">
                                         <label for="storeName">영업점 상호명</label>
-                                        <input class="form-control" type="text" id="storeName" name="storeName" pattern="[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+" required
+                                        <input class="form-control" type="text" id="storeName" name="storeName" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required
                                                th:field="*{storeName}" th:value="${updateStoreInfoRequestDto.storeName}" placeholder="영업점 상호명">
                                     </div>
                                     <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
@@ -189,7 +189,7 @@
                                         </div>
                                         <input class="form-control" type="text" id="detailPlace"
                                                name="detailPlace"
-                                               th:field="*{detailPlace}" th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소" pattern="[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+" required>
+                                               th:field="*{detailPlace}" th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required>
 
                                         <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
                                                th:value="${updateStoreInfoRequestDto.latitude}">
