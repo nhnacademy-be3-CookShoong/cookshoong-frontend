@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.shop.model.request;
+package store.cookshoong.www.cookshoongfrontend.order.model.request;
 
 import java.util.UUID;
 import javax.validation.constraints.NotNull;

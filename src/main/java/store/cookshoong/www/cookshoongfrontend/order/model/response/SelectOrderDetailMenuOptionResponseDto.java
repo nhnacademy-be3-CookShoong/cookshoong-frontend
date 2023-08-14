@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.shop.model.response;
+package store.cookshoong.www.cookshoongfrontend.order.model.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SelectOrderDetailMenuOptionResponseDto {
     private String optionName;
+    private int price;
 }
