@@ -274,17 +274,6 @@ public class MainViewController {
     }
 
     /**
-     * 매장 가맹점 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-merchant-manager")
-    public String getMerchantManager() {
-        return "store/info/store-merchant-manager";
-    }
-
-    /**
      * 시스템 관리자를 위한 뷰 페이지를 맵핑.
      *
      * @author koesnam

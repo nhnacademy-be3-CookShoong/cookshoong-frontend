@@ -11,6 +11,7 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
@@ -19,49 +20,68 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 주문 관리</h1>
+                            <h1 class="font-weight-bold">주문 관리</h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card" th:each="order, i:${orders}">
+                <div class="col-12 grid-margin stretch-card">
                     <div class="card">
-                        <div class="card-body row border-top pt-3 pb-3 justify-content-between">
-                            <h4 class="card-title" th:text="${order.getDeliveryAddress()}"></h4>
-                            <div>
-                                <h4 th:text="${order.getOrderedAt()}"></h4>
-                                <h4 class="text-right" th:text="${order.getOrderStatusDescription()}"></h4>
-                            </div>
-                            <div class="col-12">
-                                <div class="row border-top pt-3 pb-3 justify-content-between" >
-                                    <div style="width: 600px;">
-                                        <div th:each="orderMenu:${order.getSelectOrderDetails()}">
-                                            <h3 th:text="${orderMenu.getMenuName()} + ' ' + ${orderMenu.getCount()} + '개'"></h3>
-                                            <div th:each="option:${orderMenu.getSelectOrderDetailMenuOptions()}">
-                                                <p th:text="'- ' + ${option.getOptionName()}"></p>
+                        <div class="store-card-header">
+                            <h2 class="store-title">주문 관리</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12 grid-margin stretch-card" th:each="order, i:${orders}">
+                                <div class="card">
+                                    <div class="card-body row border-top pt-3 pb-3 justify-content-between">
+                                        <h4 class="card-title" th:text="${order.getDeliveryAddress()}"></h4>
+                                        <div>
+                                            <h4 th:text="${order.getOrderedAt()}"></h4>
+                                            <h4 class="text-right" th:text="${order.getOrderStatusDescription()}"></h4>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row border-top pt-3 pb-3 justify-content-between">
+                                                <div style="width: 600px;">
+                                                    <div th:each="orderMenu:${order.getSelectOrderDetails()}">
+                                                        <h3 th:text="${orderMenu.getMenuName()} + ' ' + ${orderMenu.getCount()} + '개'"></h3>
+                                                        <div th:each="option:${orderMenu.getSelectOrderDetailMenuOptions()}">
+                                                            <p th:text="'- ' + ${option.getOptionName()}"></p>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h4 th:text="${order.getMemo()}"></h4>
+                                                </div>
                                             </div>
-                                            <br>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h4 th:text="${order.getMemo()}"></h4>
+                                    <div class="justify-content-around row">
+                                        <div class="col-6">
+                                            <div th:if="${order.getOrderStatusDescription() == '조리중'}">
+                                                <button class="btn btn-info col-12"
+                                                        th:onclick="setStatusCode([[${order.orderCode}]], 'DELIVER')">배달 시작
+                                                </button>
+                                            </div>
+                                            <div th:unless="${order.getOrderStatusDescription() == '조리중'}">
+                                                <button class="btn btn-info col-12"
+                                                        th:onclick="setStatusCode([[${order.orderCode}]], 'COOKING')">수락
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="btn btn-warning col-12"
+                                                    th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'FOOD_OUT')">
+                                                재료소진
+                                            </button>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="btn btn-primary col-12"
+                                                    th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'ORD_FLOOD')">
+                                                주문폭주
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="justify-content-around row">
-                            <div class="col-6">
-                                <div th:if="${order.getOrderStatusDescription() == '조리중'}">
-                                    <button class="btn btn-info col-12" th:onclick="setStatusCode([[${order.orderCode}]], 'DELIVER')">배달 시작</button>
-                                </div>
-                                <div th:unless="${order.getOrderStatusDescription() == '조리중'}">
-                                    <button class="btn btn-info col-12" th:onclick="setStatusCode([[${order.orderCode}]], 'COOKING')">수락</button>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-warning col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'FOOD_OUT')">재료소진</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-primary col-12" th:onclick="refundAndSetStatusCode([[${order.orderCode}]], [[${order.chargeCode}]], [[${order.paymentKey}]], 'ORD_FLOOD')">주문폭주</button>
                             </div>
                         </div>
                     </div>
@@ -74,31 +94,31 @@
 <data id="path" th:value="${#request.getServletPath()}"></data>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-function setStatusCode(orderCode, statusCode) {
+    function setStatusCode(orderCode, statusCode) {
 
-    const path = document.getElementById("path").value;
-    const data = {
-        orderCode: orderCode,
-        statusCode: statusCode
-    };
-    const method = "PATCH";
+        const path = document.getElementById("path").value;
+        const data = {
+            orderCode: orderCode,
+            statusCode: statusCode
+        };
+        const method = "PATCH";
 
-    sendDataWithCsrfToken("/stores/order/status", path, data, method);
-}
+        sendDataWithCsrfToken("/stores/order/status", path, data, method);
+    }
 
-function refundAndSetStatusCode(orderCode, chargeCode, paymentKey, statusCode) {
+    function refundAndSetStatusCode(orderCode, chargeCode, paymentKey, statusCode) {
 
-    const data = {
-        orderId: orderCode,
-        chargeCode: chargeCode,
-        paymentKEy: paymentKey,
-        cancelReason: statusCode
-    };
-    const method = "POST";
+        const data = {
+            orderId: orderCode,
+            chargeCode: chargeCode,
+            paymentKEy: paymentKey,
+            cancelReason: statusCode
+        };
+        const method = "POST";
 
-    sendDataWithCsrfToken("/stores/order/refund", null, data, method);
-    setStatusCode(orderCode, statusCode);
-}
+        sendDataWithCsrfToken("/stores/order/refund", null, data, method);
+        setStatusCode(orderCode, statusCode);
+    }
 </script>
 </body>
 </html>

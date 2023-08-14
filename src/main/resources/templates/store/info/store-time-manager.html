@@ -3,10 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
@@ -15,14 +15,16 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업시간 관리 페이지</h1>
+                            <h1 class="font-weight-bold">영업시간 관리</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">영업시간 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">영업시간 관리</h4>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
@@ -59,11 +61,13 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">영업시간 추가</h2>
+                        </div>
                         <form class="col-12 p-0" th:action="@{'/stores/'+ ${storeId} + '/business-hour'}"
                               th:object="${createBusinessHourRequestDto}"
                               method="post">
                             <div class="card-body">
-                                <h4 class="card-title">영업시간 추가</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
@@ -117,8 +121,10 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">휴무일 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">휴무일 관리</h4>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
@@ -158,10 +164,12 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">휴무일 추가</h2>
+                        </div>
                         <form class="col-12 p-0" th:action="@{'/stores/'+ ${storeId} + '/holiday'}"
                               th:object="${createHolidayRequestDto}" method="post">
                             <div class="card-body">
-                                <h4 class="card-title">휴무일 추가</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
