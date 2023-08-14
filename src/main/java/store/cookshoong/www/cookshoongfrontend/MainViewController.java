@@ -227,7 +227,7 @@ public class MainViewController {
 
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
-        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
+        List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroupsByMenu(storeId, menuId);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
 
         model.addAttribute("accountId", accountIdAware.getAccountId());
@@ -249,12 +249,9 @@ public class MainViewController {
     @PostMapping("/index/store/menu/cart")
     public String postCreateCart(@Valid CartRedisDto cartRedisDto,
                                  BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
-
             return "index/menu";
         }
-
         cartRedisDto.setAccountId(accountIdAware.getAccountId());
 
         cartService.createCart(

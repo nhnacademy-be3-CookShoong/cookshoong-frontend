@@ -101,6 +101,34 @@ public class StoreOptionAdapter {
 
         return response.getBody();
     }
+    /**
+     * 옵션 그룹 리스트 조회 메서드.
+     *
+     * @param storeId 매장 아이디
+     * @return response
+     */
+    public List<SelectOptionGroupResponseDto> fetchOptionGroupsByMenu(Long storeId, Long menuId) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .pathSegment("{menuId}")
+            .pathSegment("option-group")
+            .buildAndExpand(storeId, menuId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<List<SelectOptionGroupResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
+        return response.getBody();
+    }
 
     /**
      * 옵션 그룹 조회 메서드.

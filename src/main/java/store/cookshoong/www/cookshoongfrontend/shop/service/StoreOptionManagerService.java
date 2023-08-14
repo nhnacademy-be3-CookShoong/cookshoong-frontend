@@ -49,6 +49,9 @@ public class StoreOptionManagerService {
     public List<SelectOptionGroupResponseDto> selectOptionGroups(Long storeId) {
         return storeOptionAdapter.fetchOptionGroups(storeId);
     }
+    public List<SelectOptionGroupResponseDto> selectOptionGroupsByMenu(Long storeId, Long menuId) {
+        return storeOptionAdapter.fetchOptionGroupsByMenu(storeId, menuId);
+    }
 
     /**
      * 옵션 리스트 조회 서비스.
