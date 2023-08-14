@@ -3,10 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="modal fade" id="optionGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -135,14 +135,16 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 옵션 관리</h1>
+                            <h1 class="font-weight-bold">옵션 관리</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">옵션 그룹 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">옵션 그룹 관리</h4>
                             <div class="col-12">
                                 <div class="row border-top pt-2 pb-2 justify-content-between"
                                      th:each="optionGroup, i:${optionGroups}">
@@ -183,8 +185,10 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">옵션 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">옵션 관리</h4>
                             <div class="col-12">
                                 <div class="row border-top pb-3 pt-3 justify-content-between"
                                      th:each="option, i:${options}">

@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>마이페이지</title>
     <script src="/assets/js/account/my-page.js"></script>
 </head>
 <body layout:fragment="content">
@@ -18,18 +17,22 @@
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body row">
+                            <h1 class="font-weight-bold mb-2 w-75">내 정보 관리</h1>
+                            <h2 class="font-weight-bold mb-auto w-25" th:text="${accountInfo.rank + ' 등급 '}" style="color: red; text-align: right"></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
                     <form class="col-12 p-0" th:action="@{/my-page}" th:object="${updateAccountInfoRequestDto}"
                           method="post">
                         <div class="card">
-                            <div style="display: inline-block" class="card-body">
-                                <h1 class="font-weight-bold"
-                                    th:text="${accountInfo.rank + ' 등급 '}"></h1>
+                            <div class="store-card-header">
+                                <h2 class="store-title">회원 정보</h2>
                             </div>
-                        </div>
-                        <div class="card">
                             <div class="card-body">
                                 <div class="flex-container">
-                                    <h4 class="card-title flex-1">회원 정보 </h4>
                                     <button style="display: none" class="btn btn-inverse-warning"
                                             id="update-account-info-btn" type="submit">
                                         저장

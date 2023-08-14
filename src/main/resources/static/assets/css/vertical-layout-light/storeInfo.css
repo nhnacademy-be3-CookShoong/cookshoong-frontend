@@ -1,13 +1,21 @@
+.store-page-header {
+    border-color: white;
+}
+
 .store-card-header {
-    background-color: #f0f0f0;
-    padding: 10px 20px;
-    border-bottom: 1px solid #d5d5d5;
+    background-color: #f3f3f3;
+    padding: 10px 10px;
+    border-bottom: 1px solid #e7eaed;
 }
 
 .store-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-top: 15px;
+    padding-left: 5px;
     margin: 0;
-    color: #333;
+    color: #000000;
+    height: 45px;
 }
 /* Details Styles */
 .details {

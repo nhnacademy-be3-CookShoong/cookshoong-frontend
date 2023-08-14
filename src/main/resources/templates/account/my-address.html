@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>주소등록</title>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
 </head>
@@ -61,12 +60,20 @@
             <div class="row">
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="card-body row">
+                            <h1 class="font-weight-bold mb-2 w-75">내 주소 관리</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">주소 목록</h2>
+                            <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem" type="button"
+                                   data-toggle="modal"
+                                   data-target="#addressAdd" th:value="주소등록">
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title address"><span style="font-size: 1.3rem; font-weight: bold"  th:text="주소목록"></span>
-                                <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem" type="button"
-                                    data-toggle="modal"
-                                       data-target="#addressAdd" th:value="주소등록">
-                            </h4>
                             <div class="table-responsive">
                                 <button id="currentLocationBtn" class="btn" style="position: absolute; left: 0; z-index: 2;">
                                     <i class="mdi mdi-home-map-marker" style="color: #d70206; font-size: 33px"></i>

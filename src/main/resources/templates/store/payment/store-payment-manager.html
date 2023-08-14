@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>StoreOrder</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <script src="/assets/js/common/fetcher.js"></script>
@@ -12,7 +11,7 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
-
+<div th:replace="fragments :: all-address-list"></div>
 <div class="modal fade" id="paymentRefund">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,10 +96,19 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
-                <div class="col-lg-12 grid-margin stretch-card">
+                <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">결제관리</h4>
+                            <h1 class="font-weight-bold">결제 관리</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">결제 관리</h2>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="table-light">

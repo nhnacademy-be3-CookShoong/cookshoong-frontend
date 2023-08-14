@@ -4,8 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>Untitled</title>
-    <link rel="stylesheet" href="/assets/css/vertical-layout-light/storeInfo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -18,6 +16,7 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
@@ -26,11 +25,10 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body row">
-                            <h1 class="font-weight-bold mb-2 w-75">영업점 정보 관리 페이지</h1>
-                            <h3 class="font-weight-light mb-auto w-25 " th:text="${storeInfo.storeStatus}" style="color: violet; text-align: right"></h3>
+                            <h1 class="font-weight-bold mb-2 w-75">매장정보 관리</h1>
+                            <h2 class="font-weight-bold mb-auto w-25 " th:text="${storeInfo.storeStatus}" style="color: red; text-align: right"></h2>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
@@ -59,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal fade" th:id="'businessInfoModal'" tabindex="-1"
                      role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -104,10 +103,10 @@
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="store-card-header">
@@ -153,6 +152,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="modal fade" th:id="'storeInfoModal'" tabindex="-1"
                      role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -244,10 +244,13 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">우리 가게 카테고리</h2>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    th:data-target="'#categoryModal'">수정</button>
                         </div>
                         <div class="card-body">
                             <div class="details">
@@ -256,8 +259,6 @@
                                     <h5 class="store-detail-value" th:each="category : ${storeInfo.storeCategories}" id="storeCategories">
                                         <span th:text="${category.storeCategory}"></span>
                                     </h5>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            th:data-target="'#categoryModal'">수정</button>
                                 </div>
                             </div>
                         </div>
