@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <script src="/assets/js/common/fetcher.js"></script>
+</head>
+<body layout:fragment="content">
+<header th:replace="fragments :: business-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+<div class="container-fluid page-body-wrapper">
+    <nav th:replace="fragments :: business-site-nav"></nav>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">내 주문 확인</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 grid-margin stretch-card" th:each="order, i:${orders.content}">
+                    <div class="card" th:with="orderInfo=${order.getLookupOrderInStatusResponseDto()}">
+                        <div class="card-body row border-top pt-3 pb-3 justify-content-between">
+                            <h1 class="card-title" th:text="${order.getStoreName()}"></h1>
+                            <div>
+                                <h4 class="text-right" th:text="${orderInfo.getOrderStatusDescription()}"></h4>
+                            </div>
+                            <div class="border-top col-12 pt-3 pb-3">
+                                <h3 th:text="'배달위치: ' + ${orderInfo.getDeliveryAddress()}"></h3>
+                                <h3 th:text="'요청사항: ' + ${orderInfo.getMemo()}"></h3>
+                            </div>
+                            <div class="col-12">
+                                <div class="border-top pt-3 pb-3 justify-content-between" >
+                                    <div th:each="orderMenu:${orderInfo.getSelectOrderDetails()}">
+                                        <div class="d-flex justify-content-between">
+                                            <h3 th:text="${orderMenu.getMenuName() + '(' + #numbers.formatInteger(orderMenu.getCost(), 0, 'COMMA') + '원) ' + orderMenu.getCount()} + '개'"></h3>
+                                            <h3 th:text="${#numbers.formatInteger(orderMenu.getTotalCost(), 0, 'COMMA')}"></h3>
+                                        </div>
+                                        <div th:each="option:${orderMenu.getSelectOrderDetailMenuOptions()}">
+                                            <p th:text="'- ' + ${option.getOptionName() + ' (' + #numbers.formatInteger(option.getPrice(), 0, 'COMMA') +'원)'}"></p>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top col-12 pt-3 pb-3">
+                                <div class="d-flex justify-content-between">
+                                    <h2>주문 금액</h2>
+                                    <h2 th:text="${#numbers.formatInteger(order.getTotalOrderPrice(), 0, 'COMMA')}"></h2>
+                                </div>
+                                <div class="d-flex justify-content-between" th:if="${order.getCouponDiscountAmount() != null}">
+                                    <h2>쿠폰 할인</h2>
+                                    <h2 th:text="'-' + ${#numbers.formatInteger(order.getCouponDiscountAmount(), 0, 'COMMA')}"></h2>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h2>배달팁</h2>
+                                    <h2 th:text="${#numbers.formatInteger(order.getDeliveryCost(), 0, 'COMMA')}"></h2>
+                                </div>
+                                <div class="d-flex justify-content-between" th:if="${order.getPointDiscountAmount() != null}">
+                                    <h2>포인트 할인</h2>
+                                    <h2 th:text="'-' + ${#numbers.formatInteger(order.getPointDiscountAmount(), 0, 'COMMA')}"></h2>
+                                </div>
+                                <br>
+                                <div class="d-flex justify-content-between">
+                                    <h2>총 결제 금액</h2>
+                                    <h2 th:text="${#numbers.formatInteger(orderInfo.getChargedAmount(), 0, 'COMMA')}"></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+</body>
+</html>
