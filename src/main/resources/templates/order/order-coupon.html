@@ -23,7 +23,7 @@
                         <div class="col-sm-12 text-left notification-container"
                              style="font-size: 20px; font-weight: bold"
                              th:switch="${coupon.couponTypeResponse.getClass().getSimpleName()}">
-
+                            <h2 class="pb-2" th:text="${coupon.couponUsageName}" style="font-weight: bold"></h2>
                             <div th:case="CouponTypeCashVo">
                                 <span th:text="'고정 할인'" style="font-weight: bold"></span>
                                 <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
