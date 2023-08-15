@@ -5,7 +5,6 @@ const mapContainer = document.getElementById('map');
 const mapOption = {
     center: new kakao.maps.LatLng(latitude, longitude),
     level: 4,
-    // draggable: false
 };
 const map = new kakao.maps.Map(mapContainer, mapOption);
 const geocoder = new kakao.maps.services.Geocoder();
@@ -73,8 +72,6 @@ function validateAddress() {
     const longitude = document.getElementById("longitudeInput").value;
 
     if (mainPlace.trim() === "" || latitude.trim() === "" || longitude.trim() === "") {
-        // alert("입력되지 않은 값이 있습니다. 확인해주세요@.@");
-        // SweetAlert2 팝업 띄우기
         Swal.fire({
             icon: 'error',
             title: '입력 오류',
@@ -92,13 +89,11 @@ function deleteAddress() {
 }
 
 function checkAddressLimit() {
-    // 주소록 테이블의 행 개수 확인
+
     const addressRowCount = document.querySelectorAll('#addressTable tr').length;
 
-    // 저장 버튼 가져오기
     const saveButton = document.querySelector('#addressForm input[type="submit"]');
 
-    // 주소록 행 개수가 10개 이상인 경우 에러 메시지 표시 및 저장 버튼 비활성화
     if (addressRowCount > 9) {
         const addressError = document.getElementById("addressError");
         alert("회원이 가지고 있는 주소가 10개가 넘었습니다. 주소 삭제 바랍니다.");
@@ -110,10 +105,8 @@ function checkAddressLimit() {
 
 function  checkedAddressMinLimit() {
 
-    // 주소록 테이블의 행 개수 확인
     const addressRowCount = document.querySelectorAll('#addressTable tr').length;
 
-    // 저장 버튼 가져오기
     const deleteButton = document.querySelector('#deleteForm input[type="submit"]');
 
     if (addressRowCount < 2) {
@@ -127,7 +120,6 @@ function  checkedAddressMinLimit() {
 }
 
 
-// 현재 위치 가져오기 버튼 생성
 const currentLocationBtn = document.getElementById('currentLocationBtn');
 
 currentLocationBtn.addEventListener('click', function() {
