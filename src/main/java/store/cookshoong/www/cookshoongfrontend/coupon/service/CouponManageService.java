@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.coupon.service;
 
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercen
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableCouponPolicyResponseDto;
 
 /**
  * 쿠폰 관리 서비스.
@@ -165,6 +167,15 @@ public class CouponManageService {
     }
 
     /**
+     * 이벤트 쿠폰 발급.
+     *
+     * @param createProvideCouponRequestDto the create provide coupon request dto
+     */
+    public void createProvideEventCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        couponManageAdapter.executeProvideEventCoupon(createProvideCouponRequestDto);
+    }
+
+    /**
      * 내 쿠폰 확인.
      *
      * @param accountId the account id
@@ -176,5 +187,38 @@ public class CouponManageService {
     public Page<SelectOwnCouponResponseDto> selectOwnCoupons(Long accountId, Pageable pageable, Boolean usable,
                                                              Long storeId) {
         return couponManageAdapter.fetchOwnCoupons(accountId, pageable, usable, storeId);
+    }
+
+    /**
+     * 내 쿠폰 확인.
+     *
+     * @param accountId the account id
+     * @param pageable  the pageable
+     * @return the page
+     */
+    public Page<SelectOwnCouponResponseDto> selectOwnCoupons(Long accountId, Pageable pageable) {
+        return selectOwnCoupons(accountId, pageable, true, null);
+    }
+
+    /**
+     * 발급받을 수 있는 쿠폰 정책 확인.
+     *
+     * @param merchantId the merchant id
+     * @return the page
+     */
+    public List<SelectProvableCouponPolicyResponseDto> selectProvableCouponPolicy(Long merchantId) {
+        if (Objects.nonNull(merchantId)) {
+            return selectMerchantProvableCouponPolicy(merchantId);
+        }
+
+        return selectUsageAllProvableCouponPolicy();
+    }
+
+    private List<SelectProvableCouponPolicyResponseDto> selectMerchantProvableCouponPolicy(Long merchantId) {
+        return couponManageAdapter.fetchMerchantProvableCouponPolicy(merchantId);
+    }
+
+    private List<SelectProvableCouponPolicyResponseDto> selectUsageAllProvableCouponPolicy() {
+        return couponManageAdapter.fetchUsageAllProvableCouponPolicy();
     }
 }
