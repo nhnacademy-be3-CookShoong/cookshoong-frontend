@@ -211,7 +211,6 @@ public class MainViewController {
         Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
-        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
@@ -219,6 +218,7 @@ public class MainViewController {
         model.addAttribute("accountAddresses", accountAddresses);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
+            List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
         } else {

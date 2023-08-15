@@ -23,6 +23,7 @@ import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressRes
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 
 /**
  * 마이페이지 컨트롤러.
@@ -108,8 +109,15 @@ public class MyPageController {
      */
     @PostMapping("/my-address")
     public String postCreateAccountAddress(
-            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-            BindingResult bindingResult, Model model) {
+        @ModelAttribute("createAccountAddressRequestDto")
+        @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
+        BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("createAccountAddressRequestDto", createAccountAddressRequestDto);
+            return "redirect:/my-address";
+        }
 
         accountAddressService.createAccountAddress(accountIdAware.getAccountId(), createAccountAddressRequestDto);
 
@@ -166,12 +174,13 @@ public class MyPageController {
      * @return the my orders
      */
     @GetMapping("/my-orders")
-    public String getMyOrders(Pageable pageable, Model model) {
+    public String getMyOrders(Pageable pageable, Model model, CreateReviewRequestDto createReviewRequestDto) {
         Long accountId = accountIdAware.getAccountId();
         Page<SelectAccountOrderInStatusResponseDto> orders =
                 orderService.selectOwnOrder(accountId, pageable);
 
         model.addAttribute("orders", orders);
+        model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
     }
 }
