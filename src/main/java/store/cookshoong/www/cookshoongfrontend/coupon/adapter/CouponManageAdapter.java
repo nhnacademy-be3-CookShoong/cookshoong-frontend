@@ -246,6 +246,25 @@ public class CouponManageAdapter {
     }
 
     /**
+     * 쿠폰 정책 숨김.
+     *
+     * @param policyId the policy id
+     */
+    public void changeHideCouponPolicy(Long policyId) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path(COUPON_POLICY)
+                .pathSegment(POLICY_ID_PARAMETER)
+                .buildAndExpand(policyId)
+                .toUri(),
+            HttpMethod.PATCH,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
      * 쿠폰 발행.
      *
      * @param request the request
