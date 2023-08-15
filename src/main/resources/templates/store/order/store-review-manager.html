@@ -11,6 +11,48 @@
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
+
+<div class="modal fade" id="replyAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="col-12 p-0" th:action="@{'reply'}"
+                      th:object="${createBusinessReviewRequestDto}"
+                      method="post">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title">신규 메뉴 등록</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">리뷰 답변</h4>
+                                <div class="form-group">
+                                    <input type="text" name="content" id="content" hidden="hidden">
+                                    <div id="editor"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-info m-1" type="submit" id="submitButton"
+                                        name="submitButton">답변</button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
@@ -39,7 +81,7 @@
                                                 <button class="btn btn-primary m-1" style="width: 85px; height: 40px;"
                                                         type="button"
                                                         data-toggle="modal"
-                                                        data-target="#menuAdd"
+                                                        data-target="#replyAdd"
                                                         th:text="'답변'">
                                                 </button>
                                             </div>
@@ -87,8 +129,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -102,21 +142,29 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <script>
-    const editor = new toastui.Editor({
-        initialEditType: 'wysiwyg',
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '200px',
-        placeholder: '리뷰에 답변해주세요.'
-    });
+    let editor;
 
-    function showEditor() {
-        document.getElementById('reviewBox').style.display = 'block';
-    }
+    $('#replyAdd').on('show.bs.modal', function (event) {
+        const initialValue = ' '
 
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '300px',
+            initialValue: initialValue,
+            placeholder: '리뷰에 답변해주세요.',
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#content').value = editorContent;
+        });
     });
 </script>
 <footer th:replace="fragments :: site-footer"></footer>
