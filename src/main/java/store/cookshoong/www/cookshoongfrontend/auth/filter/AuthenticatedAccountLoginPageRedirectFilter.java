@@ -7,8 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 
 /**
@@ -25,7 +28,8 @@ public class AuthenticatedAccountLoginPageRedirectFilter extends OncePerRequestF
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 인증된 사용자지만 리프레쉬토큰이 없을 때 로그인 화면으로 보내고 있기 때문에, 리프레쉬 토큰의 유무로 로그인 페이지 접근을 막습니다.
-        if (Objects.nonNull(refreshTokenManager.getCurrentRefreshToken())) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (refreshTokenManager.isExists(request) && auth instanceof JwtAuthentication) {
             response.sendRedirect("/");
             return;
         }
