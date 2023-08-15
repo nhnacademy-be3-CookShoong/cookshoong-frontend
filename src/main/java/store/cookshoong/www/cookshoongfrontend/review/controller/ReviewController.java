@@ -80,6 +80,6 @@ public class ReviewController {
 
         Long accountId = accountIdAware.getAccountId();
         reviewService.createReview(accountId, createReviewRequestDto, reviewImages);
-        return "redirect:/order";
+        return "redirect:/my-review";
     }
 }

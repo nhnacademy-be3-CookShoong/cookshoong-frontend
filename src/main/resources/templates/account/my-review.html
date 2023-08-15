@@ -36,16 +36,11 @@
                                 </div>
                                 <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
                                     <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="${review.getRating() + '.0'}"></strong>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span th:class="${review.getRating() >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span th:class="${review.getRating() >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span th:class="${review.getRating() >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span th:class="${review.getRating() >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
+                                    <span th:class="${review.getRating() == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
                                 </div>
                                 <div class="pl-3 pr-3 pt-1 pb-3 m-0">
                                     <span th:utext="${review.getContents()}"></span>
@@ -58,13 +53,13 @@
                                              style="object-fit: cover; width: 130px; height: 130px;">
                                     </div>
                                 </div>
-
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  th:each="menu, i:${review.getMenuResponseDtos()}"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="${menu.menuName}"></span>
+                                <div class="row p-0 m-0">
+                                    <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                         th:each="menu, i:${review.getMenuResponseDtos()}">
+                                                    <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"
+                                                          style="border-radius: 6px; background-color: #ffb429"
+                                                          th:text="${menu.menuName}"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
