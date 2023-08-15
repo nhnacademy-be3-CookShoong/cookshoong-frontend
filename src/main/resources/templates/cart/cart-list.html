@@ -14,10 +14,19 @@
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body row">
+                            <h1 class="font-weight-bold mb-2 w-75">장바구니 확인</h1>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">장바구니</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 style="font-size:1.4rem; font-weight: bold;" class="card-title">장바구니</h4>
                                 <p class="card-description" >
                                     매장
                                     <button class="btn" style="margin-bottom: 1px; padding: 0.3rem" th:onclick="'window.location.href=\'/index/store/' + ${storeId} + '\''" th:if="${storeName}"><code th:text="${storeName}"></code></button>
@@ -33,17 +42,28 @@
                                                         <div class="ml-3 mt-3">
                                                             <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
                                                             <div class="row" th:each="optionGroup, i:${optionGroups}">
+                                                                <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}">
+                                                                <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}">
                                                                 <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                        <div class="form-check d-flex justify-content-between pr-3" th:each="option, i:${options}" th:if="${option.optionGroupId==optionGroup.id}">
+                                                                        <div class="form-check d-flex justify-content-between pr-3"
+                                                                             th:each="option, i:${options}"
+                                                                             th:if="${option.optionGroupId==optionGroup.id}">
                                                                             <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" th:name="'optionsRadios'+${optionGroup.id}" th:id="'optionsRadio-'+${option.id}" th:value="${option.id}" th:text="${option.name}">
+                                                                                <input type="checkbox" class="form-check-input optionsCheckbox"
+                                                                                       th:name="'optionsCheckbox-'+${optionGroup.id}"
+                                                                                       th:id="'optionsCheckbox-'+${option.id}" th:value="${option.id}"
+                                                                                       th:text="${option.name}"
+                                                                                       onclick="handleOptionCheckboxClick(this)">
                                                                             </label>
-                                                                            <input type="hidden" th:id="'optionName'+${option.id}" name="optionName" th:value="${option.name}">
-                                                                            <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice" th:value="${option.price}">
-                                                                            <span th:text="${option.price}+'원'"></span>
+                                                                            <input type="hidden" th:id="'optionName'+${option.id}" name="optionName"
+                                                                                   th:value="${option.name}">
+                                                                            <input type="hidden" th:id="'optionsPrice'+${option.id}" name="optionPrice"
+                                                                                   th:value="${option.price}">
+                                                                            <span th:text="${#numbers.formatInteger(option.price,0,'COMMA')}+'원'"></span>
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -127,27 +147,12 @@
 <script>
     function saveSelectedOption(menuKey) {
         console.log("menuKey = " + menuKey);
-        const radioButtons = document.querySelectorAll("input[type='radio']:checked");
-        console.log("RadioButtons:" + radioButtons.item(0));
 
         const checkboxButtons = document.querySelectorAll("input[type='checkbox']:checked");
         console.log("CheckboxButtons:" + checkboxButtons.item(0));
 
         let selectedOption;
         const cartOptionDto = [];
-
-        for (const radioButton of radioButtons) {
-            if (radioButton.checked) {
-                selectedOption = radioButton;
-                const optionId = selectedOption.value;
-                const optionName = document.getElementById('optionName' + optionId).value;
-                const optionPrice = document.getElementById('optionsPrice' + optionId).value;
-                console.log("ID:" + optionId);
-                console.log("NAME:" + optionName);
-                console.log("PRICE:" + optionPrice);
-                cartOptionDto.push({ optionId: optionId, optionName: optionName, optionPrice:optionPrice })
-            }
-        }
 
         for (const checkboxButton of checkboxButtons) {
             if (checkboxButton.checked) {
@@ -184,6 +189,45 @@
                 // 오류를 처리합니다.
                 console.error(error);
             });
+    }
+</script>
+<script>
+    document.addEventListener(
+        "DOMContentLoaded", () => {
+            let checkboxes = document.getElementsByClassName('optionsCheckbox');
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].addEventListener('click', function() {
+                    handleOptionCheckboxClick(this);
+                });
+            }
+        }
+    )
+    function getSelectedOptionCheckbox(boxId) {
+        let categoryCheckboxes = document.getElementsByName('optionsCheckbox-'+boxId);
+        let selectedOptions = [];
+
+        for (let i = 0; i < categoryCheckboxes.length; i++) {
+            if (categoryCheckboxes[i].checked) {
+                console.log(categoryCheckboxes[i]);
+                selectedOptions.push(categoryCheckboxes[i]);
+            }
+        }
+        console.log('length: '+selectedOptions.length);
+
+        return selectedOptions;
+    }
+    function handleOptionCheckboxClick(checkbox) {
+        let optionGroupId = checkbox.name.split("-")[1]
+        let min = document.getElementById('optionGroupMin'+optionGroupId).value;
+        let max = document.getElementById('optionGroupMax'+optionGroupId).value;
+        console.log('min :' + min);
+        console.log('max :' + max);
+        const selectedStoreCategories = getSelectedOptionCheckbox(optionGroupId);
+
+        if (selectedStoreCategories.length>max) {
+            checkbox.checked = false;
+            alert(`옵션은 ${max}개 이하만 선택할 수 있습니다.`);
+        }
     }
 </script>
 </body>

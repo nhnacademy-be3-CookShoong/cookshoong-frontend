@@ -3,7 +3,11 @@ package store.cookshoong.www.cookshoongfrontend.review.controller;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +22,7 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewService;
 
 /**
@@ -37,28 +42,48 @@ public class ReviewController {
     /**
      * 회원 리뷰 페이지 진입.
      *
+     * @param model                  the model
+     * @param createReviewRequestDto the create review request dto
+     * @return the my review
      */
     @GetMapping("/my-review")
-    public String getMyReview(Model model) {
+    public String getMyReview(Model model, @PageableDefault Pageable pageable,
+                              CreateReviewRequestDto createReviewRequestDto) {
+
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+        Page<SelectReviewResponseDto> accountReviews =
+            reviewService.selectReviewByAccount(accountIdAware.getAccountId(), pageable);
 
+        model.addAttribute("accountReviews", accountReviews);
+        model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
         return "account/my-review";
     }
 
+    /**
+     * Post create store string.
+     *
+     * @param orderCode              the order code
+     * @param createReviewRequestDto the create review request dto
+     * @param bindingResult          the binding result
+     * @param reviewImages           the review images
+     * @return the string
+     */
     @PostMapping("/review")
-    public String postCreateStore(
+    public String postCreateReview(
         @RequestParam("orderCode") UUID orderCode,
-        @Valid @ModelAttribute("createReviewRequestDto") CreateReviewRequestDto createReviewRequestDto,
-        BindingResult bindingResult, Model model,
+        @ModelAttribute("createReviewRequestDto") @Valid CreateReviewRequestDto createReviewRequestDto,
+        BindingResult bindingResult,
         @RequestPart("reviewImage") List<MultipartFile> reviewImages) {
 
-        //TODO binding 처리
+        if (bindingResult.hasErrors()){
+            throw new ValidationException();
+        }
 
         Long accountId = accountIdAware.getAccountId();
         reviewService.createReview(accountId, orderCode, createReviewRequestDto, reviewImages);
-        return null; //TODO result 값 변경
+        return "redirect:/my-review"; //TODO result 값 변경
     }
 }

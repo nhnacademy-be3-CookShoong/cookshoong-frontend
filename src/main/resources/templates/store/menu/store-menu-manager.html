@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
 <head>
-    <title>Untitled</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="modal fade" id="menuGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -177,14 +177,16 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">영업점 메뉴 관리</h1>
+                            <h1 class="font-weight-bold">메뉴 관리</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">메뉴 그룹 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">메뉴 그룹 관리</h4>
                             <div class="col-12">
                                 <div class="row border-top pt-3 pb-3 justify-content-between"
                                      th:each="menuGroup, i:${menuGroups}">
@@ -220,8 +222,10 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">메뉴 관리</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">메뉴 관리</h4>
                             <div class="col-12 grid-margin">
                                 <div class="row border-top pb-3 pt-3 justify-content-between"
                                      th:each="menu, i:${menus}">

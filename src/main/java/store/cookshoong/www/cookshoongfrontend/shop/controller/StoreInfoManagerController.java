@@ -72,9 +72,9 @@ public class StoreInfoManagerController {
         model.addAttribute("storeInfo", storeInfo);
 
         UpdateStoreManagerRequestDto updateStoreManagerRequestDto =
-            new UpdateStoreManagerRequestDto(storeInfo.getRepresentativeName(), storeInfo.getBankCode(), storeInfo.getBankAccountNumber());
+            new UpdateStoreManagerRequestDto(storeInfo.getRepresentativeName(),
+                storeInfo.getBankCode(), storeInfo.getBankAccountNumber());
         model.addAttribute("updateStoreManagerInfo", updateStoreManagerRequestDto);
-
         UpdateStoreInfoRequestDto updateStoreInfoRequestDto =
             new UpdateStoreInfoRequestDto(storeInfo.getOpeningDate(), storeInfo.getStoreName(), storeInfo.getMainPlace(), storeInfo.getDetailPlace(),
                 storeInfo.getLatitude(), storeInfo.getLongitude(), storeInfo.getPhoneNumber(), storeInfo.getDescription(), storeInfo.getDefaultEarningRate(),

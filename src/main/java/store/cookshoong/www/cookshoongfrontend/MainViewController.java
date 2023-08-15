@@ -211,7 +211,6 @@ public class MainViewController {
         Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
-        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
@@ -219,6 +218,7 @@ public class MainViewController {
         model.addAttribute("accountAddresses", accountAddresses);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
+            List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
         } else {
@@ -271,17 +271,6 @@ public class MainViewController {
     @GetMapping("/images/local")
     public Resource getImage(@RequestParam("imageName") String imageName) throws MalformedURLException {
         return new UrlResource("file:" + imageName);
-    }
-
-    /**
-     * 매장 가맹점 관리 페이지를 맵핑.
-     *
-     * @author papel
-     * @since 2023.07.05
-     */
-    @GetMapping("/store-merchant-manager")
-    public String getMerchantManager() {
-        return "store/info/store-merchant-manager";
     }
 
     /**

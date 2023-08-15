@@ -25,6 +25,7 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCo
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.point.model.response.PointLogResponseDto;
 import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
 
@@ -114,8 +115,15 @@ public class MyPageController {
      */
     @PostMapping("/my-address")
     public String postCreateAccountAddress(
-            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-            BindingResult bindingResult, Model model) {
+        @ModelAttribute("createAccountAddressRequestDto")
+        @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
+        BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("createAccountAddressRequestDto", createAccountAddressRequestDto);
+            return "redirect:/my-address";
+        }
 
         accountAddressService.createAccountAddress(accountIdAware.getAccountId(), createAccountAddressRequestDto);
 
@@ -172,12 +180,13 @@ public class MyPageController {
      * @return my orders
      */
     @GetMapping("/my-orders")
-    public String getMyOrders(Pageable pageable, Model model) {
+    public String getMyOrders(Pageable pageable, Model model, CreateReviewRequestDto createReviewRequestDto) {
         Long accountId = accountIdAware.getAccountId();
         Page<SelectAccountOrderInStatusResponseDto> orders =
                 orderService.selectOwnOrder(accountId, pageable);
 
         model.addAttribute("orders", orders);
+        model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
     }
 

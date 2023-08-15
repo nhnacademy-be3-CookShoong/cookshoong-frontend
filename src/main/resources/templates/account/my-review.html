@@ -10,6 +10,7 @@
 <body layout:fragment="content">
 <header th:replace="fragments :: mypage-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: mypage-site-nav"></nav>
     <div class="main-panel">
@@ -18,14 +19,16 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">나의 리뷰</h1>
+                            <h1 class="font-weight-bold">내 리뷰 관리</h1>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                        <h2 class="store-title">리뷰 남기기</h2>
+                    </div>
                         <div class="card-body">
-                            <h4 class="card-title">리뷰 작성 가능한 주문</h4>
                             <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
                                 <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
                                     <strong style="font-size: 20px;" th:text="'드래곤 스테이크 전문점'"></strong>
@@ -47,15 +50,14 @@
                                             </span>
                                     </div>
                                 </div>
-                                <form class="col-12 p-0" th:action="@{'/review/'}"
+                                <form class="col-12 p-0" th:action="@{/review(orderCode=fbf5d003-185d-404b-8fcd-83a77e1362fa)}"
                                       th:object="${createReviewRequestDto}"
                                       method="post" enctype="multipart/form-data">
 
                                     <div class="p-1 m-3 border-top border-bottom border-left border-right"
                                          id="reviewBox" style="display: none;">
-                                        <input type="hidden" name="orderCode" th:value="'1'">
-                                        <input type="hidden" name="rating" id="rating" th:value="'1.0'">
-                                        <input type="hidden" name="content" id="content" th:value="'맛있게 먹었습니다.'">
+                                        <input type="number" hidden="hidden" name="rating" id="rating" th:field="*{rating}">
+                                        <input type="text" hidden="hidden" name="contents" id="contents" th:field="*{contents}">
 
                                         <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
                                             <strong class="mr-4" style="padding-top: 0.75rem; font-size: 20px;"
@@ -76,11 +78,11 @@
 
                                         <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
                                         <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
-                                            <input type="file" name="menuImage" class="file-upload-default"
-                                                   accept="image/png,image/jpg">
+                                            <input type="file" name="reviewImage" class="file-upload-default"
+                                                   accept="image/png,image/jpg" multiple>
                                             <div class="input-group col-xs-12">
                                                 <input type="text" class="form-control file-upload-info" disabled
-                                                       id="menuImage"
+                                                       id="reviewImage"
                                                        placeholder="사진 리뷰 이미지">
                                                 <span class="input-group-append">
                                             <button class="file-upload-browse btn btn-info"
@@ -89,7 +91,7 @@
                                         </div>
                                         <div class=" pl-3 pr-3 pt-2 pb-1 m-0">
                                             <button class="btn btn-danger font-weight-bold p-2"
-                                                    th:text="'리뷰 등록하기'"
+                                                    th:text="'리뷰 등록하기'" type="submit"
                                                     id="submitButton">
                                             </button>
                                         </div>
@@ -101,8 +103,10 @@
                 </div>
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
+                        <div class="store-card-header">
+                            <h2 class="store-title">내 리뷰</h2>
+                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">내가 작성한 리뷰</h4>
                             <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
                                 <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
                                     <strong style="font-size: 20px;" th:text="'드래곤 스테이크 전문점'"></strong>
@@ -148,8 +152,9 @@
         button.addEventListener('click', () => {
             const rating = (index + 1); // 별점 계산
             document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
-            document.getElementById('rating').value = rating.toFixed(1);
+            document.getElementById('rating').value = rating.toFixed(0);
 
+            console.log(rating);
             // 모든 버튼을 초기 상태로 리셋
             document.querySelectorAll('.star-btn').forEach(btn => {
                 btn.className = "typcn typcn-star-outline p-0 m-1 border-0 star-btn";
@@ -177,7 +182,8 @@
 
     document.querySelector('#submitButton').addEventListener('click', function () {
         let editorContent = editor.getHTML();
-        document.querySelector('#content').value = editorContent;
+        document.querySelector('#contents').value = editorContent;
+        console.log(editorContent);
     });
 </script>
 <footer th:replace="fragments :: site-footer"></footer>
