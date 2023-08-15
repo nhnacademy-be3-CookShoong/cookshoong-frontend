@@ -575,8 +575,7 @@
 
 .most-popular {
     background-color: #ffffff;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 12px;
 }
 
 .most-popular .item {

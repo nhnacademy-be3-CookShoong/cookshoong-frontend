@@ -135,22 +135,30 @@
             <section class="container mt-5 mb-5 bg-white">
 
                 <span class="category-font p-4" style="font-size: 30px;">오늘은 어디서 시킬까?</span>
-                <div class="most-popular">
-                    <ul class="nav nav-tabs col-12 border-0 p-0">
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0">
-                            <a class="category-font nav-link active p-0 border-0 m-0 bg-white" href="#c1"
-                               data-toggle="tab">모두</a>
-                        </li>
-                        <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 align-items-center border-0 p-0"
-                            th:each="category, i : ${categories}">
-                            <a class="category-font nav-link p-0 border-0 m-0 bg-white" th:href="@{'#c'+${i.index + 2}}"
-                               data-toggle="tab" th:text="${category.description}"></a>
-                        </li>
-                    </ul>
-                </div>
 
-                <div class="tab-content w-100 border-0">
-                    <div class="tab-pane fade show active" id="c1">
+                <form class="form-group" th:action="@{/index/search}" method="get">
+                    <input type="hidden" name="keyword" id="selectedCategory" value="">
+                    <div class="most-popular">
+                        <ul class="nav nav-tabs col-12 border-0 p-0">
+                            <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 d-flex align-items-center justify-content-center border-0 p-0">
+                                <button th:class="${keywordText == null} ? 'category-font nav-link p-0 border-0 m-0 bg-white active' : 'category-font nav-link p-0 border-0 m-0 bg-white'"
+                                        data-toggle="tab" th:text="'모두'" onclick="window.location.href='/'">
+                                </button>
+                            </li>
+                            <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 col-xl-1 d-flex align-items-center justify-content-center border-0 p-0"
+                                th:each="category, i : ${categories}">
+                                <button th:class="${category.description == keywordText} ? 'category-font nav-link p-0 border-0 m-0 bg-white active' : 'category-font nav-link p-0 border-0 m-0 bg-white'"
+                                        data-toggle="tab" th:text="${category.description}"
+                                        th:data-keyword="${category.description}"
+                                        th:attr="onclick='document.getElementById(\'selectedCategory\').value = \'' + ${category.description} + '\'; this.form.submit();'">
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+                <div class="w-100 border-0">
+                    <div>
                         <div class="row m-1" id="store-container">
                             <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2" th:each="store, i:${stores}">
                                 <button class="row border-top border-bottom border-left border-right pt-2 m-1 w-100 bg-white shadow-sm"
@@ -169,13 +177,10 @@
                                     </div>
                                     <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                         <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                        <p><i class="typcn typcn-star-full-outline" style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i>
+                                            <span class="pr-1" style="font-size: 0.85rem">4.7</span>
                                             <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                             <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                            <span class="pr-1" style="font-size: 0.85rem"
-                                                  th:text="${store.minimumCookingTime}+''"></span></p>
                                         <p th:text="'최소주문 : '+${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')} + ' 원'"></p>
                                         <p>
                                         <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
@@ -186,51 +191,12 @@
                                     </div>
                                 </button>
                             </div>
-
                         </div>
                         <div class="text-center w-100">
-                            <button th:if="${keywordText}==null" id="load-more" class="btn btn-warning m-4 font-weight-bold" style="color: white; background-color: #ea6b19; width: 400px; border-radius: 10px;"> 더 보기</button>
-                            <button th:if="${keywordText}!=null" id="load-more_keyword" class="btn btn-warning m-4 font-weight-bold" style="color: white;  background-color: #ea6b19; width: 400px; border-radius: 10px;"> 더 보기</button>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" th:id="'c'+${c.index + 2}" th:each="category, c : ${categories}">
-                        <div class="row m-1">
-                            <div class="col-12 col-lg-6 col-xl-6 pl-1 pr-1" th:each="store, i:${stores}"
-                                 th:if="${store.categories.contains(category.categoryCode)}">
-                                <button class="row border-top border-bottom border-left border-right pt-2 m-1 w-100 bg-white shadow-sm"
-                                        th:onclick="'window.location.href=\'/index/store/' + ${store.id} + '\''"
-                                        style="border-radius: 1rem">
-                                    <div class="col-sm-6 col-6 p-1 align-content-start text-left"
-                                         style="max-width: 150px">
-                                        <div class="position-relative">
-                                            <img th:src="${store.savedName}"
-                                                 style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
-                                                 onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
-                                            <img th:src="'/assets/images/notready.png'"
-                                                 th:if="${store.storeStatus == 'CLOSE' || store.storeStatus == 'BREAK_TIME'}"
-                                                 style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                        <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                        <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
-                                                class="pr-1" style="font-size: 0.85rem">4.7</span>
-                                            <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                            <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                            <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                            <span class="pr-1" style="font-size: 0.85rem"
-                                                  th:text="${store.minimumCookingTime}+''"></span></p>
-                                        <p th:text="'최소주문 : ' + ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')} + '원'"></p>
-                                        <p>
-                                        <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
-                                             style="font-size: 0.9rem; width: 100px; border-color: orange">
-                                            <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span
-                                                class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
-                                        </p>
-                                    </div>
-                                </button>
-                            </div>
+                            <button id="load-more" class="btn btn-warning m-4 font-weight-bold"
+                                    style="color: white; background-color: #ea6b19; width: 400px; border-radius: 10px;">
+                                더 보기
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -251,13 +217,11 @@
                                 </div>
                                 <div class="col-12 p-3 text-left">
                                     <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                    <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                    <p><i class="typcn typcn-star-full-outline"
+                                          style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i> <span
                                             class="pr-1" style="font-size: 0.85rem">4.7</span>
                                         <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                         <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                        <span class="pr-1" style="font-size: 0.85rem"
-                                              th:text="${store.minimumCookingTime}+''"></span></p>
                                     <p th:text="'최소주문 : ' + ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')}  + '원'"></p>
                                     <p>
                                     <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
@@ -280,13 +244,11 @@
                                 </div>
                                 <div class="col-12 p-3 text-left">
                                     <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                    <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                    <p><i class="typcn typcn-star-full-outline"
+                                          style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i> <span
                                             class="pr-1" style="font-size: 0.85rem">4.7</span>
                                         <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                         <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                        <span class="pr-1" style="font-size: 0.85rem"
-                                              th:text="${store.minimumCookingTime}+''"></span></p>
                                     <p th:text="'최소주문 : ' +${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')} + '원'"></p>
                                     <p>
                                     <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
@@ -316,13 +278,11 @@
                                 </div>
                                 <div class="col-12 p-3 text-left">
                                     <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                    <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                    <p><i class="typcn typcn-star-full-outline"
+                                          style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i> <span
                                             class="pr-1" style="font-size: 0.85rem">4.7</span>
                                         <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                         <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                        <span class="pr-1" style="font-size: 0.85rem"
-                                              th:text="${store.minimumCookingTime}+''"></span></p>
                                     <p th:text="'최소주문 : ' + ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')} + '원'"></p>
                                     <p>
                                     <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
@@ -345,13 +305,11 @@
                                 </div>
                                 <div class="col-12 p-3 text-left">
                                     <h4 class="font-weight-bold" th:text="${store.name}"></h4>
-                                    <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span
+                                    <p><i class="typcn typcn-star-full-outline"
+                                          style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i> <span
                                             class="pr-1" style="font-size: 0.85rem">4.7</span>
                                         <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                         <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                        <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                        <span class="pr-1" style="font-size: 0.85rem"
-                                              th:text="${store.minimumCookingTime}+''"></span></p>
                                     <p th:text="'최소주문 : ' + ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')} + '원'"></p>
                                     <p>
                                     <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
@@ -371,81 +329,33 @@
         </div>
     </div>
 </div>
-<script th:inline="javascript">
-    $(document).ready(function () {
-        let addressId = [[${addressId}]];
-        let page = 2;
-        let size = 10;
-        function checkButtonState() {
-            $.get("/index/page?addressId=" + addressId + "&page=" + (page - 1) + "&size=" + size, function (data) {
-                if (data.last) {
-                    $("#load-more").hide();
-                }
-            });
-        }
-        checkButtonState();
-        $("#load-more").click(function () {
-            $.get("/index/page?addressId=" + addressId + "&page=" + page + "&size=" + size, function (data) {
-                data.content.forEach(function (store) {
-                    let storeHtml = `
-                    <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2">
-                        <button class="row border-top border-bottom border-left border-right pt-2 m-1 w-100 bg-white shadow-sm"
-                                onclick="window.location.href='/index/store/' + ${store.id}"
-                                style="border-radius: 1rem">
-                            <div class="col-sm-6 col-6 p-1 align-content-start text-left" style="max-width: 150px">
-                                <div class="position-relative">
-                                    <img src="${store.savedName}"
-                                         style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; position: absolute;"
-                                         onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
-                                    <img src="/assets/images/notready.png"
-                                         ${store.storeStatus === 'BREAK_TIME' || store.storeStatus === 'CLOSE' ? 'style="object-fit: cover; width: 130px; height: 110px; margin-left: 4px; opacity: 0.8; position: absolute;"' : 'style="display:none;"'}>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-6 p-1" style="text-align: start">
-                                <h4 class="font-weight-bold">${store.name}</h4>
-                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span class="pr-1" style="font-size: 0.85rem">4.7</span>
-                                    <i class="mdi mdi-message icon-sm" style="color: black"></i>
-                                    <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                    <span class="pr-1" style="font-size: 0.85rem">${store.minimumCookingTime}</span></p>
-                                <p>최소주문 : ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')}원</p>
-                                <p>
-                                <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
-                                     style="font-size: 0.9rem; width: 100px; border-color: orange">
-                                    <i class="mdi mdi-checkbox-marked-circle icon-sm" style="color: orange"></i><span class="category-font" style="font-size: 1rem">쿡슝 이벤트</span></div>
-                                </p>
-                            </div>
-                        </button>
-                    </div>`;
-                    $("#store-container").append(storeHtml);
-                });
-                if (!data.last) {
-                    page++;
-                } else {
-                    $("#load-more").hide();
-                }
-            });
-        });
-    });
+<script>
 </script>
 <script th:inline="javascript">
+
     $(document).ready(function () {
         let addressId = [[${addressId}]];
         let keywordText = [[${keywordText}]];
-        let page = 2;
+        let page = 1;
         let size = 10;
-        function checkButtonState() {
-            $.get("/index/search/page?keyword=" + keywordText + "&addressId=" + addressId + "&page=" + (page - 1) + "&size=" + size, function (data) {
-                if (data.last) {
-                    $("#load-more_keyword").hide();
-                }
+        let nextPageContentByDistance = [];
+        let nextPageContentByKeyword = [];
+
+        function loadPageByDistance(p, callback) {
+            $.get("/search/page/distance?addressId=" + addressId + "&page=" + p + "&size=" + size, function (data) {
+                if (callback) callback(data);
             });
         }
-        checkButtonState();
-        $("#load-more_keyword").click(function () {
-            $.get("/index/search/page?keyword=" + keywordText +"&addressId=" + addressId + "&page=" + page + "&size=" + size, function (data) {
-                data.content.forEach(function (store) {
-                    let storeHtml = `
+
+        function loadPageByKeyword(p, callback) {
+            $.get("/search/page/keyword?keyword=" + keywordText + "&addressId=" + addressId + "&page=" + p + "&size=" + size, function (data) {
+                if (callback) callback(data);
+            });
+        }
+
+        function appendStores(data) {
+            data.content.forEach(function (store) {
+                let storeHtml = `
                     <div class="col-12 col-lg-6 col-xl-6 pl-2 pr-2">
                         <button class="row border-top border-bottom border-left border-right pt-2 m-1 w-100 bg-white shadow-sm"
                                 onclick="window.location.href='/index/store/' + ${store.id}"
@@ -461,12 +371,11 @@
                             </div>
                             <div class="col-sm-6 col-6 p-1" style="text-align: start">
                                 <h4 class="font-weight-bold">${store.name}</h4>
-                                <p><i class="mdi mdi-heart icon-sm" style="color: red"></i> <span class="pr-1" style="font-size: 0.85rem">4.7</span>
+                                <p><i class="typcn typcn-star-full-outline" style="color: darkorange; font-size: 22px; padding-bottom: 1px;"></i>
+                                 <span class="pr-1" style="font-size: 0.85rem">4.7</span>
                                     <i class="mdi mdi-message icon-sm" style="color: black"></i>
                                     <span class="pr-1" style="font-size: 0.85rem">210</span>
-                                    <i class="mdi mdi mdi-timer icon-sm" style="color: grey"></i>
-                                    <span class="pr-1" style="font-size: 0.85rem">${store.minimumCookingTime}</span></p>
-                                <p>최소주문 : ${#numbers.formatInteger(store.minimumOrderPrice,0,'COMMA')}원</p>
+                                <p>최소주문 : ${store.minimumOrderPrice.toLocaleString()} 원</p>
                                 <p>
                                 <div class="pt-1 pb-1 pl-1 pr-2 border-top border-bottom border-left border-right bg-white border-warning"
                                      style="font-size: 0.9rem; width: 100px; border-color: orange">
@@ -475,17 +384,71 @@
                             </div>
                         </button>
                     </div>`;
-                    $("#store-container").append(storeHtml);
-                });
-                if (!data.last) {
-                    page++;
-                } else {
-                    $("#load-more_keyword").hide();
-                }
+                $("#store-container").append(storeHtml);
             });
-        });
+        }
+
+        function checkButtonState(nextData) {
+            if (nextData.content.length === 0) {
+                $("#load-more").hide();
+            }
+        }
+
+        if (keywordText == null || keywordText === '') {
+            loadPageByDistance(page, function (data) {
+                if(page !== 1) {
+                    appendStores(data);
+                }
+                page++;
+
+                loadPageByDistance(page, function (nextData) {
+                    nextPageContentByDistance = nextData.content;
+                    checkButtonState(nextData);
+                });
+            });
+
+            $("#load-more").click(function () {
+                let nextData = {content: nextPageContentByDistance};
+                appendStores(nextData);
+
+                nextPageContentByDistance = [];
+
+                page++;
+                loadPageByDistance(page, function (nextData) {
+                    nextPageContentByDistance = nextData.content;
+                    checkButtonState(nextData);
+                });
+            });
+        } else {
+
+            loadPageByKeyword(page, function (data) {
+                if(page !== 1) {
+                    appendStores(data);
+                }
+                page++;
+
+                loadPageByKeyword(page, function (nextData) {
+                    nextPageContentByKeyword = nextData.content;
+                    checkButtonState(nextData);
+                });
+            });
+
+            $("#load-more").click(function () {
+                let nextData = {content: nextPageContentByKeyword};
+                appendStores(nextData);
+
+                nextPageContentByKeyword = [];
+
+                page++;
+                loadPageByKeyword(page, function (nextData) {
+                    nextPageContentByKeyword = nextData.content;
+                    checkButtonState(nextData);
+                });
+            });
+        }
     });
 </script>
+
 <script>
     $('.post-wrapper').slick({
         slidesToShow: 5,
