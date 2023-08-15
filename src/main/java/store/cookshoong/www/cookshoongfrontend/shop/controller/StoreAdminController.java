@@ -288,6 +288,19 @@ public class StoreAdminController {
     }
 
     /**
+     * 쿠폰 정책 숨김 엔드포인트.
+     *
+     * @param policyId   the policy id
+     * @param merchantId the store id
+     * @return 쿠폰 view 화면
+     */
+    @PatchMapping("/coupons/policies/{policyId}")
+    public String patchHideCouponPolicy(@PathVariable Long policyId, @RequestParam(required = false) Long merchantId) {
+        couponManageService.updateHideCouponPolicy(policyId);
+        return redirectAdminCouponIndex(merchantId);
+    }
+
+    /**
      * 쿠폰 발행 엔드포인트.
      *
      * @param createIssueCouponRequestDto 쿠폰 발행 dto
