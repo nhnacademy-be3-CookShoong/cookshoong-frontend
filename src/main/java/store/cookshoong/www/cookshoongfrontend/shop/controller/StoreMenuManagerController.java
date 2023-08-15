@@ -33,7 +33,6 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 @Controller
 @RequiredArgsConstructor
 public class StoreMenuManagerController {
-
     private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
