@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.auth.repository;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,9 @@ public interface CookieManager {
      * @return the optional
      */
     default Optional<Cookie> extractCookieByName(HttpServletRequest request, String name) {
+        if (Objects.isNull(request.getCookies())) {
+            return Optional.empty();
+        }
         return Arrays.stream(request.getCookies())
             .filter(cookie -> cookie.getName().equals(name))
             .findAny();
