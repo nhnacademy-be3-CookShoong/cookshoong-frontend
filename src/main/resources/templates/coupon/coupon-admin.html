@@ -206,6 +206,11 @@
                                                 data-toggle="modal"
                                                 th:data-target="'#couponIssue' + ${policy.id}">발행
                                         </button>
+                                        <button class="btn btn-warning mb-1" style="width: 85px"
+                                                type="button"
+                                                data-toggle="modal"
+                                                th:data-target="'#policyHide' + ${policy.id}">숨김
+                                        </button>
                                         <button class="btn btn-primary mb-1" style="width: 85px"
                                                 type="button"
                                                 data-toggle="modal"
@@ -231,6 +236,28 @@
                                                                     </div>
                                                                     <button class="btn btn-info mr-2" type="submit">발행</button>
                                                                     <button class="btn btn-light" data-dismiss="modal">취소</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" th:id="'policyHide' + ${policy.id}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form class="col-12 p-0"
+                                                          th:action="@{'/admin/management/coupons/policies/' + ${policy.id} + ${merchantParam}}"
+                                                          th:method="patch">
+                                                        <div class="col-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">해당 쿠폰 정책을 숨기겠습니까?</h4>
+                                                                    <h5>쿠폰 정책 목록에서 더 이상 보이지 않게 됩니다.</h5>
+                                                                    <button class="btn btn-info mr-2" type="submit">예</button>
+                                                                    <button class="btn btn-light" data-dismiss="modal">아니오</button>
                                                                 </div>
                                                             </div>
                                                         </div>
