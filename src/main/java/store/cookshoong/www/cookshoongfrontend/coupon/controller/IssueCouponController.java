@@ -38,4 +38,21 @@ public class IssueCouponController {
         }
         return "ok";
     }
+
+    /**
+     * 이벤트 쿠폰 발급을 위한 엔드포인트.
+     *
+     * @param createProvideCouponRequestDto the create provide coupon request dto
+     * @return the string
+     */
+    @PostMapping("/event")
+    public String postProvideEventCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        try {
+            createProvideCouponRequestDto.setAccountId(accountIdAware.getAccountId());
+            couponManageService.createProvideEventCoupon(createProvideCouponRequestDto);
+        } catch (HttpClientErrorException e) {
+            return e.getResponseBodyAsString();
+        }
+        return "ok";
+    }
 }
