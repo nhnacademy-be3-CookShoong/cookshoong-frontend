@@ -138,6 +138,15 @@ public class CouponManageService {
     }
 
     /**
+     * 쿠폰 정책 숨김.
+     *
+     * @param policyId the policy id
+     */
+    public void updateHideCouponPolicy(Long policyId) {
+        couponManageAdapter.changeHideCouponPolicy(policyId);
+    }
+
+    /**
      * 쿠폰 발행.
      *
      * @param createIssueCouponRequestDto the create issue coupon request dto
