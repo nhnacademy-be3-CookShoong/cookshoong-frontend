@@ -54,7 +54,7 @@ public class WebSecurityConfig {
     private final ForbiddenAccessHandler forbiddenAccessHandler;
     private final DormancyAccountFilter dormancyAccountFilter = new DormancyAccountFilter();
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
-        "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2",
+        "/sign-up-choice", "/", "/search/page/distance", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2",
         "/logout", "/proxy/**", "/error*/**"};
 
     /**
