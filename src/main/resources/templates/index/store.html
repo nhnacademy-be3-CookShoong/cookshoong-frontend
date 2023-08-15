@@ -42,8 +42,7 @@
                         </p>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
                             <strong>배달 비용 : </strong>
-                            <strong th:text="${#numbers.formatInteger(store.totalDeliveryCost,0,'COMMA')}+ '원'"></strong>
-                            <span th:text="' (기본 배달 비용 : ' + ${#numbers.formatInteger(store.deliveryCost,0,'COMMA')} + '원)'"></span>
+                            <strong th:text="${#numbers.formatInteger(store.deliveryCost,0,'COMMA')}+ '원'"></strong>
                         </p>
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
                             <strong>가게 위치 : </strong>
@@ -89,17 +88,27 @@
                                                 <strong style="font-size: 15px;" th:text="${review.nickname}"></strong>
                                             </div>
 
-                                            <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
-                                                <strong class="pt-1 mr-2" style="font-size: 20px;"
-                                                        th:text="${review.selectReviewResponseDto.rating + '.0'}"></strong>
-                                                <span th:class="${review.selectReviewResponseDto.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
-                                                <span th:class="${review.selectReviewResponseDto.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
-                                                <span th:class="${review.selectReviewResponseDto.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
-                                                <span th:class="${review.selectReviewResponseDto.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
-                                                <span th:class="${review.selectReviewResponseDto.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
+                                            <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                                <span th:text="${#temporals.format(review.selectReviewResponseDto.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                                      style="color: grey"></span>
                                             </div>
 
-                                            <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                            <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
+                                                <strong class="pt-1 mr-2" style="font-size: 20px;"
+                                                        th:text="${review.selectReviewResponseDto.rating + '.0'}"></strong>
+                                                <span th:class="${review.selectReviewResponseDto.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                      style="color: #ea6b19; font-size: 25px;"></span>
+                                                <span th:class="${review.selectReviewResponseDto.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                      style="color: #ea6b19; font-size: 25px;"></span>
+                                                <span th:class="${review.selectReviewResponseDto.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                      style="color: #ea6b19; font-size: 25px;"></span>
+                                                <span th:class="${review.selectReviewResponseDto.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                      style="color: #ea6b19; font-size: 25px;"></span>
+                                                <span th:class="${review.selectReviewResponseDto.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                      style="color: #ea6b19; font-size: 25px;"></span>
+                                            </div>
+
+                                            <div class="pl-3 pr-3 pt-1 pb-1 m-0">
                                                 <span th:utext="${review.selectReviewResponseDto.contents}"></span>
                                             </div>
 
@@ -269,7 +278,6 @@
                                                 <div class="pt-2 text-left">
                                                     <p class="font-weight-bold" style="font-size: 1.3rem"
                                                        th:text="${#numbers.formatInteger(menu.price,0,'COMMA')} + ' 원'"></p>
-
                                                 </div>
                                                 <div class="pt-1 text-left" style="min-width: 280px;">
                                                     <p th:utext="${menu.description}"></p>

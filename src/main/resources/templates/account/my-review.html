@@ -32,8 +32,12 @@
                             <div class="card pt-3 pb-3 pl-1 pr-1 mb-2" th:each="review, i:${accountReviews}">
                                 <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
                                     <strong style="font-size: 20px;" th:text="${review.getStoreName()}"></strong>
-                                    <span th:text="${review.getWrittenAt()}" style="color: grey"></span>
                                 </div>
+
+                                <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                    <span th:text="${#temporals.format(review.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}" style="color: grey"></span>
+                                </div>
+
                                 <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
                                     <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="${review.getRating() + '.0'}"></strong>
                                     <span th:class="${review.getRating() >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'" style="color: #ea6b19; font-size: 25px;"></span>
