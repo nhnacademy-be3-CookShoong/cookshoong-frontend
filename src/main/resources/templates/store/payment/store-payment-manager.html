@@ -12,9 +12,17 @@
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
-<div class="modal fade" id="paymentRefund">
-    <div class="modal-dialog">
+
+<div class="modal fade" id="paymentRefund" tabindex="-1"
+        role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #161d3d !important;">
+                <h5 class="modal-title" th:text="환불"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
 
                 <div class="card rounded">
@@ -129,7 +137,7 @@
                                             <span th:text="${payment.orderCode}"></span>
                                         </td>
                                         <td class="pl-0 pr-0" style="padding: 0.8rem">
-                                            <span th:text="${payment.orderStatusCode}"></span>
+                                            <span th:text="${payment.orderStatusDescription}"></span>
                                         </td>
                                         <td class="pl-0 pr-0" style="padding: 0.8rem">
                                             <span th:text="${payment.chargedAmount}"></span>
@@ -159,26 +167,26 @@
                             th:with="start=${(orderCompletePage.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
                             last=(${start + (buttonNumber - 1) < orderCompletePage.totalPages ? start + (buttonNumber - 1) : orderCompletePage.totalPages})">
                             <li>
-                                <a th:href="@{/stores/${storeId}/store-payment-manager(page=1, size=${orderCompletePage.size})}" aria-label="First">
+                                <a th:href="@{|/stores/${storeId}/store-payment-manager|(page=1, size=${orderCompletePage.size})}" aria-label="First">
                                     <span aria-hidden="true">First</span>
                                 </a>
                             </li>
                             <li th:class="${orderCompletePage.first} ? 'disabled'">
-                                <a th:href="${orderCompletePage.first} ? '#' :@{/stores/${storeId}/store-payment-manager(page=${banks.number}, size=${banks.size})}"
+                                <a th:href="${orderCompletePage.first} ? '#' :@{|/stores/${storeId}/store-payment-manager|(page=${banks.number}, size=${banks.size})}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
                             </li>
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == orderCompletePage.number + 1} ? 'active'">
-                                <a th:text="${page}" th:href="@{/stores/${storeId}/store-payment-manager(page=${page}, size=${orderCompletePage.size})}"></a>
+                                <a th:text="${page}" th:href="@{|/stores/${storeId}/store-payment-manager|(page=${page}, size=${orderCompletePage.size})}"></a>
                             </li>
                             <li th:class="${orderCompletePage.last} ? 'disabled'">
-                                <a th:href="${orderCompletePage.last} ? '#': @{/stores/${storeId}/store-payment-manager(page=${banks.number + 2}, size=${banks.size})}">
+                                <a th:href="${orderCompletePage.last} ? '#': @{|/stores/${storeId}/store-payment-manager|(page=${banks.number + 2}, size=${banks.size})}">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/stores/${storeId}/store-payment-manager(page=${orderCompletePage.totalPages}, size=${orderCompletePage.size})}" aria-label="Last">
+                                <a th:href="@{|/stores/${storeId}/store-payment-manager|(page=${orderCompletePage.totalPages}, size=${orderCompletePage.size})}" aria-label="Last">
                                     <span aria-hidden="true">Last</span>
                                 </a>
                             </li>

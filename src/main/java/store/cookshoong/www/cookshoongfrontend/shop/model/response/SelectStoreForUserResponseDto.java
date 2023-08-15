@@ -3,7 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.shop.model.response;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
-import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableStoreCouponPolicyResponseDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableCouponPolicyResponseDto;
 
 /**
  * 매장 조회 Dto.
@@ -27,7 +27,7 @@ public class SelectStoreForUserResponseDto {
     private String locationType;
     private String domainName;
     private String savedName;
-    private List<SelectProvableStoreCouponPolicyResponseDto> provableCouponPolicies;
+    private List<SelectProvableCouponPolicyResponseDto> provableCouponPolicies;
     private String storeStatus;
     private Integer distance;
     private Integer totalDeliveryCost;

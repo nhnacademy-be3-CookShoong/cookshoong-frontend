@@ -22,12 +22,12 @@ import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAdd
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
-import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponService;
+import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
-import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.point.model.response.PointLogResponseDto;
 import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 
 /**
  * 마이페이지 컨트롤러.
@@ -42,7 +42,7 @@ public class MyPageController {
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
     private final OrderService orderService;
-    private final CouponService couponService;
+    private final CouponManageService couponManageService;
     private final PointService pointService;
 
     /**
@@ -55,10 +55,8 @@ public class MyPageController {
     @GetMapping("/my-page")
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
 
-        List<AccountAddressResponseDto> accountAddresses =
-                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+        addressListHeader(model);
 
-        model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
         return "account/my-page";
@@ -89,18 +87,16 @@ public class MyPageController {
      */
     @GetMapping("/my-address")
     public String getMyAddress(
-            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-            Model model) {
+        @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
+        Model model) {
 
         AddressResponseDto address =
-                accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
+            accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
 
-        List<AccountAddressResponseDto> accountAddresses =
-                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+        addressListHeader(model);
 
         model.addAttribute("latitude", address.getLatitude());
         model.addAttribute("longitude", address.getLongitude());
-        model.addAttribute("accountAddresses", accountAddresses);
 
         return "account/my-address";
     }
@@ -183,11 +179,20 @@ public class MyPageController {
     public String getMyOrders(Pageable pageable, Model model, CreateReviewRequestDto createReviewRequestDto) {
         Long accountId = accountIdAware.getAccountId();
         Page<SelectAccountOrderInStatusResponseDto> orders =
-                orderService.selectOwnOrder(accountId, pageable);
+            orderService.selectOwnOrder(accountId, pageable);
+
+        addressListHeader(model);
 
         model.addAttribute("orders", orders);
         model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
+    }
+
+    private void addressListHeader(Model model) {
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 
     /**
@@ -200,7 +205,7 @@ public class MyPageController {
     @GetMapping("/my-coupons")
     public String getMyCoupons(Pageable pageable, Model model) {
         Long accountId = accountIdAware.getAccountId();
-        Page<SelectOwnCouponResponseDto> coupons = couponService.selectOwnCoupons(accountId, pageable);
+        Page<SelectOwnCouponResponseDto> coupons = couponManageService.selectOwnCoupons(accountId, pageable);
 
         model.addAttribute("coupons", coupons);
         return "account/my-coupons";
