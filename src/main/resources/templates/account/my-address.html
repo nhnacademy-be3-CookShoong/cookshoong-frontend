@@ -16,9 +16,15 @@
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
 
-<div class="modal fade" id="addressAdd">
-    <div class="modal-dialog">
+<div class="modal fade" id="addressAdd" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title" th:text="주소"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{'/my-address'}"
                       th:object="${createAccountAddressRequestDto}"
@@ -28,8 +34,8 @@
                             <div class="card-body">
                                 <h4 class="card-title address"><span>신규 주소 등록</span><button
                                         class="btn btn-inverse-info" style="margin-left: 13rem; font-size: 0.9rem"
-                                        type="button" onclick="execDaumPostcode()">주소검색</button></h4>
-
+                                        type="button" onclick="execDaumPostcode()">주소검색</button>
+                                </h4>
                                 <div class="form-group">
                                     <label>별칭</label>
                                     <input class="form-control" type="text" id="alias" name="alias"
