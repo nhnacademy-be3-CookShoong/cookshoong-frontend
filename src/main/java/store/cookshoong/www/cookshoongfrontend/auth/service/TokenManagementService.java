@@ -1,9 +1,11 @@
 package store.cookshoong.www.cookshoongfrontend.auth.service;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
+import store.cookshoong.www.cookshoongfrontend.auth.exception.RefreshTokenExpiredException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
@@ -46,6 +48,9 @@ public class TokenManagementService {
      */
     public AuthenticationResponseDto reissueToken() {
         RefreshToken refreshToken = getRefreshToken();
+        if (Objects.isNull(refreshToken)) {
+            throw new RefreshTokenExpiredException();
+        }
         return sendRefreshTokenForRenewal(refreshToken);
     }
 
