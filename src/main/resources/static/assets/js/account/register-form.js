@@ -1,9 +1,7 @@
-'use strict'
-document.addEventListener("DOMContentLoaded", () => {
-    const now_utc = Date.now()
-    const timeOff = new Date().getTimezoneOffset() * 60000;
-    const today = new Date(now_utc - timeOff).toISOString().split("T")[0];
-    document.getElementById("birthday").setAttribute("max", today);
+'use strict';
+setup();
+function setup() {
+    setCriterionDay();
 
     const signUpBtn = document.getElementById("sign-up-btn");
     const loginIdInput = document.getElementById("loginId");
@@ -31,14 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
             signUpBtn.disabled = !validateAll();
         });
     }
-})
-
+}
 function changeStateProperly(input, signUpBtn) {
     const passwordInput = document.getElementById("password");
     const passwordCheckInput = document.getElementById("password-check");
     const $isSame = document.getElementById("password")
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-    if (passwordInput.value !== passwordCheckInput.value) {
+    if (passwordInput.value !== passwordCheckInput.value || !regex.test(input.value)) {
         input.style.borderColor = 'red';
         $isSame.dataset.checked = 'false';
     } else {
@@ -48,9 +46,6 @@ function changeStateProperly(input, signUpBtn) {
         input.style.borderColor = '#d3f2d4';
     }
 }
-
-
-
 
 function checkExists() {
     const signUpBtn = document.getElementById("sign-up-btn");
@@ -92,7 +87,6 @@ function hasValueAllElements() {
     return true;
 }
 
-
 function getAllElements() {
     return [
         document.getElementById("loginId"),
@@ -125,4 +119,15 @@ function validateAll() {
     const duplicateCheck = document.getElementById('loginId').dataset.checked;
     const passwordCheck = document.getElementById('password').dataset.checked;
     return hasValueAllElements() && duplicateCheck && passwordCheck;
+}
+
+function setCriterionDay() {
+    const criterionDay = (function (minimumAge = 14) {
+        const now = new Date()
+        now.setFullYear(now.getFullYear() - minimumAge);
+        const now_utc = now.getTime();
+        const timeOff = new Date().getTimezoneOffset() * 60000;
+        return new Date(now_utc - timeOff).toISOString().split("T")[0];
+    });
+    document.getElementById("birthday").setAttribute("max", criterionDay(15));
 }

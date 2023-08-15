@@ -2,7 +2,7 @@ function makeNumberOnly(elementId) {
     replace(elementId, /[^0-9]/g);
 }
 function makeLetterOnly(elementId) {
-    replace(elementId, /[^가-힇a-zA-Z]/g);
+    replace(elementId, /[^ㄱ-ㅎ가-힇a-zA-Z]/g);
 }
 
 function replace(element, pattern) {

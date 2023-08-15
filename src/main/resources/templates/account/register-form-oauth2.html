@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="/assets/css/validation.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png"/>
 
-    <script src="/assets/js/form-validation.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
-    <script src="/assets/js/account/oauth-register-form.js"></script>
+    <script defer src="/assets/js/account/oauth-register-form.js"></script>
 </head>
 
 <body>
@@ -67,7 +66,7 @@
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="phoneNumber">* 주문현황을 알려드리기 위해 필요해요</label>
-                                    <input type="number" class="form-control form-control-lg" id="phoneNumber"
+                                    <input type="text" class="form-control form-control-lg oauth-info-element" id="phoneNumber"
                                            name="phoneNumber" th:field="*{phoneNumber}" th:value="*{phoneNumber}"
                                            minlength="11" maxlength="11" pattern="^010[0-9]{8}$"
                                            placeholder="전화번호 ('-' 제외)" oninput="makeNumberOnly('phoneNumber')" required>
@@ -78,7 +77,7 @@
                             <div class="form-group">
                                 <label for="mainPlace">* 주변 매장을 검색하기 위해 필요해요</label>
                                 <div class="flex-container">
-                                    <input type="text" class="form-control form-control-lg flex-1"
+                                    <input type="text" class="form-control form-control-lg flex-1 oauth-info-element"
                                            id="mainPlace" name="createAccountAddressRequestDto.mainPlace"
                                            th:field="*{createAccountAddressRequestDto.mainPlace}"
                                            th:value="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소"
@@ -92,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control form-control-lg" type="text" id="detailPlace"
+                                <input class="form-control form-control-lg oauth-info-element" type="text" id="detailPlace"
                                        name="createAccountAddressRequestDto.detailPlace"
                                        th:field="*{createAccountAddressRequestDto.detailPlace}"
                                        th:value="*{createAccountAddressRequestDto.detailPlace}" placeholder="서브 주소"
@@ -102,7 +101,7 @@
                                    th:errors="*{createAccountAddressRequestDto.detailPlace}"></p>
                             </div>
                             <div class="form-group">
-                                <input class="form-control form-control-lg" type="text" id="alias"
+                                <input class="form-control form-control-lg oauth-info-element" type="text" id="alias"
                                        name="createAccountAddressRequestDto.alias"
                                        th:field="*{createAccountAddressRequestDto.alias}"
                                        th:value="*{createAccountAddressRequestDto.alias}" placeholder="별칭" required>
@@ -114,16 +113,9 @@
                                    th:field="*{createAccountAddressRequestDto.latitude}">
                             <input type="hidden" id="longitude" name="createAccountAddressRequestDto.longitude"
                                    th:field="*{createAccountAddressRequestDto.longitude}">
-                            <div class="mb-4">
-                                <div class="form-check form-check-warning">
-                                    <label class="form-check-label text-muted">
-                                        <input type="checkbox" class="form-check-input">
-                                        I agree to all Terms & Conditions
-                                    </label>
-                                </div>
-                            </div>
                             <div class="mt-3">
-                                <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-up-btn"
+                                <button disabled class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn sign-up-btn"
+                                        id="sign-up-btn"
                                         type="submit">가입 완료
                                 </button>
                             </div>
@@ -140,7 +132,6 @@
 <script src="/assets/js/template.js"></script>
 <script src="/assets/js/settings.js"></script>
 <script src="/assets/js/todolist.js"></script>
-<script src="/assets/js/account/account.js"></script>
 <script src="/assets/js/account/validation.js"></script>
 <script>
     const geocoder = new daum.maps.services.Geocoder();
