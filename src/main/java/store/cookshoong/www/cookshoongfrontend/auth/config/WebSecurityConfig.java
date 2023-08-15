@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
+import store.cookshoong.www.cookshoongfrontend.auth.hanlder.ForbiddenAccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginFailureHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginSuccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.OAuth2AccountNotFoundHandler;
@@ -50,6 +51,7 @@ public class WebSecurityConfig {
     private final ClientRegistrationRepository clientRegistrationRepository;
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final OAuth2AuthorizationRequestResolver authorizationRequestResolver;
+    private final ForbiddenAccessHandler forbiddenAccessHandler;
     private final DormancyAccountFilter dormancyAccountFilter = new DormancyAccountFilter();
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
         "/sign-up-choice", "/", "/config", "/fragments", "/fragments-admin", "/images/**", "/sign-up-oauth2",
@@ -99,6 +101,9 @@ public class WebSecurityConfig {
         http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
         http.csrf();
+
+        http.exceptionHandling()
+            .accessDeniedHandler(forbiddenAccessHandler);
 
         http.httpBasic()
             .disable();

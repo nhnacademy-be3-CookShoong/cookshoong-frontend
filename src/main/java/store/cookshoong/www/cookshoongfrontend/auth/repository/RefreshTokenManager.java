@@ -1,8 +1,10 @@
 package store.cookshoong.www.cookshoongfrontend.auth.repository;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Component;
+import store.cookshoong.www.cookshoongfrontend.auth.exception.RefreshTokenExpiredException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 
 import javax.servlet.http.Cookie;
@@ -46,7 +48,11 @@ public class RefreshTokenManager implements CookieManager {
      * @return the optional
      */
     public RefreshToken convertRefreshToken(HttpServletRequest request) {
-        return RefreshToken.createRefreshToken(extractRefreshToken(request));
+        String rawRefreshToken = extractRefreshToken(request);
+        if (Objects.isNull(rawRefreshToken)) {
+            throw new RefreshTokenExpiredException();
+        }
+        return RefreshToken.createRefreshToken(rawRefreshToken);
     }
 
     /**
