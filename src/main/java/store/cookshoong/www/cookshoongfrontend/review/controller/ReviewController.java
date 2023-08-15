@@ -1,7 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.review.controller;
 
 import java.util.List;
-import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
@@ -65,7 +63,6 @@ public class ReviewController {
     /**
      * Post create store string.
      *
-     * @param orderCode              the order code
      * @param createReviewRequestDto the create review request dto
      * @param bindingResult          the binding result
      * @param reviewImages           the review images
@@ -73,8 +70,7 @@ public class ReviewController {
      */
     @PostMapping("/review")
     public String postCreateReview(
-        @RequestParam("orderCode") UUID orderCode,
-        @ModelAttribute("createReviewRequestDto") @Valid CreateReviewRequestDto createReviewRequestDto,
+        @Valid @ModelAttribute("createReviewRequestDto") CreateReviewRequestDto createReviewRequestDto,
         BindingResult bindingResult,
         @RequestPart("reviewImage") List<MultipartFile> reviewImages) {
 
@@ -83,7 +79,7 @@ public class ReviewController {
         }
 
         Long accountId = accountIdAware.getAccountId();
-        reviewService.createReview(accountId, orderCode, createReviewRequestDto, reviewImages);
-        return "redirect:/my-review"; //TODO result 값 변경
+        reviewService.createReview(accountId, createReviewRequestDto, reviewImages);
+        return "redirect:/order";
     }
 }

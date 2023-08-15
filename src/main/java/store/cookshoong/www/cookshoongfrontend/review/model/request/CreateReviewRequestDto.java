@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.review.model.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +16,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateReviewRequestDto {
     @NotBlank
-    private String contents;
+    private String orderCode;
+    @NotNull
     private Integer rating;
+    @NotBlank
+    private String contents;
 }

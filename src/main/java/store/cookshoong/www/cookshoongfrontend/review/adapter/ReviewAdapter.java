@@ -3,12 +3,9 @@ package store.cookshoong.www.cookshoongfrontend.review.adapter;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.net.URI;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
-import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 
 /**
@@ -35,7 +31,6 @@ public class ReviewAdapter {
     private final ApiProperties apiProperties;
 
     public ResponseEntity<Void> executeCreateReview(Long accountId,
-                                                     UUID orderCode,
                                                      MultiValueMap<String, Object> mapRequest) {
 
         URI uri = UriComponentsBuilder
@@ -43,18 +38,16 @@ public class ReviewAdapter {
             .pathSegment("api")
             .pathSegment("accounts")
             .pathSegment("{accountId}")
-            .pathSegment("orders")
-            .pathSegment("{orderCode}")
             .pathSegment("review")
             .queryParam("storedAt", LocationCode.OBJECT_S.getVariable())
-            .buildAndExpand(accountId, orderCode)
+            .buildAndExpand(accountId)
             .toUri();
 
         RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.post(uri)
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .body(mapRequest);
 
-        return restTemplate.exchange(request, new ParameterizedTypeReference<Void>() {
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
     }
 
