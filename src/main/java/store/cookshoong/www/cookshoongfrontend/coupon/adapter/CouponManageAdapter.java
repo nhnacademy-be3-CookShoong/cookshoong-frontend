@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.coupon.adapter;
 
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,13 +13,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateProvideCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
-import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectProvableCouponPolicyResponseDto;
 
 /**
  * 쿠폰 관리 어뎁터.
@@ -301,9 +303,30 @@ public class CouponManageAdapter {
     }
 
     /**
+     * 이벤트 쿠폰 발급.
+     *
+     * @param createProvideCouponRequestDto the create provide coupon request dto
+     */
+    public void executeProvideEventCoupon(CreateProvideCouponRequestDto createProvideCouponRequestDto) {
+        restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/coupon/provide/event")
+                .build()
+                .toUri(),
+            HttpMethod.POST,
+            new HttpEntity<>(createProvideCouponRequestDto),
+            new ParameterizedTypeReference<>() {
+            });
+    }
+
+    /**
      * 소유한 쿠폰 목록 확인.
      *
-     * @param pageable the pageable
+     * @param accountId the account id
+     * @param pageable  the pageable
+     * @param usable    the usable
+     * @param storeId   the store id
      * @return the page
      */
     public Page<SelectOwnCouponResponseDto> fetchOwnCoupons(Long accountId, Pageable pageable, Boolean usable,
@@ -317,6 +340,47 @@ public class CouponManageAdapter {
                     .queryParamIfPresent("usable", Optional.ofNullable(usable))
                     .queryParamIfPresent("storeId", Optional.ofNullable(storeId))
                     .buildAndExpand(accountId), pageable),
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+
+        return response.getBody();
+    }
+
+    /**
+     * 모든 사용처에서 발급 가능한 쿠폰 정책 획득.
+     *
+     * @return the list
+     */
+    public List<SelectProvableCouponPolicyResponseDto> fetchUsageAllProvableCouponPolicy() {
+        ResponseEntity<List<SelectProvableCouponPolicyResponseDto>> response = restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/coupon/policies/event")
+                .build()
+                .toUri(),
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<>() {
+            });
+
+        return response.getBody();
+    }
+
+    /**
+     * 가맹점에서 발급 가능한 쿠폰 정책 획득.
+     *
+     * @param merchantId the merchant id
+     * @return the list
+     */
+    public List<SelectProvableCouponPolicyResponseDto> fetchMerchantProvableCouponPolicy(Long merchantId) {
+        ResponseEntity<List<SelectProvableCouponPolicyResponseDto>> response = restTemplate.exchange(
+            UriComponentsBuilder
+                .fromUriString(apiProperties.getGatewayUrl())
+                .path("/api/coupon/policies/event/merchants/{merchantId}")
+                .buildAndExpand(merchantId)
+                .toUri(),
             HttpMethod.GET,
             null,
             new ParameterizedTypeReference<>() {

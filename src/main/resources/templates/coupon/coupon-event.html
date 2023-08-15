@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en" data-bss-forced-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{config}">
+
+<body layout:fragment="content">
+<header th:replace="fragments :: user-site-header"></header>
+<div th:replace="fragments :: business-store-list"></div>
+<div th:replace="fragments :: all-address-list"></div>
+
+<div class="container-fluid page-body-wrapper" th:with="merchantId=${#request.getParameter('merchantId')}, merchantParam=${merchantId != null ? '?merchantId=' + merchantId : ''}">
+    <div class="landing-panel">
+        <div class="content-wrapper">
+            <section class="container">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="font-weight-bold">이벤트 페이지</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-bottom-0">
+                    <ul class="nav nav-tabs col-12 m-0 p-0">
+                        <li class="nav-item flex-grow-1" style="text-align: center">
+                            <a class="nav-link" href="/event"
+                               th:classappend="${merchantId == null ? 'active' : ''}">모두 보기</a>
+                        </li>
+                        <li class="nav-item flex-grow-1" style="text-align: center"
+                            th:each="merchant, i:${merchants}">
+                            <a class="nav-link" th:href="@{'/event'(merchantId=${merchant.id})}"
+                               th:text="${merchant.name}"
+                               th:classappend="${merchant.id.toString() == merchantId ? 'active' : ''}">
+                                ></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="row p-2">
+                        <h1 th:if="${policies.isEmpty()}">진행중인 이벤트가 없어요!</h1>
+                        <div th:unless="${policies.isEmpty()}" th:each="policy : ${policies}" class="col-12 col-xl-4"
+                             style="max-width: 400px;">
+                            <div class="w-100">
+                                <form th:action="@{/coupon/provide/event}" th:method="post">
+                                    <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2"
+                                            th:data-policy-id="${policy.couponPolicyId}" type="submit"
+                                            style="border-radius: 6px; border-width: 6px; height: 160px;">
+                                        <div class="col-sm-12 text-left notification-container"
+                                             style="font-size: 20px; font-weight: bold"
+                                             th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
+
+                                            <div th:case="CouponTypeCashVo">
+                                                <span th:text="'고정 할인'" style="font-weight: bold"></span>
+                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
+                                                    th:text="${policy.couponTypeResponse.discountAmount} + '원 할인'"></h1>
+
+                                                <div style="height: 60px;">
+                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
+                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'"></p>
+                                                </div>
+                                            </div>
+
+                                            <div th:case="CouponTypePercentVo">
+                                                <span th:text="'퍼센트 할인'" style="font-weight: bold"></span>
+                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
+                                                    th:text="${policy.couponTypeResponse.rate} + '% 할인'"></h1>
+
+                                                <div style="height: 60px;">
+                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
+                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'
+                                                    + ' (최대 ' + ${policy.couponTypeResponse.maximumDiscountAmount} + '원 까지)'"></p>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" name="couponPolicyId"
+                                                   th:value="${policy.couponPolicyId}">
+                                        </div>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: site-footer"></footer>
+<script>
+    window.onload = function () {
+        window.scrollTo(0, 0);
+    }
+
+    $('.provide-button').click(function (event) {
+        event.preventDefault();
+        const button = $(this);
+        const form = button.closest('form');
+
+        button.prop('disabled', true);
+
+        $.post(form.attr('action'), form.serialize(), function (response) {
+            if (response === "ok") {
+                showNotification(button, "쿠폰 발급 요청이 확인되었습니다! 잠시 후 쿠폰함을 확인해 보세요!");
+            } else {
+                showNotification(button, response);
+            }
+        });
+    });
+
+    function showNotification(button, message) {
+        button.find('.notification-container').text(message);
+    }
+</script>
+
+</body>
+</html>
