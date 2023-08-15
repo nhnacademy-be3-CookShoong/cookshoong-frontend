@@ -19,8 +19,10 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body row">
-                            <h1 class="font-weight-bold mb-2 w-75">내 정보 관리</h1>
-                            <h2 class="font-weight-bold mb-auto w-25" th:text="${accountInfo.rank + ' 등급 '}" style="color: red; text-align: right"></h2>
+                            <h1 class="font-weight-bold mb-2 w-75">내 정보 관리
+                                <span class="font-weight-lighter mb-auto w-10" th:text="${accountInfo.rank + ' 등급 '}"
+                                    style="color: goldenrod; text-align: right"></span>
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -30,14 +32,12 @@
                         <div class="card">
                             <div class="store-card-header">
                                 <h2 class="store-title">회원 정보</h2>
+                                <button disabled class="btn btn-inverse-warning"
+                                        id="update-account-info-btn" type="submit">
+                                    저장
+                                </button>
                             </div>
                             <div class="card-body">
-                                <div class="flex-container">
-                                    <button style="display: none" class="btn btn-inverse-warning"
-                                            id="update-account-info-btn" type="submit">
-                                        저장
-                                    </button>
-                                </div>
                                 <div class="form-group"><label for="loginId">아이디</label>
                                     <input type="text" class="form-control" id="loginId"
                                            th:value="${accountInfo.loginId}"
@@ -45,13 +45,11 @@
                                 </div>
                                 <div class="form-group"><label for="name">이름</label>
                                     <input type="text" class="form-control form-control-lg" id="name"
-                                           pattern="^[가-힇a-zA-Z\w]{1,30}$" title="공백없이 한글자 이상이여야합니다."
                                            th:value="${accountInfo.name}" placeholder="이름" readonly>
                                 </div>
                                 <div class="form-group"><label for="nickname">닉네임</label>
                                     <input type="text" class="form-control form-control-lg modifiable-element"
-                                           id="nickname"
-                                           name="nickname"
+                                           id="nickname" name="nickname" maxlength="30"
                                            th:value="${accountInfo.nickname}" placeholder="닉네임 (30글자 이내)"
                                            pattern="^[가-힇a-zA-Z\w]{1,30}$" title="공백없이 한글자 이상 30글자이하로 작성해주세요."
                                            required>
@@ -74,7 +72,7 @@
                                 </div>
                                 <div class="form-group"><label for="phoneNumber">전화번호</label>
                                     <input type="text" class="form-control form-control-lg modifiable-element"
-                                           id="phoneNumber"
+                                           id="phoneNumber" maxlength="11" oninput="makeNumberOnly('phoneNumber')"
                                            name="phoneNumber" pattern="^010[0-9]{8}" title="'-' 를 제외하고 휴대폰번호를 입력해주세요."
                                            th:value="${accountInfo.phoneNumber}"
                                            placeholder="전화번호 ('-' 제외)" required>

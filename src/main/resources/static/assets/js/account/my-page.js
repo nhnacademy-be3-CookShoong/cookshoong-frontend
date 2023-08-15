@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modifiableElements = document.getElementsByClassName('modifiable-element');
     for (const modifiableElement of modifiableElements) {
         modifiableElement.addEventListener('keyup', () => {
-            let isDisplayed = false;
+            let isChanged = false;
             for (const argument of modifiableElements) {
-                isDisplayed = argument.value !== orgMap[argument.id];
-                if (isDisplayed) {
+                isChanged = argument.value !== orgMap[argument.id];
+                if (isChanged) {
                     break;
                 }
             }
-            accountInfoUpdateBtn.style.display = isDisplayed ? 'block' : 'none';
+            accountInfoUpdateBtn.disabled = !isChanged;
         });
     }
 })
