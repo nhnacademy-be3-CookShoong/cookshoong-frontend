@@ -48,7 +48,7 @@
                         <p style="padding-left: 1.25rem; padding-right: 1.25rem;">
                             <strong>가게 위치 : </strong>
                             <strong th:if="${store.distance < 1000}" th:text="${store.distance} + 'm'"></strong>
-                            <strong th:if="${store.distance >= 1000}" th:text="${store.distance/1000} + 'km'"></strong>
+                            <strong th:if="${store.distance >= 1000}" th:text="${store.distance/1000.0} + 'km'"></strong>
                         </p>
                         <span class="m-3 pt-1 pb-1"
                               style="height: auto; padding-left: 1.25rem; padding-right: 1.25rem; border-radius: 1rem; background-color: whitesmoke"
