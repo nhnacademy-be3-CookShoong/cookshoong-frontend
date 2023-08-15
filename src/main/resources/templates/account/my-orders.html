@@ -77,9 +77,89 @@
                                                 <h2>총 결제 금액</h2>
                                                 <h2 th:text="${#numbers.formatInteger(orderInfo.getChargedAmount(), 0, 'COMMA')}"></h2>
                                             </div>
+                                            <div th:if="${orderInfo.getOrderStatusDescription() == '배달완료' || orderInfo.getOrderStatusDescription() == '환불'}">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        th:data-target="'#reviewModal'+${orderInfo.getOrderCode()}">리뷰 작성하기
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="modal fade" th:id="'reviewModal'+${orderInfo.getOrderCode()}" tabindex="-1"
+                                         role="dialog" aria-labelledby="" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" th:text="${order.storeName}"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:id="reviewCreate+${orderInfo.getOrderCode()}"
+                                                          th:action="@{/review(order=${orderInfo.getOrderCode()})}"
+                                                          th:method="post" th:object="${createReviewRequestDto}"
+                                                          enctype="multipart/form-data">
+                                                        <div class="p-1 m-3 border-top border-bottom border-left border-right"
+                                                             id="reviewBox">
+                                                            <input type="number" hidden="hidden" name="rating" id="rating"
+                                                                   th:field="*{rating}">
+                                                            <input type="text" hidden="hidden" name="contents" id="contents"
+                                                                   th:field="*{contents}">
 
+                                                            <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
+                                                                <strong class="mr-4"
+                                                                        style="padding-top: 0.75rem; font-size: 20px;"
+                                                                        th:text="'별점'"></strong>
+                                                                <strong class="mr-2"
+                                                                        style="padding-top: 0.75rem; font-size: 20px;"
+                                                                        id="rating-text">1.0</strong>
+                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                        type="button"
+                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                        type="button"
+                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                        type="button"
+                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                        type="button"
+                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                        type="button"
+                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                            </div>
+
+                                                            <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
+                                                            <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
+                                                                <input type="file" name="reviewImage"
+                                                                       class="file-upload-default"
+                                                                       accept="image/png,image/jpg" multiple>
+                                                                <div class="input-group col-xs-12">
+                                                                    <input type="text" class="form-control file-upload-info"
+                                                                           disabled
+                                                                           id="reviewImage"
+                                                                           placeholder="사진 리뷰 이미지">
+                                                                    <span class="input-group-append">
+                                                                    <button class="file-upload-browse btn btn-info" type="button">이미지 찾기</button>
+                                                                </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                            <button type="submit" th:form="reviewCreate+${orderInfo.getOrderCode()}"
+                                                                    class="btn btn-primary"  id="submitButton" th:method="post">리뷰등록
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,5 +171,44 @@
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    document.querySelectorAll('.star-btn').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            const rating = (index + 1); // 별점 계산
+            document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
+            document.getElementById('rating').value = rating.toFixed(0);
+
+            console.log(rating);
+            // 모든 버튼을 초기 상태로 리셋
+            document.querySelectorAll('.star-btn').forEach(btn => {
+                btn.className = "typcn typcn-star-outline p-0 m-1 border-0 star-btn";
+            });
+
+            // 선택한 버튼과 이전 버튼을 채운 상태로 변경
+            for (let i = 0; i <= index; i++) {
+                document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
+            }
+        });
+    });
+</script>
+<script>
+    const editor = new toastui.Editor({
+        initialEditType: 'wysiwyg',
+        el: document.querySelector('#editor'),
+        previewStyle: 'vertical',
+        height: '200px',
+        placeholder: '리뷰에 답변해주세요.'
+    });
+
+    function showEditor() {
+        document.getElementById('reviewBox').style.display = 'block';
+    }
+
+    document.querySelector('#submitButton').addEventListener('click', function () {
+        let editorContent = editor.getHTML();
+        document.querySelector('#contents').value = editorContent;
+        console.log(editorContent);
+    });
+</script>
 </body>
 </html>

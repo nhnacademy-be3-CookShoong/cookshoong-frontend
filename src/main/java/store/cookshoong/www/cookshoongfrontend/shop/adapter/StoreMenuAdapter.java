@@ -87,6 +87,30 @@ public class StoreMenuAdapter {
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
     }
+    public ResponseEntity<Void> executeUpdateMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto,
+                                                  MultipartFile menuImage) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("{storeId}")
+            .pathSegment("menu")
+            .queryParam("storedAt", LocationCode.OBJECT_S.getVariable())
+            .buildAndExpand(storeId)
+            .toUri();
+
+        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("requestDto", createMenuRequestDto);
+        multiValueMap.add("menuImage", menuImage.getResource());
+
+        RequestEntity<MultiValueMap<String, Object>> request = RequestEntity.patch(uri)
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .body(multiValueMap);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
 
     /**
      * 메뉴 그룹 리스트 조회 메서드.

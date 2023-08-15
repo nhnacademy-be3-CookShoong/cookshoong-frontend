@@ -45,6 +45,7 @@ public class ReviewAdapter {
             .pathSegment("{accountId}")
             .pathSegment("orders")
             .pathSegment("{orderCode}")
+            .pathSegment("review")
             .queryParam("storedAt", LocationCode.OBJECT_S.getVariable())
             .buildAndExpand(accountId, orderCode)
             .toUri();

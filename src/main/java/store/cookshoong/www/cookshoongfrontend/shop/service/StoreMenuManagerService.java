@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.service;
 
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,11 @@ public class StoreMenuManagerService {
      * @param createMenuRequestDto 메뉴 등록 Dto
      */
     public void createMenu(Long storeId, CreateMenuRequestDto createMenuRequestDto, MultipartFile menuImage) {
-        storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto, menuImage);
+        if (Objects.nonNull(createMenuRequestDto.getTargetMenuId())) {
+            storeMenuAdapter.executeUpdateMenu(storeId, createMenuRequestDto, menuImage);
+        } else {
+            storeMenuAdapter.executeCreateMenu(storeId, createMenuRequestDto, menuImage);
+        }
     }
 
     /**
@@ -55,7 +60,7 @@ public class StoreMenuManagerService {
     /**
      * 메뉴 그룹 조회 서비스.
      *
-     * @param storeId 매장 아이디
+     * @param storeId     매장 아이디
      * @param menuGroupId 메뉴 그룹 아이디
      * @return 매장의 메뉴 그룹
      */
@@ -77,7 +82,7 @@ public class StoreMenuManagerService {
      * 메뉴 조회 서비스.
      *
      * @param storeId 매장 아이디
-     * @param menuId 메뉴 아이디
+     * @param menuId  메뉴 아이디
      * @return 매장의 메뉴
      */
     public SelectMenuResponseDto selectMenu(Long storeId, Long menuId) {
@@ -87,7 +92,7 @@ public class StoreMenuManagerService {
     /**
      * 메뉴 그룹 삭제 서비스.
      *
-     * @param storeId 매장 아이디
+     * @param storeId     매장 아이디
      * @param menuGroupId 메뉴 그룹 아이디
      */
     public void deleteMenuGroup(Long storeId, Long menuGroupId) {
@@ -98,7 +103,7 @@ public class StoreMenuManagerService {
      * 메뉴 삭제 서비스.
      *
      * @param storeId 매장 아이디
-     * @param menuId 메뉴 아이디
+     * @param menuId  메뉴 아이디
      */
     public void deleteMenu(Long storeId, Long menuId) {
         storeMenuAdapter.executeDeleteMenu(storeId, menuId);
