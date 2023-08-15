@@ -1,7 +1,11 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,7 +18,13 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBankRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateCategoriesRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateMerchantRequestDto;
@@ -22,6 +32,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateCategory
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllMerchantsResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.MerchantService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreAdminService;
 
 /**
@@ -35,6 +46,8 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreAdminService;
 @RequestMapping("/admin/management")
 public class StoreAdminController {
     private final StoreAdminService storeAdminService;
+    private final MerchantService merchantService;
+    private final CouponManageService couponManageService;
 
     /**
      * 은행 리스트 가져오는 컨트롤러.
@@ -137,9 +150,9 @@ public class StoreAdminController {
      */
     @GetMapping("/categories")
     public String getCategories(@PageableDefault(size = 5) Pageable pageable,
-                               Model model,
-                               CreateCategoriesRequestDto createCategoriesRequestDto,
-                               UpdateCategoryRequestDto updateCategoryRequestDto) {
+                                Model model,
+                                CreateCategoriesRequestDto createCategoriesRequestDto,
+                                UpdateCategoryRequestDto updateCategoryRequestDto) {
         RestResponsePage<SelectAllCategoriesResponseDto> categories = storeAdminService.selectAllCategories(pageable);
         model.addAttribute("createCategoriesRequestDto", createCategoriesRequestDto);
         model.addAttribute("updateCategoryRequestDto", updateCategoryRequestDto);
@@ -200,5 +213,105 @@ public class StoreAdminController {
         }
         storeAdminService.updateCategory(updateCategoryRequestDto, categoryCode);
         return "redirect:/admin/management/categories";
+    }
+
+    /**
+     * Gets event coupons.
+     *
+     * @param model      the model
+     * @param merchantId the merchant id
+     * @param pageable   the pageable
+     * @return the event coupons
+     */
+    @GetMapping("/coupons")
+    public String getEventCoupons(Model model, @RequestParam(required = false) Long merchantId, Pageable pageable) {
+        List<SelectAllMerchantsResponseDto> merchants = merchantService.selectAllMerchants();
+        model.addAttribute("merchants", merchants);
+
+        Page<SelectPolicyResponseDto> policies = couponManageService.selectCouponPolicy(merchantId, pageable);
+        model.addAttribute("policies", policies);
+
+        return "coupon/coupon-admin";
+    }
+
+    /**
+     * 금액 쿠폰 정책 생성 엔드포인트.
+     *
+     * @param request    쿠폰 정책 생성 dto
+     * @param merchantId the store id
+     * @return 쿠폰 view 화면
+     */
+    @PostMapping("/coupons/cash")
+    public String postCashCouponPolicies(CreateCashCouponPolicyRequestDto request,
+                                         @RequestParam(required = false) Long merchantId) {
+        couponManageService.createCashCouponPolicy(request, merchantId);
+        return redirectAdminCouponIndex(merchantId);
+    }
+
+    private static String redirectAdminCouponIndex(Long merchantId) {
+        return "redirect:/admin/management/coupons" + getParam(merchantId);
+    }
+
+    private static String getParam(Long merchantId) {
+        if (Objects.isNull(merchantId)) {
+            return "";
+        }
+
+        return "?merchantId=" + merchantId;
+    }
+
+    /**
+     * 퍼센트 쿠폰 정책 생성 엔드포인트.
+     *
+     * @param request    쿠폰 정책 생성 dto
+     * @param merchantId the merchant id
+     * @return 쿠폰 view 화면
+     */
+    @PostMapping("/coupons/percent")
+    public String postPercentCouponPolicies(CreatePercentCouponPolicyRequestDto request,
+                                            @RequestParam(required = false) Long merchantId) {
+        couponManageService.createPercentCouponPolicy(request, merchantId);
+        return redirectAdminCouponIndex(merchantId);
+    }
+
+    /**
+     * 쿠폰 정책 삭제 엔드포인트.
+     *
+     * @param policyId   the policy id
+     * @param merchantId the store id
+     * @return 쿠폰 view 화면
+     */
+    @DeleteMapping("/coupons/policies/{policyId}")
+    public String deleteCouponPolicy(@PathVariable Long policyId, @RequestParam(required = false) Long merchantId) {
+        couponManageService.removeCouponPolicy(policyId);
+        return redirectAdminCouponIndex(merchantId);
+    }
+
+    /**
+     * 쿠폰 정책 숨김 엔드포인트.
+     *
+     * @param policyId   the policy id
+     * @param merchantId the store id
+     * @return 쿠폰 view 화면
+     */
+    @PatchMapping("/coupons/policies/{policyId}")
+    public String patchHideCouponPolicy(@PathVariable Long policyId, @RequestParam(required = false) Long merchantId) {
+        couponManageService.updateHideCouponPolicy(policyId);
+        return redirectAdminCouponIndex(merchantId);
+    }
+
+    /**
+     * 쿠폰 발행 엔드포인트.
+     *
+     * @param createIssueCouponRequestDto 쿠폰 발행 dto
+     * @param merchantId                  the store id
+     * @return 쿠폰 view 화면
+     */
+    @PostMapping("/coupons/issue")
+    public String postCouponIssue(CreateIssueCouponRequestDto createIssueCouponRequestDto,
+                                  @RequestParam(required = false) Long merchantId) {
+        createIssueCouponRequestDto.setIssueMethod(CreateIssueCouponRequestDto.IssueMethod.EVENT);
+        couponManageService.createIssueCoupon(createIssueCouponRequestDto);
+        return redirectAdminCouponIndex(merchantId);
     }
 }

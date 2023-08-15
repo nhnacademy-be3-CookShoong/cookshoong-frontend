@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.point.adapter;
+package store.cookshoong.www.cookshoongfrontend.coupon.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,55 +11,34 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
-import store.cookshoong.www.cookshoongfrontend.point.model.response.PointLogResponseDto;
-import store.cookshoong.www.cookshoongfrontend.point.model.response.PointResponseDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 
 /**
- * 포인트 어뎁터.
+ * 쿠폰 어뎁터.
  *
  * @author eora21 (김주호)
- * @since 2023.08.12
+ * @since 2023.08.14
  */
 @Component
 @RequiredArgsConstructor
-public class PointAdapter {
+public class CouponAdapter {
     private final RestTemplate restTemplate;
     private final ApiProperties apiProperties;
 
     /**
-     * 포인트 확인.
-     *
-     * @param accountId the account id
-     * @return the point response dto
-     */
-    public PointResponseDto fetchPoint(Long accountId) {
-        ResponseEntity<PointResponseDto> response = restTemplate.exchange(
-                UriComponentsBuilder
-                        .fromUriString(apiProperties.getGatewayUrl())
-                        .path("/api/point/{accountId}")
-                        .buildAndExpand(accountId)
-                        .toUri(),
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<>() {
-                });
-
-        return response.getBody();
-    }
-
-    /**
-     * 포인트 로그 확인.
+     * 내 유효 쿠폰 목록 확인.
      *
      * @param accountId the account id
      * @param pageable  the pageable
      * @return the page
      */
-    public Page<PointLogResponseDto> fetchPointLog(Long accountId, Pageable pageable) {
-        ResponseEntity<RestResponsePage<PointLogResponseDto>> response = restTemplate.exchange(
+    public Page<SelectOwnCouponResponseDto> fetchOwnCoupon(Long accountId, Pageable pageable) {
+        ResponseEntity<RestResponsePage<SelectOwnCouponResponseDto>> response = restTemplate.exchange(
                 RestResponsePage.pageableToParameter(
                         UriComponentsBuilder
                                 .fromUriString(apiProperties.getGatewayUrl())
-                                .path("/api/point/{accountId}/log")
+                                .path("/api/coupon/search/{accountId}")
+                                .queryParam("usable", true)
                                 .buildAndExpand(accountId), pageable),
                 HttpMethod.GET,
                 null,

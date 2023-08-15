@@ -21,9 +21,13 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
+import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.point.model.response.PointLogResponseDto;
+import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
 
 /**
  * 마이페이지 컨트롤러.
@@ -38,6 +42,8 @@ public class MyPageController {
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
     private final OrderService orderService;
+    private final CouponService couponService;
+    private final PointService pointService;
 
     /**
      * 회원정보 페이지 진입.
@@ -171,7 +177,7 @@ public class MyPageController {
      *
      * @param pageable the pageable
      * @param model    the model
-     * @return the my orders
+     * @return my orders
      */
     @GetMapping("/my-orders")
     public String getMyOrders(Pageable pageable, Model model, CreateReviewRequestDto createReviewRequestDto) {
@@ -182,5 +188,40 @@ public class MyPageController {
         model.addAttribute("orders", orders);
         model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
+    }
+
+    /**
+     * 내 쿠폰 확인.
+     *
+     * @param pageable the pageable
+     * @param model    the model
+     * @return my coupons
+     */
+    @GetMapping("/my-coupons")
+    public String getMyCoupons(Pageable pageable, Model model) {
+        Long accountId = accountIdAware.getAccountId();
+        Page<SelectOwnCouponResponseDto> coupons = couponService.selectOwnCoupons(accountId, pageable);
+
+        model.addAttribute("coupons", coupons);
+        return "account/my-coupons";
+    }
+
+    /**
+     * 내 포인트 확인.
+     *
+     * @param pageable the pageable
+     * @param model    the model
+     * @return my points
+     */
+    @GetMapping("/my-points")
+    public String getMyPoints(Pageable pageable, Model model) {
+        Long accountId = accountIdAware.getAccountId();
+        int totalPoint = pointService.selectPoint(accountId);
+        model.addAttribute("totalPoint", totalPoint);
+
+        Page<PointLogResponseDto> pointLogs = pointService.selectOwnPoints(accountId, pageable);
+
+        model.addAttribute("pointLogs", pointLogs);
+        return "account/my-points";
     }
 }
