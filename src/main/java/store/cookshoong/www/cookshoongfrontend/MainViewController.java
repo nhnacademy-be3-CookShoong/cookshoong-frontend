@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -31,6 +32,8 @@ import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
+import store.cookshoong.www.cookshoongfrontend.review.service.ReviewStoreService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
@@ -63,6 +66,7 @@ public class MainViewController {
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
     private final CartService cartService;
+    private final ReviewStoreService reviewStoreService;
     private static final Long DEFAULT_ADDRESS_ID = 1L;
 
     /**
@@ -171,7 +175,8 @@ public class MainViewController {
      * @return the index store
      */
     @GetMapping({"/index/store/{storeId}"})
-    public String getIndexStore(@PathVariable("storeId") Long storeId, Model model) {
+    public String getIndexStore(@PathVariable("storeId") Long storeId, @PageableDefault Pageable pageable,
+                                Model model) {
 
         Long accountId = accountIdAware.getAccountId();
         Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
@@ -183,10 +188,12 @@ public class MainViewController {
 
         model.addAttribute("accountAddresses", accountAddresses);
 
+        Page<SelectReviewStoreResponseDto> reviewList = reviewStoreService.selectReviewByAccount(storeId, pageable);
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
 
+        model.addAttribute("reviewList", reviewList);
         model.addAttribute("store", store);
         model.addAttribute("menuGroups", menuGroups);
         model.addAttribute("menus", menus);
