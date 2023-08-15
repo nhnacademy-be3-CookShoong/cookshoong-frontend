@@ -1,9 +1,14 @@
 package store.cookshoong.www.cookshoongfrontend.review.adapter;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 import java.net.URI;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +17,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
+import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
+import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderInStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 
 /**
  * 리뷰 등록, 조회, 수정에 대한 adapter.
@@ -49,4 +57,34 @@ public class ReviewAdapter {
         });
     }
 
+    /**
+     * 회원이 작성란 리뷰에 대해 조회하는 Adapter.
+     *
+     * @param accountId     회원 아이디
+     * @param pageable      페이지 처리
+     * @return              회원이 작성한 모든 리뷰를 반환
+     */
+    public RestResponsePage<SelectReviewResponseDto> fetchReviewByAccount(Long accountId, Pageable pageable) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("review")
+            .queryParam("page", pageable.getPageNumber())
+            .queryParam("size", pageable.getPageSize())
+            .buildAndExpand(accountId)
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<RestResponsePage<SelectReviewResponseDto>> response =
+            restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+            });
+
+        return response.getBody();
+    }
 }
