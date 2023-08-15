@@ -20,6 +20,7 @@ import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.ModifyBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
 /**
  * 사장님이 회원에 대한 리뷰 조회 및 답글 생성, 수정, 삭제 adapter.
@@ -88,7 +89,7 @@ public class ReviewBusinessAdapter {
      * @param pageable      페이지 처리
      * @return              회원이 작성한 모든 리뷰를 반환
      */
-    public RestResponsePage<SelectReviewResponseDto> fetchBusinessReviewByStore(Long storeId, Pageable pageable) {
+    public RestResponsePage<SelectReviewStoreResponseDto> fetchBusinessReviewByStore(Long storeId, Pageable pageable) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -105,7 +106,7 @@ public class ReviewBusinessAdapter {
             .accept(APPLICATION_JSON)
             .build();
 
-        ResponseEntity<RestResponsePage<SelectReviewResponseDto>> response =
+        ResponseEntity<RestResponsePage<SelectReviewStoreResponseDto>> response =
             restTemplate.exchange(request, new ParameterizedTypeReference<>() {
             });
 

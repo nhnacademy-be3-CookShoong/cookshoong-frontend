@@ -8,6 +8,7 @@ import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewBusinessAdap
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.ModifyBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
 /**
  * 매장에 대한 회원 리뷰 조회 등의 로직 작성.
@@ -50,7 +51,7 @@ public class ReviewBusinessStoreService {
      * @param pageable      페이지 처리
      * @return              회원이 작성한 모든 리뷰를 반환
      */
-    public Page<SelectReviewResponseDto> selectReviewByAccount(Long storeId, Pageable pageable) {
+    public Page<SelectReviewStoreResponseDto> selectReviewByAccount(Long storeId, Pageable pageable) {
 
         return reviewBusinessAdapter.fetchBusinessReviewByStore(storeId, pageable);
     }

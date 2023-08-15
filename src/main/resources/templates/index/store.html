@@ -81,76 +81,47 @@
                             </div>
                             <div class="modal-body">
                                 <div class="card border-0 flex-fill" style="max-width: 900px;">
-
                                     <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
-                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                            <strong style="font-size: 15px;" th:text="'조금 무서운 손님'"></strong>
-                                            <span th:text="'3일 전'" style="color: grey"></span>
-                                        </div>
-                                        <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="'5.0'"></strong>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span th:text="'사장님이 맛있고, 음식이 친절해요. 또 시킬꺼야. 월요일도 시키고 화요일도 시키고 수요일도 시키고 목요일도 시키고 금요일도 시키고 토요일도 시키고 일요일도 시킬꺼야. 계속 시킬꺼야. 사장님 조아. 피자 조아.'"></span>
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0 w-100">
-                                            <img style="max-width: 100%; max-height: 100%;"
-                                                 th:src="${store.getSavedName()}"
-                                                 onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="'드래곤 스테이크 허니 콤보'"></span>
+                                        <div  th:each="review, i:${reviewList}">
+                                            <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                                <strong style="font-size: 15px;" th:text="${review.nickname}"></strong>
+                                                <span th:text="${review.selectReviewResponseDto.updatedAt != null ? review.selectReviewResponseDto.updatedAt : review.selectReviewResponseDto.writtenAt}" style="color: grey"></span>
+                                            </div>
+                                            <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
+                                                <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="${review.selectReviewResponseDto.rating}"></strong>
+                                                <span style="color: #ea6b19; font-size: 25px;">
+                                                <span th:each="star : ${#numbers.sequence(1, review.selectReviewResponseDto.rating)}" class="typcn typcn-star-full-outline"></span>
+                                                <span th:each="star : ${#numbers.sequence(review.selectReviewResponseDto.rating + 1, 5)}" class="typcn typcn-star-outline"></span>
+                                            </span>
+                                            </div>
+                                            <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                                <span th:text="${review.selectReviewResponseDto.contents}"></span>
+                                            </div>
+                                            <div class="pl-3 pr-3 pt-1 pb-3 m-0 w-100">
+                                                <div th:each="image : ${review.selectReviewResponseDto.imageResponseDtos}">
+                                                    <img style="max-width: 100%; max-height: 100%;"
+                                                         th:src="${image.savedName}"
+                                                         onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
+                                                </div>
+                                            </div>
+                                            <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                                <div th:each="menu : ${review.selectReviewResponseDto.menuResponseDtos}">
+                                                    <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
+                                                    border-left border-right border-top border-bottom font-weight-bold"
+                                                          style="border-radius: 6px; background-color: #ffb429"
+                                                          th:text="${menu.menuName}"></span>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
+                                                    <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="사장님 답글"></strong>
+                                                    <div th:each="reviewReply : ${review.selectReviewResponseDto.replyResponseDtos}">
+                                                        <span th:text="${reviewReply.contents}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
-                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                            <strong style="font-size: 15px;" th:text="'이상해진 손님'"></strong>
-                                            <span th:text="'18시간 전'" style="color: grey"></span>
-                                        </div>
-                                        <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="'2.5'"></strong>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-full-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-half-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span class="typcn typcn-star-outline"
-                                                  style="color: #ea6b19; font-size: 25px;"></span>
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span th:text="'피자 시러.'"></span>
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0 w-100">
-                                        </div>
-                                        <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="'치킨윙'"></span>
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="'콜라'"></span>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                             <div class="modal-footer">
