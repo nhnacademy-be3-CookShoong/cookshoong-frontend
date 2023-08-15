@@ -112,7 +112,7 @@
                                                 <span th:utext="${review.selectReviewResponseDto.contents}"></span>
                                             </div>
 
-                                            <div class="row p-0 m-0">
+                                            <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
                                                 <div class="pl-1 pr-1 pt-1 pb-3 m-0"
                                                      th:each="image, i:${review.selectReviewResponseDto.imageResponseDtos}">
                                                     <img th:src="${image.getSavedName()}" alt=""
@@ -121,7 +121,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row p-0 m-0">
+                                            <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
                                                 <div class="pl-1 pr-1 pt-1 pb-3 m-0"
                                                      th:each="menu, i:${review.selectReviewResponseDto.menuResponseDtos}">
                                                     <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"

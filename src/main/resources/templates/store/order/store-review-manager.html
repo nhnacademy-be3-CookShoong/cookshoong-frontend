@@ -29,46 +29,54 @@
                             <h2 class="store-title">리뷰 관리</h2>
                         </div>
                         <div class="card-body">
-                            <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
-                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                    <strong style="font-size: 20px;" th:text="'조금 이상한 손님'"></strong>
-                                    <div class="p-0 m-0">
-                                        <button class="btn btn-danger font-weight-bold p-2" th:text="'답변 남기기'" onclick="showEditor()"></button>
-                                    </div>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-1 m-0">
-                                    <p th:text="'2023년 8월 13일 주문'" style="color: grey"></p>
-                                </div>
-                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
-                                    <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="'5.0'"></strong>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                    <span th:text="'사장님이 맛있고, 음식이 친절해요. 또 시킬꺼야. 월요일도 시키고 화요일도 시키고 수요일도 시키고 목요일도 시키고 금요일도 시키고 토요일도 시키고 일요일도 시킬꺼야. 계속 시킬꺼야. 사장님 조아. 피자 조아.'"></span>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="'드래곤 스테이크 허니 콤보'"></span>
-                                </div>
-                                <div class="p-1 m-3 border-top border-bottom border-left border-right" id="reviewBox" style="display: none;">
-                                    <div class="p-3" id="editor">
-                                    </div>
-                                    <div class="pl-3 pr-3 pt-1 pb-1">
-                                        <button class="btn btn-danger font-weight-bold p-2"
-                                                th:text="'답변 등록하기'"
-                                                id="submitButton">
-                                        </button>
+                            <div class="card border-0 flex-fill" th:each="review, i:${reviewList}">
+                                <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+                                    <div>
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                            <strong style="font-size: 15px;" th:text="${review.nickname}"></strong>
+                                        </div>
+
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                                <span th:text="${#temporals.format(review.selectReviewResponseDto.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                                      style="color: grey"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <strong class="pt-1 mr-2" style="font-size: 20px;"
+                                                    th:text="${review.selectReviewResponseDto.rating + '.0'}"></strong>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                        </div>
+
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <span th:utext="${review.selectReviewResponseDto.contents}"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="image, i:${review.selectReviewResponseDto.imageResponseDtos}">
+                                                <img th:src="${image.getSavedName()}" alt=""
+                                                     onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                                     style="object-fit: cover; width: 130px; height: 130px;">
+                                            </div>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="menu, i:${review.selectReviewResponseDto.menuResponseDtos}">
+                                                    <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"
+                                                          style="border-radius: 6px; background-color: #ffb429"
+                                                          th:text="${menu.menuName}"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
