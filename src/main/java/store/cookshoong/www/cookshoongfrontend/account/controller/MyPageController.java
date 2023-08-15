@@ -55,10 +55,8 @@ public class MyPageController {
     @GetMapping("/my-page")
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
 
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+        addressListHeader(model);
 
-        model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
         return "account/my-page";
@@ -95,12 +93,10 @@ public class MyPageController {
         AddressResponseDto address =
             accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
 
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+        addressListHeader(model);
 
         model.addAttribute("latitude", address.getLatitude());
         model.addAttribute("longitude", address.getLongitude());
-        model.addAttribute("accountAddresses", accountAddresses);
 
         return "account/my-address";
     }
@@ -185,9 +181,18 @@ public class MyPageController {
         Page<SelectAccountOrderInStatusResponseDto> orders =
             orderService.selectOwnOrder(accountId, pageable);
 
+        addressListHeader(model);
+
         model.addAttribute("orders", orders);
         model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
+    }
+
+    private void addressListHeader(Model model) {
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 
     /**
