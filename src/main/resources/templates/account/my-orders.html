@@ -35,14 +35,15 @@
                                     <div class="card-body row border-top pt-3 pb-3 justify-content-between">
                                         <h1 class="card-title" th:text="${order.getStoreName()}"></h1>
                                         <div>
-                                            <h4 class="text-right" th:text="${orderInfo.getOrderStatusDescription()}"></h4>
+                                            <h4 class="text-right"
+                                                th:text="${orderInfo.getOrderStatusDescription()}"></h4>
                                         </div>
                                         <div class="border-top col-12 pt-3 pb-3">
                                             <h3 th:text="'배달위치: ' + ${orderInfo.getDeliveryAddress()}"></h3>
                                             <h3 th:text="'요청사항: ' + ${orderInfo.getMemo()}"></h3>
                                         </div>
                                         <div class="col-12">
-                                            <div class="border-top pt-3 pb-3 justify-content-between" >
+                                            <div class="border-top pt-3 pb-3 justify-content-between">
                                                 <div th:each="orderMenu:${orderInfo.getSelectOrderDetails()}">
                                                     <div class="d-flex justify-content-between">
                                                         <h3 th:text="${orderMenu.getMenuName() + '(' + #numbers.formatInteger(orderMenu.getCost(), 0, 'COMMA') + '원) ' + orderMenu.getCount()} + '개'"></h3>
@@ -55,12 +56,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="border-top col-12 pt-3 pb-3">
                                             <div class="d-flex justify-content-between">
                                                 <h2>주문 금액</h2>
                                                 <h2 th:text="${#numbers.formatInteger(order.getTotalOrderPrice(), 0, 'COMMA')}"></h2>
                                             </div>
-                                            <div class="d-flex justify-content-between" th:if="${order.getCouponDiscountAmount() != null}">
+                                            <div class="d-flex justify-content-between"
+                                                 th:if="${order.getCouponDiscountAmount() != null}">
                                                 <h2>쿠폰 할인</h2>
                                                 <h2 th:text="'-' + ${#numbers.formatInteger(order.getCouponDiscountAmount(), 0, 'COMMA')}"></h2>
                                             </div>
@@ -68,7 +71,8 @@
                                                 <h2>배달팁</h2>
                                                 <h2 th:text="${#numbers.formatInteger(order.getDeliveryCost(), 0, 'COMMA')}"></h2>
                                             </div>
-                                            <div class="d-flex justify-content-between" th:if="${order.getPointDiscountAmount() != null}">
+                                            <div class="d-flex justify-content-between"
+                                                 th:if="${order.getPointDiscountAmount() != null}">
                                                 <h2>포인트 할인</h2>
                                                 <h2 th:text="'-' + ${#numbers.formatInteger(order.getPointDiscountAmount(), 0, 'COMMA')}"></h2>
                                             </div>
@@ -79,12 +83,14 @@
                                             </div>
                                             <div th:if="${orderInfo.getOrderStatusDescription() == '배달완료' || orderInfo.getOrderStatusDescription() == '환불'}">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        th:data-target="'#reviewModal'+${orderInfo.getOrderCode()}">리뷰 작성하기
+                                                        th:data-target="'#reviewModal'"
+                                                        th:data-ordercode="${orderInfo.getOrderCode()}">리뷰 작성하기
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" th:id="'reviewModal'+${orderInfo.getOrderCode()}" tabindex="-1"
+
+                                    <div class="modal fade" th:id="'reviewModal'" tabindex="-1"
                                          role="dialog" aria-labelledby="" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -96,63 +102,64 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form th:id="reviewCreate+${orderInfo.getOrderCode()}"
-                                                          th:action="@{/review(order=${orderInfo.getOrderCode()})}"
-                                                          th:method="post" th:object="${createReviewRequestDto}"
+                                                    <form th:action="@{'/review'}" th:object="${createReviewRequestDto}"
+                                                          th:method="post"
                                                           enctype="multipart/form-data">
                                                         <div class="p-1 m-3 border-top border-bottom border-left border-right"
                                                              id="reviewBox">
-                                                            <input type="number" hidden="hidden" name="rating" id="rating"
-                                                                   th:field="*{rating}">
-                                                            <input type="text" hidden="hidden" name="contents" id="contents"
-                                                                   th:field="*{contents}">
-
+                                                            <input type="hidden" name="rating" id="rating" th:value=5>
+                                                            <input type="hidden" name="contents" id="contents" th:value="''">
+                                                            <input type="hidden" name="orderCode" id="orderCode">
                                                             <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
                                                                 <strong class="mr-4"
-                                                                        style="padding-top: 0.75rem; font-size: 20px;"
+                                                                        style="padding-top: 0.55rem; font-size: 20px;"
                                                                         th:text="'별점'"></strong>
-                                                                <strong class="mr-2"
-                                                                        style="padding-top: 0.75rem; font-size: 20px;"
-                                                                        id="rating-text">1.0</strong>
+                                                                <input class="m-0 border-0" id="star-rating"
+                                                                       type="text"
+                                                                       style="padding-top: 0.35rem; width: 35px;  font-size: 20px;"
+                                                                       th:value="5.0">
                                                                 <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
                                                                         type="button"
                                                                         style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
                                                                         type="button"
                                                                         style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
                                                                         type="button"
                                                                         style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
                                                                         type="button"
                                                                         style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-outline p-0 m-1 border-0 star-btn"
+                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
                                                                         type="button"
                                                                         style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
                                                             </div>
 
                                                             <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
+
                                                             <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
                                                                 <input type="file" name="reviewImage"
                                                                        class="file-upload-default"
                                                                        accept="image/png,image/jpg" multiple>
                                                                 <div class="input-group col-xs-12">
-                                                                    <input type="text" class="form-control file-upload-info"
+                                                                    <input type="text"
+                                                                           class="form-control file-upload-info"
                                                                            disabled
                                                                            id="reviewImage"
                                                                            placeholder="사진 리뷰 이미지">
                                                                     <span class="input-group-append">
-                                                                    <button class="file-upload-browse btn btn-info" type="button">이미지 찾기</button>
+                                                                    <button class="file-upload-browse btn btn-info"
+                                                                            type="button">이미지 찾기</button>
                                                                 </span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
+                                                            <button type="submit"
+                                                                    class="btn btn-primary" id="submitButton">리뷰등록
+                                                            </button>
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="submit" th:form="reviewCreate+${orderInfo.getOrderCode()}"
-                                                                    class="btn btn-primary"  id="submitButton" th:method="post">리뷰등록
                                                             </button>
                                                         </div>
                                                     </form>
@@ -172,42 +179,42 @@
 <footer th:replace="fragments :: site-footer"></footer>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
+    let editor;
+
     document.querySelectorAll('.star-btn').forEach((button, index) => {
         button.addEventListener('click', () => {
-            const rating = (index + 1); // 별점 계산
-            document.getElementById('rating-text').innerText = rating.toFixed(1); // 텍스트 변경
-            document.getElementById('rating').value = rating.toFixed(0);
-
-            console.log(rating);
-            // 모든 버튼을 초기 상태로 리셋
             document.querySelectorAll('.star-btn').forEach(btn => {
                 btn.className = "typcn typcn-star-outline p-0 m-1 border-0 star-btn";
             });
 
-            // 선택한 버튼과 이전 버튼을 채운 상태로 변경
             for (let i = 0; i <= index; i++) {
                 document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
+                document.querySelector('#star-rating').value = (i + 1) + '.0';
+                document.querySelector('#rating').value = (i + 1);
             }
         });
     });
-</script>
-<script>
-    const editor = new toastui.Editor({
-        initialEditType: 'wysiwyg',
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '200px',
-        placeholder: '리뷰에 답변해주세요.'
-    });
 
-    function showEditor() {
-        document.getElementById('reviewBox').style.display = 'block';
-    }
+    $('#reviewModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const orderCode = button.data('ordercode')
+        const initialValue = ' '
+        const modal = $(this)
+        modal.find('input[name="orderCode"]').val(orderCode)
 
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#contents').value = editorContent;
-        console.log(editorContent);
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '200px',
+            placeholder: '리뷰에 답변해주세요.',
+            initialValue: initialValue
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#contents').value = editorContent;
+        });
     });
 </script>
 </body>

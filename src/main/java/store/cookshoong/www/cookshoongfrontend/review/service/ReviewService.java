@@ -2,7 +2,6 @@ package store.cookshoong.www.cookshoongfrontend.review.service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewAdapter;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterStoreFailureException;
-import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 
 /**
  * 리뷰 등록, 수정, 조회 등의 로직 작성.
@@ -29,7 +27,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreReq
 public class ReviewService {
     private final ReviewAdapter reviewAdapter;
 
-    public String createReview(Long accountId, UUID orderCode,
+    public void createReview(Long accountId,
                                CreateReviewRequestDto requestDto,
                                List<MultipartFile> reviewImages) {
 
@@ -42,12 +40,11 @@ public class ReviewService {
             }
         }
 
-        ResponseEntity<Void> response = reviewAdapter.executeCreateReview(accountId, orderCode, fileMap);
+        ResponseEntity<Void> response = reviewAdapter.executeCreateReview(accountId, fileMap);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RegisterStoreFailureException(response.getStatusCode());
         }
-        return Objects.requireNonNull(response.getHeaders().getLocation()).getPath();
     }
 
     /**
