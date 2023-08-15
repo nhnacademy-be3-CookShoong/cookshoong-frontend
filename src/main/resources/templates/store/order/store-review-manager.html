@@ -29,11 +29,20 @@
                             <h2 class="store-title">리뷰 관리</h2>
                         </div>
                         <div class="card-body">
-                            <div class="card border-0 flex-fill" th:each="review, i:${reviewList}">
+                            <div class="row card border-0 flex-fill" th:each="review, i:${reviewList}">
                                 <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+
                                     <div>
                                         <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                            <strong style="font-size: 15px;" th:text="${review.nickname}"></strong>
+                                            <strong style="font-size: 20px;" th:text="${review.nickname}"></strong>
+                                            <div class="row pl-3">
+                                                <button class="btn btn-primary m-1" style="width: 85px; height: 40px;"
+                                                        type="button"
+                                                        data-toggle="modal"
+                                                        data-target="#menuAdd"
+                                                        th:text="'답변'">
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div class="pl-3 pr-3 pt-1 pb-1 m-0">
@@ -78,6 +87,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
