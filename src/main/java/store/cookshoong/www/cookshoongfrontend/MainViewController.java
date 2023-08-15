@@ -100,24 +100,6 @@ public class MainViewController {
     }
 
     /**
-     * 매장 기본 랜딩 페이지 페이지 호출 컨트롤러.
-     *
-     * @param addressId  the addressId
-     * @param page       the page
-     * @param size       the size
-     * @return the index
-     */
-    @GetMapping("/index/page")
-    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresNotOuted(
-        @RequestParam("addressId") Long addressId,
-        @RequestParam("page") int page,
-        @RequestParam("size") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
-        return ResponseEntity.ok(stores);
-    }
-
-    /**
      * 매장 검색 랜딩 페이지 맵핑.
      *
      * @param keywordText the keywordText
@@ -144,6 +126,24 @@ public class MainViewController {
     }
 
     /**
+     * 매장 기본 랜딩 페이지 페이지 호출 컨트롤러.
+     *
+     * @param addressId  the addressId
+     * @param page       the page
+     * @param size       the size
+     * @return the index
+     */
+    @GetMapping("/search/page/distance")
+    public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresNotOuted(
+        @RequestParam("addressId") Long addressId,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
+        return ResponseEntity.ok(stores);
+    }
+
+    /**
      * 매장 검색 랜딩 페이지 페이지 호출 컨트롤러.
      *
      * @param keyword    the keywordText
@@ -152,7 +152,7 @@ public class MainViewController {
      * @param size       the size
      * @return the index
      */
-    @GetMapping("/index/search/page")
+    @GetMapping("/search/page/keyword")
     public ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> getStoresByKeyword(
         @RequestParam("keyword") String keyword,
         @RequestParam("addressId") Long addressId,
