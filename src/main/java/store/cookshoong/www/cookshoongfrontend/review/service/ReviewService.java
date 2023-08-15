@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.file.model.FileDomain;
 import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewAdapter;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterStoreFailureException;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 
@@ -45,5 +48,17 @@ public class ReviewService {
             throw new RegisterStoreFailureException(response.getStatusCode());
         }
         return Objects.requireNonNull(response.getHeaders().getLocation()).getPath();
+    }
+
+    /**
+     * 회원이 작성한 리뷰에 대해 조회하는 메서드.
+     *
+     * @param accountId     회원 아이디
+     * @param pageable      페이지 처리
+     * @return              회원이 작성한 모든 리뷰를 반환
+     */
+    public Page<SelectReviewResponseDto> selectReviewByAccount(Long accountId, Pageable pageable) {
+
+        return reviewAdapter.fetchReviewByAccount(accountId, pageable);
     }
 }

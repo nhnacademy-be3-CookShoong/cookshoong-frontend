@@ -109,8 +109,15 @@ public class MyPageController {
      */
     @PostMapping("/my-address")
     public String postCreateAccountAddress(
-            @ModelAttribute("createAccountAddressRequestDto") CreateAccountAddressRequestDto createAccountAddressRequestDto,
-            BindingResult bindingResult, Model model) {
+        @ModelAttribute("createAccountAddressRequestDto")
+        @Valid CreateAccountAddressRequestDto createAccountAddressRequestDto,
+        BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("createAccountAddressRequestDto", createAccountAddressRequestDto);
+            return "redirect:/my-address";
+        }
 
         accountAddressService.createAccountAddress(accountIdAware.getAccountId(), createAccountAddressRequestDto);
 
