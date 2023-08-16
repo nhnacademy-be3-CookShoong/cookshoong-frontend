@@ -32,7 +32,7 @@ public class StorePaymentManageController {
      * @return 주문이 완료된 건에 대한 페이지 반환
      */
     @GetMapping("/stores/{storeId}/store-payment-manager")
-    public String getSelectStoreOrderComplete(@PathVariable Long storeId, @PageableDefault Pageable pageable,
+    public String getSelectStoreOrderComplete(@PathVariable Long storeId, Pageable pageable,
                                               Model model) {
 
         Page<SelectOrderInStatusResponseDto> orderCompletePage =
