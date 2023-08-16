@@ -1,5 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.coupon.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateCashCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueCouponRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
@@ -30,6 +39,9 @@ public class CouponManageInStoreController {
     private static final String REDIRECT_STORE_COUPON_INDEX_HEAD = "redirect:/stores/";
     private static final String REDIRECT_STORE_COUPON_INDEX_TAIL = "/store-coupon-manager";
     private final CouponManageService couponManageService;
+    private final AccountIdAware account;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
 
     @ModelAttribute
     private Long storeId(@PathVariable Long storeId) {
@@ -50,6 +62,9 @@ public class CouponManageInStoreController {
         model.addAttribute("policies", policies);
         model.addAttribute("buttonNumber", 5);
         model.addAttribute("storeId", storeId);
+
+        commonInfo(model, account.getAccountId());
+
         return "coupon/coupon-store";
     }
 
@@ -116,5 +131,20 @@ public class CouponManageInStoreController {
      */
     public static String redirectStoreCouponIndex(Long storeId) {
         return REDIRECT_STORE_COUPON_INDEX_HEAD + storeId + REDIRECT_STORE_COUPON_INDEX_TAIL;
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }
