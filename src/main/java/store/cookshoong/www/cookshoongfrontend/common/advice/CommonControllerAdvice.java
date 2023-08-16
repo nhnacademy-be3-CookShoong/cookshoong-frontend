@@ -31,8 +31,8 @@ public class CommonControllerAdvice {
      * @return the string
      */
     @ExceptionHandler({AuthenticationException.class, HttpClientErrorException.Unauthorized.class})
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handle401Exception(Exception exception, Model model) {
+        model.addAttribute("status", 401);
         model.addAttribute("errorMessage", exception.getMessage());
         return "/error/4xx";
     }
@@ -44,8 +44,9 @@ public class CommonControllerAdvice {
      * @return the string
      */
     @ExceptionHandler({HttpClientErrorException.Forbidden.class, AccessDeniedException.class})
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String handle403Exception(Exception exception) {
+    public String handle403Exception(Exception exception, Model model) {
+        model.addAttribute("status", 403);
+        model.addAttribute("errorMessage", exception.getMessage());
         return "error/4xx";
     }
 
@@ -57,8 +58,8 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class,
         HttpClientErrorException.NotFound.class, LocationTypeNotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handle404Exception(Exception exception) {
+    public String handle404Exception(Exception exception, Model model) {
+        model.addAttribute("status", 404);
         return "error/4xx";
     }
 
@@ -69,7 +70,6 @@ public class CommonControllerAdvice {
      * @return the string
      */
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handle5xxException(Exception exception) {
         log.error("server exception caused by: {}", exception.getCause().toString());
         log.error("server exception message : {}", exception.getMessage());
