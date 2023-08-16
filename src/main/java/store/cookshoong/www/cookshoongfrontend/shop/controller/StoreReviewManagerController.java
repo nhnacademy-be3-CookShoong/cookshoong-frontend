@@ -1,5 +1,9 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReplyResponseDto;
@@ -27,6 +36,10 @@ import store.cookshoong.www.cookshoongfrontend.review.service.ReviewBusinessStor
 @Controller
 @RequiredArgsConstructor
 public class StoreReviewManagerController {
+    private final ReviewStoreService reviewStoreService;
+    private final AccountIdAware account;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
     private final ReviewBusinessStoreService reviewBusinessStoreService;
 
     /**
@@ -51,7 +64,25 @@ public class StoreReviewManagerController {
         model.addAttribute("createBusinessReviewRequestDto", createBusinessReviewRequestDto);
         model.addAttribute("updateReplyResponseDto", updateReplyResponseDto);
         model.addAttribute("reviewList", reviewList);
+
+        commonInfo(model, account.getAccountId());
+
         return "store/order/store-review-manager";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 
     /**

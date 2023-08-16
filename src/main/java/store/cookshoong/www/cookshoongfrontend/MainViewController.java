@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
 
 import java.net.MalformedURLException;
@@ -286,14 +287,16 @@ public class MainViewController {
 
     private void commonInfo(Model model, Long accountId) {
 
-
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountId);
-
         CartMenuCountDto cartMenuCountDto =
             cartService.selectCartMenuCountAll(String.valueOf(accountId));
 
-        model.addAttribute("count", cartMenuCountDto.getCount());
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
         model.addAttribute("accountAddresses", accountAddresses);
     }
 }

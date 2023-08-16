@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
@@ -19,6 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreCategoryRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreInfoRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.UpdateStoreManagerRequestDto;
@@ -43,6 +50,8 @@ public class StoreInfoManagerController {
     private final StoreService storeService;
     private final StoreCategoryService storeCategoryService;
     private final StoreInfoManagerService storeInfoManagerService;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
     private final AccountIdAware accountIdAware;
 
     /**
@@ -70,6 +79,8 @@ public class StoreInfoManagerController {
         model.addAttribute("businessStoreList", businessStoreList);
         model.addAttribute("storeName", storeName);
         model.addAttribute("storeInfo", storeInfo);
+
+        commonInfo(model, accountId);
 
         UpdateStoreManagerRequestDto updateStoreManagerRequestDto =
             new UpdateStoreManagerRequestDto(storeInfo.getRepresentativeName(),
@@ -197,5 +208,20 @@ public class StoreInfoManagerController {
         Long accountId = accountIdAware.getAccountId();
         storeInfoManagerService.removeStoreIamge(accountId, storeId);
         return "redirect:/stores/" + storeId + "/store-info-manager";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }

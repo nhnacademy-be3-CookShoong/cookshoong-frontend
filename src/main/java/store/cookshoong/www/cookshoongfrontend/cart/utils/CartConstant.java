@@ -14,4 +14,5 @@ public class CartConstant {
 
     public static final String NO_MENU = "NO_KEY";
     public static final String CART = "cartKey=";
+    public static final Integer CART_COUNT_ZERO = 0;
 }

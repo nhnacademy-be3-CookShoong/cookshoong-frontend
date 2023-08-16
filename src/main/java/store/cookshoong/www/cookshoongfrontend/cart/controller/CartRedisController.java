@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.cart.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
 
 import java.util.ArrayList;
@@ -69,8 +70,10 @@ public class CartRedisController {
 
         model.addAttribute("accountAddresses", accountAddresses);
 
+        cartCountInfo(model, accountId);
+
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
-            createCartDetail(model, cartItems, accountId);
+            createCartDetail(model, cartItems);
             checkOrderPossible(accountId, model);
         }
 
@@ -89,19 +92,29 @@ public class CartRedisController {
         model.addAttribute("explain", checkOrder.getExplain());
     }
 
-    private void createCartDetail(Model model, List<CartRedisDto> cartItems, Long accountId) {
+    private void createCartDetail(Model model, List<CartRedisDto> cartItems) {
         int totalPrice = cartService.calculateTotalPrice(cartItems);
         Long storeId = cartItems.get(0).getStoreId();
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
         String storeName = cartItems.get(0).getStoreName();
-        CartMenuCountDto cartMenuCountDto = cartService.selectCartMenuCountAll(String.valueOf(accountId));
-        model.addAttribute("count", cartMenuCountDto.getCount());
         model.addAttribute("options", options);
         model.addAttribute("storeId", storeId);
         model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("storeName", storeName);
+    }
+
+    private void cartCountInfo(Model model, Long accountId) {
+        CartMenuCountDto cartMenuCountDto = cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
     }
 
     /**
