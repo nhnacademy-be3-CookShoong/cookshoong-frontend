@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewStoreService;
 
@@ -26,11 +27,9 @@ public class StoreReviewManagerController {
     public String businessReviewPage(
         Model model,
         Pageable pageable,
-        @PathVariable("storeId") Long storeId,
-        CreateBusinessReviewRequestDto createBusinessReviewRequestDto) {
+        @PathVariable("storeId") Long storeId) {
         Page<SelectReviewStoreResponseDto> reviewList = reviewStoreService.selectReviewByAccount(storeId, pageable);
         model.addAttribute("storeId", storeId);
-        model.addAttribute("createBusinessReviewRequestDto", createBusinessReviewRequestDto);
         model.addAttribute("reviewList", reviewList);
         return "store/order/store-review-manager";
     }
