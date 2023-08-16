@@ -227,6 +227,7 @@ public class MyPageController {
         Page<PointLogResponseDto> pointLogs = pointService.selectOwnPoints(accountId, pageable);
 
         model.addAttribute("pointLogs", pointLogs);
+        model.addAttribute("buttonNumber", 5);
         return "account/my-points";
     }
 }
