@@ -8,12 +8,12 @@
 <body style="background-image:url('https://64.media.tumblr.com/d0b4f86e3259e366166432cb7021f26e/tumblr_misqjcpaop1rqedcko1_400.gifv');
 background-size: 100%">
 <div class="status-error-message">
-    <h1 class="error-title" th:text="|ERROR ${status != null ? status : ''}|"></h1>
+    <h1 class="error-title" th:text="|ERROR ${status != null ? status : '4xx'}|"></h1>
     <h3 th:if="${status == 403}" class="error-detail">접근 권한이 없습니다.</h3>
     <h3 th:if="${status == 404}" class="error-detail">페이지를 찾을 수 없습니다.</h3>
-    <h3 th:if="${!#strings.isEmpty(errorMessage)}" class="error-detail" th:text="${errorMessage}"></h3>
+    <h4 class="error-detail" style="font-size: 2em" th:text="${!#strings.isEmpty(errorMessage) ? '(' + errorMessage + ')' : '(요청의 문법이 잘못되었거나 요청을 처리할 수 없습니다.)'}"></h4>
     <div>
-        <button th:if="${status == 404}" class="home-btn" onClick="history.back()"><img src="/assets/images/back-btn.png"></button>
+        <button th:if="${status != 403}" class="home-btn" onClick="history.back()"><img src="/assets/images/back-btn.png"></button>
         <button class="home-btn" onClick="location.href='/'"><img src="/assets/images/home-btn.png"></button>
     </div>
 </div>

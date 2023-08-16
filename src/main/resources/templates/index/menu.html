@@ -3,7 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
-
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 <body layout:fragment="content">
 <header th:replace="fragments :: user-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
@@ -12,7 +14,7 @@
 <div class="container-fluid page-body-wrapper">
     <div class="landing-panel">
         <div class="content-wrapper">
-            <form id="addCart" th:action="@{/index/store/menu/cart}" method="POST">
+            <form id="addCart" th:action="@{/index/store/menu/cart}" method="POST" onsubmit="return showSuccessModal()">
 
                 <input type="hidden" name="storeId" th:value="${storeId}">
                 <input type="hidden" name="storeName" th:value="${store.storeName}">
@@ -272,6 +274,16 @@
         count++;
         countElement.value = count;
         updateTotal();
+        showSuccessModal();
+    }
+
+    function showSuccessModal() {
+        Swal.fire({
+            icon: 'success',
+            title: '장바구니에 성공적으로 담겼습니다!',
+            showConfirmButton: false,
+            timer: 1000
+        });
     }
 </script>
 </body>
