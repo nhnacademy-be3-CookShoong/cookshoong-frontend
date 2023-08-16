@@ -21,6 +21,8 @@ import store.cookshoong.www.cookshoongfrontend.address.model.request.CreateAccou
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectAccountOrderInStatusResponseDto;
@@ -43,6 +45,7 @@ public class MyPageController {
     private final AccountIdAware accountIdAware;
     private final OrderService orderService;
     private final CouponManageService couponManageService;
+    private final CartService cartService;
     private final PointService pointService;
 
     /**
@@ -55,7 +58,7 @@ public class MyPageController {
     @GetMapping("/my-page")
     public String getMyPage(UpdateAccountInfoRequestDto updateAccountInfoRequestDto, Model model) {
 
-        addressListHeader(model);
+        addressListHeader(model, accountIdAware.getAccountId());
 
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
@@ -93,7 +96,7 @@ public class MyPageController {
         AddressResponseDto address =
             accountAddressService.selectAccountAddressRenewalAt(accountIdAware.getAccountId());
 
-        addressListHeader(model);
+        addressListHeader(model, accountIdAware.getAccountId());
 
         model.addAttribute("latitude", address.getLatitude());
         model.addAttribute("longitude", address.getLongitude());
@@ -181,18 +184,23 @@ public class MyPageController {
         Page<SelectAccountOrderInStatusResponseDto> orders =
             orderService.selectOwnOrder(accountId, pageable);
 
-        addressListHeader(model);
+        addressListHeader(model, accountId);
 
         model.addAttribute("orders", orders);
         model.addAttribute("createReviewRequestDto", createReviewRequestDto);
         return "account/my-orders";
     }
 
-    private void addressListHeader(Model model) {
+    private void addressListHeader(Model model, Long accountId) {
         List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
+            accountAddressService.selectAccountAddressAll(accountId);
 
         model.addAttribute("accountAddresses", accountAddresses);
+
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        model.addAttribute("count", cartMenuCountDto.getCount());
     }
 
     /**
@@ -227,6 +235,7 @@ public class MyPageController {
         Page<PointLogResponseDto> pointLogs = pointService.selectOwnPoints(accountId, pageable);
 
         model.addAttribute("pointLogs", pointLogs);
+        model.addAttribute("buttonNumber", 5);
         return "account/my-points";
     }
 }

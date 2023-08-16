@@ -129,7 +129,7 @@
                                     </tr>
                                     </thead>
                                     <tbody id="addressTable">
-                                    <tr th:each="payment, i:${orderCompletePage}">
+                                    <tr th:each="payment, i:${orderCompletePage.content}">
                                         <td class="pl-0 pr-0" style="padding: 0.8rem">
                                             <span th:text="${(orderCompletePage.pageable.pageNumber * orderCompletePage.pageable.pageSize) + i.index +1}"></span>
                                         </td>
@@ -172,7 +172,7 @@
                                 </a>
                             </li>
                             <li th:class="${orderCompletePage.first} ? 'disabled'">
-                                <a th:href="${orderCompletePage.first} ? '#' :@{|/stores/${storeId}/store-payment-manager|(page=${banks.number}, size=${banks.size})}"
+                                <a th:href="${orderCompletePage.first} ? '#' :@{|/stores/${storeId}/store-payment-manager|(page=${orderCompletePage.number}, size=${orderCompletePage.size})}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&lt;</span>
                                 </a>
@@ -181,7 +181,7 @@
                                 <a th:text="${page}" th:href="@{|/stores/${storeId}/store-payment-manager|(page=${page}, size=${orderCompletePage.size})}"></a>
                             </li>
                             <li th:class="${orderCompletePage.last} ? 'disabled'">
-                                <a th:href="${orderCompletePage.last} ? '#': @{|/stores/${storeId}/store-payment-manager|(page=${banks.number + 2}, size=${banks.size})}">
+                                <a th:href="${orderCompletePage.last} ? '#': @{|/stores/${storeId}/store-payment-manager|(page=${orderCompletePage.number + 2}, size=${orderCompletePage.size})}">
                                     <span aria-hidden="true">&gt;</span>
                                 </a>
                             </li>

@@ -1,15 +1,14 @@
 package store.cookshoong.www.cookshoongfrontend.shop.adapter;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.HttpMethod.GET;
 
-import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -51,7 +50,7 @@ public class StoreOrderAdapter {
                         .pathSegment(STORE_ID)
                         .buildAndExpand(storeId)
                         .toUri(),
-                HttpMethod.GET,
+                GET,
                 null,
                 new ParameterizedTypeReference<>() {
                 });
@@ -65,25 +64,22 @@ public class StoreOrderAdapter {
      * @param storeId the store id
      * @return the list
      */
-    public RestResponsePage<SelectOrderInStatusResponseDto> fetchOrderInComplete(Long storeId, Pageable pageable) {
+    public Page<SelectOrderInStatusResponseDto> fetchOrderInComplete(Long storeId, Pageable pageable) {
 
-        URI uri = UriComponentsBuilder
-                .fromUriString(apiProperties.getGatewayUrl())
-                .pathSegment(ORDER)
-                .pathSegment(STORE_ID)
-                .pathSegment(COMPLETE)
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .buildAndExpand(storeId)
-                .toUri();
+        ResponseEntity<RestResponsePage<SelectOrderInStatusResponseDto>> response = restTemplate.exchange(
+            RestResponsePage.pageableToParameter(
+                UriComponentsBuilder
+                    .fromUriString(apiProperties.getGatewayUrl())
+                    .pathSegment(ORDER)
+                    .pathSegment(STORE_ID)
+                    .pathSegment(COMPLETE)
+                    .buildAndExpand(storeId), pageable),
+                GET,
+                null,
+                new ParameterizedTypeReference<>(){
 
-        RequestEntity<Void> request = RequestEntity.get(uri)
-                .accept(APPLICATION_JSON)
-                .build();
-
-        ResponseEntity<RestResponsePage<SelectOrderInStatusResponseDto>> response =
-                restTemplate.exchange(request, new ParameterizedTypeReference<>() {
-                });
+                }
+            );
 
         return response.getBody();
     }
