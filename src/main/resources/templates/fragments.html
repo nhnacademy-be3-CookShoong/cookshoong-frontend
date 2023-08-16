@@ -46,7 +46,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -65,7 +66,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -266,7 +268,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -285,7 +288,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -353,6 +357,7 @@
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
                     <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -368,7 +373,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -493,7 +499,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
+                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -512,7 +519,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2">장바구니
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
+                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>

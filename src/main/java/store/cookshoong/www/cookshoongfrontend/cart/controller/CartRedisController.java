@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
@@ -69,7 +70,7 @@ public class CartRedisController {
         model.addAttribute("accountAddresses", accountAddresses);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
-            createCartDetail(model, cartItems);
+            createCartDetail(model, cartItems, accountId);
             checkOrderPossible(accountId, model);
         }
 
@@ -88,12 +89,14 @@ public class CartRedisController {
         model.addAttribute("explain", checkOrder.getExplain());
     }
 
-    private void createCartDetail(Model model, List<CartRedisDto> cartItems) {
+    private void createCartDetail(Model model, List<CartRedisDto> cartItems, Long accountId) {
         int totalPrice = cartService.calculateTotalPrice(cartItems);
         Long storeId = cartItems.get(0).getStoreId();
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
         String storeName = cartItems.get(0).getStoreName();
+        CartMenuCountDto cartMenuCountDto = cartService.selectCartMenuCountAll(String.valueOf(accountId));
+        model.addAttribute("count", cartMenuCountDto.getCount());
         model.addAttribute("options", options);
         model.addAttribute("storeId", storeId);
         model.addAttribute("optionGroups", optionGroups);
