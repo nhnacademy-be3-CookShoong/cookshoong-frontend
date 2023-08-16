@@ -12,46 +12,7 @@
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
 
-<div class="modal fade" id="replyAdd">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form class="col-12 p-0" th:action="@{'reply'}"
-                      th:object="${createBusinessReviewRequestDto}"
-                      method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h2 class="card-title">신규 메뉴 등록</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">리뷰 답변</h4>
-                                <div class="form-group">
-                                    <input type="text" name="content" id="content" hidden="hidden">
-                                    <div id="editor"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="btn btn-info m-1" type="submit" id="submitButton"
-                                        name="submitButton">답변</button>
-                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
@@ -82,6 +43,7 @@
                                                         type="button"
                                                         data-toggle="modal"
                                                         data-target="#replyAdd"
+                                                        th:data-reviewid="${review.getSelectReviewResponse().reviewId}"
                                                         th:text="'답변'">
                                                 </button>
                                             </div>
@@ -130,6 +92,140 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card pt-3 pb-3 pl-1 pr-1 mb-2"  style="background-color: #d2c6c5;" th:each="reply, i : ${review.getSelectReviewResponse().getReplyResponses()}">
+                                    <div>
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                            <div>
+                                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                                    <strong style="font-size: 20px;">내 답변</strong>
+                                                </div>
+                                                <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                                <span th:text="${#temporals.format(reply.writtenAt, 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                                      style="color: grey"></span>
+                                                </div>
+                                                <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                                    <span th:utext="${reply.contents}"></span>
+                                                </div>
+                                                <div class="row pl-3">
+                                                    <button class="btn btn-primary m-1" style="width: 85px; height: 40px;"
+                                                            type="button"
+                                                            data-toggle="modal"
+                                                            data-target="#replyModify"
+                                                            th:data-replyid="${reply.reviewReplyId}"
+                                                            th:data-replycontents="${reply.contents}"
+                                                            th:text="'수정'">
+                                                    </button>
+                                                </div>
+                                                <div class="row pl-3">
+                                                    <button type="button" class="btn btn-primary m-1" data-toggle="modal"
+                                                            th:data-target="'#replyDelete'">삭제</button>
+                                                </div>
+                                                <div class="modal fade" th:id="'replyDelete'">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <form class="col-12 p-0"
+                                                                      th:action="@{|/stores/${storeId}/store-review-manager/reply/${reply.getReviewReplyId()}|}"
+                                                                      th:method="delete">
+                                                                    <div class="col-12 grid-margin stretch-card">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h4 class="card-title">해당 답글을 삭제하시겠습니까?</h4>
+                                                                                <button class="btn btn-info mr-2" type="submit">예</button>
+                                                                                <button class="btn btn-light" data-dismiss="modal">아니오</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="replyModify">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <form class="col-12 p-0" th:action="@{|/stores/${storeId}/store-review-manager/reply|}"
+                                                                      th:object="${updateReplyResponseDto}"
+                                                                      th:method="patch">
+                                                                    <div class="col-12 grid-margin stretch-card">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h2 class="card-title">수정</h2>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 grid-margin stretch-card">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h4 class="card-title">답글 수정</h4>
+                                                                                <div class="form-group">
+                                                                                    <div id="replyEditor"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 grid-margin stretch-card">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <input type="number" name="replyId" id="replyId" hidden="hidden">
+                                                                                <input type="text" name="replyContents" id="replyContents" hidden="hidden">
+                                                                                <button class="btn btn-info m-1" type="submit" id="submitReplyButton"
+                                                                                        name="submitReplyButton">수정</button>
+                                                                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="replyAdd">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <form class="col-12 p-0" th:action="@{|/stores/${storeId}/store-review-manager/reply|}"
+                                                      th:object="${createBusinessReviewRequestDto}"
+                                                      method="post">
+                                                    <div class="col-12 grid-margin stretch-card">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h2 class="card-title">답글작성</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 grid-margin stretch-card">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">리뷰 답글 작성하기</h4>
+                                                                <div class="form-group">
+                                                                    <div id="editor"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 grid-margin stretch-card">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <input type="number" name="reviewId" id="reviewId" hidden="hidden">
+                                                                <input type="text" name="contents" id="contents" hidden="hidden">
+                                                                <button class="btn btn-info m-1" type="submit" id="submitButton"
+                                                                        name="submitButton">답변</button>
+                                                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -145,7 +241,12 @@
     let editor;
 
     $('#replyAdd').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const reviewId = button.data('reviewid')
         const initialValue = ' '
+
+        const modal = $(this)
+        modal.find('input[name="reviewId"]').val(reviewId)
 
         editor = new toastui.Editor({
             el: document.querySelector('#editor'),
@@ -163,7 +264,40 @@
 
         document.querySelector('#submitButton').addEventListener('click', function () {
             let editorContent = editor.getHTML();
-            document.querySelector('#content').value = editorContent;
+            document.querySelector('#contents').value = editorContent;
+        });
+    });
+
+    let replyEditor;
+
+    $('#replyModify').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+
+        const replyId = button.data('replyid')
+        console.log(replyId)
+        const replyContents = button.data('replycontents')
+        const initialValue = ' '
+
+        const modal = $(this)
+        modal.find('input[name="replyId"]').val(replyId)
+        modal.find('input[name="replyContents"]').val(replyContents);
+
+        replyEditor = new toastui.Editor({
+            el: document.querySelector('#replyEditor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '300px',
+            initialValue: replyContents,
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
+        });
+
+        document.querySelector('#submitReplyButton').addEventListener('click', function () {
+            let editorContent = replyEditor.getHTML();
+            document.querySelector('#replyContents').value = editorContent;
         });
     });
 </script>

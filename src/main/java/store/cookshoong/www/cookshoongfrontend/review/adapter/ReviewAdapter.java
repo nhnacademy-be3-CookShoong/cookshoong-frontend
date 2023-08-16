@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 
 /**
@@ -50,7 +51,26 @@ public class ReviewAdapter {
         return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
         });
     }
+    public ResponseEntity<Void> executeUpdateReview(Long accountId,
+                                                    Long reviewId, UpdateReviewResponseDto updateReviewResponseDto) {
 
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("accounts")
+            .pathSegment("{accountId}")
+            .pathSegment("review")
+            .pathSegment("{reviewId}")
+            .buildAndExpand(accountId, reviewId)
+            .toUri();
+
+        RequestEntity<UpdateReviewResponseDto> request = RequestEntity.patch(uri)
+            .contentType(APPLICATION_JSON)
+            .body(updateReviewResponseDto);
+
+        return restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+    }
     /**
      * 회원이 작성란 리뷰에 대해 조회하는 Adapter.
      *

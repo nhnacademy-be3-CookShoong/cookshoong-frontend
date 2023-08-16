@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewBusinessAdapter;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.ModifyBusinessReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReplyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
@@ -39,7 +40,7 @@ public class ReviewBusinessStoreService {
      * @param reviewReplyId      리뷰 답글 아이디
      * @param requestDto         리뷰 답글 내용
      */
-    public void updateAccountReviewByReviewReply(Long reviewReplyId, ModifyBusinessReviewRequestDto requestDto) {
+    public void updateAccountReviewByReviewReply(Long reviewReplyId, UpdateReplyResponseDto requestDto) {
 
         reviewBusinessAdapter.changeAccountReviewByReviewReply(reviewReplyId, requestDto);
     }
@@ -51,7 +52,7 @@ public class ReviewBusinessStoreService {
      * @param pageable      페이지 처리
      * @return              회원이 작성한 모든 리뷰를 반환
      */
-    public Page<SelectReviewStoreResponseDto> selectReviewByAccount(Long storeId, Pageable pageable) {
+    public Page<SelectReviewStoreResponseDto> selectReviewByStore(Long storeId, Pageable pageable) {
 
         return reviewBusinessAdapter.fetchBusinessReviewByStore(storeId, pageable);
     }
