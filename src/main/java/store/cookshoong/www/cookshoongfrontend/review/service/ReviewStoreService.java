@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewStoreAdapter;
-import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
 /**

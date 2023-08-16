@@ -11,6 +11,48 @@
 <header th:replace="fragments :: mypage-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
+
+<div class="modal fade" id="reviewEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="col-12 p-0" th:action="@{'reviewEdit'}"
+                      th:object="${createReviewRequestDto}"
+                      method="post">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title">신규 메뉴 등록</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">리뷰 수정</h4>
+                                <div class="form-group">
+                                    <input type="text" name="content" id="content" hidden="hidden">
+                                    <div id="editor"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-info m-1" type="submit" id="submitButton"
+                                        name="submitButton">수정</button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: mypage-site-nav"></nav>
     <div class="main-panel">
@@ -27,44 +69,68 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">내 리뷰</h2>
+
                         </div>
                         <div class="card-body">
-                            <div class="card pt-3 pb-3 pl-1 pr-1 mb-2" th:each="review, i:${accountReviews}">
-                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                    <strong style="font-size: 20px;" th:text="${review.getStoreName()}"></strong>
-                                    <span th:text="${review.getWrittenAt()}" style="color: grey"></span>
-                                </div>
-                                <div class="row pl-3 pr-3 pt-1 pb-3 m-0">
-                                    <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="${review.getRating() + '.0'}"></strong>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                    <span th:utext="${review.getContents()}"></span>
-                                </div>
+                            <div class="row card border-0 flex-fill" th:each="review, i:${accountReviews}">
+                                <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+                                    <div>
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                            <strong style="font-size: 20px;"
+                                                    th:text="${review.getStoreName()}"></strong>
+                                            <div class="row pl-3">
+                                                <button class="btn btn-light m-1" style="width: 85px; height: 40px;"
+                                                        type="button"
+                                                        data-toggle="modal"
+                                                        data-target="#reviewEdit"
+                                                        th:data-content="${review.contents}"
+                                                        th:text="'수정'">
+                                                </button>
+                                            </div>
+                                        </div>
 
-                                <div class="row p-0 m-0">
-                                    <div class="pl-3 pr-3 pt-1 pb-3 m-0" th:each="image, i:${review.getImageResponseDtos()}">
-                                        <img th:src="${image.getSavedName()}" alt=""
-                                             onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
-                                             style="object-fit: cover; width: 130px; height: 130px;">
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                    <span th:text="${#temporals.format(review.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                          style="color: grey"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <strong class="pt-1 mr-2" style="font-size: 20px;"
+                                                    th:text="${review.getRating() + '.0'}"></strong>
+                                            <span th:class="${review.getRating() >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.getRating() >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.getRating() >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.getRating() >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.getRating() == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                        </div>
+
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <span th:utext="${review.getContents()}"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="image, i:${review.getImageResponseDtos()}">
+                                                <img th:src="${image.getSavedName()}" alt=""
+                                                     onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                                     style="object-fit: cover; width: 130px; height: 130px;">
+                                            </div>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="menu, i:${review.getMenuResponseDtos()}">
+                                                    <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"
+                                                          style="border-radius: 6px; background-color: #ffb429"
+                                                          th:text="${menu.menuName}"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  th:each="menu, i:${review.getMenuResponseDtos()}"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="${menu.menuName}"></span>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +157,35 @@
             for (let i = 0; i <= index; i++) {
                 document.querySelectorAll('.star-btn')[i].className = "typcn typcn-star-full-outline p-0 m-1 border-0 star-btn";
             }
+        });
+    });
+</script>
+<script>
+    let editor;
+
+    $('#reviewEdit').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const content = button.data('content') || '내용을 입력해주세요.'
+
+        const modal = $(this)
+        modal.find('input[name="content"]').val(content)
+
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '300px',
+            initialValue: content,
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#content').value = editorContent;
         });
     });
 </script>

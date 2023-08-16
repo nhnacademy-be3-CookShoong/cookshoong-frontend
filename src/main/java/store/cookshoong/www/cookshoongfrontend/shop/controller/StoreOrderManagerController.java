@@ -16,7 +16,6 @@ import store.cookshoong.www.cookshoongfrontend.order.model.request.PatchOrderReq
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderInStatusResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
-import store.cookshoong.www.cookshoongfrontend.payment.model.response.TossPaymentKeyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
 
 /**

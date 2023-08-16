@@ -3,21 +3,16 @@ package store.cookshoong.www.cookshoongfrontend.review.adapter;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.net.URI;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
-import store.cookshoong.www.cookshoongfrontend.file.model.LocationCode;
-import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
 /**

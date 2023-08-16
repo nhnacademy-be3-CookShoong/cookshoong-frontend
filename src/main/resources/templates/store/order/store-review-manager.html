@@ -11,6 +11,48 @@
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
 <div th:replace="fragments :: all-address-list"></div>
+
+<div class="modal fade" id="replyAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="col-12 p-0" th:action="@{'reply'}"
+                      th:object="${createBusinessReviewRequestDto}"
+                      method="post">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title">신규 메뉴 등록</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">리뷰 답변</h4>
+                                <div class="form-group">
+                                    <input type="text" name="content" id="content" hidden="hidden">
+                                    <div id="editor"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-info m-1" type="submit" id="submitButton"
+                                        name="submitButton">답변</button>
+                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid page-body-wrapper">
     <nav th:replace="fragments :: business-site-nav"></nav>
     <div class="main-panel">
@@ -29,46 +71,63 @@
                             <h2 class="store-title">리뷰 관리</h2>
                         </div>
                         <div class="card-body">
-                            <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
-                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
-                                    <strong style="font-size: 20px;" th:text="'조금 이상한 손님'"></strong>
-                                    <div class="p-0 m-0">
-                                        <button class="btn btn-danger font-weight-bold p-2" th:text="'답변 남기기'" onclick="showEditor()"></button>
-                                    </div>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-1 m-0">
-                                    <p th:text="'2023년 8월 13일 주문'" style="color: grey"></p>
-                                </div>
-                                <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
-                                    <strong class="pt-1 mr-2" style="font-size: 20px;" th:text="'5.0'"></strong>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                    <span class="typcn typcn-star-full-outline"
-                                          style="color: #ea6b19; font-size: 25px;"></span>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                    <span th:text="'사장님이 맛있고, 음식이 친절해요. 또 시킬꺼야. 월요일도 시키고 화요일도 시키고 수요일도 시키고 목요일도 시키고 금요일도 시키고 토요일도 시키고 일요일도 시킬꺼야. 계속 시킬꺼야. 사장님 조아. 피자 조아.'"></span>
-                                </div>
-                                <div class="pl-3 pr-3 pt-1 pb-3 m-0">
-                                            <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0
-                                            border-left border-right border-top border-bottom font-weight-bold"
-                                                  style="border-radius: 6px; background-color: #ffb429"
-                                                  th:text="'드래곤 스테이크 허니 콤보'"></span>
-                                </div>
-                                <div class="p-1 m-3 border-top border-bottom border-left border-right" id="reviewBox" style="display: none;">
-                                    <div class="p-3" id="editor">
-                                    </div>
-                                    <div class="pl-3 pr-3 pt-1 pb-1">
-                                        <button class="btn btn-danger font-weight-bold p-2"
-                                                th:text="'답변 등록하기'"
-                                                id="submitButton">
-                                        </button>
+                            <div class="row card border-0 flex-fill" th:each="review, i:${reviewList}">
+                                <div class="card pt-3 pb-3 pl-1 pr-1 mb-2">
+
+                                    <div>
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
+                                            <strong style="font-size: 20px;" th:text="${review.nickname}"></strong>
+                                            <div class="row pl-3">
+                                                <button class="btn btn-primary m-1" style="width: 85px; height: 40px;"
+                                                        type="button"
+                                                        data-toggle="modal"
+                                                        data-target="#replyAdd"
+                                                        th:text="'답변'">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                                <span th:text="${#temporals.format(review.selectReviewResponseDto.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                                      style="color: grey"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <strong class="pt-1 mr-2" style="font-size: 20px;"
+                                                    th:text="${review.selectReviewResponseDto.rating + '.0'}"></strong>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                            <span th:class="${review.selectReviewResponseDto.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                  style="color: #ea6b19; font-size: 25px;"></span>
+                                        </div>
+
+                                        <div class="pl-3 pr-3 pt-1 pb-1 m-0">
+                                            <span th:utext="${review.selectReviewResponseDto.contents}"></span>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="image, i:${review.selectReviewResponseDto.imageResponseDtos}">
+                                                <img th:src="${image.getSavedName()}" alt=""
+                                                     onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
+                                                     style="object-fit: cover; width: 130px; height: 130px;">
+                                            </div>
+                                        </div>
+
+                                        <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
+                                            <div class="pl-1 pr-1 pt-1 pb-3 m-0"
+                                                 th:each="menu, i:${review.selectReviewResponseDto.menuResponseDtos}">
+                                                    <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"
+                                                          style="border-radius: 6px; background-color: #ffb429"
+                                                          th:text="${menu.menuName}"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,21 +142,29 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <script>
-    const editor = new toastui.Editor({
-        initialEditType: 'wysiwyg',
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '200px',
-        placeholder: '리뷰에 답변해주세요.'
-    });
+    let editor;
 
-    function showEditor() {
-        document.getElementById('reviewBox').style.display = 'block';
-    }
+    $('#replyAdd').on('show.bs.modal', function (event) {
+        const initialValue = ' '
 
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '300px',
+            initialValue: initialValue,
+            placeholder: '리뷰에 답변해주세요.',
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#content').value = editorContent;
+        });
     });
 </script>
 <footer th:replace="fragments :: site-footer"></footer>
