@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAdd
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
@@ -84,10 +86,7 @@ public class MainViewController {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
 
-            List<AccountAddressResponseDto> accountAddresses =
-                accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
-
-            model.addAttribute("accountAddresses", accountAddresses);
+            commonInfo(model, accountId);
 
             if (CustomAuthorityUtils.match("ROLE_BUSINESS", ((JwtAuthentication) principal).getAuthorities())) {
                 List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
@@ -183,10 +182,7 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
-
-        model.addAttribute("accountAddresses", accountAddresses);
+        commonInfo(model, accountId);
 
         Page<SelectReviewStoreResponseDto> reviewList = reviewStoreService.selectReviewByAccount(storeId, pageable);
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
@@ -219,10 +215,7 @@ public class MainViewController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
 
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
-
-        model.addAttribute("accountAddresses", accountAddresses);
+        commonInfo(model, accountId);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
             List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
@@ -289,5 +282,18 @@ public class MainViewController {
     @GetMapping("/admin")
     public String adminMain() {
         return "/admin/index";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        model.addAttribute("count", cartMenuCountDto.getCount());
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }
