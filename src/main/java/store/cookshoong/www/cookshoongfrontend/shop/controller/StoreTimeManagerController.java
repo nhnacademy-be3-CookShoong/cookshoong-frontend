@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.Valid;
@@ -13,6 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBusinessHourRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateHolidayRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
@@ -34,6 +41,8 @@ public class StoreTimeManagerController {
     private final StoreService storeService;
     private final StoreTimeManagerService storeTimeManagerService;
     private final AccountIdAware accountIdAware;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
 
     /**
      * 매장 영업시간 관리 페이지를 맵핑.
@@ -61,6 +70,9 @@ public class StoreTimeManagerController {
         model.addAttribute("storeId", storeId);
         model.addAttribute("businessHours", businessHourList);
         model.addAttribute("holidays", holidayList);
+
+        commonInfo(model, accountId);
+
         return "store/info/store-time-manager";
     }
 
@@ -118,5 +130,20 @@ public class StoreTimeManagerController {
         @PathVariable("storeId") Long storeId, @PathVariable("holidayId") Long holidayId) {
         storeTimeManagerService.deleteHoliday(storeId, holidayId);
         return "redirect:" + "/stores/" + storeId + "/store-time-manager";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }

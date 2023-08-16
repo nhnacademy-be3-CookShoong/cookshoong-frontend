@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -200,7 +203,13 @@ public class MyPageController {
         CartMenuCountDto cartMenuCountDto =
             cartService.selectCartMenuCountAll(String.valueOf(accountId));
 
-        model.addAttribute("count", cartMenuCountDto.getCount());
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
     }
 
     /**
@@ -214,6 +223,8 @@ public class MyPageController {
     public String getMyCoupons(Pageable pageable, Model model) {
         Long accountId = accountIdAware.getAccountId();
         Page<SelectOwnCouponResponseDto> coupons = couponManageService.selectOwnCoupons(accountId, pageable);
+
+        addressListHeader(model, accountId);
 
         model.addAttribute("coupons", coupons);
         return "account/my-coupons";
@@ -233,6 +244,8 @@ public class MyPageController {
         model.addAttribute("totalPoint", totalPoint);
 
         Page<PointLogResponseDto> pointLogs = pointService.selectOwnPoints(accountId, pageable);
+
+        addressListHeader(model, accountId);
 
         model.addAttribute("pointLogs", pointLogs);
         model.addAttribute("buttonNumber", 5);

@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionGroupRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateOptionRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
@@ -32,6 +39,8 @@ public class StoreOptionManagerController {
     private final StoreService storeService;
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountIdAware accountIdAware;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
 
     /**
      * 매장 옵션 관리 페이지 맵핑.
@@ -60,6 +69,9 @@ public class StoreOptionManagerController {
         model.addAttribute("optionGroups", optionGroups);
         model.addAttribute("createOptionRequestDto", createOptionRequestDto);
         model.addAttribute("createOptionGroupRequestDto", createOptionGroupRequestDto);
+
+        commonInfo(model, accountId);
+
         return "store/menu/store-option-manager";
     }
 
@@ -120,5 +132,20 @@ public class StoreOptionManagerController {
     public String postDeleteOption(@PathVariable("storeId") Long storeId, @PathVariable("optionId") Long optionId) {
         storeOptionManagerService.deleteOption(storeId, optionId);
         return "redirect:" + "/stores/" + storeId + "/store-option-manager";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }

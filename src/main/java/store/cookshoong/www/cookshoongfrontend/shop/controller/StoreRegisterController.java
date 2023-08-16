@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
@@ -13,6 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
+import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateStoreRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllBanksResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
@@ -36,6 +43,8 @@ public class StoreRegisterController {
     private final StoreCategoryService storeCategoryService;
     private final MerchantService merchantService;
     private final AccountIdAware accountIdAware;
+    private final AccountAddressService accountAddressService;
+    private final CartService cartService;
 
 
     private void registerFormData(Model model, CreateStoreRequestDto createStoreRequestDto) {
@@ -60,6 +69,8 @@ public class StoreRegisterController {
         Long accountId = accountIdAware.getAccountId();
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
+
+        commonInfo(model, accountId);
 
         registerFormData(model, createStoreRequestDto);
         return "store/register/store-register";
@@ -93,5 +104,20 @@ public class StoreRegisterController {
         Long accountId = accountIdAware.getAccountId();
         String storePath = storeService.createStore(accountId, createStoreRequestDto, businessLicense, storeImage);
         return "redirect:" + storePath;
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+        model.addAttribute("accountAddresses", accountAddresses);
     }
 }
