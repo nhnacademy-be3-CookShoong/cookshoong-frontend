@@ -88,32 +88,32 @@
                                         </div>
 
                                         <div class="pl-3 pr-3 pt-1 pb-1 m-0">
-                                                <span th:text="${#temporals.format(review.selectReviewResponseDto.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
+                                                <span th:text="${#temporals.format(review.selectReviewResponse.getWrittenAt(), 'yyyy년 MM월 dd일 HH시 mm분 작성')}"
                                                       style="color: grey"></span>
                                         </div>
 
                                         <div class="row pl-3 pr-3 pt-1 pb-1 m-0">
                                             <strong class="pt-1 mr-2" style="font-size: 20px;"
-                                                    th:text="${review.selectReviewResponseDto.rating + '.0'}"></strong>
-                                            <span th:class="${review.selectReviewResponseDto.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                                    th:text="${review.selectReviewResponse.rating + '.0'}"></strong>
+                                            <span th:class="${review.selectReviewResponse.rating >= 1} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
                                                   style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span th:class="${review.selectReviewResponseDto.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                            <span th:class="${review.selectReviewResponse.rating >= 2} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
                                                   style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span th:class="${review.selectReviewResponseDto.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                            <span th:class="${review.selectReviewResponse.rating >= 3} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
                                                   style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span th:class="${review.selectReviewResponseDto.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                            <span th:class="${review.selectReviewResponse.rating >= 4} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
                                                   style="color: #ea6b19; font-size: 25px;"></span>
-                                            <span th:class="${review.selectReviewResponseDto.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
+                                            <span th:class="${review.selectReviewResponse.rating == 5} ? 'typcn typcn-star-full-outline' : 'typcn typcn-star-outline'"
                                                   style="color: #ea6b19; font-size: 25px;"></span>
                                         </div>
 
                                         <div class="pl-3 pr-3 pt-1 pb-1 m-0">
-                                            <span th:utext="${review.selectReviewResponseDto.contents}"></span>
+                                            <span th:utext="${review.selectReviewResponse.contents}"></span>
                                         </div>
 
                                         <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
                                             <div class="pl-1 pr-1 pt-1 pb-3 m-0"
-                                                 th:each="image, i:${review.selectReviewResponseDto.imageResponseDtos}">
+                                                 th:each="image, i:${review.selectReviewResponse.imageResponses}">
                                                 <img th:src="${image.getSavedName()}" alt=""
                                                      onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
                                                      style="object-fit: cover; width: 130px; height: 130px;">
@@ -122,7 +122,7 @@
 
                                         <div class="row pl-3 pr-3 pt-0 pb-0 m-0">
                                             <div class="pl-1 pr-1 pt-1 pb-3 m-0"
-                                                 th:each="menu, i:${review.selectReviewResponseDto.menuResponseDtos}">
+                                                 th:each="menu, i:${review.selectReviewResponse.menuResponses}">
                                                     <span class="w-auto pl-3 pr-3 pt-2 pb-2 m-0 border-left border-right border-top border-bottom font-weight-bold"
                                                           style="border-radius: 6px; background-color: #ffb429"
                                                           th:text="${menu.menuName}"></span>
