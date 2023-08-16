@@ -19,4 +19,5 @@ public class SelectAccountOrderInStatusResponseDto {
     private Integer pointDiscountAmount;
     private Integer deliveryCost;
     private int totalOrderPrice;
+    private boolean writableReview;
 }
