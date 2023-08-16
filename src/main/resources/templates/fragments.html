@@ -46,8 +46,7 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
-                        <div class="qtc" th:text="${count}"></div>
+                    <a th:href="@{/carts}" style="color: white; font-size: 1.2rem; position: relative;" class="mr-2 mdi mdi-basket cart-header">
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -55,6 +54,7 @@
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-login">
                     </a>
+                    <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
                 <div class="navbar-toggler-ex">
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}"
@@ -66,8 +66,7 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
-                        <div class="qtc" th:text="${count}"></div>
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header" th:text="'장바구니 ('+${count}+')'">
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -269,7 +268,6 @@
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
                     <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
-                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -277,6 +275,7 @@
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-login">
                     </a>
+                    <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
                 <div class="navbar-toggler-ex">
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}"
@@ -288,8 +287,8 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
-                        <div class="qtc" th:text="${count}"></div>
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header" th:text="'장바구니 ('+${count}+')'">
+
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -357,7 +356,6 @@
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
                     <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket">
-                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -365,6 +363,7 @@
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-login">
                     </a>
+                    <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
                 <div class="navbar-toggler-ex">
                     <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/management/banks}"
@@ -373,8 +372,7 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
-                        <div class="qtc" th:text="${count}"></div>
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header" th:text="'장바구니 ('+${count}+')'">
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
@@ -500,7 +498,6 @@
                        class="mr-2 mdi mdi-store" data-toggle="modal" data-target="#storeList">
                     </a>
                     <a th:href="@{/carts}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-basket cart-header">
-                        <div class="qtc" th:text="${count}"></div>
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-human-greeting">
@@ -508,6 +505,7 @@
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
                        class="mr-2 mdi mdi-login">
                     </a>
+                    <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
                 <div class="navbar-toggler-ex">
                     <a th:href="@{/my-address}" style="color: white; font-size: 0.85rem" class="mr-2" type="button"
@@ -519,8 +517,7 @@
                     <a sec:authorize="hasRole('BUSINESS')" th:href="@{/stores}" style="color: white; font-size: 0.85rem"
                        class="mr-2" data-toggle="modal" data-target="#storeList">매장보기
                     </a>
-                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header">장바구니
-                        <div class="qtc" th:text="${count}"></div>
+                    <a th:href="@{/carts}" style="color: white; font-size: 0.85rem" class="mr-2 cart-header" th:text="'장바구니 ('+${count}+')'">
                     </a>
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
