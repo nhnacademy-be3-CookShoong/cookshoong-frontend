@@ -12,7 +12,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import store.cookshoong.www.cookshoongfrontend.file.model.FileDomain;
 import store.cookshoong.www.cookshoongfrontend.review.adapter.ReviewAdapter;
+import store.cookshoong.www.cookshoongfrontend.review.exception.RegisterReviewFailureException;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.exception.RegisterStoreFailureException;
 
@@ -43,7 +45,14 @@ public class ReviewService {
         ResponseEntity<Void> response = reviewAdapter.executeCreateReview(accountId, fileMap);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RegisterStoreFailureException(response.getStatusCode());
+            throw new RegisterReviewFailureException(response.getStatusCode());
+        }
+    }
+
+    public void updateReview(Long accountId, Long reviewId, UpdateReviewResponseDto updateReviewResponseDto){
+        ResponseEntity<Void> response = reviewAdapter.executeUpdateReview(accountId, reviewId, updateReviewResponseDto);
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RegisterReviewFailureException(response.getStatusCode());
         }
     }
 
