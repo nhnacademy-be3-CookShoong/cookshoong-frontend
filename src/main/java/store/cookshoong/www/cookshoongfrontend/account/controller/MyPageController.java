@@ -236,6 +236,10 @@ public class MyPageController {
 
         model.addAttribute("pointLogs", pointLogs);
         model.addAttribute("buttonNumber", 5);
+        model.addAttribute("balance", pointLogs.stream()
+            .mapToInt(PointLogResponseDto::getPointMovement)
+            .sum()
+        );
         return "account/my-points";
     }
 }
