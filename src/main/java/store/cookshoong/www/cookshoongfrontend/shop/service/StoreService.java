@@ -60,6 +60,17 @@ public class StoreService {
         return storeAdapter.fetchStoresByKeyword(keyword, addressId, pageable);
     }
 
+    /**
+     * 사용자 : 별점 기준 매장 리스트 조회 메서드.
+     *
+     * @param addressId the address id
+     * @param pageable  페이지 파라미터
+     * @return the rest response page
+     */
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> selectStoresByRating(Long addressId, Pageable pageable) {
+        return storeAdapter.fetchStoresByRating(addressId, pageable);
+    }
+
 
     /**
      * 사업자 : 매장 등록 메서드.

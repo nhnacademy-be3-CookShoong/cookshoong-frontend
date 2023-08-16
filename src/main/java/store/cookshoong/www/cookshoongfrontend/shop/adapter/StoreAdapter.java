@@ -153,6 +153,36 @@ public class StoreAdapter {
         return response.getBody();
     }
 
+    /**
+     * 사용자 : 별점 기준 매장 리스트 조회 메서드.
+     *
+     * @param pageable 페이지 파라미터
+     * @return response rest response page
+     */
+    public RestResponsePage<SelectStoresKeywordSearchResponseDto> fetchStoresByRating(Long addressId, Pageable pageable) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("stores")
+            .pathSegment("search")
+            .pathSegment("rating")
+            .queryParam("addressId", addressId)
+            .queryParam("page", pageable.getPageNumber())
+            .queryParam("size", pageable.getPageSize())
+            .build()
+            .toUri();
+
+        RequestEntity<Void> request = RequestEntity.get(uri)
+            .accept(MediaType.APPLICATION_JSON)
+            .build();
+
+        ResponseEntity<RestResponsePage<SelectStoresKeywordSearchResponseDto>> response
+            = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
+        });
+
+        return response.getBody();
+    }
 
     /**
      * 매장 조회 메서드.
