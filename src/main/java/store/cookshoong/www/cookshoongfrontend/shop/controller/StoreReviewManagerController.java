@@ -36,7 +36,6 @@ import store.cookshoong.www.cookshoongfrontend.review.service.ReviewBusinessStor
 @Controller
 @RequiredArgsConstructor
 public class StoreReviewManagerController {
-    private final ReviewStoreService reviewStoreService;
     private final AccountIdAware account;
     private final AccountAddressService accountAddressService;
     private final CartService cartService;

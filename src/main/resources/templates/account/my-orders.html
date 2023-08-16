@@ -82,10 +82,11 @@
                                                 <h2 th:text="${#numbers.formatInteger(orderInfo.getChargedAmount(), 0, 'COMMA')}"></h2>
                                             </div>
                                             <div th:if="${orderInfo.getOrderStatusDescription() == '배달완료' || orderInfo.getOrderStatusDescription() == '환불'}">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                <button type="button" class="btn btn-block btn-inverse-warning" data-toggle="modal"
                                                         th:data-target="'#reviewModal'"
-                                                        th:data-ordercode="${orderInfo.getOrderCode()}">리뷰 작성하기
+                                                        th:data-ordercode="${orderInfo.getOrderCode()}" th:if="${order.writableReview==true}">리뷰 작성하기
                                                 </button>
+                                                <button type="button" class="btn btn-block btn-dark" th:if="${order.writableReview==false}" disabled>리뷰 작성완료</button>
 
                                             </div>
                                         </div>
