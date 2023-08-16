@@ -23,7 +23,7 @@ public class SelectStoresKeywordSearchResponseDto {
     private Integer minimumCookingTime;
     private Integer countReview;
     private Float avgRating;
-    private Boolean isEventOngoing;
+    private Boolean offerCoupon;
     private List<String> categories;
 
 }
