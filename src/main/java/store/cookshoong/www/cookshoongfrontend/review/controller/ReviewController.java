@@ -27,7 +27,7 @@ import store.cookshoong.www.cookshoongfrontend.review.service.ReviewService;
 /**
  * 리뷰 등록, 수정, 조회를 위한 controller.
  *
- * @author seungyeon
+ * @author seungyeon (유승연)
  * @since 2023.08.13
  */
 @Controller
@@ -41,8 +41,10 @@ public class ReviewController {
     /**
      * 회원 리뷰 페이지 진입.
      *
-     * @param model                  the model
-     * @param createReviewRequestDto the create review request dto
+     * @param model                   the model
+     * @param pageable                the pageable
+     * @param createReviewRequestDto  the create review request dto
+     * @param updateReviewResponseDto the update review response dto
      * @return the my review
      */
     @GetMapping("/my-review")
@@ -64,7 +66,7 @@ public class ReviewController {
     }
 
     /**
-     * Post create store string.
+     * 사용자 : 리뷰 등록을 위한 controller.
      *
      * @param createReviewRequestDto the create review request dto
      * @param bindingResult          the binding result
@@ -86,6 +88,13 @@ public class ReviewController {
         return "redirect:/my-review";
     }
 
+    /**
+     * 사용자 : 리뷰 수정을 위한 controller.
+     *
+     * @param updateReviewResponseDto the update review response dto
+     * @param bindingResult           the binding result
+     * @return the string
+     */
     @PatchMapping("/review")
     public String patchAccountReview(@Valid @ModelAttribute("updateReviewResponseDto") UpdateReviewResponseDto updateReviewResponseDto,
                                      BindingResult bindingResult) {
