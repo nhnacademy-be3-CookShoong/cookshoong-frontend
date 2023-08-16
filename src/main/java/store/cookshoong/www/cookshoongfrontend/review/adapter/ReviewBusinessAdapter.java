@@ -19,6 +19,7 @@ import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusinessReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.ModifyBusinessReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReplyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 
@@ -64,7 +65,7 @@ public class ReviewBusinessAdapter {
      * @param reviewReplyId      리뷰 답글 아이디
      * @param requestDto         리뷰 생성 내용
      */
-    public void changeAccountReviewByReviewReply(Long reviewReplyId, ModifyBusinessReviewRequestDto requestDto) {
+    public void changeAccountReviewByReviewReply(Long reviewReplyId, UpdateReplyResponseDto requestDto) {
 
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
@@ -76,7 +77,7 @@ public class ReviewBusinessAdapter {
             .buildAndExpand(reviewReplyId)
             .toUri();
 
-        HttpEntity<ModifyBusinessReviewRequestDto> httpEntity =
+        HttpEntity<UpdateReplyResponseDto> httpEntity =
             new HttpEntity<>(requestDto);
 
         restTemplate.exchange(uri, PATCH, httpEntity, new ParameterizedTypeReference<>() {});
