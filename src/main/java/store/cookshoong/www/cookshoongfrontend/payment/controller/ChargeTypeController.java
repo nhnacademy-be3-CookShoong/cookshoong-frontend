@@ -64,7 +64,7 @@ public class ChargeTypeController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "charges");
-            return "payment/charge-type-form";
+            return "redirect:/admin/management/charges";
         }
 
         chargeTypeService.createChargeType(createTypeRequestDto);

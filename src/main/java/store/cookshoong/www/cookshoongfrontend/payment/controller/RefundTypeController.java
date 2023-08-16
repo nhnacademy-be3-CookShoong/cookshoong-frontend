@@ -64,7 +64,7 @@ public class RefundTypeController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("url", "refunds");
-            return "payment/refund-type-form";
+            return "redirect:/admin/management/refunds";
         }
 
         refundTypeService.createChargeType(createTypeRequestDto);
