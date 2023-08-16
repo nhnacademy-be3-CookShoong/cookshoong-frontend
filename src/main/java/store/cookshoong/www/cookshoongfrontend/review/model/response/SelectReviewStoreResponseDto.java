@@ -17,6 +17,5 @@ public class SelectReviewStoreResponseDto {
 
     private Long accountId;
     private String nickname;
-    @Setter
-    private SelectReviewResponseDto selectReviewResponseDto;
+    private SelectReviewResponseDto selectReviewResponse;
 }
