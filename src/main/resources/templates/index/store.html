@@ -50,10 +50,6 @@
                             <strong th:if="${store.distance >= 1000}"
                                     th:text="${store.distance/1000.0} + 'km'"></strong>
                         </p>
-                        <span class="m-3 pt-1 pb-1"
-                              style="height: auto; padding-left: 1.25rem; padding-right: 1.25rem; border-radius: 1rem; background-color: whitesmoke"
-                              th:utext="${store.description}">
-                        </span>
                         <div class="col-12 d-flex">
                             <button class="flex-grow-1 border-bottom border-left border-right border-top bg-white m-2"
                                     style="height: 40px; border-radius: 1rem" data-toggle="modal"
@@ -154,27 +150,27 @@
                                 <table class="table table-striped">
                                     <tr>
                                         <td>사업자명</td>
-                                        <td th:text="${store.representativeName}"></td>
+                                        <td style="max-width: 300px;" th:text="${store.representativeName}"></td>
                                     </tr>
                                     <tr>
                                         <td>사업자등록번호</td>
-                                        <td th:text="${store.businessLicenseNumber}"></td>
+                                        <td style="max-width: 300px;" th:text="${store.businessLicenseNumber}"></td>
                                     </tr>
                                     <tr>
                                         <td>개업일자</td>
-                                        <td th:text="${store.openingDate}"></td>
+                                        <td style="max-width: 300px;" th:text="${store.openingDate}"></td>
                                     </tr>
                                     <tr>
                                         <td>전화번호</td>
-                                        <td th:text="${store.phoneNumber}"></td>
+                                        <td style="max-width: 300px;" th:text="${store.phoneNumber}"></td>
                                     </tr>
                                     <tr>
                                         <td>가게 주소</td>
-                                        <td th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></td>
+                                        <td style="max-width: 300px;" th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></td>
                                     </tr>
                                     <tr>
                                         <td>소개글</td>
-                                        <td th:utext="${store.description}"></td>
+                                        <td style="max-width: 300px;" th:utext="${store.description}"></td>
                                     </tr>
                                 </table>
                             </div>
