@@ -57,7 +57,7 @@
                                 <input type="hidden" id="latitudeInput" name="latitude" th:value="*{latitude}" required>
                                 <input type="hidden" id="longitudeInput" name="longitude" th:value="*{longitude}" required>
                             </div>
-                            <div class="card-body text-center address">
+                            <div class="card-body text-center address" style="padding-top: 0rem">
                                 <input id="address-add" class="btn btn-inverse-info" style="font-size: 1.0rem" type="submit"
                                        onclick="return validateAddress()" value="주소추가">
                                 <button class="btn btn-inverse-info m-1" style="font-size: 1.0rem" data-dismiss="modal">취소</button>
@@ -86,7 +86,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">주소 목록</h2>
-                            <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem" type="button"
+                            <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem; padding: 10px 20px;" type="button"
                                    data-toggle="modal"
                                    data-target="#addressAdd" th:value="주소등록">
                         </div>
@@ -112,13 +112,13 @@
                                             <td class="pl-0 pr-0" style="width: 50px; padding: 0.8rem">
                                                 <span th:text="${address.getAlias()}"></span>
                                             </td>
-                                            <td class="pl-0 pr-0" style="width: 100px; padding: 0.8rem">
+                                            <td class="pl-0 pr-0" style="width: 120px; padding: 0.8rem">
                                                 <span th:text="${address.getMainPlace()}"></span>
                                             </td>
                                             <td class="pl-0 pr-0" style="width: 100px; padding: 0.8rem">
                                                 <span th:text="${address.getDetailPlace()}"></span>
                                             </td>
-                                            <td class="pl-0 pr-0 address" style="width: 50px; padding: 0.5rem">
+                                            <td class="pl-0 pr-0 address" style="width: 80px; padding: 0.5rem">
                                                 <form th:action="@{'/my-address/' + ${address.id}}"
                                                       th:method="PATCH">
                                                     <button class="btn m-0 p-2" type="submit" style="color: #77acf8;">
@@ -126,7 +126,7 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td class="pl-0 pr-0 address" style="width: 50px; padding: 0.8rem">
+                                            <td class="pl-0 pr-0 address" style="width: 85px; padding: 0.8rem">
                                                 <form id="deleteForm" th:action="@{'/my-address/'+ ${address.id}}"
                                                       th:method="DELETE">
                                                     <input class="btn m-0 p-2" style="font-size: 16px; color: #77acf8" type="submit" onclick="return deleteAddress()" value="X">

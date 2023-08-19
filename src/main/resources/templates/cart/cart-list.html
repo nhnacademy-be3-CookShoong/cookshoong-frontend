@@ -34,9 +34,15 @@
                             <hr style="border-top: 1px solid #ccc; margin: 20px 0;">
                             <div class="table-responsive">
                                 <div class="cart-item" th:each="item, i:${cartItems}" th:unless="${item == null}">
-                                    <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}">
-                                        <div class="modal-dialog">
+                                    <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
+                                                <div class="modal-header bg-warning text-white">
+                                                    <h5 class="modal-title" th:text="옵션수정"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                                 <div class="modal-body">
                                                     <div class="card">
                                                         <div class="ml-3 mt-3">
@@ -67,8 +73,8 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <button class="btn mr-2" style="background: #ffa636" th:customHashKey="${item.hashKey}" th:onclick="saveSelectedOption(this.getAttribute('customHashKey'))">변경</button>
-                                                            <button class="btn btn-light mr-2" style="text-align: center" data-dismiss="modal">취소</button>
+                                                            <button class="btn mr-2" style="background: #ffa636; padding: 10px 20px" th:customHashKey="${item.hashKey}" th:onclick="saveSelectedOption(this.getAttribute('customHashKey'))">변경</button>
+                                                            <button class="btn btn-light mr-2" style="text-align: center; padding: 10px 20px" data-dismiss="modal">취소</button>
                                                         </div>
                                                     </div>
                                                 </div>
