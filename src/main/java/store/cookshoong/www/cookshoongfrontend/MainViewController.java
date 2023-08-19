@@ -222,8 +222,9 @@ public class MainViewController {
 
         commonInfo(model, accountId);
 
+        List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
+
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
-            List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
         } else {
