@@ -21,9 +21,9 @@ public class SelectStoresKeywordSearchResponseDto {
     private String storeStatus;
     private Integer minimumOrderPrice;
     private Integer minimumCookingTime;
-    private Float avgRateScore;
     private Integer countReview;
-    private Boolean isEventOngoing;
+    private Float avgRating;
+    private Boolean offerCoupon;
     private List<String> categories;
 
 }

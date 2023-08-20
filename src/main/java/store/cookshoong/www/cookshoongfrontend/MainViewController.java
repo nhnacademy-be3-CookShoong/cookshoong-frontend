@@ -96,9 +96,11 @@ public class MainViewController {
         }
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> stores = storeService.selectStoresNotOuted(addressId, pageable);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> storesByRating = storeService.selectStoresByRating(addressId, pageable);
         model.addAttribute("categories", categories);
         model.addAttribute("addressId", addressId);
         model.addAttribute("stores", stores);
+        model.addAttribute("storesByRating", storesByRating);
 
         return "index/index";
     }
@@ -121,10 +123,12 @@ public class MainViewController {
 
         List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
         RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> storesByRating = storeService.selectStoresByRating(addressId, pageable);
         model.addAttribute("categories", categories);
         model.addAttribute("addressId", addressId);
         model.addAttribute("keywordText", keywordText);
         model.addAttribute("stores", searchedStores);
+        model.addAttribute("storesByRating", storesByRating);
 
         return "index/index";
     }
