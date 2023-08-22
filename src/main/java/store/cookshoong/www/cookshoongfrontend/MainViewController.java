@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +34,7 @@ import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.util.RestResponsePage;
+import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewStoreService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
@@ -86,6 +86,10 @@ public class MainViewController {
         if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
+
+            if (!cartService.existMenuInCart(String.valueOf(accountId))) {
+                cartService.selectCartMenuAll(String.valueOf(accountId));
+            }
 
             commonInfo(model, accountId);
 
