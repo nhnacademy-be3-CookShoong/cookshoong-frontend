@@ -84,7 +84,7 @@
                                     <div class="row justify-content-between rounded" th:classappend="${i.index % 2 == 1} ? '' : 'odd-cart-item'">
                                         <div class="border-info" style="margin-top: 3px; margin-left: 6px; width: 70px"
                                              th:onclick="'window.location.href=\'/index/store/' + ${item.storeId} + '\''">
-                                            <img style="border-radius: 3px; margin-top: 0.03rem;object-fit: cover; width: 100px; height: 100px;" th:src="${item.menu.menuImage}"
+                                            <img style="border-radius: 3px; margin-top: 0.2rem;object-fit: cover; width: 90px; height: 90px;" th:src="${item.menu.menuImage}"
                                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';">
                                         </div>
                                         <div class="pt-1" style="width: 220px; margin-top: 30px">
