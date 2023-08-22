@@ -134,6 +134,17 @@ public class CartService {
     }
 
     /**
+     * Redis 장바구니에 redis Key 애 존재여부 확인하는 메소드.
+     *
+     * @param cartKey       redis Key
+     * @return              존재여부를 반환
+     */
+    public boolean existMenuInCart(String cartKey) {
+
+        return cartAdapter.existKeyInCartRedis(CART + cartKey);
+    }
+
+    /**
      * 장바구니에 들어있는 메뉴에 총 가격을 계산하는 메서드.
      *
      * @param cartItems     장바구니 내역들
@@ -148,6 +159,12 @@ public class CartService {
         return totalPrice;
     }
 
+    /**
+     * 빈 장바구니 여부에 대한 메서드.
+     *
+     * @param cartKey       redis key
+     * @return              빈 장바구니 여부에 따라 true, false 반환
+     */
     public boolean isCartIsEmpty(String cartKey) {
         return existMenuInCartRedis(cartKey, NO_MENU);
     }
