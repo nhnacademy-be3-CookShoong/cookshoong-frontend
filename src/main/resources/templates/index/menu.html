@@ -230,6 +230,7 @@
 
         if (selectedStoreCategories.length>max) {
             checkbox.checked = false;
+            updateTotal();
             alert(`옵션은 ${max}개 이하만 선택할 수 있습니다.`);
         }
     }
