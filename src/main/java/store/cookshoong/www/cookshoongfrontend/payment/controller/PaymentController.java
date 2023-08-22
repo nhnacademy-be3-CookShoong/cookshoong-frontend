@@ -117,7 +117,7 @@ public class PaymentController {
             paymentPageRequestDto.getPoint(), paymentPageRequestDto.getDiscountAmount());
 
         //TODO 추후 사용자 주문조회 페이지가 만들어지면 그쪽으로 Redirect
-        return "redirect:/";
+        return "redirect:/my-orders";
     }
 
     /**
