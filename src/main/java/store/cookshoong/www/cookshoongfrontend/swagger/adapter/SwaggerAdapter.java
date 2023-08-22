@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.swagger.adapter;
 
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.cookshoong.www.cookshoongfrontend.common.property.ApiProperties;
-import store.cookshoong.www.cookshoongfrontend.swagger.model.response.SwaggerUiResponseDto;
 
 /**
  * swagger 요청 어뎁터.
@@ -25,8 +25,8 @@ public class SwaggerAdapter {
     /**
      * Fetch swagger ui.
      */
-    public SwaggerUiResponseDto fetchSwaggerUi() {
-        ResponseEntity<SwaggerUiResponseDto> response = restTemplate.exchange(
+    public Map<String, Object> fetchSwaggerUi() {
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
             UriComponentsBuilder
                 .fromUriString(apiProperties.getGatewayUrl())
                 .path("/api/swagger-ui")
