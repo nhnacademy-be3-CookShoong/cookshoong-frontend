@@ -39,6 +39,7 @@ import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectRevie
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewStoreService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectBusinessHourResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
@@ -49,6 +50,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreTimeManagerService;
 
 /**
  * 메인 뷰 페이지 컨트롤러.
@@ -65,6 +67,7 @@ public class MainViewController {
     private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final StoreTimeManagerService storeTimeManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
@@ -192,12 +195,13 @@ public class MainViewController {
         model.addAttribute("businessStoreList", businessStoreList);
 
         commonInfo(model, accountId);
-
+        List<SelectBusinessHourResponseDto> businessHourList = storeTimeManagerService.selectBusinessHours(storeId);
         Page<SelectReviewStoreResponseDto> reviewList = reviewStoreService.selectReviewByAccount(storeId, pageable);
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
 
+        model.addAttribute("businessHours", businessHourList);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("store", store);
         model.addAttribute("menuGroups", menuGroups);
