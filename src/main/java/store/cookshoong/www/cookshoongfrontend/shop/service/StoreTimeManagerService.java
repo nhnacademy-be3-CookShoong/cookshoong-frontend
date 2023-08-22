@@ -2,7 +2,10 @@ package store.cookshoong.www.cookshoongfrontend.shop.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.shop.adapter.StoreTimeAdapter;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateBusinessHourRequestDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.request.CreateHolidayRequestDto;
@@ -26,8 +29,13 @@ public class StoreTimeManagerService {
      * @param storeId                      매장 기본키
      * @param createBusinessHourRequestDto 영업시간 신규등록 요청 정보
      */
-    public void createBusinessHour(Long storeId, CreateBusinessHourRequestDto createBusinessHourRequestDto) {
-        storeTimeAdapter.executeCreateBusinessHour(storeId, createBusinessHourRequestDto);
+    public boolean createBusinessHour(Long storeId, CreateBusinessHourRequestDto createBusinessHourRequestDto) {
+        try {
+            storeTimeAdapter.executeCreateBusinessHour(storeId, createBusinessHourRequestDto);
+        }catch (HttpClientErrorException e){
+            return false;
+        }
+        return true;
     }
 
 
