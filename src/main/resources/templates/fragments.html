@@ -154,8 +154,10 @@
                                             오픈시 중단해제를 눌러주세요.</h6>
                                         <h4 class="font-weight-bold" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 230px; font-size: 1.2rem"
                                             th:text="${businessStore.storeName}"></h4>
-                                        <span th:text="${businessStore.storeMainAddress}"></span>
-                                        <span th:text="${businessStore.storeDetailAddress}"></span>
+                                        <div class="m-0 p-0 row" style="width: 230px;">
+                                            <span th:text="${businessStore.storeMainAddress}"></span>
+                                            <span th:text="${businessStore.storeDetailAddress}"></span>
+                                        </div>
                                     </div>
                                 </button>
                                 <div class="col-4 p-1 m-1 text-right">

@@ -32,8 +32,9 @@
                     <div class="col-12 stretch-card">
                         <div class="card rounded">
                             <div class="card-body">
-                                <h4 class="card-title address"><span>신규 주소 등록</span><button
-                                        class="btn btn-inverse-info" style="margin-left: 13rem; font-size: 0.9rem"
+                                <h4 class="card-title address justify-content-between d-flex align-items-center">
+                                    <span>신규 주소 등록</span>
+                                    <button class="btn btn-inverse-warning"
                                         type="button" onclick="execDaumPostcode()">주소검색</button>
                                 </h4>
                                 <div class="form-group">
@@ -58,9 +59,9 @@
                                 <input type="hidden" id="longitudeInput" name="longitude" th:value="*{longitude}" required>
                             </div>
                             <div class="card-body text-center address" style="padding-top: 0rem">
-                                <input id="address-add" class="btn btn-inverse-info" style="font-size: 1.0rem" type="submit"
+                                <input id="address-add" class="btn btn-inverse-warning" style="font-size: 1.0rem" type="submit"
                                        onclick="return validateAddress()" value="주소추가">
-                                <button class="btn btn-inverse-info m-1" style="font-size: 1.0rem" data-dismiss="modal">취소</button>
+                                <button class="btn btn-inverse-light m-1" style="font-size: 1.0rem" data-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
@@ -86,7 +87,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">주소 목록</h2>
-                            <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem; padding: 10px 20px;" type="button"
+                            <input class="btn btn-inverse-warning float-right" type="button"
                                    data-toggle="modal"
                                    data-target="#addressAdd" th:value="주소등록">
                         </div>
@@ -121,7 +122,7 @@
                                             <td class="pl-0 pr-0 address" style="width: 80px; padding: 0.5rem">
                                                 <form th:action="@{'/my-address/' + ${address.id}}"
                                                       th:method="PATCH">
-                                                    <button class="btn m-0 p-2" type="submit" style="color: #77acf8;">
+                                                    <button class="btn m-0 p-2" type="submit" style="color: #e7770f;">
                                                         <i class="mdi mdi-check-circle-outline" style="font-size: 20px"></i>
                                                     </button>
                                                 </form>
@@ -129,7 +130,7 @@
                                             <td class="pl-0 pr-0 address" style="width: 85px; padding: 0.8rem">
                                                 <form id="deleteForm" th:action="@{'/my-address/'+ ${address.id}}"
                                                       th:method="DELETE">
-                                                    <input class="btn m-0 p-2" style="font-size: 16px; color: #77acf8" type="submit" onclick="return deleteAddress()" value="X">
+                                                    <input class="btn m-0 p-2" style="font-size: 16px; color: #e7770f" type="submit" onclick="return deleteAddress()" value="X">
                                                 </form>
                                             </td>
                                         </tr>
