@@ -25,6 +25,8 @@ import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreateIssueC
 import store.cookshoong.www.cookshoongfrontend.coupon.model.request.CreatePercentCouponPolicyRequestDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectPolicyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장에서의 쿠폰 관리 엔드포인트.
@@ -42,6 +44,7 @@ public class CouponManageInStoreController {
     private final AccountIdAware account;
     private final AccountAddressService accountAddressService;
     private final CartService cartService;
+    private final StoreService storeService;
 
     @ModelAttribute
     private Long storeId(@PathVariable Long storeId) {
@@ -145,6 +148,11 @@ public class CouponManageInStoreController {
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
         }
+
         model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }

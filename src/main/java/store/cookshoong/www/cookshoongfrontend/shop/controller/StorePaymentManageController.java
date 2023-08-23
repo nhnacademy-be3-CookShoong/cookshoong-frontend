@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,9 @@ import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressSer
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderInStatusResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StorePaymentManageService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장 주문 완료 건에 대한 결제 내역 컨트롤러.
@@ -34,6 +35,7 @@ public class StorePaymentManageController {
     private final AccountIdAware account;
     private final AccountAddressService accountAddressService;
     private final CartService cartService;
+    private final StoreService storeService;
 
     /**
      * 주문이 완료된 건에 대한 결제내역.
@@ -71,6 +73,11 @@ public class StorePaymentManageController {
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
         }
+
         model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }

@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.payment.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.common.property.TossProperties;
@@ -27,8 +31,9 @@ import store.cookshoong.www.cookshoongfrontend.payment.model.request.PaymentPage
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreatePartialRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.model.response.OrderCompletionInfo;
-import store.cookshoong.www.cookshoongfrontend.payment.model.response.TossPaymentKeyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 결제와 관련된 Controller.
@@ -47,6 +52,7 @@ public class PaymentController {
     private final AccountAddressService accountAddressService;
     private final OrderService orderService;
     private final CartService cartService;
+    private final StoreService storeService;
 
     /**
      * 주문에서 결제로 넘어오는 페이지.
@@ -90,6 +96,7 @@ public class PaymentController {
         model.addAttribute("order", orderCompletionInfo);
         model.addAttribute("toss", tossProperties.tossPaymentsDto());
 
+        commonInfo(model, accountIdAware.getAccountId());
         return "payment/toss-api";
     }
 
@@ -116,7 +123,6 @@ public class PaymentController {
         paymentService.createApproveTossPayment(paymentKey, amount, orderId, paymentPageRequestDto.getCouponCode(),
             paymentPageRequestDto.getPoint(), paymentPageRequestDto.getDiscountAmount());
 
-        //TODO 추후 사용자 주문조회 페이지가 만들어지면 그쪽으로 Redirect
         return "redirect:/my-orders";
     }
 
@@ -132,6 +138,8 @@ public class PaymentController {
 
         model.addAttribute("code", code);
         model.addAttribute("message", message);
+
+        commonInfo(model, accountIdAware.getAccountId());
 
         return "payment/error/toss-error";
     }
@@ -168,5 +176,26 @@ public class PaymentController {
         paymentService.createPartialCancelTossPayment(partialRefundRequestDto);
 
         return "redirect:/stores/" + storeId + "/store-payment-manager";
+    }
+
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }
