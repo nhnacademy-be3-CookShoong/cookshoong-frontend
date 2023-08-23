@@ -112,7 +112,7 @@
                                 <div class="form-group"><label>영업점 주소</label>
                                     <div class="input-group col-xs-12 mb-2">
                                         <input type="text" class="form-control" id="mainPlace" name="mainPlace"
-                                               th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소">
+                                               th:field="*{mainPlace}" th:value="*{mainPlace}" placeholder="메인 주소" readonly required>
                                         <button class="btn btn-info" onclick="execDaumPostcode()" type="button">
                                             주소 검색
                                         </button>
