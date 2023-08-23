@@ -32,10 +32,12 @@ import store.cookshoong.www.cookshoongfrontend.common.model.vo.ValidationFailure
 @AllArgsConstructor
 public class SignUpRequestDto {
     @NotBlank
-    @Length(min = 1, max = 100)
+    @Length(min = 4, max = 100)
+    @Pattern(regexp = RegularExpressions.ENG_NUMBER_AT, message = ValidationFailureMessages.LOGIN_ID)
     private String loginId;
     @NotBlank
-    @Length(min = 4)
+    @Length(min = 8)
+    @Pattern(regexp = RegularExpressions.PASSWORD, message = ValidationFailureMessages.PASSWORD)
     private String password;
     @NotBlank
     @Length(min = 2, max = 30)

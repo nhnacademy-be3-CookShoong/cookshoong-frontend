@@ -1,61 +1,63 @@
 'use strict';
+const LIGHT_GREEN = '#d3f2d4';
+
 setup();
 function setup() {
     setCriterionDay();
 
-    const signUpBtn = document.getElementById("sign-up-btn");
-    const loginIdInput = document.getElementById("loginId");
     const errorMsg = document.getElementById("login-duplicate-msg");
     const $isDuplicated = document.getElementById("loginId")
-    loginIdInput.addEventListener('keyup', () => {
-        signUpBtn.disabled = true;
-        $isDuplicated.dataset.checked = 'false';
-        loginIdInput.style.borderColor = 'red';
-        errorMsg.style.display = 'none';
-    })
-
     const passwordInput = document.getElementById("password");
     const passwordCheckInput = document.getElementById("password-check");
-    passwordInput.addEventListener('keyup', () => {
-        changeStateProperly(passwordInput, signUpBtn);
-    })
-    passwordCheckInput.addEventListener('keyup', () => {
-        changeStateProperly(passwordCheckInput, signUpBtn);
-    })
 
-    const elements = getAllElementsWithoutIdAndPw();
-    for (const element of elements) {
-        element.addEventListener('keyup', () => {
-            signUpBtn.disabled = !validateAll();
+    const needValidationInputs = getAllNeedValidationInputs();
+    for (const input of needValidationInputs) {
+        input.addEventListener('keyup', () => {
+            if (input.id === "loginId") {
+                deactivateSignUpBtn()
+                setBorderColor(input, 'red');
+                $isDuplicated.dataset.checked = 'false';
+                errorMsg.style.display = 'none';
+            } else if (input.id === "password") {
+                checkPasswordEqual(input, passwordCheckInput);
+            } else if (input.id === "password-check") {
+                checkPasswordEqual(input, passwordInput);
+            } else {
+                validateRegex(input.id, getRegex(input.id)) ? setBorderColor(input, LIGHT_GREEN) : setBorderColor(input, 'red')
+            }
+            validateAll() ? activateSignUpBtn() : deactivateSignUpBtn();
         });
     }
 }
-function changeStateProperly(input, signUpBtn) {
-    const passwordInput = document.getElementById("password");
-    const passwordCheckInput = document.getElementById("password-check");
-    const $isSame = document.getElementById("password")
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
-    if (passwordInput.value !== passwordCheckInput.value || !regex.test(input.value)) {
-        input.style.borderColor = 'red';
-        $isSame.dataset.checked = 'false';
-    } else {
-        $isSame.dataset.checked = 'true';
-        signUpBtn.disabled = !validateAll();
-        passwordInput.style.borderColor = '#d3f2d4';
-        input.style.borderColor = '#d3f2d4';
+function checkPasswordEqual(focusedPasswordInput, otherPasswordInput) {
+    const focusedPassword = focusedPasswordInput.value;
+    const otherPassword = otherPasswordInput.value;
+    if (focusedPassword === otherPassword && !isEmpty(focusedPassword) && !isEmpty(otherPassword)) {
+        setBorderColor(focusedPasswordInput, LIGHT_GREEN);
+        setBorderColor(otherPasswordInput, LIGHT_GREEN);
+        checkPasswordPattern(focusedPasswordInput);
+        return true;
     }
+    setBorderColor(focusedPasswordInput, 'red');
+    return false;
 }
 
+function checkPasswordPattern(focusedPasswordInput) {
+    const pwd = focusedPasswordInput.value;
+    const pwdRegex = getRegex("password");
+    const infoMsg = getElementById("password-info-msg");
+    infoMsg.style.display = pwdRegex.test(pwd) ? 'none' : 'block';
+}
+
+
 function checkExists() {
-    const signUpBtn = document.getElementById("sign-up-btn");
     const loginIdInput = document.getElementById("loginId");
     const loginIdInputStyle = loginIdInput.style;
     const errorMsg = document.getElementById("login-duplicate-msg");
+    const successMsg = document.getElementById("login-success-msg");
     const $isDuplicated = document.getElementById("loginId")
 
-    errorMsg.style.color = 'red'
-    errorMsg.textContent = '이미 존재하는 아이디입니다.';
     $.ajax({
         type: 'get',
         url: '/proxy/accounts/account/exists',
@@ -65,69 +67,81 @@ function checkExists() {
         success: function (result) {
             $isDuplicated.dataset.checked = (!result).toString();
             if (result === true) {
-                loginIdInputStyle.borderColor = 'red';
+                setBorderColor(loginIdInput, 'red');
                 errorMsg.style.display = 'block';
+            } else if (result === false) {
+                setBorderColor(loginIdInput, LIGHT_GREEN);
+                successMsg.style.display = 'block';
             } else {
-                loginIdInputStyle.borderColor = '#d3f2d4';
-                errorMsg.style.display = 'none';
+                setBorderColor(loginIdInput, 'red');
+                loginIdInputStyle.borderColor = 'red';
+                errorMsg.textContent = result;
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
             }
         }
     })
-    signUpBtn.disabled = !validateAll();
+    validateAll() ? activateSignUpBtn() : deactivateSignUpBtn();
 }
 
-function hasValueAllElements() {
-    const elements = getAllElements();
-
-    for (const element of elements) {
-        if (!element.value) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function getAllElements() {
-    return [
-        document.getElementById("loginId"),
-        document.getElementById("password"),
-        document.getElementById("name"),
-        document.getElementById("nickname"),
-        document.getElementById("email"),
-        document.getElementById("birthday"),
-        document.getElementById("phoneNumber"),
-        document.getElementById("mainPlace"),
-        document.getElementById("detailPlace"),
-        document.getElementById("alias")
-    ];
-}
-
-function getAllElementsWithoutIdAndPw() {
-    return [
-        document.getElementById("name"),
-        document.getElementById("nickname"),
-        document.getElementById("email"),
-        document.getElementById("birthday"),
-        document.getElementById("phoneNumber"),
-        document.getElementById("mainPlace"),
-        document.getElementById("detailPlace"),
-        document.getElementById("alias")
-    ];
+function getAllNeedValidationInputs() {
+    return document.getElementsByClassName("need-validation-input");
 }
 
 function validateAll() {
     const duplicateCheck = document.getElementById('loginId').dataset.checked;
-    const passwordCheck = document.getElementById('password').dataset.checked;
-    return hasValueAllElements() && duplicateCheck && passwordCheck;
+    const passwordCheck = findAndCheckIsSamePassword();
+    return duplicateCheck && passwordCheck && executeAllRegexTest();
+}
+
+function checkAllAndShowSuccess() {
+    if (validateAll()) {
+        Swal.fire({
+            icon: 'success',
+            title: '회원가입 성공!',
+            showConfirmButton: false,
+            timer: 1000
+        });
+        return true;
+    }
+    return false;
 }
 
 function setCriterionDay() {
     const criterionDay = (function (minimumAge = 14) {
-        const now = new Date()
-        now.setFullYear(now.getFullYear() - minimumAge);
-        const now_utc = now.getTime();
-        const timeOff = new Date().getTimezoneOffset() * 60000;
-        return new Date(now_utc - timeOff).toISOString().split("T")[0];
+        const THIS_YEAR = (() => {
+            return new Date().getFullYear()
+        })();
+        const DECEMBER = 11;
+        return new Date(THIS_YEAR - minimumAge, DECEMBER, 32).toISOString().split("T")[0];
     });
     document.getElementById("birthday").setAttribute("max", criterionDay(15));
+}
+
+function findAndCheckIsSamePassword() {
+    const passwordInput = document.getElementById("password");
+    const passwordCheckInput = document.getElementById("password-check");
+    if (passwordInput.value === "" || passwordCheckInput.value === "") {
+        return false;
+    }
+    return passwordInput.value === passwordCheckInput.value;
+}
+
+
+function activateSignUpBtn() {
+    const signUpBtn = document.getElementById("sign-up-btn");
+    signUpBtn.disabled = false;
+}
+
+function deactivateSignUpBtn() {
+    const signUpBtn = document.getElementById("sign-up-btn");
+    signUpBtn.disabled = true;
+}
+
+function isEmpty(value) {
+    return value === "";
+}
+
+function setBorderColor(element, color) {
+    element.style.borderColor = color;
 }

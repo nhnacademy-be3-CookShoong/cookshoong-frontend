@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <script src="/assets/js/common/fetcher.js"></script>
+    <link rel="stylesheet" href="/assets/css/my-points-style.css">
 </head>
 <body layout:fragment="content">
 <header th:replace="fragments :: mypage-site-header"></header>
@@ -20,7 +21,7 @@
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">포인트 내역</h1>
+                            <h1 class="font-weight-bold">포인트 내역 <span class="balance" th:text="|(잔액: ${balance})|"></span></h1>
                         </div>
                     </div>
                 </div>
@@ -49,7 +50,8 @@
                                             <span th:text="${#temporals.format(pointLog.pointAt, 'yyyy년 MM월 dd일 HH시 mm분')}"></span>
                                         </td>
                                         <td class="pl-0 pr-0" style="padding: 0.8rem">
-                                            <span th:text="${pointLog.pointMovement}"></span>
+                                            <span th:class="${pointLog.pointMovement >= 0 ? 'acquire' : 'use'}"
+                                                  th:text="${pointLog.pointMovement >= 0 ? '+' + pointLog.pointMovement + ' 적립' : pointLog.pointMovement + ' 사용' }"></span>
                                         </td>
                                         <td class="pl-0 pr-0" style="padding: 0.8rem">
                                             <span th:text="${pointLog.reason}"></span>

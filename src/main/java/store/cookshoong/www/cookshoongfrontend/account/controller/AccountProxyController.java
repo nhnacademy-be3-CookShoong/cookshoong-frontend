@@ -1,6 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.account.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,10 @@ public class AccountProxyController {
     @GetMapping("/account/exists")
     public boolean getAccountExists(@RequestHeader("X-LOGIN-ID") String loginId) {
         return accountService.selectLoginIdExists(loginId);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleInternalServerError() {
+        return "잠시후 다시 시도해주세요";
     }
 }

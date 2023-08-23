@@ -16,4 +16,6 @@ public class ValidationFailureMessages {
     public static final String NUMBER_ONLY = "숫자만 입력해주세요";
     public static final String NOT_NUMBER = "숫자를 제외한 문자만 입력해주세요";
     public static final String MAIN_DETAIL_ADDRESS = "옳지 않은 주소 입니다. 다시 입력해주세요.";
+    public static final String PASSWORD = "최소 8자, 숫자 및 특수문자(@$!%*#?&)를 포함해야합니다.";
+    public static final String LOGIN_ID = "영문자와 숫자로 구성해주세요.";
 }
