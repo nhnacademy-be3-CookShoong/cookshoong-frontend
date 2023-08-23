@@ -255,11 +255,14 @@
             height: '300px',
             initialValue: initialValue,
             placeholder: '리뷰에 답변해주세요.',
-            hooks: {
-                addImageBlobHook(blob, callback) {
-                    console.log(blob)
-                }
-            }
+
+            toolbarItems: [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr', 'quote'],
+                ['ul', 'ol', 'task', 'indent', 'outdent'],
+                ['table', 'link'],
+                ['scrollSync'],
+            ]
         });
 
         document.querySelector('#submitButton').addEventListener('click', function () {
@@ -288,11 +291,13 @@
             previewStyle: 'vertical',
             height: '300px',
             initialValue: replyContents,
-            hooks: {
-                addImageBlobHook(blob, callback) {
-                    console.log(blob)
-                }
-            }
+            toolbarItems: [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr', 'quote'],
+                ['ul', 'ol', 'task', 'indent', 'outdent'],
+                ['table', 'link'],
+                ['scrollSync'],
+            ]
         });
 
         document.querySelector('#submitReplyButton').addEventListener('click', function () {
