@@ -50,11 +50,9 @@ function hideInputElementsIfExists() {
 
 function setCriterionDay() {
     const criterionDay = (function (minimumAge = 14) {
-        const now = new Date()
-        now.setFullYear(now.getFullYear() - minimumAge);
-        const now_utc = now.getTime();
-        const timeOff = new Date().getTimezoneOffset() * 60000;
-        return new Date(now_utc - timeOff).toISOString().split("T")[0];
+        const THIS_YEAR = (() => {return new Date().getFullYear()})();
+        const DECEMBER = 11;
+        return new Date(THIS_YEAR - minimumAge, DECEMBER, 32).toISOString().split("T")[0];
     });
     document.getElementById("birthday").setAttribute("max", criterionDay(15));
 }
