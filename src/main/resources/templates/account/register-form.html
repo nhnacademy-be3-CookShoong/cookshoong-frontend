@@ -57,6 +57,7 @@
                                 <input type="text" class="form-control form-control-lg" minlength="2" maxlength="30"
                                        pattern="^[a-zA-Z가-힇]$" title="온전한 글자를 입력해주세요."
                                        th:field="*{name}" placeholder="이름 (한글, 영어)" oninput="makeLetterOnly('name')" required>
+                                       pattern="^[a-zA-Z가-힇]{2,30}$" title="온전한 글자를 입력해주세요."
                                 <p class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                             </div>
                             <div class="form-group">
