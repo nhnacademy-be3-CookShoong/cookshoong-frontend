@@ -3,6 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
+<head>
+    <script src="/assets/js/common/fetcher.js"></script>
+</head>
 <body layout:fragment="content">
 <header th:replace="fragments :: business-site-header"></header>
 <div th:replace="fragments :: business-store-list"></div>
@@ -83,8 +86,8 @@
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
                                                         <select class="form-control w-100" style="color: black"
-                                                                name="dayCodeName">
-                                                            <option value="">요일 선택</option>
+                                                                name="dayCodeName" required>
+                                                            <option value="" disabled selected>요일 선택</option>
                                                             <option value="월요일">월요일</option>
                                                             <option value="화요일">화요일</option>
                                                             <option value="수요일">수요일</option>
@@ -99,14 +102,14 @@
                                             <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control p-1" name="openHour">
+                                                        <input type="time" class="form-control p-1" name="openHour" required>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="pl-1 pr-1">
                                                 <div class="form-group">
                                                     <div class="input-group col-xs-12">
-                                                        <input type="time" class="form-control p-1" name="closeHour">
+                                                        <input type="time" class="form-control p-1" name="closeHour" required>
                                                     </div>
                                                 </div>
                                             </td>
@@ -209,6 +212,14 @@
     </div>
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
-</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDuplicate = urlParams.get('duplicate');
 
+    console.log("duplicated : " +isDuplicate)
+    if (isDuplicate === 'true') {
+        alert("중복되는 시간이 있습니다. 다른 시간을 선택해주세요.");
+    }
+</script>
+</body>
 </html>

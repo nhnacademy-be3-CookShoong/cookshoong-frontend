@@ -87,7 +87,13 @@ public class StoreTimeManagerController {
         @PathVariable("storeId") Long storeId,
         @Valid @ModelAttribute("createBusinessHourRequestDto") CreateBusinessHourRequestDto createBusinessHourRequestDto,
         BindingResult bindingResult) {
-        storeTimeManagerService.createBusinessHour(storeId, createBusinessHourRequestDto);
+        if (bindingResult.hasErrors()){
+            return "redirect:/stores/"+storeId+"/store-time-manager";
+        }
+        boolean result = storeTimeManagerService.createBusinessHour(storeId, createBusinessHourRequestDto);
+        if (!result){
+            return "redirect:/stores/"+storeId+"/store-time-manager?duplicate=true";
+        }
         return "redirect:" + "/stores/" + storeId + "/store-time-manager";
     }
 

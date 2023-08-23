@@ -17,6 +17,10 @@ function sendDataWithCsrfToken(url, redirectUrl, data, method) {
                     window.location.href =  window.location.origin + redirectUrl;
                 }
                 return response;
+            }else{
+                return response.text().then(errorMessage => {
+                    alert(errorMessage);
+                })
             }
         })
 }
