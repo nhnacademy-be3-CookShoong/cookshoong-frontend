@@ -40,7 +40,8 @@
                             <div class="card-body">
                                 <div class="form-group"><label for="loginId">아이디</label>
                                     <input type="text" class="form-control form-control-lg" id="loginId"
-                                           th:value="${accountInfo.loginId}" readonly>
+                                           th:value="${accountInfo.loginId}"
+                                           readonly>
                                 </div>
                                 <div class="form-group"><label for="name">이름</label>
                                     <input type="text" class="form-control form-control-lg" id="name"
@@ -60,7 +61,7 @@
                                            id="email" name="email"
                                            th:value="${accountInfo.email}"
                                            placeholder="you@example.com"
-                                           pattern="[a-zA-Z0-9]+[@][a-zA-0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*"
+                                           pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.{1}[a-zA-Z]+$"
                                            required>
                                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</p>
                                 </div>

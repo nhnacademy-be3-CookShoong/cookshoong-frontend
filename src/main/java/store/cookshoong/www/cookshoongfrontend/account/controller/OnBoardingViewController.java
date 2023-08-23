@@ -35,7 +35,6 @@ public class OnBoardingViewController {
     private static final String REGISTER_FORM_VIEW = "account/register-form";
     private final AccountService accountService;
     private final AccountIdAware accountIdAware;
-    private final StoreService storeService;
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @GetMapping("/sign-up-choice")
