@@ -26,6 +26,8 @@ import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateBusine
 import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReplyResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewStoreResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewBusinessStoreService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장 리뷰 관리 페이지에서 사용될 컨트롤러.
@@ -40,6 +42,7 @@ public class StoreReviewManagerController {
     private final AccountAddressService accountAddressService;
     private final CartService cartService;
     private final ReviewBusinessStoreService reviewBusinessStoreService;
+    private final StoreService storeService;
 
     /**
      * 사업자 : 매장에 달린 리뷰 및 본인이 작성한 답글 조회 가능.
@@ -69,20 +72,6 @@ public class StoreReviewManagerController {
         return "store/order/store-review-manager";
     }
 
-    private void commonInfo(Model model, Long accountId) {
-
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountId);
-        CartMenuCountDto cartMenuCountDto =
-            cartService.selectCartMenuCountAll(String.valueOf(accountId));
-
-        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
-            model.addAttribute("count", CART_COUNT_ZERO);
-        } else {
-            model.addAttribute("count", cartMenuCountDto.getCount());
-        }
-        model.addAttribute("accountAddresses", accountAddresses);
-    }
 
     /**
      * 사업자 : 매장에 작성된 리뷰에 답글을 등록.
@@ -134,5 +123,25 @@ public class StoreReviewManagerController {
                                             @PathVariable("replyId") Long replyId) {
         reviewBusinessStoreService.removeAccountReviewByReviewReply(replyId);
         return "redirect:/stores/" + storeId + "/store-review-manager";
+    }
+
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
     }
 }

@@ -33,6 +33,8 @@ import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.point.model.response.PointLogResponseDto;
 import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 마이페이지 컨트롤러.
@@ -50,6 +52,7 @@ public class MyPageController {
     private final CouponManageService couponManageService;
     private final CartService cartService;
     private final PointService pointService;
+    private final StoreService storeService;
 
     /**
      * 회원정보 페이지 진입.
@@ -65,6 +68,8 @@ public class MyPageController {
 
         model.addAttribute("updateAccountInfoRequestDto", updateAccountInfoRequestDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
+
+        commonInfo(model, accountIdAware.getAccountId());
         return "account/my-page";
     }
 
@@ -103,6 +108,8 @@ public class MyPageController {
 
         model.addAttribute("latitude", address.getLatitude());
         model.addAttribute("longitude", address.getLongitude());
+
+        commonInfo(model, accountIdAware.getAccountId());
 
         return "account/my-address";
     }
@@ -191,6 +198,8 @@ public class MyPageController {
 
         model.addAttribute("orders", orders);
         model.addAttribute("createReviewRequestDto", createReviewRequestDto);
+
+        commonInfo(model, accountIdAware.getAccountId());
         return "account/my-orders";
     }
 
@@ -227,6 +236,8 @@ public class MyPageController {
         addressListHeader(model, accountId);
 
         model.addAttribute("coupons", coupons);
+
+        commonInfo(model, accountIdAware.getAccountId());
         return "account/my-coupons";
     }
 
@@ -253,6 +264,28 @@ public class MyPageController {
             .mapToInt(PointLogResponseDto::getPointMovement)
             .sum()
         );
+
+        commonInfo(model, accountIdAware.getAccountId());
         return "account/my-points";
+    }
+
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
     }
 }

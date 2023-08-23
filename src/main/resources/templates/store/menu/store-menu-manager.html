@@ -193,7 +193,7 @@
                             <div class="col-12">
                                 <div class="row border-top pt-3 pb-3 justify-content-between"
                                      th:each="menuGroup, i:${menuGroups}">
-                                    <div class="row">
+                                    <div class="row" style="width: 600px;">
                                         <h3 class="font-weight-bold pt-2" th:text="${menuGroup.name}"></h3>
                                     </div>
                                     <div class="row">
@@ -232,14 +232,14 @@
                             <div class="col-12 grid-margin">
                                 <div class="row border-top pb-3 pt-3 justify-content-between"
                                      th:each="menu, i:${menus}">
-                                    <div class="row" style="width: 600px;">
+                                    <div class="row" style="width: 600px; flex-wrap: nowrap;">
                                         <div class="align-content-end text-md-center border-info mr-3 mb-2"
                                              style="max-width: 400px">
                                             <img th:src="${menu.getSavedName()}"
                                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
                                                  style="object-fit: cover; width: 130px; height: 130px;">
                                         </div>
-                                        <div>
+                                        <div class="flex-fill">
                                             <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
                                             <p><i class="mdi mdi mdi-file-powerpoint-box"
                                                   style="color: orange; font-size: 1.1rem"></i>
@@ -255,7 +255,7 @@
                                                 <p class="font-weight-bold" style="font-size: 1.3rem"
                                                    th:if="${menu.price < 1000}" th:text="${menu.price} + ' 원'"></p>
                                             </div>
-                                            <div class="pt-1" style="width: 200px;">
+                                            <div class="pt-1">
                                                 <span th:utext="${menu.description}"></span>
                                             </div>
                                         </div>

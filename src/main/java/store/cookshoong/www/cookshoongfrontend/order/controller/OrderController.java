@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.order.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
+import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.coupon.model.response.SelectOwnCouponResponseDto;
@@ -22,6 +27,8 @@ import store.cookshoong.www.cookshoongfrontend.coupon.service.CouponManageServic
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 주문 controller.
@@ -35,10 +42,11 @@ import store.cookshoong.www.cookshoongfrontend.point.service.PointService;
 public class OrderController {
     private final AccountIdAware accountIdAware;
     private final CartService cartService;
-    private final AccountAddressService addressService;
+    private final AccountAddressService accountAddressService;
     private final CouponManageService couponManageService;
     private final OrderService orderService;
     private final PointService pointService;
+    private final StoreService storeService;
 
     /**
      * 주문 페이지 엔드포인트.
@@ -76,12 +84,14 @@ public class OrderController {
 
         model.addAttribute("orderCode", UUID.randomUUID());
 
-        AddressResponseDto addressResponseDto = addressService.selectAccountAddressRenewalAt(accountId);
+        AddressResponseDto addressResponseDto = accountAddressService.selectAccountAddressRenewalAt(accountId);
         model.addAttribute("mainPlace", addressResponseDto.getMainPlace());
         model.addAttribute("detailPlace", addressResponseDto.getDetailPlace());
 
         int point = pointService.selectPoint(accountId);
         model.addAttribute("point", point);
+
+        commonInfo(model, accountIdAware.getAccountId());
 
         return "order/order";
     }
@@ -105,5 +115,25 @@ public class OrderController {
         model.addAttribute("totalPrice", totalPrice);
 
         return "order/order-coupon";
+    }
+
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }
