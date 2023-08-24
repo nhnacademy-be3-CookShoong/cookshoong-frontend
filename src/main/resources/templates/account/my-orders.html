@@ -108,61 +108,58 @@
                                                     <form th:action="@{'/review'}" th:object="${createReviewRequestDto}"
                                                           th:method="post"
                                                           enctype="multipart/form-data">
-                                                        <div class="p-1 m-3 border-top border-bottom border-left border-right"
-                                                             id="reviewBox">
-                                                            <input type="hidden" name="rating" id="rating" th:value=5>
-                                                            <input type="hidden" name="contents" id="contents" th:value="''">
-                                                            <input type="hidden" name="orderCode" id="orderCode">
-                                                            <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
-                                                                <strong class="mr-4"
-                                                                        style="padding-top: 0.55rem; font-size: 20px;"
-                                                                        th:text="'별점'"></strong>
-                                                                <input class="m-0 border-0" id="star-rating"
-                                                                       type="text"
-                                                                       style="padding-top: 0.35rem; width: 35px;  font-size: 20px;"
-                                                                       th:value="5.0">
-                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
-                                                                        type="button"
-                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
-                                                                        type="button"
-                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
-                                                                        type="button"
-                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
-                                                                        type="button"
-                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                                <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
-                                                                        type="button"
-                                                                        style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
-                                                            </div>
+                                                        <input type="hidden" name="rating" id="rating" th:value=5>
+                                                        <input type="hidden" name="contents" id="contents" th:value="''">
+                                                        <input type="hidden" name="orderCode" id="orderCode">
+                                                        <div class="row pl-3 pr-3 pt-2 pb-1 m-0" id="rating-container">
+                                                            <strong class="mr-4"
+                                                                    style="padding-top: 0.55rem; font-size: 20px;"
+                                                                    th:text="'별점'"></strong>
+                                                            <input class="m-0 border-0" id="star-rating"
+                                                                   type="text"
+                                                                   style="padding-top: 0.35rem; width: 35px;  font-size: 20px;"
+                                                                   th:value="5.0">
+                                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                    type="button"
+                                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                    type="button"
+                                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                    type="button"
+                                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                    type="button"
+                                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                            <button class="typcn typcn-star-full-outline p-0 m-1 border-0 star-btn"
+                                                                    type="button"
+                                                                    style="color: #ea6b19; font-size: 25px; background-color: white;"></button>
+                                                        </div>
 
-                                                            <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
+                                                        <div class=" pl-3 pr-3 pt-2 pb-1 m-0" id="editor"></div>
 
-                                                            <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
-                                                                <input type="file" name="reviewImage"
-                                                                       class="file-upload-default"
-                                                                       accept="image/png,image/jpg" multiple>
-                                                                <div class="input-group col-xs-12">
-                                                                    <input type="text"
-                                                                           class="form-control file-upload-info"
-                                                                           disabled
-                                                                           id="reviewImage"
-                                                                           placeholder="사진 리뷰 이미지">
-                                                                    <span class="input-group-append">
+                                                        <div class="form-group pl-3 pr-3 pt-2 pb-1 m-0">
+                                                            <input type="file" name="reviewImage"
+                                                                   class="file-upload-default"
+                                                                   accept="image/png,image/jpg" multiple>
+                                                            <div class="input-group col-xs-12">
+                                                                <input type="text"
+                                                                       class="form-control file-upload-info"
+                                                                       disabled
+                                                                       id="reviewImage"
+                                                                       placeholder="사진 리뷰 이미지">
+                                                                <span class="input-group-append">
                                                                     <button class="file-upload-browse btn btn-info"
                                                                             type="button">이미지 찾기</button>
                                                                 </span>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                    data-dismiss="modal">취소
+                                                            </button>
                                                             <button type="submit"
                                                                     class="btn btn-primary" id="submitButton">리뷰등록
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close
                                                             </button>
                                                         </div>
                                                     </form>

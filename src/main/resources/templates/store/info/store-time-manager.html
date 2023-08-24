@@ -52,7 +52,7 @@
                                         <td class="pl-0 pr-0" style="width: 150px;">
                                             <form th:action="@{'/stores/'+${storeId}+'/business-hour/' + ${businessHour.id } }"
                                                   th:method="delete">
-                                                <button class="btn btn-info mr-2" type="submit">영업시간 삭제</button>
+                                                <button class="btn btn-primary" type="submit">영업시간 삭제</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -155,7 +155,7 @@
                                             <form th:action="@{'/stores/'+${storeId}+'/holiday/' + ${holiday.id } }"
                                                   th:method="delete">
                                                 <button th:disabled="${!holiday.holidayStartDate.isAfter(nowTime)}"
-                                                        class="btn btn-info mr-2" type="submit">휴무일 취소</button>
+                                                        class="btn btn-primary mr-2" type="submit">휴무일 취소</button>
                                             </form>
                                         </td>
                                     </tr>

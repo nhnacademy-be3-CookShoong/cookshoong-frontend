@@ -39,7 +39,7 @@
                                     <div class="modal fade" th:id="'cartMenu' + ${item.hashKey}" tabindex="-1">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header bg-warning text-white">
+                                                <div class="modal-header">
                                                     <h5 class="modal-title" th:text="옵션수정"></h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -48,7 +48,6 @@
                                                 <div class="modal-body">
                                                     <div class="card">
                                                         <div class="ml-3 mt-3">
-                                                            <h3 class="font-weight-bold">옵션 선택<span class="pl-2" style="font-size: 0.8rem; color: red">(필수 선택)</span></h3>
                                                             <div class="row" th:each="optionGroup, i:${optionGroups}">
                                                                 <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}">
                                                                 <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}">

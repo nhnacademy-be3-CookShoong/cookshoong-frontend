@@ -10,54 +10,44 @@
 <div class="modal fade" id="optionGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">옵션 그룹 관리</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-group-manager'}"
                       th:object="${createOptionGroupRequestDto}"
                       method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">신규 옵션 그룹 등록</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">옵션 그룹 정보</h4>
-                                <div class="form-group">
-                                    <label>옵션 그룹 이름</label>
-                                    <input class="form-control" type="text" name="name" placeholder="옵션 그룹 이름"
-                                           required>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="minSelectCount">옵션 최소 선택 수</label>
-                                    <input class="form-control" type="number" name="minSelectCount"
-                                           min="0" step="1"
-                                           max="99999999"
-                                           oninput="makeNumberOnly('minSelectCount')" id="minSelectCount"
-                                           placeholder="옵션 최소 선택 수" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="maxSelectCount">옵션 최대 선택 수</label>
-                                    <input class="form-control" type="number" name="maxSelectCount" min="0" step="1"
-                                           oninput="makeNumberOnly('maxSelectCount')" id="maxSelectCount" required
-                                           max="99999999"
-                                           placeholder="옵션 최대 선택 수">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>옵션 그룹 이름</label>
+                        <input class="form-control" type="text" name="name" placeholder="옵션 그룹 이름"
+                               required>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <input class="form-control" type="hidden" name="targetOptionGroupId">
-                                <button class="btn btn-info m-1" type="submit" name="submitButton"></button>
-                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="minSelectCount">옵션 최소 선택 수</label>
+                        <input class="form-control" type="number" name="minSelectCount"
+                               min="0" step="1"
+                               max="99999999"
+                               oninput="makeNumberOnly('minSelectCount')" id="minSelectCount"
+                               placeholder="옵션 최소 선택 수" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxSelectCount">옵션 최대 선택 수</label>
+                        <input class="form-control" type="number" name="maxSelectCount" min="0" step="1"
+                               oninput="makeNumberOnly('maxSelectCount')" id="maxSelectCount" required
+                               max="99999999"
+                               placeholder="옵션 최대 선택 수">
+                    </div>
+                    <div class="modal-footer">
+                        <input class="form-control" type="hidden" name="targetOptionGroupId">
+                        <button class="btn btn-light" data-dismiss="modal">취소</button>
+                        <button class="btn btn-info" type="submit" name="submitButton"></button>
                     </div>
                 </form>
             </div>
@@ -67,60 +57,48 @@
 <div class="modal fade" id="optionAdd">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">옵션 관리</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-option-manager'}"
                       th:object="${createOptionRequestDto}"
                       method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">신규 옵션 등록</h4>
+                    <div class="form-group">
+                        <label>옵션 이름</label>
+                        <input class="form-control" type="text" name="name" required
+                               placeholder="옵션 이름" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">가격</label>
+                        <input class="form-control" type="number" oninput="makeNumberOnly('price')"
+                               name="price" required
+                               id="price" max="99999999"
+                               placeholder="옵션 가격">
+                    </div>
+                    <div class="form-group">
+                        <label>그룹</label>
+                        <div class="row">
+                            <div class="input-group">
+                                <select name="optionGroup" class="form-control w-100" required
+                                        style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;">
+                                    <option value="">-- 선택 --</option>
+                                    <option th:each="optionGroup, i : ${optionGroups}"
+                                            th:value="${optionGroup.id}"
+                                            th:text="${optionGroup.name}"></option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">옵션 정보</h4>
-                                <div class="form-group">
-                                    <label>옵션 이름</label>
-                                    <input class="form-control" type="text" name="name" required
-                                           placeholder="옵션 이름" maxlength="20">
-                                </div>
-                                <div class="form-group">
-                                    <label for="price">가격</label>
-                                    <input class="form-control" type="number" oninput="makeNumberOnly('price')"
-                                           name="price" required
-                                           id="price" max="99999999"
-                                           placeholder="옵션 가격">
-                                </div>
-                                <div class="form-group">
-                                    <label>그룹</label>
-                                    <div class="row">
-                                        <div class="input-group">
-                                            <select name="optionGroup" class="form-control w-100" required
-                                                    style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;">
-                                                <option value="">-- 선택 --</option>
-                                                <option th:each="optionGroup, i : ${optionGroups}"
-                                                        th:value="${optionGroup.id}"
-                                                        th:text="${optionGroup.name}"></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <input class="form-control" type="hidden" name="targetOptionId">
-                                <button class="btn btn-info m-1" type="submit" id="submitButton"
-                                        name="submitButton"></button>
-                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <input class="form-control" type="hidden" name="targetOptionId">
+                        <button class="btn btn-light" data-dismiss="modal">취소</button>
+                        <button class="btn btn-info" type="submit" id="submitButton"
+                                name="submitButton"></button>
                     </div>
                 </form>
             </div>
@@ -143,13 +121,18 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">옵션 그룹 관리</h2>
+                            <button class="btn btn-info" type="button" data-toggle="modal"
+                                    data-target="#optionGroupAdd">추가
+                            </button>
                         </div>
                         <div class="card-body">
                             <div class="col-12">
                                 <div class="row border-top pt-2 pb-2 justify-content-between"
                                      th:each="optionGroup, i:${optionGroups}">
                                     <div class="row" style="width: 600px;">
-                                        <h3 class="font-weight-bold pt-2 optionGroup" th:id="${'option-group-' + optionGroup.id}" th:text="${optionGroup.name}"></h3>
+                                        <h3 class="font-weight-bold pt-2 optionGroup"
+                                            th:id="${'option-group-' + optionGroup.id}"
+                                            th:text="${optionGroup.name}"></h3>
                                     </div>
                                     <div class="row">
                                         <button class="btn btn-light m-1" style="width: 85px; height: 40px;"
@@ -172,13 +155,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="border-top pt-2 pb-2">
-                                    <div class="col">
-                                        <button class="btn btn-info w-100 mb-1" type="button" data-toggle="modal"
-                                                data-target="#optionGroupAdd">추가
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -187,13 +163,19 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">옵션 관리</h2>
+                            <button class="btn btn-info" type="button"
+                                    data-toggle="modal"
+                                    data-target="#optionAdd">추가
+                            </button>
                         </div>
                         <div class="card-body">
                             <div class="col-12">
                                 <div class="row border-top pb-3 pt-3 justify-content-between"
                                      th:each="option, i:${options}">
                                     <div style="width: 600px;">
-                                        <h3 class="font-weight-bold option" th:id="${'option-associated-' + option.optionGroupId}" th:text="${option.name}"></h3>
+                                        <h3 class="font-weight-bold option"
+                                            th:id="${'option-associated-' + option.optionGroupId}"
+                                            th:text="${option.name}"></h3>
                                         <div class="pt-2">
                                             <p class="font-weight-bold" style="font-size: 1.3rem"
                                                th:if="${option.price >=1000}"
@@ -223,14 +205,6 @@
                                                 삭제
                                             </button>
                                         </form>
-                                    </div>
-                                </div>
-                                <div class="border-top pt-2 pb-2">
-                                    <div class="col">
-                                        <button class="btn btn-info w-100 mb-1" type="button"
-                                                data-toggle="modal"
-                                                data-target="#optionAdd">추가
-                                        </button>
                                     </div>
                                 </div>
                             </div>
