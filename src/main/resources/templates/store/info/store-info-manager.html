@@ -26,7 +26,8 @@
                     <div class="card">
                         <div class="card-body row">
                             <h1 class="font-weight-bold mb-2 w-75">매장정보 관리</h1>
-                            <h2 class="font-weight-bold mb-auto w-25 " th:text="${storeInfo.storeStatus}" style="color: red; text-align: right"></h2>
+                            <h2 class="font-weight-bold mb-auto w-25 " th:text="${storeInfo.storeStatus}"
+                                style="color: red; text-align: right"></h2>
                         </div>
                     </div>
                 </div>
@@ -35,23 +36,31 @@
                         <div class="store-card-header">
                             <h2 class="store-title">사업자 정보</h2>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                    th:data-target="'#businessInfoModal'">수정</button>
+                                    th:data-target="'#businessInfoModal'">수정
+                            </button>
                         </div>
                         <div class="card-body">
-                            <div class="details">
-                                <div class="detail-row">
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="detail-label">사업자 이름</h4>
-                                    <h5 class="detail-value" th:utext="${storeInfo.getRepresentativeName()}" id="representativeName-read"></h5>
+                                    <h5 class="detail-value" th:utext="${storeInfo.getRepresentativeName()}"
+                                        id="representativeName-read"></h5>
+                                </div>
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="detail-label">사업자 등록번호</h4>
                                     <h5 class="detail-value" id="businessLicenseNumber-read"></h5>
-                                    </h5>
                                 </div>
-                                <hr>
-                                <div class="detail-row">
+                            </div>
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="detail-label">은행명</h4>
-                                    <h5 class="detail-value" th:text="${storeInfo.getBankCode()}" id="bankCode-read"></h5>
+                                    <h5 class="detail-value" th:text="${storeInfo.getBankCode()}"
+                                        id="bankCode-read"></h5>
+                                </div>
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="detail-label">계좌번호</h4>
-                                    <h5 class="detail-value" th:text="${storeInfo.getBankAccountNumber()}" id="bankAccountNumber-read"></h5>
+                                    <h5 class="detail-value" th:text="${storeInfo.getBankAccountNumber()}"
+                                        id="bankAccountNumber-read"></h5>
                                 </div>
                             </div>
                         </div>
@@ -82,16 +91,21 @@
                                     </div>
                                     <div class="form-group"><label class="form-label">은행명</label>
                                         <div class="input-group col-xs-12 mb-2">
-                                            <select class="form-control w-100" id="bankCode" name="bankCode" style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;"
-                                                    th:field="*{bankCode}" th:value="${updateStoreManagerInfo.bankCode}">
+                                            <select class="form-control w-100" id="bankCode" name="bankCode"
+                                                    style="height: 42px; padding-left: 18px; padding-right: 20px; color: black;"
+                                                    th:field="*{bankCode}"
+                                                    th:value="${updateStoreManagerInfo.bankCode}">
                                                 <option value="">은행을 선택해주세요</option>
-                                                <option th:each="bank : ${selectBanks}" th:value="${updateStoreManagerInfo.bankCode}"
+                                                <option th:each="bank : ${selectBanks}"
+                                                        th:value="${updateStoreManagerInfo.bankCode}"
                                                         th:text="${bank.getDescription()}"></option>
                                             </select>
                                         </div>
                                         <input class="form-control" type="text"
                                                id="bankAccount" name="bankAccount" pattern="^[0-9]+$"
-                                               th:field="*{bankAccount}" th:value="${updateStoreManagerInfo.bankAccount}" placeholder="'-'은 제외하고 입력해주세요." oninput="checkInputLength(this, 14)">
+                                               th:field="*{bankAccount}"
+                                               th:value="${updateStoreManagerInfo.bankAccount}"
+                                               placeholder="'-'은 제외하고 입력해주세요." oninput="checkInputLength(this, 14)">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light"
@@ -112,41 +126,58 @@
                         <div class="store-card-header">
                             <h2 class="store-title">영업점 정보</h2>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                    th:data-target="'#storeInfoModal'">수정</button>
+                                    th:data-target="'#storeInfoModal'">수정
+                            </button>
                         </div>
                         <div class="card-body">
-                            <div class="details">
-                                <div class="detail-row">
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">상호명</h4>
-                                    <h5 class="store-detail-value" th:text="${storeInfo.getStoreName()}" id="storeName-read"></h5>
+                                    <h5 class="store-detail-value" th:text="${storeInfo.getStoreName()}"
+                                        id="storeName-read"></h5>
+                                </div>
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">전화번호</h4>
-                                    <h5 class="store-detail-value" th:text="${storeInfo.getPhoneNumber()}" id="phoneNumber-read">
+                                    <h5 class="store-detail-value" th:text="${storeInfo.getPhoneNumber()}"
+                                        id="phoneNumber-read">
                                     </h5>
                                 </div>
-                                <hr>
-                                <div class="detail-row">
+                            </div>
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">주소</h4>
-                                    <h5 class="store-detail-value" th:text="${storeInfo.getMainPlace()}+ ' '+ ${storeInfo.getDetailPlace()}"></h5>
+                                    <h5 class="store-detail-value"
+                                        th:text="${storeInfo.getMainPlace()}+ ' '+ ${storeInfo.getDetailPlace()}"></h5>
                                 </div>
-                                <hr>
-                                <div class="detail-row">
+                            </div>
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">적립률</h4>
-                                    <h5 class="store-detail-value" th:text="${storeInfo.getDefaultEarningRate()}" id="earningRate-read"></h5>
+                                    <h5 class="store-detail-value" th:text="${storeInfo.getDefaultEarningRate()}"
+                                        id="earningRate-read"></h5>
+                                </div>
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">개업일</h4>
-                                    <h5 class="store-detail-value" th:text="${storeInfo.getOpeningDate()}" id="openingDate-read"></h5>
+                                    <h5 class="store-detail-value" th:text="${storeInfo.getOpeningDate()}"
+                                        id="openingDate-read"></h5>
                                 </div>
-                                <hr>
-                                <div class="detail-row">
+                            </div>
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">최소주문금액</h4>
-                                    <h5 class="store-detail-value" th:text="${#numbers.formatInteger(storeInfo.minimumOrderPrice,0,'COMMA')} + ' 원'"></h5>
-
-                                    <h4 class="store-detail-label">배달료</h4>
-                                    <h5 class="store-detail-value" th:text="${#numbers.formatInteger(storeInfo.deliveryCost,0,'COMMA')} + ' 원'"></h5>
+                                    <h5 class="store-detail-value"
+                                        th:text="${#numbers.formatInteger(storeInfo.minimumOrderPrice,0,'COMMA')} + ' 원'"></h5>
                                 </div>
-                                <hr>
-                                <div class="detail-row">
+                                <div class="col-lg-6 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="store-detail-label">배달료</h4>
+                                    <h5 class="store-detail-value"
+                                        th:text="${#numbers.formatInteger(storeInfo.deliveryCost,0,'COMMA')} + ' 원'"></h5>
+                                </div>
+                            </div>
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">소개글</h4>
-                                    <h5 class="store-detail-value"  th:utext="${storeInfo.getDescription()}"></h5>
+                                    <h5 class="store-detail-value" th:utext="${storeInfo.getDescription()}"></h5>
                                 </div>
                             </div>
                         </div>
@@ -170,26 +201,34 @@
                                       th:method="patch" th:object="${updateStoreInfoRequestDto}">
                                     <div class="form-group">
                                         <label for="storeName">영업점 상호명</label>
-                                        <input class="form-control" type="text" id="storeName" name="storeName" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required
-                                               th:field="*{storeName}" th:value="${updateStoreInfoRequestDto.storeName}" placeholder="영업점 상호명">
+                                        <input class="form-control" type="text" id="storeName" name="storeName"
+                                               pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required
+                                               th:field="*{storeName}" th:value="${updateStoreInfoRequestDto.storeName}"
+                                               placeholder="영업점 상호명">
                                     </div>
                                     <div class="form-group"><label for="phoneNumber">영업점 전화번호</label>
                                         <input class="form-control" type="text" id="phoneNumber"
                                                name="phoneNumber"
-                                               th:field="*{phoneNumber}" th:value="${updateStoreInfoRequestDto.phoneNumber}"
-                                               placeholder="'-'은 제외하고 입력해주세요." pattern="^[0-9]+$" minlength="10" maxlength="12" required>
+                                               th:field="*{phoneNumber}"
+                                               th:value="${updateStoreInfoRequestDto.phoneNumber}"
+                                               placeholder="'-'은 제외하고 입력해주세요." pattern="^[0-9]+$" minlength="10"
+                                               maxlength="12" required>
                                     </div>
                                     <div class="form-group"><label>영업점 주소</label>
                                         <div class="input-group col-xs-12 mb-2">
                                             <input type="text" class="form-control" id="mainPlace" name="mainPlace"
-                                                   th:field="*{mainPlace}" th:value="${updateStoreInfoRequestDto.mainPlace}" placeholder="메인 주소">
+                                                   th:field="*{mainPlace}"
+                                                   th:value="${updateStoreInfoRequestDto.mainPlace}"
+                                                   placeholder="메인 주소">
                                             <button class="btn btn-info" onclick="execDaumPostcode()" type="button">
                                                 주소 검색
                                             </button>
                                         </div>
                                         <input class="form-control" type="text" id="detailPlace"
                                                name="detailPlace"
-                                               th:field="*{detailPlace}" th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소" pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required>
+                                               th:field="*{detailPlace}"
+                                               th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소"
+                                               pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required>
 
                                         <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
                                                th:value="${updateStoreInfoRequestDto.latitude}">
@@ -199,30 +238,41 @@
                                     </div>
                                     <div class="form-group"><label for="earningRate">적립률</label>
                                         <input class="form-control" type="text" id="earningRate" name="earningRate"
-                                               th:field="*{earningRate}" th:value="${updateStoreInfoRequestDto.earningRate}" placeholder="0.0 ~ 9.9까지 입력 가능합니다."
+                                               th:field="*{earningRate}"
+                                               th:value="${updateStoreInfoRequestDto.earningRate}"
+                                               placeholder="0.0 ~ 9.9까지 입력 가능합니다."
                                                oninput="validateEarningRate(this)" pattern="^[0-9\.]+$" required>
-                                        <p id="errorText" style="color: red; display: none;" >0.0보다 적거나 9.9보다 큰 값을 입력할 수 없습니다.</p>
+                                        <p id="errorText" style="color: red; display: none;">0.0보다 적거나 9.9보다 큰 값을 입력할 수
+                                            없습니다.</p>
                                     </div>
                                     <div class="form-group">
                                         <label>오픈 예정일</label>
                                         <div class="input-group col-xs-12">
                                             <input type="date" class="form-control"
-                                                   th:field="*{openingDate}" th:value="${updateStoreInfoRequestDto.openingDate}"
+                                                   th:field="*{openingDate}"
+                                                   th:value="${updateStoreInfoRequestDto.openingDate}"
                                                    id="openingDate" name="openingDate" required
                                                    placeholder="오픈 예정일">
                                         </div>
                                     </div>
                                     <div class="form-group"><label for="minimumOrderPrice">최소주문금액</label>
-                                        <input class="form-control" type="text" id="minimumOrderPrice" name="minimumOrderPrice"
-                                               th:field="*{minimumOrderPrice}" th:value="${updateStoreInfoRequestDto.minimumOrderPrice}" placeholder="숫자만 입력하세요."
+                                        <input class="form-control" type="text" id="minimumOrderPrice"
+                                               name="minimumOrderPrice"
+                                               th:field="*{minimumOrderPrice}"
+                                               th:value="${updateStoreInfoRequestDto.minimumOrderPrice}"
+                                               placeholder="숫자만 입력하세요."
                                                oninput="validateMinimumOrderPrice(this)" pattern="^[0-9]+$" required>
-                                        <p id="errorText-minimumOrderPrice" style="color: red; display: none;" >0보다 작은 값을 적을 수 없습니다.</p>
+                                        <p id="errorText-minimumOrderPrice" style="color: red; display: none;">0보다 작은 값을
+                                            적을 수 없습니다.</p>
                                     </div>
                                     <div class="form-group"><label for="deliveryCost">기본 배달비</label>
                                         <input class="form-control" type="text" id="deliveryCost" name="deliveryCost"
-                                               th:field="*{deliveryCost}" th:value="${updateStoreInfoRequestDto.deliveryCost}" placeholder="숫자만 입력하세요."
-                                               oninput="validateDeliveryCost(this)"  pattern="^[0-9]+$" required>
-                                        <p id="errorText-deliveryCost" style="color: red; display: none;">4000원보다 적을 수 없습니다.</p>
+                                               th:field="*{deliveryCost}"
+                                               th:value="${updateStoreInfoRequestDto.deliveryCost}"
+                                               placeholder="숫자만 입력하세요."
+                                               oninput="validateDeliveryCost(this)" pattern="^[0-9]+$" required>
+                                        <p id="errorText-deliveryCost" style="color: red; display: none;">4000원보다 적을 수
+                                            없습니다.</p>
                                     </div>
                                     <div class="form-group">
                                         <label>가게 설명</label>
@@ -250,13 +300,15 @@
                         <div class="store-card-header">
                             <h2 class="store-title">우리 가게 카테고리</h2>
                             <button type="button" class="btn btn-info" data-toggle="modal"
-                                    th:data-target="'#categoryModal'">수정</button>
+                                    th:data-target="'#categoryModal'">수정
+                            </button>
                         </div>
                         <div class="card-body">
-                            <div class="details">
-                                <div class="detail-row">
+                            <div class="row pt-0 pb-0">
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
                                     <h4 class="store-detail-label">카테고리</h4>
-                                    <h5 class="store-detail-value" th:each="category : ${storeInfo.storeCategories}" id="storeCategories">
+                                    <h5 class="store-detail-value" th:each="category : ${storeInfo.storeCategories}"
+                                        id="storeCategories">
                                         <span th:text="${category.storeCategory}"></span>
                                     </h5>
                                 </div>
@@ -277,13 +329,17 @@
                                 <div class="modal-body">
                                     <form th:id="storeCategoryUpdate"
                                           th:action="@{|/stores/${storeId}/store-info-manager/categoryInfo|}"
-                                          th:method="patch" th:object="${updateStoreCategory}" >
-                                        <div class="form-group"><label class="form-label" for="storeCategories">카테고리 (1 ~ 3개까지 입력 가능합니다.)</label>
+                                          th:method="patch" th:object="${updateStoreCategory}">
+                                        <div class="form-group"><label class="form-label" for="storeCategories">카테고리 (1
+                                            ~ 3개까지 입력 가능합니다.)</label>
                                             <div class="row">
-                                                <div class="col-sm-3" th:each="category : ${selectCategories}"  id="selectCategories">
+                                                <div class="col-sm-3" th:each="category : ${selectCategories}"
+                                                     id="selectCategories">
                                                     <label class="custom-checkbox">
-                                                        <input type="checkbox" name="updateStoreCategories" th:value="${category.getCategoryCode()}"
-                                                               th:text="${category.getDescription()}" onclick="handleCheckboxClick.call(this)">
+                                                        <input type="checkbox" name="updateStoreCategories"
+                                                               th:value="${category.getCategoryCode()}"
+                                                               th:text="${category.getDescription()}"
+                                                               onclick="handleCheckboxClick.call(this)">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
@@ -310,14 +366,21 @@
                         <h2 class="store-title">매장 대표 사진</h2>
                     </div>
                     <div class="card-body">
-                        <div class="detail-row">
-                            <h4 class="detail-label">현재 매장 사진</h4>
-                            <p class="detail-image-value "><img th:src="${storeInfo.getPathName()}" alt="No image" class="store-image"></p>
-
-                            <button type="button" class="btn btn-light m-1" data-toggle="modal"
-                                    th:data-target="'#storeImageModal'">수정</button>
-                            <button type="button" class="btn btn-primary m-1" data-toggle="modal"
-                                    th:data-target="'#storeImageDelete'">삭제</button>
+                        <div class="row pt-0 pb-0">
+                            <div class="col-lg-6 row border-bottom pt-3 pb-3 align-items-center" style="flex-wrap: nowrap">
+                                <h4 class="detail-label">현재 매장 사진</h4>
+                                <p class="detail-image-value "><img th:src="${storeInfo.getPathName()}" alt="No image"
+                                                                    class="store-image"></p>
+                            </div>
+                            <div class="col-lg-6 row border-bottom pt-3 pb-3 align-items-center d-flex justify-content-end"
+                                 style="flex-wrap: nowrap">
+                                <button type="button" class="btn btn-light m-1" data-toggle="modal" style="height: 44px"
+                                        th:data-target="'#storeImageModal'">수정
+                                </button>
+                                <button type="button" class="btn btn-primary m-1" data-toggle="modal" style="height: 44px"
+                                        th:data-target="'#storeImageDelete'">삭제
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -339,7 +402,8 @@
                                   th:method="patch" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>매장 대표 이미지</label>
-                                    <input type="file" name="uploadImage" class="file-upload-default" accept="image/png,image/jpg">
+                                    <input type="file" name="uploadImage" class="file-upload-default"
+                                           accept="image/png,image/jpg">
                                     <div class="input-group col-xs-12">
                                         <input type="text" class="form-control file-upload-info" disabled
                                                id="uploadImage"
@@ -386,9 +450,11 @@
             </div>
             <div th:if="${storeInfo.storeStatus!='폐업'}">
                 <button type="button" class="btn btn-primary m-1" data-toggle="modal"
-                        th:data-target="'#storeStatusOUTED'">매장 중단</button>
+                        th:data-target="'#storeStatusOUTED'">매장 중단
+                </button>
             </div>
-            <div class="modal fade" th:id="'storeStatusOUTED'" tabindex="-1" role="dialog" aria-labelledby="storeStatusOUTEDLabel"
+            <div class="modal fade" th:id="'storeStatusOUTED'" tabindex="-1" role="dialog"
+                 aria-labelledby="storeStatusOUTEDLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -398,12 +464,14 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" >
+                        <div class="modal-body">
                             중단을 누르시면 매장을 해당 매장은 영구 중지됩니다. 신중하게 선택 해주세요.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary" th:onclick="'javascript:confirmStoreOuted('+${storeId}+')'">중단하기</button>
+                            <button type="button" class="btn btn-primary"
+                                    th:onclick="'javascript:confirmStoreOuted('+${storeId}+')'">중단하기
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -415,18 +483,20 @@
 </div>
 <footer th:replace="fragments :: site-footer"></footer>
 <script>
-    function checkInputLength(input, maxLength){
-        if (input.value.length > maxLength){
-            input.value = input.value.slice(0,maxLength);
+    function checkInputLength(input, maxLength) {
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
         }
     }
+
     function confirmStoreOuted(storeId) {
-        const url = `/stores/`+storeId+`/status?option=OUTED`;
+        const url = `/stores/` + storeId + `/status?option=OUTED`;
         const data = null;
         const method = "PATCH";
 
-        sendDataWithCsrfToken(url, "/stores/"+storeId+"/store-info-manager", data, method);
+        sendDataWithCsrfToken(url, "/stores/" + storeId + "/store-info-manager", data, method);
     }
+
     function validateEarningRate(input) {
         const earningRate = parseFloat(input.value);
         const errorText = document.getElementById('errorText');
@@ -461,17 +531,17 @@
     }
 
 
-    window.onload = function(){
+    window.onload = function () {
         const deliveryCostInput = document.getElementById('deliveryCost');
         const earningRateInput = document.getElementById('earningRate');
         const minimumOrderPriceInput = document.getElementById('minimumOrderPrice')
-        if (earningRateInput.value.trim() === ""){
+        if (earningRateInput.value.trim() === "") {
             earningRateInput.value = "0.0";
         }
-        if(minimumOrderPriceInput.value.trim() === ""){
+        if (minimumOrderPriceInput.value.trim() === "") {
             minimumOrderPriceInput.value = 0;
         }
-        if(deliveryCostInput.value.trim() === ""){
+        if (deliveryCostInput.value.trim() === "") {
             deliveryCostInput.value = 4000;
         }
     }
@@ -491,7 +561,7 @@
     function handleCheckboxClick() {
         let selectedStoreCategories = getSelectedUpdateCategories();
         let checkMaximum = 3;
-        if (selectedStoreCategories.length > checkMaximum || selectedStoreCategories.length<=0) {
+        if (selectedStoreCategories.length > checkMaximum || selectedStoreCategories.length <= 0) {
             this.checked = false;
             alert("카테고리는 반드시 1개이상, 3개 이하만 선택할 수 있습니다.");
         }
@@ -505,27 +575,30 @@
 
     let phoneNumber = [[${storeInfo.getPhoneNumber()}]];
     document.getElementById("phoneNumber-read").innerText = formatPhoneNumber(phoneNumber);
-    function formatPhoneNumber(number){
-        if (number.length ===12){
-            return number.substring(0,4)+"-"+number.substring(4,8)+"-"+number.substring(8,12);
-        }else if(number.length ===11){
-            return number.substring(0,3)+"-"+number.substring(3,7)+"-"+number.substring(7);
-        }else if(number.length === 10){
-            return number.substring(0,3)+"-"+number.substring(3,6) +"-"+number.substring(6);
-        }else{
+
+    function formatPhoneNumber(number) {
+        if (number.length === 12) {
+            return number.substring(0, 4) + "-" + number.substring(4, 8) + "-" + number.substring(8, 12);
+        } else if (number.length === 11) {
+            return number.substring(0, 3) + "-" + number.substring(3, 7) + "-" + number.substring(7);
+        } else if (number.length === 10) {
+            return number.substring(0, 3) + "-" + number.substring(3, 6) + "-" + number.substring(6);
+        } else {
             return number
         }
     }
+
     let accountNumber = [[${storeInfo.getBankAccountNumber()}]];
     document.getElementById("bankAccountNumber-read").innerText = formatBankNumber(accountNumber);
 
-    function formatBankNumber(number){
-        if(number.length === 12){
-            return number.substring(0,3) +"-" +number.substring(3,6)+"-"+number.substring(6);
-        }else{
-            return number.substring(0,5) + "-"+number.substring(5,7)+"-"+number.substring(7);
+    function formatBankNumber(number) {
+        if (number.length === 12) {
+            return number.substring(0, 3) + "-" + number.substring(3, 6) + "-" + number.substring(6);
+        } else {
+            return number.substring(0, 5) + "-" + number.substring(5, 7) + "-" + number.substring(7);
         }
     }
+
     /* 번호를 ***-**-***** 형태로 변환하는 함수 */
     function formatBusinessLicenseNumber(number) {
         if (number.length !== 10) {
