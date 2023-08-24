@@ -248,7 +248,7 @@ public class AdminAdapter {
             .buildAndExpand(categoryCode)
             .toUri();
 
-        RequestEntity<UpdateCategoryRequestDto> request = RequestEntity.put(uri)
+        RequestEntity<UpdateCategoryRequestDto> request = RequestEntity.patch(uri)
             .contentType(MediaType.APPLICATION_JSON)
             .body(updateCategoryRequestDto);
 

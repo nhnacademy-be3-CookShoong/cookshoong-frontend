@@ -3,6 +3,7 @@ package store.cookshoong.www.cookshoongfrontend.order.model.request;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class PatchOrderRequestDto {
     @NotNull
     private UUID orderCode;
@@ -25,6 +27,6 @@ public class PatchOrderRequestDto {
      * The enum Status code.
      */
     public enum StatusCode {
-        COOKING, FOOD_OUT, ORD_FLOOD, DELIVER;
+        COOKING, FOOD_OUT, ORD_FLOOD, DELIVER, COMPLETE;
     }
 }
