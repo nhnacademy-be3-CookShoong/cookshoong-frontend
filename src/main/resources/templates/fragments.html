@@ -153,23 +153,23 @@
                             </div>
                         </div>
                         <div class="card-body p-1">
-                            <div class="col-12 row w-100 p-3 mb-3 border-left border-right border-top border-bottom"
+                            <div class="col-12 row w-100 p-3 mb-3 border-left border-right border-top border-bottom d-flex justify-content-between" style="flex-wrap: nowrap"
                                  th:each="businessStore, i:${businessStoreList}">
-                                <button class="row border-0 flex-fill bg-white mt-1 mb-1"
+
+                                <button class="row border-0 bg-white mt-1 mb-1 text-left col-7"
                                         th:onclick="'window.location.href=\'/stores/' + ${businessStore.storeId} + '/store-info-manager' + '\''"
-                                        style="border-radius: 1rem">
-                                    <div class="col-11 p-1 m-1 text-left">
-                                        <h6 th:if="${businessStore.storeStatus == 'CLOSE'}" style="color: orangered;">매장
-                                            오픈시 중단해제를 눌러주세요.</h6>
-                                        <h4 class="font-weight-bold" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 230px; font-size: 1.2rem"
-                                            th:text="${businessStore.storeName}"></h4>
-                                        <div class="m-0 p-0 row" style="width: 230px;">
-                                            <span th:text="${businessStore.storeMainAddress}"></span>
-                                            <span th:text="${businessStore.storeDetailAddress}"></span>
-                                        </div>
+                                        style="border-radius: 1rem;">
+                                    <h6 th:if="${businessStore.storeStatus == 'CLOSE'}" style="color: orangered;">매장
+                                        오픈시 중단해제를 눌러주세요.</h6>
+                                    <h4 class="font-weight-bold" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%"
+                                        th:text="${businessStore.storeName}"></h4>
+                                    <div class="m-0 p-0 row">
+                                        <span th:text="${businessStore.storeMainAddress}"></span>
+                                        <span th:text="${businessStore.storeDetailAddress}"></span>
                                     </div>
                                 </button>
-                                <div class="col-4 p-1 m-1 text-right">
+
+                                <div class="p-1 m-1 text-right" style="width: 200px">
                                     <button th:if="${businessStore.storeStatus == 'OPEN'}"
                                             th:onclick="'javascript:storeStatusChange('+${businessStore.storeId}+', \'CLOSE\')'"
                                             class="btn btn-outline-reddit">
