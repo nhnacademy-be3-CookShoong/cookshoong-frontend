@@ -39,8 +39,8 @@ body {
 
 /* Card Styles */
 .payment-card {
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -72,7 +72,7 @@ body {
 }
 
 .detail-label {
-    width: 150px;
+    width: 70px;
     font-weight: bold;
     color: #555;
 }
