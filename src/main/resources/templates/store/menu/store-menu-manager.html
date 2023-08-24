@@ -15,42 +15,31 @@
 <div class="modal fade" id="menuGroupAdd">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">메뉴 그룹 관리</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-group-manager'}"
                       th:object="${createMenuGroupRequestDto}"
                       method="post">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h2 class="card-title">신규 메뉴 그룹 등록</h2>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>메뉴 그룹 이름</label>
+                        <input class="form-control" type="text" name="name" placeholder="메뉴 그룹 이름"
+                               maxlength="30" required>
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">메뉴 그룹 정보</h4>
-                                <div class="form-group">
-                                    <label>메뉴 그룹 이름</label>
-                                    <input class="form-control" type="text" name="name" placeholder="메뉴 그룹 이름"
-                                    maxlength="30" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>메뉴 그룹 상세</label>
-                                    <input class="form-control" type="text" name="description"
-                                           maxlength="200" placeholder="메뉴 그룹 상세">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>메뉴 그룹 상세</label>
+                        <input class="form-control" type="text" name="description"
+                               maxlength="200" placeholder="메뉴 그룹 상세">
                     </div>
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <input class="form-control" type="hidden" name="targetMenuGroupId">
-                                <button class="btn btn-info m-1" type="submit" name="submitButton"></button>
-                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <input class="form-control" type="hidden" name="targetMenuGroupId">
+                        <button class="btn btn-light" data-dismiss="modal">취소</button>
+                        <button class="btn btn-info" type="submit" name="submitButton"></button>
                     </div>
                 </form>
             </div>
@@ -61,17 +50,17 @@
 <div class="modal fade" id="menuAdd">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">메뉴 관리</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <form class="col-12 p-0" th:action="@{'/stores/' + ${storeId} + '/store-menu-manager'}"
                       th:object="${createMenuRequestDto}"
                       method="post" enctype="multipart/form-data">
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h2 class="card-title">신규 메뉴 등록</h2>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -155,16 +144,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <input class="form-control" type="hidden" name="targetMenuId">
-                                <button class="btn btn-info m-1" type="submit" id="submitButton"
-                                        name="submitButton"></button>
-                                <button class="btn btn-light m-1" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <input class="form-control" type="hidden" name="targetMenuId">
+                        <button class="btn btn-light" data-dismiss="modal">취소</button>
+                        <button class="btn btn-info" type="submit" id="submitButton"
+                                name="submitButton"></button>
                     </div>
                 </form>
             </div>
@@ -188,16 +172,19 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">메뉴 그룹 관리</h2>
+                            <button class="btn btn-info" type="button" data-toggle="modal"
+                                    data-target="#menuGroupAdd">추가
+                            </button>
                         </div>
                         <div class="card-body">
                             <div class="col-12">
                                 <div class="row border-top pt-3 pb-3 justify-content-between"
                                      th:each="menuGroup, i:${menuGroups}">
-                                    <div class="row">
+                                    <div class="row" style="width: 600px;">
                                         <h3 class="font-weight-bold pt-2" th:text="${menuGroup.name}"></h3>
                                     </div>
                                     <div class="row">
-                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;"
+                                        <button class="btn btn-info m-1" style="width: 85px; height: 40px;"
                                                 type="button"
                                                 th:id="${menuGroup.id}"
                                                 data-toggle="modal"
@@ -216,9 +203,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <button class="btn btn-info w-100 mt-2" type="button" data-toggle="modal"
-                                        data-target="#menuGroupAdd">추가
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -227,19 +211,23 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">메뉴 관리</h2>
+                            <button class="btn btn-info" type="button"
+                                    data-toggle="modal"
+                                    data-target="#menuAdd">추가
+                            </button>
                         </div>
                         <div class="card-body">
                             <div class="col-12 grid-margin">
                                 <div class="row border-top pb-3 pt-3 justify-content-between"
                                      th:each="menu, i:${menus}">
-                                    <div class="row" style="width: 600px;">
+                                    <div class="row" style="width: 600px; flex-wrap: nowrap;">
                                         <div class="align-content-end text-md-center border-info mr-3 mb-2"
                                              style="max-width: 400px">
                                             <img th:src="${menu.getSavedName()}"
                                                  onerror="this.onerror=null; this.src='/assets/images/nodata.png';"
                                                  style="object-fit: cover; width: 130px; height: 130px;">
                                         </div>
-                                        <div>
+                                        <div class="flex-fill">
                                             <h3 class="font-weight-bold" th:text="${menu.name}"></h3>
                                             <p><i class="mdi mdi mdi-file-powerpoint-box"
                                                   style="color: orange; font-size: 1.1rem"></i>
@@ -255,13 +243,13 @@
                                                 <p class="font-weight-bold" style="font-size: 1.3rem"
                                                    th:if="${menu.price < 1000}" th:text="${menu.price} + ' 원'"></p>
                                             </div>
-                                            <div class="pt-1" style="width: 200px;">
+                                            <div class="pt-1">
                                                 <span th:utext="${menu.description}"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <button class="btn btn-light m-1" style="width: 85px; height: 40px;"
+                                        <button class="btn btn-info m-1" style="width: 85px; height: 40px;"
                                                 type="button"
                                                 th:id="${menu.id}"
                                                 data-toggle="modal"
@@ -285,10 +273,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <button class="btn btn-info w-100 mt-2" type="button"
-                                        data-toggle="modal"
-                                        data-target="#menuAdd">추가
-                                </button>
                             </div>
                         </div>
                     </div>

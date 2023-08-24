@@ -69,7 +69,7 @@
                      role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header bg-warning text-white">
+                            <div class="modal-header">
                                 <h5 class="modal-title" th:text="${store.storeName}"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -127,7 +127,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card pt-3 pb-3 pl-1 pr-1 mb-2" style="background-color: #d2c6c5;" th:each="reply, i : ${review.getSelectReviewResponse().getReplyResponses()}">
+                                    <div class="card pt-3 pb-3 pl-1 pr-1 mb-2" style="background-color: #d2c6c5;"
+                                         th:each="reply, i : ${review.getSelectReviewResponse().getReplyResponses()}">
                                         <div>
                                             <div class="row pl-3 pr-3 pt-1 pb-1 m-0 justify-content-between">
                                                 <div>
@@ -146,9 +147,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +159,7 @@
                      role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header bg-warning text-white">
+                            <div class="modal-header">
                                 <h5 class="modal-title" th:text="${store.storeName}"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -184,7 +185,8 @@
                                     </tr>
                                     <tr>
                                         <td>가게 주소</td>
-                                        <td style="max-width: 300px;" th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></td>
+                                        <td style="max-width: 300px;"
+                                            th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></td>
                                     </tr>
                                     <tr>
                                         <td>소개글</td>
@@ -195,13 +197,13 @@
                                     <strong style="margin-bottom: 10px;">영업 시간</strong>
                                     <br>
                                     <div th:each="businessHour, i:${businessHours}">
-                                <span th:text="${businessHour.dayCodeName} + ' ' + ${businessHour.openHour} + ' ~ ' + ${businessHour.closeHour}">
-                                </span>
+                                        <span th:text="${businessHour.dayCodeName} + ' ' + ${businessHour.openHour} + ' ~ ' + ${businessHour.closeHour}">
+                                        </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+                                </div>
                             </div>
                         </div>
                     </div>

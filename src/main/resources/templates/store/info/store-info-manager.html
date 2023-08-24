@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">사업자 정보</h2>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="button" class="btn btn-info" data-toggle="modal"
                                     th:data-target="'#businessInfoModal'">수정</button>
                         </div>
                         <div class="card-body">
@@ -94,11 +94,11 @@
                                                th:field="*{bankAccount}" th:value="${updateStoreManagerInfo.bankAccount}" placeholder="'-'은 제외하고 입력해주세요." oninput="checkInputLength(this, 14)">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close
+                                        <button type="button" class="btn btn-light"
+                                                data-dismiss="modal">닫기
                                         </button>
                                         <button type="submit" th:form="businessInfoUpdate"
-                                                class="btn btn-primary" th:method="patch">Save
+                                                class="btn btn-primary" th:method="patch">저장하기
                                         </button>
                                     </div>
                                 </form>
@@ -111,7 +111,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">영업점 정보</h2>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="button" class="btn btn-info" data-toggle="modal"
                                     th:data-target="'#storeInfoModal'"
                                     th:data-content="${updateStoreInfoRequestDto.description}">수정</button>
                         </div>
@@ -232,11 +232,11 @@
                                         <div id="editor"></div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close
+                                        <button type="button" class="btn btn-light"
+                                                data-dismiss="modal">닫기
                                         </button>
                                         <button type="submit" th:form="storeInfoUpdate"
-                                                class="btn btn-primary" th:method="patch" id="submitButton">Save
+                                                class="btn btn-primary" th:method="patch" id="submitButton">저장하기
                                         </button>
                                     </div>
                                 </form>
@@ -250,7 +250,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">우리 가게 카테고리</h2>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="button" class="btn btn-info" data-toggle="modal"
                                     th:data-target="'#categoryModal'">수정</button>
                         </div>
                         <div class="card-body">
@@ -291,11 +291,11 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close
+                                            <button type="button" class="btn btn-light"
+                                                    data-dismiss="modal">닫기
                                             </button>
                                             <button type="submit" th:form="storeCategoryUpdate"
-                                                    class="btn btn-primary" th:method="patch">Save
+                                                    class="btn btn-primary" th:method="patch">저장하기
                                             </button>
                                         </div>
                                     </form>
@@ -319,7 +319,6 @@
                                     th:data-target="'#storeImageModal'">수정</button>
                             <button type="button" class="btn btn-primary m-1" data-toggle="modal"
                                     th:data-target="'#storeImageDelete'">삭제</button>
-
                         </div>
                     </div>
                 </div>
@@ -353,11 +352,11 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close
+                                    <button type="button" class="btn btn-light"
+                                            data-dismiss="modal">닫기
                                     </button>
                                     <button type="submit" th:form="storeImageUpdate"
-                                            class="btn btn-primary" th:method="patch">Save
+                                            class="btn btn-primary" th:method="patch">저장하기
                                     </button>
                                 </div>
                             </form>
@@ -410,7 +409,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

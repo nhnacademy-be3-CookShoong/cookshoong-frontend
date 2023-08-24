@@ -146,6 +146,11 @@ public class StoreOptionManagerController {
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
         }
+
         model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }

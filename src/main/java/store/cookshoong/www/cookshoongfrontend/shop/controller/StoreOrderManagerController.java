@@ -25,6 +25,8 @@ import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderI
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.payment.model.request.tossrefund.CreateFullRefundRequestDto;
 import store.cookshoong.www.cookshoongfrontend.payment.service.PaymentService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 매장 주문 관리 페이지 컨트롤러.
@@ -40,6 +42,7 @@ public class StoreOrderManagerController {
     private final AccountIdAware account;
     private final AccountAddressService accountAddressService;
     private final CartService cartService;
+    private final StoreService storeService;
 
     /**
      * 매장 주문 확인.
@@ -95,6 +98,11 @@ public class StoreOrderManagerController {
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
         }
+
         model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
     }
 }

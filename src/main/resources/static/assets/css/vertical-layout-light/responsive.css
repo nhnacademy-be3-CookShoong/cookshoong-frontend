@@ -77,6 +77,7 @@
 .header_section {
     padding: 10px 10px;
     background-color: #ef7b09;
+    height: 85px;
 }
 
 .header_section .container-fluid {

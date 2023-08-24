@@ -19,9 +19,10 @@
 <div class="modal fade" id="addressAdd" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-warning text-white">
-                <h5 class="modal-title" th:text="주소"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title">주소 관리</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -29,40 +30,37 @@
                 <form class="col-12 p-0" th:action="@{'/my-address'}"
                       th:object="${createAccountAddressRequestDto}"
                       method="post" id="addressForm">
-                    <div class="col-12 stretch-card">
-                        <div class="card rounded">
-                            <div class="card-body">
-                                <h4 class="card-title address"><span>신규 주소 등록</span><button
-                                        class="btn btn-inverse-info" style="margin-left: 13rem; font-size: 0.9rem"
-                                        type="button" onclick="execDaumPostcode()">주소검색</button>
-                                </h4>
-                                <div class="form-group">
-                                    <label>별칭</label>
-                                    <input class="form-control" type="text" id="alias" name="alias"
-                                           placeholder="별칭" pattern="^[가-힇\w]+$\, " maxlength="10" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>메인 주소</label>
-                                    <input type="text" class="form-control" id="addressInput"
-                                           name="mainPlace"
-                                           th:field="*{mainPlace}"
-                                           th:value="*{mainPlace}" placeholder="메인 주소"
-                                           readonly required>
-                                </div>
-                                <div class="form-group">
-                                    <label>상세 주소</label>
-                                    <input class="form-control" type="text" id="detailAddress" name="detailPlace"
-                                           placeholder="상세 주소" pattern="^[가-힇0-9\w\-\,\(\), ]+$" required>
-                                </div>
-                                <input type="hidden" id="latitudeInput" name="latitude" th:value="*{latitude}" required>
-                                <input type="hidden" id="longitudeInput" name="longitude" th:value="*{longitude}" required>
-                            </div>
-                            <div class="card-body text-center address" style="padding-top: 0rem">
-                                <input id="address-add" class="btn btn-inverse-info" style="font-size: 1.0rem" type="submit"
-                                       onclick="return validateAddress()" value="주소추가">
-                                <button class="btn btn-inverse-info m-1" style="font-size: 1.0rem" data-dismiss="modal">취소</button>
-                            </div>
-                        </div>
+                    <h4 class="card-title address justify-content-between d-flex align-items-center">
+                        <span>신규 주소 등록</span>
+                        <button class="btn btn-inverse-warning"
+                                type="button" onclick="execDaumPostcode()">주소검색</button>
+                    </h4>
+                    <div class="form-group">
+                        <label>별칭</label>
+                        <input class="form-control" type="text" id="alias" name="alias"
+                               placeholder="별칭" pattern="^[가-힇\w]+$\, " maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label>메인 주소</label>
+                        <input type="text" class="form-control" id="addressInput"
+                               name="mainPlace"
+                               th:field="*{mainPlace}"
+                               th:value="*{mainPlace}" placeholder="메인 주소"
+                               readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>상세 주소</label>
+                        <input class="form-control" type="text" id="detailAddress" name="detailPlace"
+                               placeholder="상세 주소" pattern="^[가-힇0-9\w\-\,\(\), ]+$" required>
+                    </div>
+                    <input type="hidden" id="latitudeInput" name="latitude" th:value="*{latitude}" required>
+                    <input type="hidden" id="longitudeInput" name="longitude" th:value="*{longitude}" required>
+
+
+                    <div class="modal-footer">
+                        <button class="btn btn-light"data-dismiss="modal">취소</button>
+                        <input id="address-add" class="btn btn-inverse-warning" type="submit"
+                               onclick="return validateAddress()" value="주소추가">
                     </div>
                 </form>
             </div>
@@ -86,7 +84,7 @@
                     <div class="card">
                         <div class="store-card-header">
                             <h2 class="store-title">주소 목록</h2>
-                            <input class="btn btn-inverse-info float-right" style="font-size: 0.9rem; padding: 10px 20px;" type="button"
+                            <input class="btn btn-inverse-warning float-right" type="button"
                                    data-toggle="modal"
                                    data-target="#addressAdd" th:value="주소등록">
                         </div>
@@ -121,7 +119,7 @@
                                             <td class="pl-0 pr-0 address" style="width: 80px; padding: 0.5rem">
                                                 <form th:action="@{'/my-address/' + ${address.id}}"
                                                       th:method="PATCH">
-                                                    <button class="btn m-0 p-2" type="submit" style="color: #77acf8;">
+                                                    <button class="btn m-0 p-2" type="submit" style="color: #e7770f;">
                                                         <i class="mdi mdi-check-circle-outline" style="font-size: 20px"></i>
                                                     </button>
                                                 </form>
@@ -129,7 +127,7 @@
                                             <td class="pl-0 pr-0 address" style="width: 85px; padding: 0.8rem">
                                                 <form id="deleteForm" th:action="@{'/my-address/'+ ${address.id}}"
                                                       th:method="DELETE">
-                                                    <input class="btn m-0 p-2" style="font-size: 16px; color: #77acf8" type="submit" onclick="return deleteAddress()" value="X">
+                                                    <input class="btn m-0 p-2" style="font-size: 16px; color: #e7770f" type="submit" onclick="return deleteAddress()" value="X">
                                                 </form>
                                             </td>
                                         </tr>

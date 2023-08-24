@@ -1,5 +1,8 @@
 package store.cookshoong.www.cookshoongfrontend.review.controller;
 
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +22,14 @@ import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountService;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
+import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.CreateReviewRequestDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.request.UpdateReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectReviewResponseDto;
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewService;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
 /**
  * 리뷰 등록, 수정, 조회를 위한 controller.
@@ -37,6 +44,8 @@ public class ReviewController {
     private final AccountIdAware accountIdAware;
     private final AccountAddressService accountAddressService;
     private final AccountService accountService;
+    private final CartService cartService;
+    private final StoreService storeService;
 
     /**
      * 회원 리뷰 페이지 진입.
@@ -62,6 +71,9 @@ public class ReviewController {
         model.addAttribute("accountAddresses", accountAddresses);
         model.addAttribute("updateReviewRequestDto", updateReviewResponseDto);
         model.addAttribute("accountInfo", accountService.selectAccountMypageInfo(accountIdAware.getAccountId()));
+
+        commonInfo(model, accountIdAware.getAccountId());
+
         return "account/my-review";
     }
 
@@ -106,4 +118,22 @@ public class ReviewController {
         return "redirect:/my-review";
     }
 
+    private void commonInfo(Model model, Long accountId) {
+
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        CartMenuCountDto cartMenuCountDto =
+            cartService.selectCartMenuCountAll(String.valueOf(accountId));
+
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+            model.addAttribute("count", CART_COUNT_ZERO);
+        } else {
+            model.addAttribute("count", cartMenuCountDto.getCount());
+        }
+
+        model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+    }
 }
