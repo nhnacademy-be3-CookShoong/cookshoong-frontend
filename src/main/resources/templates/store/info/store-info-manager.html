@@ -112,7 +112,8 @@
                         <div class="store-card-header">
                             <h2 class="store-title">영업점 정보</h2>
                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    th:data-target="'#storeInfoModal'">수정</button>
+                                    th:data-target="'#storeInfoModal'"
+                                    th:data-content="${updateStoreInfoRequestDto.description}">수정</button>
                         </div>
                         <div class="card-body">
                             <div class="details">
@@ -277,7 +278,7 @@
                                 <div class="modal-body">
                                     <form th:id="storeCategoryUpdate"
                                           th:action="@{|/stores/${storeId}/store-info-manager/categoryInfo|}"
-                                          th:method="patch" th:object="${updateStoreCategory}" >
+                                          th:method="patch" th:object="${updateStoreCategory}">
                                         <div class="form-group"><label class="form-label" for="storeCategories">카테고리 (1 ~ 3개까지 입력 가능합니다.)</label>
                                             <div class="row">
                                                 <div class="col-sm-3" th:each="category : ${selectCategories}"  id="selectCategories">
@@ -574,17 +575,33 @@
 </script>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-    const editor = new toastui.Editor({
-        initialEditType: 'wysiwyg',
-        el: document.querySelector('#editor'),
-        previewStyle: 'vertical',
-        height: '500px',
-        initialValue: '가게 설명을 입력해주세요.'
-    });
+    let editor;
 
-    document.querySelector('#submitButton').addEventListener('click', function () {
-        let editorContent = editor.getHTML();
-        document.querySelector('#description').value = editorContent;
+    $('#storeInfoModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const content = button.data('content')
+
+        const modal = $(this)
+
+        modal.find('input[name="description"]').val(content);
+
+        editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+            height: '500px',
+            initialValue: content,
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    console.log(blob)
+                }
+            }
+        });
+
+        document.querySelector('#submitButton').addEventListener('click', function () {
+            let editorContent = editor.getHTML();
+            document.querySelector('#description').value = editorContent;
+        });
     });
 </script>
 </body>
