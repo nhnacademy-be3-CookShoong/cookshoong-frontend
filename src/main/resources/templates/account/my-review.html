@@ -199,11 +199,13 @@
             previewStyle: 'vertical',
             height: '300px',
             initialValue: content,
-            hooks: {
-                addImageBlobHook(blob, callback) {
-                    console.log(blob)
-                }
-            }
+            toolbarItems: [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr', 'quote'],
+                ['ul', 'ol', 'task', 'indent', 'outdent'],
+                ['table', 'link'],
+                ['scrollSync'],
+            ]
         });
 
         document.querySelector('#submitButton').addEventListener('click', function () {

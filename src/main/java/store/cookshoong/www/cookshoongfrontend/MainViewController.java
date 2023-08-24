@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +38,7 @@ import store.cookshoong.www.cookshoongfrontend.review.model.response.SelectRevie
 import store.cookshoong.www.cookshoongfrontend.review.service.ReviewStoreService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllCategoriesResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectBusinessHourResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectMenuResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
@@ -49,6 +49,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreCategoryService
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreTimeManagerService;
 
 /**
  * 메인 뷰 페이지 컨트롤러.
@@ -65,6 +66,7 @@ public class MainViewController {
     private final StoreService storeService;
     private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
+    private final StoreTimeManagerService storeTimeManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
     private final StoreCategoryService storeCategoryService;
@@ -86,6 +88,10 @@ public class MainViewController {
         if (Objects.nonNull(principal)) {
             Long accountId = accountIdAware.getAccountId();
             addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
+
+            if (!cartService.existMenuInCart(String.valueOf(accountId))) {
+                cartService.selectCartMenuAll(String.valueOf(accountId));
+            }
 
             commonInfo(model, accountId);
 
@@ -117,18 +123,19 @@ public class MainViewController {
     public String getIndexByKeyword(@PageableDefault Pageable pageable, @RequestParam("keyword") String keywordText,  Model model) {
 
         Long accountId = accountIdAware.getAccountId();
-        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
 
-        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
-        RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
-        RestResponsePage<SelectStoresKeywordSearchResponseDto> storesByRating = storeService.selectStoresByRating(addressId, pageable);
-        model.addAttribute("categories", categories);
+        commonInfo(model, accountId);
+
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
         model.addAttribute("addressId", addressId);
-        model.addAttribute("keywordText", keywordText);
+
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> searchedStores = storeService.selectStoresByKeyword(keywordText, addressId, pageable);
         model.addAttribute("stores", searchedStores);
+
+        RestResponsePage<SelectStoresKeywordSearchResponseDto> storesByRating = storeService.selectStoresByRating(addressId, pageable);
         model.addAttribute("storesByRating", storesByRating);
+
+        model.addAttribute("keywordText", keywordText);
 
         return "index/index";
     }
@@ -183,20 +190,23 @@ public class MainViewController {
                                 Model model) {
 
         Long accountId = accountIdAware.getAccountId();
-        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
 
         commonInfo(model, accountId);
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
+
+        List<SelectBusinessHourResponseDto> businessHourList = storeTimeManagerService.selectBusinessHours(storeId);
+        model.addAttribute("businessHours", businessHourList);
 
         Page<SelectReviewStoreResponseDto> reviewList = reviewStoreService.selectReviewByAccount(storeId, pageable);
-        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
-        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
-        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
-
         model.addAttribute("reviewList", reviewList);
+
+        SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
         model.addAttribute("store", store);
+
+        List<SelectMenuGroupResponseDto> menuGroups = storeMenuManagerService.selectMenuGroups(storeId);
         model.addAttribute("menuGroups", menuGroups);
+
+        List<SelectMenuResponseDto> menus = storeMenuManagerService.selectMenus(storeId);
         model.addAttribute("menus", menus);
 
         return "index/store";
@@ -216,11 +226,10 @@ public class MainViewController {
                                Model model) {
 
         Long accountId = accountIdAware.getAccountId();
-        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
 
         commonInfo(model, accountId);
+
+        Long addressId = accountAddressService.selectAccountAddressRenewalAt(accountId).getId();
 
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
@@ -232,16 +241,18 @@ public class MainViewController {
         }
 
         SelectStoreForUserResponseDto store = storeService.selectStoreForUser(addressId, storeId);
+        model.addAttribute("store", store);
+        model.addAttribute("storeId", storeId);
+
         SelectMenuResponseDto menu = storeMenuManagerService.selectMenu(storeId, menuId);
+        model.addAttribute("menu", menu);
+
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroupsByMenu(storeId, menuId);
+        model.addAttribute("optionGroups", optionGroups);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
+        model.addAttribute("options", options);
 
         model.addAttribute("accountId", accountIdAware.getAccountId());
-        model.addAttribute("storeId", storeId);
-        model.addAttribute("store", store);
-        model.addAttribute("menu", menu);
-        model.addAttribute("optionGroups", optionGroups);
-        model.addAttribute("options", options);
 
         return "index/menu";
     }
@@ -302,6 +313,13 @@ public class MainViewController {
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
         }
+
         model.addAttribute("accountAddresses", accountAddresses);
+
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
+        List<SelectAllCategoriesResponseDto> categories = storeCategoryService.selectAllCategories();
+        model.addAttribute("categories", categories);
     }
 }

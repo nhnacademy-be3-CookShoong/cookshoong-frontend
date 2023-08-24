@@ -259,4 +259,28 @@ public class CartAdapter {
 
         return Boolean.TRUE.equals(exchange.getBody());
     }
+
+    /**
+     * Redis 장바구니에 회원에 대한 장바구니에 hashKey 가 존재하는지 확인.
+     *
+     * @param redisKey         redis Key
+     * @return                  DB 장바구니 존재여부 반환
+     */
+    public boolean existKeyInCartRedis(String redisKey) {
+
+        URI uri = UriComponentsBuilder
+            .fromUriString(apiProperties.getGatewayUrl())
+            .pathSegment("api")
+            .pathSegment("carts")
+            .pathSegment("redis")
+            .pathSegment("{cartKey}")
+            .pathSegment("exist")
+            .buildAndExpand(redisKey)
+            .toUri();
+
+        ResponseEntity<Boolean> exchange = restTemplate.exchange(
+            uri, GET, null, new ParameterizedTypeReference<>() {});
+
+        return Boolean.TRUE.equals(exchange.getBody());
+    }
 }

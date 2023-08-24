@@ -25,6 +25,10 @@ public class RegularExpressions {
     public static final String NUMBER_ONLY = "^\\d+$";
     // 숫자가 아닌 모든 문자(한글, 영어, 특수문자) (1개 이상)
     public static final String NOT_NUMBER = "(?=^\\D+$)(?=^\\S+$).*";
+    // 문자, 숫자, 특수문자 포함
+    public static final String PASSWORD = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+    // 로그인 아이디용 정규표현식(OAuth2 회원가입으로 인해 @를 포함)
+    public static final String ENG_NUMBER_AT = "^[0-9A-Za-z@]{4,}$";
 }
 
 

@@ -216,7 +216,7 @@ public class StoreAdminController {
     }
 
     /**
-     * Gets event coupons.
+     * 매장의 이벤트 쿠폰 조회.
      *
      * @param model      the model
      * @param merchantId the merchant id

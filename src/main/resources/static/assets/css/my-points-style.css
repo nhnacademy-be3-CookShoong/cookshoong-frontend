@@ -1,0 +1,12 @@
+.balance {
+    font-size: 0.6em;
+    color: darkgrey;
+}
+
+.use {
+    color: red;
+}
+
+.acquire {
+    color: blue;
+}
