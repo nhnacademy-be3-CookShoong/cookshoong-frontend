@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import store.cookshoong.www.cookshoongfrontend.common.util.IpResolver;
 import store.cookshoong.www.cookshoongfrontend.common.util.ExceptionUtils;
+import store.cookshoong.www.cookshoongfrontend.common.util.IpResolver;
 
 /**
  * 서버에서 처리된 예외들을 로깅하기 위한 Aspect.
@@ -24,7 +24,7 @@ public class ErrorLoggingAspect {
      *
      * @param joinPoint the join point
      */
-    @Before("@within(org.springframework.web.bind.annotation.RestControllerAdvice)")
+    @Before("@within(org.springframework.web.bind.annotation.ControllerAdvice)")
     public void logError(JoinPoint joinPoint) {
         if (joinPoint.getArgs()[0] instanceof Exception) {
             Exception exception = (Exception) joinPoint.getArgs()[0];
