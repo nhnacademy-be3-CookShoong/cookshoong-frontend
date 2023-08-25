@@ -7,6 +7,8 @@ package store.cookshoong.www.cookshoongfrontend.auth.exception;
  * @since 2023.07.16
  */
 public class InvalidAccessTokenException extends RuntimeException {
+    private static final long serialVersionUID = 571156014721795940L;
+
     public InvalidAccessTokenException() {
         super("토큰의 형식을 확인해주세요.");
     }
