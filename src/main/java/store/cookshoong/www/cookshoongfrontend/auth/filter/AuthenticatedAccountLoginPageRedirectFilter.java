@@ -1,7 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.auth.filter;
 
 import java.io.IOException;
-import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 
 /**

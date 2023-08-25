@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementService;
 
 /**

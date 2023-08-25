@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
 
