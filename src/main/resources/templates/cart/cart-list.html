@@ -85,7 +85,7 @@
                                     <div class="row rounded border-left border-right border-top border-bottom" style="flex-wrap: nowrap">
                                         <div class="row flex-fill">
 
-                                            <div class="row" style="flex-wrap: nowrap">
+                                            <div class="row col-md-5" style="flex-wrap: nowrap">
                                                 <div class="m-1 align-items-center d-flex" style="min-width: 110px"
                                                      th:onclick="'window.location.href=\'/index/store/' + ${item.storeId} + '\''">
                                                     <img style="border-radius: 3px; object-fit: cover; width: 90px; height: 90px;" th:src="${item.menu.menuImage}"
@@ -97,7 +97,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row flex-fill" style="flex-wrap: nowrap;">
+                                            <div class="row col-md-5" style="flex-wrap: nowrap;">
                                                 <div class="m-1 align-items-center d-flex justify-content-center flex-grow-1">
                                                     <form th:action="@{/carts/menu-count-down/{menuKey}(menuKey=${item.hashKey})}" th:method="PUT" class="d-inline">
                                                         <button class="btn m-0 p-2" style="color: #ffa636" type="submit">
@@ -116,7 +116,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row" style="flex-wrap: nowrap">
+                                            <div class="row col-md-2" style="flex-wrap: nowrap">
                                                 <div class="m-1 align-items-center d-flex">
                                                     <button class="btn btn-inverse-warning mr-2" style="padding: 8px 13px;"
                                                             type="button" data-toggle="modal" th:data-target="'#cartMenu' + ${item.hashKey}">옵션수정
