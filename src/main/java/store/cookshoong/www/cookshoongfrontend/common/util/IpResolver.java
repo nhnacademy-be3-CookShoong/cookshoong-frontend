@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.common;
+package store.cookshoong.www.cookshoongfrontend.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 
