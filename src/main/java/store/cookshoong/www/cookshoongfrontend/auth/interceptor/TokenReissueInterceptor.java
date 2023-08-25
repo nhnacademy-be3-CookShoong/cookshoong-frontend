@@ -55,6 +55,8 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
             AuthenticationResponseDto authResponse = tokenManagementService.reissueToken();
             updateCurrentAccessToken(authResponse.getAccessToken());
             tokenManagementService.saveRefreshToken(response, authResponse.getRefreshToken());
+            log.error("============ 토큰 재발급 성공 : {} ===============",
+                JwtResolver.resolveRefreshToken(authResponse.getRefreshToken()).getLoginId());
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
                 logout(request, response);
@@ -94,5 +96,7 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
         JwtAuthentication oldAuthentication = (JwtAuthentication) SecurityContextHolder.getContext()
             .getAuthentication();
         oldAuthentication.updateAccessToken(accessToken);
+        log.error("========== 재발급된 액세스 토큰 확인 : {} ================", SecurityContextHolder.getContext()
+            .getAuthentication().getName());
     }
 }
