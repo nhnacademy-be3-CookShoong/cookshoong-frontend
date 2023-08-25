@@ -84,7 +84,6 @@ public class OAuth2Config {
             .build();
     }
 
-
     /**
      * OAuth2 공급자들의 정보를 저장하고 있는 빈을 등록하는 메서드.
      *

@@ -1,21 +1,21 @@
 package store.cookshoong.www.cookshoongfrontend.auth.service;
 
+import java.util.Date;
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.RefreshTokenExpiredException;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 import store.cookshoong.www.cookshoongfrontend.common.util.Times;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * 토큰관리를 맡고있는 서비스 클래스.

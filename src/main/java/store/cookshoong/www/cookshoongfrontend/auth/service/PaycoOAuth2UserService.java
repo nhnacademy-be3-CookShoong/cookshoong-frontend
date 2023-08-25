@@ -17,10 +17,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.CommonAccount;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.OAuth2AccountNotFoundException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.PaycoAuthenticationResponseDto;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.CommonAccount;
 
 /**
  * Payco 로그인을 위해 사용자를 인증해주기 위한 Service.
