@@ -1,6 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.swagger.controller;
 
-import java.io.IOException;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -24,13 +24,22 @@ public class SwaggerController {
      * swagger-ui 엔드포인트.
      *
      * @return the swagger ui
-     * @throws IOException the io exception
      */
     @GetMapping("/swagger-ui")
-    public ResponseEntity<Resource> getSwaggerUi() throws IOException {
+    public ResponseEntity<Resource> getSwaggerUi() {
         swaggerService.selectSwaggerUi();
 
         Resource resource = new ClassPathResource("static/swagger-ui/swagger-ui.html");
         return ResponseEntity.ok(resource);
+    }
+
+    /**
+     * swagger-ui json 엔드포인트.
+     *
+     * @return the swagger ui json
+     */
+    @GetMapping("/swagger-ui/json")
+    public ResponseEntity<Map<String, Object>> getSwaggerUiJson() {
+        return ResponseEntity.ok(swaggerService.selectSwaggerUi());
     }
 }
