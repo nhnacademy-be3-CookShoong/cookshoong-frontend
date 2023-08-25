@@ -4,9 +4,11 @@ package store.cookshoong.www.cookshoongfrontend.auth.service;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
@@ -21,6 +24,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.authentication.CommonAccount
 import store.cookshoong.www.cookshoongfrontend.auth.exception.OAuth2AccountNotFoundException;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.PaycoAuthenticationResponseDto;
+import store.cookshoong.www.cookshoongfrontend.common.util.ExceptionUtils;
 
 /**
  * Payco 로그인을 위해 사용자를 인증해주기 위한 Service.
@@ -30,6 +34,7 @@ import store.cookshoong.www.cookshoongfrontend.auth.model.response.PaycoAuthenti
  */
 
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PaycoOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -70,9 +75,17 @@ public class PaycoOAuth2UserService implements OAuth2UserService<OAuth2UserReque
                 attributes.put("accountCode", idNo);
                 throw new OAuth2AccountNotFoundException(attributes);
             }
+            log.error("OAuth2 로그인 과정 중 인증서버에서 실패 \n\n상태코드 : {}, 에러메세지 : {}, OAuth2 공급자명 : {} , 회원식별자 : {}",
+                e.getRawStatusCode(), e.getMessage(), provider, idNo);
             throw e;
+        } catch (HttpServerErrorException e2) {
+            log.error("백엔드 서버 내부 오류 발생");
+            throw new AuthenticationServiceException("서버 통신 실패");
+        } catch (Exception e3) {
+            log.error("OAuth2 로그인 과정 중 프론트서버에서 실패 \n\n발생한 예외 : {} , 에러메세지 : {} \n\n --> {}", e3.getClass(),
+                e3.getMessage(), ExceptionUtils.getStackTrace(e3));
+            throw new AuthenticationServiceException("백엔드 서버 송신 실패");
         }
-
         Assert.notNull(responseDto, "기존 회원이면 인증된 토큰들이 담겨있습니다.");
         return CommonAccount.authenticated(responseDto.getAccessToken(), responseDto.getRefreshToken());
     }

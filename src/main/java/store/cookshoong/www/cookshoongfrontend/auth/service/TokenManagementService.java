@@ -36,6 +36,7 @@ public class TokenManagementService {
      * @return the boolean
      */
     public boolean isTimeToLiveUnderFiveMinutes(String accessToken) {
+        Assert.notNull(accessToken, "액세스 토큰이 null 이여선 안됩니다.");
         ParsedAccessToken parsedAccessToken = JwtResolver.resolveAccessToken(accessToken);
         Long expiredTime = Long.valueOf(parsedAccessToken.getExp());
         Long now = new Date().toInstant().getEpochSecond();
@@ -54,7 +55,8 @@ public class TokenManagementService {
         return sendRefreshTokenForRenewal(refreshToken);
     }
 
-    private AuthenticationResponseDto sendRefreshTokenForRenewal(RefreshToken refreshToken) {
+    private AuthenticationResponseDto sendRefreshTokenForRenewal(RefreshToken refreshToken)
+        throws HttpClientErrorException {
         return authApiAdapter.executeTokenRenewal(refreshToken.getRawRefreshToken())
             .getBody();
     }
@@ -72,6 +74,10 @@ public class TokenManagementService {
     public void saveRefreshToken(HttpServletResponse response, String refreshToken) {
         Assert.notNull(refreshToken, "리프레쉬토큰 값이 없으면 안됩니다.");
         refreshTokenManager.save(response, RefreshToken.createRefreshToken(refreshToken));
+    }
+
+    public void deleteRefreshToken(HttpServletResponse response) {
+        refreshTokenManager.delete(response);
     }
 
     public boolean hasRefreshToken(HttpServletRequest request) {
