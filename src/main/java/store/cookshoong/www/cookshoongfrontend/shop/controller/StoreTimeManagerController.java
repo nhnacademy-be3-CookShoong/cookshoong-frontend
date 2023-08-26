@@ -1,7 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.shop.controller;
 
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
-import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.EMPTY_CART;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -145,7 +145,7 @@ public class StoreTimeManagerController {
         CartMenuCountDto cartMenuCountDto =
             cartService.selectCartMenuCountAll(String.valueOf(accountId));
 
-        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), EMPTY_CART)) {
             model.addAttribute("count", CART_COUNT_ZERO);
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());
