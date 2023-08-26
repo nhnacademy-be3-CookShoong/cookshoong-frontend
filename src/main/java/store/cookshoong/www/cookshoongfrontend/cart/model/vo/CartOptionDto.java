@@ -1,7 +1,5 @@
 package store.cookshoong.www.cookshoongfrontend.cart.model.vo;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -22,12 +22,14 @@ import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressSer
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartOptionDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
+import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartViewDto;
 import store.cookshoong.www.cookshoongfrontend.cart.service.CartService;
 import store.cookshoong.www.cookshoongfrontend.order.model.response.SelectOrderPossibleResponseDto;
 import store.cookshoong.www.cookshoongfrontend.order.service.OrderService;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectAllStoresResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionGroupResponseDto;
 import store.cookshoong.www.cookshoongfrontend.shop.model.response.SelectOptionResponseDto;
+import store.cookshoong.www.cookshoongfrontend.shop.service.StoreMenuManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreOptionManagerService;
 import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 
@@ -44,6 +46,7 @@ import store.cookshoong.www.cookshoongfrontend.shop.service.StoreService;
 public class CartRedisController {
     private final StoreService storeService;
     private final CartService cartService;
+    private final StoreMenuManagerService storeMenuManagerService;
     private final StoreOptionManagerService storeOptionManagerService;
     private final AccountAddressService accountAddressService;
     private final AccountIdAware accountIdAware;
@@ -64,6 +67,27 @@ public class CartRedisController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
+        List<CartViewDto> cartViewDtoList = new ArrayList<>();
+
+        for(CartRedisDto c : cartItems) {
+            CartViewDto cartViewDto =
+                new CartViewDto(
+                    c.getAccountId(),
+                    c.getStoreId(),
+                    c.getStoreName(),
+                    c.getDeliveryCost(),
+                    c.getMinimumOrderPrice(),
+                    c.getMenu(),
+                    c.getOptions(),
+                    c.getCreateTimeMillis(),
+                    c.getHashKey(),
+                    c.getCount(),
+                    c.getMenuOptName(),
+                    c.getTotalMenuPrice(),
+                    storeMenuManagerService.selectMenu(c.getStoreId(), c.getMenu().getMenuId()).getOptionGroups() );
+            cartViewDtoList.add(cartViewDto);
+
+        }
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
@@ -77,7 +101,7 @@ public class CartRedisController {
             checkOrderPossible(accountId, model);
         }
 
-        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("cartItems", cartViewDtoList);
 
         String lineSeparator = System.getProperty("line.separator");
         model.addAttribute("lineSeparator", lineSeparator);
@@ -95,12 +119,16 @@ public class CartRedisController {
     private void createCartDetail(Model model, List<CartRedisDto> cartItems) {
         int totalPrice = cartService.calculateTotalPrice(cartItems);
         Long storeId = cartItems.get(0).getStoreId();
-        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
+        List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         String storeName = cartItems.get(0).getStoreName();
-        model.addAttribute("options", options);
+
+
         model.addAttribute("storeId", storeId);
+
         model.addAttribute("optionGroups", optionGroups);
+        model.addAttribute("options", options);
+
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("storeName", storeName);
     }
