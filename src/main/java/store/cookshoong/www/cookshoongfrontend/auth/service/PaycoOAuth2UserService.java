@@ -79,12 +79,12 @@ public class PaycoOAuth2UserService implements OAuth2UserService<OAuth2UserReque
                 e.getRawStatusCode(), e.getMessage(), provider, idNo);
             throw e;
         } catch (HttpServerErrorException e2) {
-            log.error("백엔드 서버 내부 오류 발생");
-            throw new AuthenticationServiceException("서버 통신 실패");
+            log.error("OAuth2 로그인 중 외부 서버 내부 오류 발생");
+            throw new AuthenticationServiceException("서버와 통신 실패");
         } catch (Exception e3) {
             log.error("OAuth2 로그인 과정 중 프론트서버에서 실패 \n\n발생한 예외 : {} , 에러메세지 : {} \n\n --> {}", e3.getClass(),
                 e3.getMessage(), ExceptionUtils.getStackTrace(e3));
-            throw new AuthenticationServiceException("백엔드 서버 송신 실패");
+            throw new AuthenticationServiceException("서버로 송신 실패");
         }
         Assert.notNull(responseDto, "기존 회원이면 인증된 토큰들이 담겨있습니다.");
         return CommonAccount.authenticated(responseDto.getAccessToken(), responseDto.getRefreshToken());

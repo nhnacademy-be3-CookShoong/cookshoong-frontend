@@ -59,7 +59,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             log.error("일반 로그인 과정 중 인증서버에서 실패 \n\n상태코드 : {}, 에러메세지 : {}", e.getRawStatusCode(), e.getMessage());
             throw e;
         } catch (HttpServerErrorException e2) {
-            log.error("인증 서버 내부 오류 발생");
+            log.error("로그인 중 외부 서버에서 오류 발생");
             throw new AuthenticationServiceException("인증 서버 통신 실패");
         } catch (Exception e3) {
             log.error("일반 로그인 과정 중 프론트서버에서 실패 \n\n발생한 예외 : {} , 에러메세지 : {} \n\n --> {}", e3.getClass(),

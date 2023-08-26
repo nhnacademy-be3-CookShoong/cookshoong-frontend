@@ -11,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.Assert;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.HandlerInterceptor;
 import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
@@ -51,6 +53,7 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
     }
 
     private void reissueAndUpdatePrincipal(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Assert.isTrue(tokenManagementService.hasRefreshToken(request), "리프레쉬 토큰이 없는 상태로 재발급은 불가능합니다.");
         try {
             AuthenticationResponseDto authResponse = tokenManagementService.reissueToken();
             updateCurrentAccessToken(authResponse.getAccessToken());
@@ -59,15 +62,16 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
                 JwtResolver.resolveRefreshToken(authResponse.getRefreshToken()).getLoginId());
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                log.warn("액세스 토큰과 리프레쉬 토큰 불일치로 인한 토큰 재발급 실패");
                 logout(request, response);
-                log.error("액세스 토큰과 리프레쉬 토큰 불일치로 인한 토큰 재발급 실패");
                 return;
             }
-            log.error("리프레쉬 토큰 재발급 요청 실패 \n\n 상태코드 : {} \n\n refreshToken : {}",
-                e.getRawStatusCode(), tokenManagementService.getRefreshToken());
+            log.error("토큰 재발급 요청 실패 \n\n 상태코드 : {} \n\n refreshToken : {}", e.getRawStatusCode(),
+                tokenManagementService.getRefreshToken());
+        } catch (HttpServerErrorException e) {
+            log.error("토큰 재발급 중 외부 서버에서 에러 발생 {} \n\n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
         } catch (Exception e) {
-            log.error("토큰 재발급 중 프론트 서버 내에서 에러 발생 {}", e.getClass());
-            log.error("--> {}", ExceptionUtils.getStackTrace(e));
+            log.error("토큰 재발급 중 프론트 서버 내에서 에러 발생 {} \n\n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -75,6 +79,7 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
         request.getSession(false).invalidate();
         tokenManagementService.deleteRefreshToken(response);
         response.sendRedirect("/login-page");
+        log.warn("+액세스 토큰과 리프레쉬 토큰 불일치로 인한 강제 로그아웃+");
     }
 
     private boolean canReissue(HttpServletRequest request, String accessToken) {
