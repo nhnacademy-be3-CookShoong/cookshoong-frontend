@@ -2,7 +2,9 @@ package store.cookshoong.www.cookshoongfrontend.common.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.StringBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ public class LoggerLevelController {
      */
     @GetMapping
     public String checkLoggingLevel() {
-        List<String> displayedLevel = new ArrayList<>();
+        StringJoiner displayedLevel = new StringJoiner(", ");
         if (log.isTraceEnabled()) {
             displayedLevel.add("trace");
         }
@@ -41,6 +43,6 @@ public class LoggerLevelController {
         if (log.isErrorEnabled()) {
             displayedLevel.add("error");
         }
-        return String.join(", ", displayedLevel);
+        return displayedLevel.toString();
     }
 }
