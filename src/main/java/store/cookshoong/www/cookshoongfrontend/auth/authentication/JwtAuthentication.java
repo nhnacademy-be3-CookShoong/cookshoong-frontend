@@ -1,4 +1,4 @@
-package store.cookshoong.www.cookshoongfrontend.auth.model.vo;
+package store.cookshoong.www.cookshoongfrontend.auth.authentication;
 
 import java.util.Collection;
 import java.util.Objects;

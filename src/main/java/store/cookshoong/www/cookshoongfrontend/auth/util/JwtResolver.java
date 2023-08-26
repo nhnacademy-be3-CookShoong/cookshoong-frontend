@@ -19,7 +19,6 @@ public class JwtResolver {
     private JwtResolver() {
     }
 
-
     public static ParsedAccessToken resolveAccessToken(String accessToken) {
         return resolveToken(accessToken, ParsedAccessToken.class);
     }

@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 
 /**
  * 휴면 상태인 유저가 다른 페이지에 접근 못하도록 막는 필터.

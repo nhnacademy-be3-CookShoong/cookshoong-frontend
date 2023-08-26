@@ -1,21 +1,21 @@
 package store.cookshoong.www.cookshoongfrontend.auth.service;
 
+import java.util.Date;
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.client.HttpClientErrorException;
 import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 import store.cookshoong.www.cookshoongfrontend.auth.exception.RefreshTokenExpiredException;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.model.vo.ParsedAccessToken;
+import store.cookshoong.www.cookshoongfrontend.auth.model.vo.RefreshToken;
 import store.cookshoong.www.cookshoongfrontend.auth.repository.RefreshTokenManager;
 import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
 import store.cookshoong.www.cookshoongfrontend.common.util.Times;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * 토큰관리를 맡고있는 서비스 클래스.
@@ -36,6 +36,7 @@ public class TokenManagementService {
      * @return the boolean
      */
     public boolean isTimeToLiveUnderFiveMinutes(String accessToken) {
+        Assert.notNull(accessToken, "액세스 토큰이 null 이여선 안됩니다.");
         ParsedAccessToken parsedAccessToken = JwtResolver.resolveAccessToken(accessToken);
         Long expiredTime = Long.valueOf(parsedAccessToken.getExp());
         Long now = new Date().toInstant().getEpochSecond();
@@ -54,7 +55,8 @@ public class TokenManagementService {
         return sendRefreshTokenForRenewal(refreshToken);
     }
 
-    private AuthenticationResponseDto sendRefreshTokenForRenewal(RefreshToken refreshToken) {
+    private AuthenticationResponseDto sendRefreshTokenForRenewal(RefreshToken refreshToken)
+        throws HttpClientErrorException {
         return authApiAdapter.executeTokenRenewal(refreshToken.getRawRefreshToken())
             .getBody();
     }
@@ -72,6 +74,10 @@ public class TokenManagementService {
     public void saveRefreshToken(HttpServletResponse response, String refreshToken) {
         Assert.notNull(refreshToken, "리프레쉬토큰 값이 없으면 안됩니다.");
         refreshTokenManager.save(response, RefreshToken.createRefreshToken(refreshToken));
+    }
+
+    public void deleteRefreshToken(HttpServletResponse response) {
+        refreshTokenManager.delete(response);
     }
 
     public boolean hasRefreshToken(HttpServletRequest request) {
