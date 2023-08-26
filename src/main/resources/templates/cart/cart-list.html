@@ -48,7 +48,7 @@
                                                 <div class="modal-body">
                                                     <div class="card">
                                                         <div class="ml-3 mt-3">
-                                                            <div class="row" th:each="optionGroup, i:${optionGroups}" th:if="${#lists.contains(item.optionGroups, optionGroup.id)}">
+                                                            <div class="row" th:each="optionGroup, j:${optionGroups}" th:if="${#lists.contains(cartOptionGroups.get(i.index).optionGroups, optionGroup.id)}">
                                                                 <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}">
                                                                 <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}">
                                                                 <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>

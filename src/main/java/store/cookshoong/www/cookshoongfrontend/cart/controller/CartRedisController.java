@@ -67,27 +67,7 @@ public class CartRedisController {
         List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
         model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
-        List<CartViewDto> cartViewDtoList = new ArrayList<>();
-
-        for(CartRedisDto c : cartItems) {
-            CartViewDto cartViewDto =
-                new CartViewDto(
-                    c.getAccountId(),
-                    c.getStoreId(),
-                    c.getStoreName(),
-                    c.getDeliveryCost(),
-                    c.getMinimumOrderPrice(),
-                    c.getMenu(),
-                    c.getOptions(),
-                    c.getCreateTimeMillis(),
-                    c.getHashKey(),
-                    c.getCount(),
-                    c.getMenuOptName(),
-                    c.getTotalMenuPrice(),
-                    storeMenuManagerService.selectMenu(c.getStoreId(), c.getMenu().getMenuId()).getOptionGroups() );
-            cartViewDtoList.add(cartViewDto);
-
-        }
+        List<CartViewDto> optionGroupInfoAndOption = new ArrayList<>();
 
         List<AccountAddressResponseDto> accountAddresses =
             accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
@@ -97,11 +77,11 @@ public class CartRedisController {
         cartCountInfo(model, accountId);
 
         if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
-            createCartDetail(model, cartItems);
+            createCartDetail(model, cartItems, optionGroupInfoAndOption);
             checkOrderPossible(accountId, model);
         }
 
-        model.addAttribute("cartItems", cartViewDtoList);
+        model.addAttribute("cartItems", cartItems);
 
         String lineSeparator = System.getProperty("line.separator");
         model.addAttribute("lineSeparator", lineSeparator);
@@ -116,14 +96,14 @@ public class CartRedisController {
         model.addAttribute("explain", checkOrder.getExplain());
     }
 
-    private void createCartDetail(Model model, List<CartRedisDto> cartItems) {
+    private void createCartDetail(Model model, List<CartRedisDto> cartItems, List<CartViewDto> optionGroupInfoAndOption) {
         int totalPrice = cartService.calculateTotalPrice(cartItems);
         Long storeId = cartItems.get(0).getStoreId();
         List<SelectOptionGroupResponseDto> optionGroups = storeOptionManagerService.selectOptionGroups(storeId);
         List<SelectOptionResponseDto> options = storeOptionManagerService.selectOptions(storeId);
         String storeName = cartItems.get(0).getStoreName();
 
-
+        getOptionGroupInfoAndOption(model, cartItems, optionGroupInfoAndOption);
         model.addAttribute("storeId", storeId);
 
         model.addAttribute("optionGroups", optionGroups);
@@ -131,6 +111,16 @@ public class CartRedisController {
 
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("storeName", storeName);
+    }
+
+    private void getOptionGroupInfoAndOption(Model model, List<CartRedisDto> cartItems, List<CartViewDto> optionGroupInfoAndOption) {
+        for(CartRedisDto c : cartItems) {
+            CartViewDto cartViewDto =
+                new CartViewDto(storeMenuManagerService.selectMenu(c.getStoreId(), c.getMenu().getMenuId()).getOptionGroups() );
+            optionGroupInfoAndOption.add(cartViewDto);
+        }
+
+        model.addAttribute("cartOptionGroups", optionGroupInfoAndOption);
     }
 
     private void cartCountInfo(Model model, Long accountId) {
