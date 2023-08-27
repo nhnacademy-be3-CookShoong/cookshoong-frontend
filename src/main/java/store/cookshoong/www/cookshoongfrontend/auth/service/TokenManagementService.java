@@ -66,9 +66,9 @@ public class TokenManagementService {
      *
      * @param accessToken the access token
      */
-    public void invalidate(HttpServletResponse response, String accessToken) {
+    public void invalidate(HttpServletResponse response) {
         refreshTokenManager.delete(response);
-        authApiAdapter.executeTokenInvalidated(accessToken);
+        authApiAdapter.executeTokenInvalidated();
     }
 
     public void saveRefreshToken(HttpServletResponse response, String refreshToken) {

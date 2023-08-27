@@ -33,10 +33,10 @@ function setup() {
 function checkPasswordEqual(focusedPasswordInput, otherPasswordInput) {
     const focusedPassword = focusedPasswordInput.value;
     const otherPassword = otherPasswordInput.value;
-    if (focusedPassword === otherPassword && !isEmpty(focusedPassword) && !isEmpty(otherPassword)) {
+    if (focusedPassword === otherPassword && !isEmpty(focusedPassword) && !isEmpty(otherPassword)
+        && checkPasswordPattern(focusedPasswordInput)) {
         setBorderColor(focusedPasswordInput, LIGHT_GREEN);
         setBorderColor(otherPasswordInput, LIGHT_GREEN);
-        checkPasswordPattern(focusedPasswordInput);
         return true;
     }
     setBorderColor(focusedPasswordInput, 'red');
@@ -48,6 +48,7 @@ function checkPasswordPattern(focusedPasswordInput) {
     const pwdRegex = getRegex("password");
     const infoMsg = getElementById("password-info-msg");
     infoMsg.style.display = pwdRegex.test(pwd) ? 'none' : 'block';
+    return pwdRegex.test(pwd);
 }
 
 
@@ -89,7 +90,7 @@ function getAllNeedValidationInputs() {
 }
 
 function validateAll() {
-    const duplicateCheck = document.getElementById('loginId').dataset.checked;
+    const duplicateCheck = document.getElementById('loginId').dataset.checked === 'true';
     const passwordCheck = findAndCheckIsSamePassword();
     return duplicateCheck && passwordCheck && executeAllRegexTest();
 }
@@ -126,7 +127,6 @@ function findAndCheckIsSamePassword() {
     }
     return passwordInput.value === passwordCheckInput.value;
 }
-
 
 function activateSignUpBtn() {
     const signUpBtn = document.getElementById("sign-up-btn");

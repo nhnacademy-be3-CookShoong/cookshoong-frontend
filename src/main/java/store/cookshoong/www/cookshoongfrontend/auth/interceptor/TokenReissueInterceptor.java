@@ -4,19 +4,21 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.Objects;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.HandlerInterceptor;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.AuthenticationHolder;
 import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.RedisAuthenticationHolder;
 import store.cookshoong.www.cookshoongfrontend.auth.model.response.AuthenticationResponseDto;
 import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementService;
 import store.cookshoong.www.cookshoongfrontend.auth.util.JwtResolver;
@@ -37,7 +39,7 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-        throws IOException {
+        throws IOException, ServletException {
         Principal principal = request.getUserPrincipal();
         String uri = request.getRequestURI();
 
@@ -52,34 +54,29 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void reissueAndUpdatePrincipal(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void reissueAndUpdatePrincipal(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Assert.isTrue(tokenManagementService.hasRefreshToken(request), "리프레쉬 토큰이 없는 상태로 재발급은 불가능합니다.");
         try {
             AuthenticationResponseDto authResponse = tokenManagementService.reissueToken();
-            updateCurrentAccessToken(authResponse.getAccessToken());
+            updateCurrentAccessToken(request, authResponse.getAccessToken());
             tokenManagementService.saveRefreshToken(response, authResponse.getRefreshToken());
-            log.info("============ 토큰 재발급 성공 : {} ===============",
-                JwtResolver.resolveRefreshToken(authResponse.getRefreshToken()).getLoginId());
+            log.info("============ 토큰 재발급 성공 : {} =============== \naccessToken = {} \nrefreshToken = {}",
+                JwtResolver.resolveRefreshToken(authResponse.getRefreshToken()).getLoginId(),
+                authResponse.getAccessToken(), authResponse.getRefreshToken());
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                response.sendRedirect("/logout");
                 log.warn("액세스 토큰과 리프레쉬 토큰 불일치로 인한 토큰 재발급 실패");
-                logout(request, response);
+                log.warn("+액세스 토큰과 리프레쉬 토큰 불일치로 인한 강제 로그아웃+");
                 return;
             }
-            log.error("토큰 재발급 요청 실패 \n\n 상태코드 : {} \n\n refreshToken : {}", e.getRawStatusCode(),
+            log.error("토큰 재발급 요청 실패 \n 상태코드 : {} refreshToken : {}", e.getRawStatusCode(),
                 tokenManagementService.getRefreshToken());
         } catch (HttpServerErrorException e) {
-            log.error("토큰 재발급 중 외부 서버에서 에러 발생 {} \n\n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
+            log.error("토큰 재발급 중 외부 서버에서 에러 발생 {} \n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
         } catch (Exception e) {
-            log.error("토큰 재발급 중 프론트 서버 내에서 에러 발생 {} \n\n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
+            log.error("토큰 재발급 중 프론트 서버 내에서 에러 발생 {} \n--> {}", e.getClass(), ExceptionUtils.getStackTrace(e));
         }
-    }
-
-    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.getSession(false).invalidate();
-        tokenManagementService.deleteRefreshToken(response);
-        response.sendRedirect("/login-page");
-        log.warn("+액세스 토큰과 리프레쉬 토큰 불일치로 인한 강제 로그아웃+");
     }
 
     private boolean canReissue(HttpServletRequest request, String accessToken) {
@@ -97,11 +94,10 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
      *
      * @param accessToken the access token
      */
-    public void updateCurrentAccessToken(String accessToken) {
-        JwtAuthentication oldAuthentication = (JwtAuthentication) SecurityContextHolder.getContext()
-            .getAuthentication();
+    public void updateCurrentAccessToken(HttpServletRequest request, String accessToken) {
+        JwtAuthentication oldAuthentication = (JwtAuthentication) AuthenticationHolder.getCurrentUser();
         oldAuthentication.updateAccessToken(accessToken);
-        log.info("========== 재발급후 액세스 토큰 : {} ================", SecurityContextHolder.getContext()
-            .getAuthentication().getName());
+        RedisAuthenticationHolder.updateCurrentUser(request, oldAuthentication);
+        log.info("========== 재발급후 액세스 토큰 : {} ================", AuthenticationHolder.getCurrentUser().getName());
     }
 }

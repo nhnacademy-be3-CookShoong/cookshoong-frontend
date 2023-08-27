@@ -29,7 +29,7 @@
         <div class="pt-1">
             <div class="navbar navbar-expand-lg" sec:authorize="!isAuthenticated()">
                 <div class="navbar-toggler">
-                    <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem"
+                    <a th:href="@{/sign-up}" style="color: white; font-size: 1.2rem;"
                        class="mr-2 mdi mdi-human-greeting">
                     </a>
                     <a th:href="@{/login-page}" style="color: white; font-size: 1.2rem" class="mr-2 mdi mdi-login">
@@ -61,7 +61,7 @@
                        class="mr-2 mdi mdi-human-greeting">
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
-                       class="mr-2 mdi mdi-login">
+                       class="mr-2 mdi mdi-logout logout-anchor">
                     </a>
                     <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
@@ -80,7 +80,7 @@
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem"
-                       class="mr-2">로그아웃
+                       class="mr-2 mdi mdi-logout logout-anchor">로그아웃
                     </a>
                 </div>
             </div>
@@ -302,7 +302,7 @@
                        class="mr-2 mdi mdi-human-greeting">
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
-                       class="mr-2 mdi mdi-login">
+                       class="mr-2 mdi mdi-logout logout-anchor">
                     </a>
                     <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
@@ -322,7 +322,7 @@
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem"
-                       class="mr-2">로그아웃
+                       class="mr-2 mdi mdi-logout logout-anchor">로그아웃
                     </a>
                 </div>
             </div>
@@ -400,7 +400,7 @@
                        class="mr-2 mdi mdi-human-greeting">
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 1.2rem"
-                       class="mr-2 mdi mdi-login">
+                       class="mr-2 mdi mdi-logout logout-anchor">
                     </a>
                     <span th:if="${count > 0}" th:text="${count}" style="position: absolute; right: 75px; top: 0; border-radius: 100%; color: white; background-color: red; padding: 2px 5px; font-size: 0.8rem;"></span>
                 </div>
@@ -416,7 +416,7 @@
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem"
-                       class="mr-2">로그아웃
+                       class="mr-2 mdi mdi-logout logout-anchor">로그아웃
                     </a>
                 </div>
             </div>
@@ -571,7 +571,7 @@
                     <a th:href="@{/my-page}" style="color: white; font-size: 0.85rem" class="mr-2">내 정보
                     </a>
                     <a href="#" onclick="justSendCsrfToken('/logout', '/')" style="color: white; font-size: 0.85rem"
-                       class="mr-2">로그아웃
+                       class="mr-2 mdi mdi-logout logout-anchor">로그아웃
                     </a>
                 </div>
             </div>
