@@ -1,7 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.cart.controller;
 
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
-import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.EMPTY_CART;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,19 +64,12 @@ public class CartRedisController {
         model.addAttribute("explain", "장바구니가 비어있습니다.");
 
         Long accountId = accountIdAware.getAccountId();
-        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
-        model.addAttribute("businessStoreList", businessStoreList);
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountIdAware.getAccountId()));
         List<CartViewDto> optionGroupInfoAndOption = new ArrayList<>();
 
-        List<AccountAddressResponseDto> accountAddresses =
-            accountAddressService.selectAccountAddressAll(accountIdAware.getAccountId());
-
-        model.addAttribute("accountAddresses", accountAddresses);
-
         cartCountInfo(model, accountId);
 
-        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
+        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), EMPTY_CART)) {
             createCartDetail(model, cartItems, optionGroupInfoAndOption);
             checkOrderPossible(accountId, model);
         }
@@ -124,9 +117,15 @@ public class CartRedisController {
     }
 
     private void cartCountInfo(Model model, Long accountId) {
+        List<AccountAddressResponseDto> accountAddresses =
+            accountAddressService.selectAccountAddressAll(accountId);
+        model.addAttribute("accountAddresses", accountAddresses);
+        List<SelectAllStoresResponseDto> businessStoreList = storeService.selectStores(accountId);
+        model.addAttribute("businessStoreList", businessStoreList);
+
         CartMenuCountDto cartMenuCountDto = cartService.selectCartMenuCountAll(String.valueOf(accountId));
 
-        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), EMPTY_CART)) {
 
             model.addAttribute("count", CART_COUNT_ZERO);
         } else {
