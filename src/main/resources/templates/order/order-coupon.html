@@ -3,6 +3,26 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{config}">
+<head>
+    <style>
+        .coupon-container{
+            display: flex;
+            height: auto;
+            align-items: center;
+            border: 1px solid #e1e1e1;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .coupon-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
 <body layout:fragment="content">
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
@@ -11,33 +31,33 @@
                     <h1>사용 가능한 쿠폰이 없습니다.</h1>
                 </div>
                 <button th:unless="${coupon == null}" class="btn col-12 grid-margin" th:each="coupon, i:${ownCoupons.content}">
-                    <div class="rounded w-100 border-warning border p-1 row text-center" style="background-color: rgba( 255, 131, 0, 0.75);" th:couponCode="${coupon.issueCouponCode}" th:discount="${coupon.couponTypeResponse.getDiscountAmount(totalPrice)}"
-                            th:disabled="${totalPrice < coupon.couponTypeResponse.getMinimumOrderPrice()}"
-                            th:onclick="couponButtonEvent(this.getAttribute('couponCode'), this.getAttribute('discount'))">
-
-                        <div class="col-8 bg-white rounded">
-                            <h1 class="font-weight-bold pt-1 grad-text mt-3 text-warning"
-                                th:text="${coupon.name}"></h1>
-                            <h4 class="pb-2 text-gray" th:text="${coupon.description}" style="font-weight: bold"></h4>
-                            <h2 class="mt-4" th:text="${coupon.couponUsageName}" style="font-weight: bold"></h2>
-                            <h4 class="pb-2" th:text="'만료일자: ' + ${coupon.expirationDate}"></h4>
-                        </div>
-                        <div class="notification-container col bg-white rounded-right border-warning pt-3"
-                             style="font-size: 20px; font-weight: bold; border-left: dotted"
-                             th:switch="${coupon.couponTypeResponse.getClass().getSimpleName()}">
-                            <div th:case="CouponTypeCashVo">
-                                <h1 class="font-weight-bold pt-2 grad-text text-warning"
-                                    th:text="${#numbers.formatInteger(coupon.couponTypeResponse.discountAmount, 0, 'COMMA')} + '원 할인'"></h1>
-                                <div style="height: 60px;" class="pt-5">
-                                    <p th:text="'최소 주문 금액: ' + ${#numbers.formatInteger(coupon.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
-                                </div>
+                    <div class="coupon-container">
+                        <div class="rounded w-100 border-warning border p-1 row text-center" style="background-color: rgba( 255, 131, 0, 0.75);" th:couponCode="${coupon.issueCouponCode}" th:discount="${coupon.couponTypeResponse.getDiscountAmount(totalPrice)}"
+                                th:disabled="${totalPrice < coupon.couponTypeResponse.getMinimumOrderPrice()}"
+                                th:onclick="couponButtonEvent(this.getAttribute('couponCode'), this.getAttribute('discount'))">
+                            <div class="col-8 bg-white rounded">
+                                <h1 class="font-weight-bold pt-1 grad-text mt-3 text-warning"
+                                    th:text="${coupon.name}"></h1>
+                                <h4 class="pb-2 text-gray" th:text="${coupon.description}" style="font-weight: bold"></h4>
+                                <h2 class="mt-4" th:text="${coupon.couponUsageName}" style="font-weight: bold"></h2>
+                                <h4 class="pb-2" th:text="'만료일자: ' + ${coupon.expirationDate}"></h4>
                             </div>
-
-                            <div th:case="CouponTypePercentVo">
-                                <h1 class="font-weight-bold pt-2 grad-text text-warning" style="font-size: 40px;"
-                                    th:text="${coupon.couponTypeResponse.rate} + '% 할인 (최대 ' + ${#numbers.formatInteger(coupon.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 까지)'"></h1>
-                                <div style="height: 60px;" class="pt-5">
-                                    <p th:text="'최소 주문 금액: ' + ${#numbers.formatInteger(coupon.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
+                            <div class="notification-container col bg-white rounded-right border-warning pt-3"
+                                 style="font-size: 20px; font-weight: bold; border-left: dotted"
+                                 th:switch="${coupon.couponTypeResponse.getClass().getSimpleName()}">
+                                <div th:case="CouponTypeCashVo">
+                                    <h1 class="font-weight-bold pt-2 grad-text text-warning"
+                                        th:text="${#numbers.formatInteger(coupon.couponTypeResponse.discountAmount, 0, 'COMMA')} + '원 할인'"></h1>
+                                    <div style="height: 60px;" class="pt-5">
+                                        <p th:text="'최소 주문 금액: ' + ${#numbers.formatInteger(coupon.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
+                                    </div>
+                                </div>
+                                <div th:case="CouponTypePercentVo">
+                                    <h1 class="font-weight-bold pt-2 grad-text text-warning" style="font-size: 40px;"
+                                        th:text="${coupon.couponTypeResponse.rate} + '% 할인 (최대 ' + ${#numbers.formatInteger(coupon.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 까지)'"></h1>
+                                    <div style="height: 60px;" class="pt-5">
+                                        <p th:text="'최소 주문 금액: ' + ${#numbers.formatInteger(coupon.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원'"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

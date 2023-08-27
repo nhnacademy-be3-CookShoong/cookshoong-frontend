@@ -44,31 +44,27 @@
                                 <form th:action="@{/coupon/provide/event}" th:method="post">
                                     <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2"
                                             th:data-policy-id="${policy.couponPolicyId}" type="submit"
-                                            style="border-radius: 6px; border-width: 6px; height: 160px;">
+                                            style="border-radius: 6px; border-width: 6px; height: 140px;">
                                         <div class="col-sm-12 text-left notification-container"
                                              style="font-size: 20px; font-weight: bold"
                                              th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
 
-                                            <div th:case="CouponTypeCashVo">
-                                                <span th:text="'고정 할인'" style="font-weight: bold"></span>
-                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
-                                                    th:text="${policy.couponTypeResponse.discountAmount} + '원 할인'"></h1>
-
-                                                <div style="height: 60px;">
-                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
-                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'"></p>
+                                            <div th:case="CouponTypeCashVo" style="text-align: center">
+                                                <p th:text="'최소 ' + ${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원 이상 주문 시'"></p>
+                                                <h2 class="font-weight-bold pt-2 grad-text" style="font-size: 35px;"
+                                                    th:text="${#numbers.formatInteger(policy.couponTypeResponse.discountAmount, 0, 'COMMA')} + '원 할인'"></h2>
+                                                <div style="height: 50px;">
+                                                    <p th:text="${policy.usagePeriod} + '일 후 까지 사용 가능'"></p>
                                                 </div>
                                             </div>
 
-                                            <div th:case="CouponTypePercentVo">
-                                                <span th:text="'퍼센트 할인'" style="font-weight: bold"></span>
-                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
-                                                    th:text="${policy.couponTypeResponse.rate} + '% 할인'"></h1>
-
+                                            <div th:case="CouponTypePercentVo" style="text-align: center">
+                                                <p th:text="${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원 이상 주문 시, '
+                                                +' 최대 ' + ${#numbers.formatInteger(policy.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 할인'"></p>
+                                                <h2 class="font-weight-bold pt-2 grad-text" style="font-size: 35px;"
+                                                    th:text="${policy.couponTypeResponse.rate} + '% 할인'"></h2>
                                                 <div style="height: 60px;">
-                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
-                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'
-                                                    + ' (최대 ' + ${policy.couponTypeResponse.maximumDiscountAmount} + '원 까지)'"></p>
+                                                    <p th:text="${policy.usagePeriod} + '일 후 까지 사용 가능'"></p>
                                                 </div>
                                             </div>
 
