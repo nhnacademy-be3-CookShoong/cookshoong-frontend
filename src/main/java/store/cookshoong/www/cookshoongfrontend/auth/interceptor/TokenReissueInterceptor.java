@@ -65,6 +65,7 @@ public class TokenReissueInterceptor implements HandlerInterceptor {
                 authResponse.getAccessToken(), authResponse.getRefreshToken());
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                response.sendRedirect("/logout");
                 log.warn("액세스 토큰과 리프레쉬 토큰 불일치로 인한 토큰 재발급 실패");
                 log.warn("+액세스 토큰과 리프레쉬 토큰 불일치로 인한 강제 로그아웃+");
                 return;

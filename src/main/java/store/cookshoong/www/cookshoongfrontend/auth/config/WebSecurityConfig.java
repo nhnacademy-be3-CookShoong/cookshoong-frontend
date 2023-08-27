@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.ForbiddenAccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginFailureHandler;
@@ -57,6 +60,10 @@ public class WebSecurityConfig {
         "/sign-up-choice", "/", "/search/page/distance", "/config", "/fragments", "/fragments-admin", "/images/**",
         "/sign-up-oauth2", "/logout", "/proxy/**", "/error*/**", "/delivery", "/swagger/**", "/swagger-ui/**",
         "/management/logger", "/actuator/loggers/**"};
+    private static final RequestMatcher logoutRequestMatcher = new OrRequestMatcher(
+        new AntPathRequestMatcher("/logout", "POST"),
+        new AntPathRequestMatcher("/logout", "GET")
+    );
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -92,6 +99,8 @@ public class WebSecurityConfig {
             .failureHandler(oAuth2AccountNotFoundHandler);
 
         http.logout()
+            .logoutSuccessUrl("/login-page")
+            .logoutRequestMatcher(logoutRequestMatcher)
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
