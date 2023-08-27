@@ -104,7 +104,7 @@ public class WebSecurityConfig {
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
-            .logoutSuccessHandler(tokenInvalidationHandler);
+            .addLogoutHandler(tokenInvalidationHandler);
 
         http.sessionManagement()
             .sessionFixation()

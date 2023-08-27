@@ -79,18 +79,14 @@ public class AuthApiAdapter {
      *
      * @param accessToken 로그아웃 전 사용자가 가지고 있던 액세스토큰
      */
-    public void executeTokenInvalidated(String accessToken) {
+    public void executeTokenInvalidated() {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("token-invalidate")
             .build()
             .toUri();
 
-        HttpHeaders authorizationHeader = new HttpHeaders();
-        authorizationHeader.setBearerAuth(accessToken);
-        HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
-
-        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+        restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
         });
     }
 
