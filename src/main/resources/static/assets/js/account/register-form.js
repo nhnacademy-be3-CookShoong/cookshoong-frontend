@@ -66,7 +66,6 @@ function checkExists() {
             'X-LOGIN-ID': loginIdInput.value
         },
         success: function (result) {
-            console.log("-----> result : ", result)
             if (result === true) {
                 $isDuplicated.dataset.checked = 'false';
                 setBorderColor(loginIdInput, 'red');
@@ -96,7 +95,6 @@ function getAllNeedValidationInputs() {
 
 function validateAll() {
     const duplicateCheck = document.getElementById('loginId').dataset.checked === 'true';
-    console.log("duplicateCheck", duplicateCheck);
     const passwordCheck = findAndCheckIsSamePassword();
     return duplicateCheck && passwordCheck && executeAllRegexTest();
 }
@@ -135,13 +133,11 @@ function findAndCheckIsSamePassword() {
 }
 
 function activateSignUpBtn() {
-    console.log("activate Signup!")
     const signUpBtn = document.getElementById("sign-up-btn");
     signUpBtn.disabled = false;
 }
 
 function deactivateSignUpBtn() {
-    console.log("deactivate Signup!")
     const signUpBtn = document.getElementById("sign-up-btn");
     signUpBtn.disabled = true;
 }
