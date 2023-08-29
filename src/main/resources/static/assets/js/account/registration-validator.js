@@ -15,6 +15,10 @@ function getRegex(inputId) {
     return regexValidationMap[inputId];
 }
 
+function validateOne(inputTagId) {
+    return validateRegex(inputTagId, getRegex(inputTagId))
+}
+
 function validateRegex(inputTagId, regex) {
     return regex.test(getValue(inputTagId));
 }

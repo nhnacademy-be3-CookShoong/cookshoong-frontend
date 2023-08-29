@@ -59,6 +59,10 @@ function checkExists() {
     const successMsg = document.getElementById("login-success-msg");
     const $isDuplicated = document.getElementById("loginId")
 
+    if (!validateOne("loginId")) {
+        return;
+    }
+
     $.ajax({
         type: 'get',
         url: '/proxy/accounts/account/exists',
@@ -86,7 +90,7 @@ function checkExists() {
             }
             validateAll() ? activateSignUpBtn() : deactivateSignUpBtn()
         }
-    })
+    });
 }
 
 function getAllNeedValidationInputs() {
