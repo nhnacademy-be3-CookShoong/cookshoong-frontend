@@ -48,8 +48,9 @@
                                     </div>
 
                                     <div th:case="CouponTypePercentVo">
-                                        <h1 class="font-weight-bold pt-2 grad-text text-warning" style="font-size: 40px;"
-                                            th:text="${coupon.couponTypeResponse.rate} + '% 할인 (최대 ' + ${#numbers.formatInteger(coupon.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 까지)'"></h1>
+                                        <h1 class="font-weight-bold pt-2 grad-text text-warning"
+                                            th:text="${coupon.couponTypeResponse.rate} + '% 할인'"></h1>
+                                        <h4 class="pb-2 text-gray" th:text="'최대 ' + ${#numbers.formatInteger(coupon.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 까지'" style="font-weight: bold;"></h4>
                                         <div class="coupon-details">
                                             <p class="mt-3" th:text="${#numbers.formatInteger(coupon.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원 이상 주문시'"></p>
                                         </div>
