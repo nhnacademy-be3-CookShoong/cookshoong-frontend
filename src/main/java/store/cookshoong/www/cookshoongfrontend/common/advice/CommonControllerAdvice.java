@@ -1,16 +1,14 @@
 package store.cookshoong.www.cookshoongfrontend.common.advice;
 
-import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import store.cookshoong.www.cookshoongfrontend.auth.exception.RefreshTokenExpiredException;
 import store.cookshoong.www.cookshoongfrontend.common.exception.NotFoundException;
 import store.cookshoong.www.cookshoongfrontend.file.exception.LocationTypeNotFoundException;
 
@@ -38,9 +36,20 @@ public class CommonControllerAdvice {
     }
 
     /**
+     * 리프레쉬 토큰 만료시에 로그인 페이지로 보내기위한 메서드.
+     *
+     * @return the string
+     */
+    @ExceptionHandler(RefreshTokenExpiredException.class)
+    public String handleRefreshTokenExpired() {
+        return "redirect:/login-page";
+    }
+
+    /**
      * 권한이 없거나 낮은 권한 상위 권한으로의 접근이 일어날 때의 에러를 처리하는 메서드.
      *
      * @param exception the exception
+     * @param model     the model
      * @return the string
      */
     @ExceptionHandler({HttpClientErrorException.Forbidden.class, AccessDeniedException.class})
@@ -54,10 +63,11 @@ public class CommonControllerAdvice {
      * 요청하는 리소스가 없을 때의 에러를 처리하는 메서드.
      *
      * @param exception the exception
+     * @param model     the model
      * @return the string
      */
-    @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class,
-        HttpClientErrorException.NotFound.class, LocationTypeNotFoundException.class})
+    @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class, HttpClientErrorException.NotFound.class,
+        LocationTypeNotFoundException.class})
     public String handle404Exception(Exception exception, Model model) {
         model.addAttribute("status", 404);
         return "error/4xx";
@@ -71,11 +81,6 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler(Exception.class)
     public String handle5xxException(Exception exception) {
-        log.error("server exception caused by: {}", exception.getCause().toString());
-        log.error("server exception message : {}", exception.getMessage());
-        Arrays.stream(exception.getStackTrace()).forEach(
-            trace -> log.error(trace.toString())
-        );
         return "error/5xx";
     }
 }

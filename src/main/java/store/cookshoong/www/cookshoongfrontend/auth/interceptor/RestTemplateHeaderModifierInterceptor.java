@@ -5,6 +5,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -32,6 +33,7 @@ public class RestTemplateHeaderModifierInterceptor implements ClientHttpRequestI
     }
 
     private static boolean isNotAuthenticated(SecurityContext context) {
-        return context == null || context.getAuthentication() == null;
+        return context == null || context.getAuthentication() == null
+            || context.getAuthentication() instanceof AnonymousAuthenticationToken;
     }
 }

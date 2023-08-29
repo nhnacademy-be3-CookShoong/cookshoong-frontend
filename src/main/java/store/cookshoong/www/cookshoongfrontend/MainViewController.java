@@ -1,7 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend;
 
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART_COUNT_ZERO;
-import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.EMPTY_CART;
 
 import java.net.MalformedURLException;
 import java.security.Principal;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import store.cookshoong.www.cookshoongfrontend.account.service.AccountIdAware;
 import store.cookshoong.www.cookshoongfrontend.address.model.response.AccountAddressResponseDto;
 import store.cookshoong.www.cookshoongfrontend.address.service.AccountAddressService;
-import store.cookshoong.www.cookshoongfrontend.auth.model.vo.JwtAuthentication;
+import store.cookshoong.www.cookshoongfrontend.auth.authentication.JwtAuthentication;
 import store.cookshoong.www.cookshoongfrontend.auth.util.CustomAuthorityUtils;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartMenuCountDto;
 import store.cookshoong.www.cookshoongfrontend.cart.model.vo.CartRedisDto;
@@ -233,7 +233,7 @@ public class MainViewController {
 
         List<CartRedisDto> cartItems = cartService.selectCartMenuAll(String.valueOf(accountId));
 
-        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), NO_MENU)) {
+        if (!cartService.existMenuInCartRedis(String.valueOf(accountIdAware.getAccountId()), EMPTY_CART)) {
             Long cartStoreId = cartItems.get(0).getStoreId();
             model.addAttribute("cartStoreId", cartStoreId);
         } else {
@@ -308,7 +308,7 @@ public class MainViewController {
         CartMenuCountDto cartMenuCountDto =
             cartService.selectCartMenuCountAll(String.valueOf(accountId));
 
-        if (cartService.existMenuInCartRedis(String.valueOf(accountId), NO_MENU)) {
+        if (cartService.existMenuInCartRedis(String.valueOf(accountId), EMPTY_CART)) {
             model.addAttribute("count", CART_COUNT_ZERO);
         } else {
             model.addAttribute("count", cartMenuCountDto.getCount());

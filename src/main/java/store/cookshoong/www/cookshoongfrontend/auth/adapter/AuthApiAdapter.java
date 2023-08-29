@@ -77,20 +77,15 @@ public class AuthApiAdapter {
      * 로그아웃시 세션이 사라지므로 컨텍스트에서 인증 객체를 얻지 못하게 되므로(=헤더에 액세스토큰을 달지 못함)
      * 토큰을 인자값으로 받아서 직접 헤더에 넣어준다.
      *
-     * @param accessToken 로그아웃 전 사용자가 가지고 있던 액세스토큰
      */
-    public void executeTokenInvalidated(String accessToken) {
+    public void executeTokenInvalidated() {
         URI uri = UriComponentsBuilder
             .fromUriString(apiProperties.getGatewayUrl())
             .pathSegment("token-invalidate")
             .build()
             .toUri();
 
-        HttpHeaders authorizationHeader = new HttpHeaders();
-        authorizationHeader.setBearerAuth(accessToken);
-        HttpEntity<Void> request = new HttpEntity<>(authorizationHeader);
-
-        restTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+        restTemplate.exchange(uri, HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
         });
     }
 

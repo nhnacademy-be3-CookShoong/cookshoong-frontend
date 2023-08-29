@@ -166,39 +166,38 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <td>사업자명</td>
-                                        <td style="max-width: 300px;" th:text="${store.representativeName}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>사업자등록번호</td>
-                                        <td style="max-width: 300px;" th:text="${store.businessLicenseNumber}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>개업일자</td>
-                                        <td style="max-width: 300px;" th:text="${store.openingDate}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>전화번호</td>
-                                        <td style="max-width: 300px;" th:text="${store.phoneNumber}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>가게 주소</td>
-                                        <td style="max-width: 300px;"
-                                            th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>소개글</td>
-                                        <td style="max-width: 300px;" th:utext="${store.description}"></td>
-                                    </tr>
-                                </table>
-                                <div style="padding-left: 1.25rem; padding-right: 1.25rem;">
-                                    <strong style="margin-bottom: 10px;">영업 시간</strong>
-                                    <br>
-                                    <div th:each="businessHour, i:${businessHours}">
-                                        <span th:text="${businessHour.dayCodeName} + ' ' + ${businessHour.openHour} + ' ~ ' + ${businessHour.closeHour}">
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">사업자명</h4>
+                                    <h5 class="detail-value" th:text="${store.representativeName}"></h5>
+                                </div>
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">사업자등록번호</h4>
+                                    <h5 class="detail-value" th:text="${store.businessLicenseNumber}"></h5>
+                                </div>
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">개업일자</h4>
+                                    <h5 class="detail-value" th:text="${store.openingDate}"></h5>
+                                </div>
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">전화번호</h4>
+                                    <h5 class="detail-value" th:text="${store.phoneNumber}"></h5>
+                                </div>
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">가게 주소</h4>
+                                    <h5 class="detail-value" th:text="${store.mainPlace}+' '+ ${store.detailPlace}"></h5>
+                                </div>
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">소개글</h4>
+                                    <h5 class="detail-value" th:utext="${store.description}"></h5>
+                                </div>
+
+                                <div class="col-lg-12 row border-bottom pt-3 pb-3" style="flex-wrap: nowrap">
+                                    <h4 class="detail-label">영업 시간</h4>
+                                    <div class="detail-value">
+                                        <div th:each="businessHour, i:${businessHours}">
+                                        <span th:text="${businessHour.dayCodeName} + '&nbsp;&nbsp;&nbsp;&nbsp;' + ${businessHour.openHour} + '&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;' + ${businessHour.closeHour}">
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -217,34 +216,29 @@
                                 <form th:action="@{/coupon/provide}" th:method="post">
                                     <button class="btn btn-outline-warning mr-2 provide-button w-100 pl-2 pr-2"
                                             th:data-policy-id="${policy.couponPolicyId}" type="submit"
-                                            style="border-radius: 6px; border-width: 6px; height: 160px;">
+                                            style="border-radius: 6px; border-width: 6px; height: 140px;">
                                         <div class="col-sm-12 text-left notification-container"
                                              style="font-size: 20px; font-weight: bold"
                                              th:switch="${policy.couponTypeResponse.getClass().getSimpleName()}">
 
-                                            <div th:case="CouponTypeCashVo">
-                                                <span th:text="'고정 할인'" style="font-weight: bold"></span>
-                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
-                                                    th:text="${policy.couponTypeResponse.discountAmount} + '원 할인'"></h1>
-
-                                                <div style="height: 60px;">
-                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
-                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'"></p>
+                                            <div th:case="CouponTypeCashVo" style="text-align: center">
+                                                <p th:text="'최소 ' + ${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원 이상 주문 시'"></p>
+                                                <h2 class="font-weight-bold pt-2 grad-text" style="font-size: 35px;"
+                                                    th:text="${#numbers.formatInteger(policy.couponTypeResponse.discountAmount, 0, 'COMMA')} + '원 할인'"></h2>
+                                                <div style="height: 50px;">
+                                                    <p th:text="${policy.usagePeriod} + '일 후 까지 사용 가능'"></p>
                                                 </div>
                                             </div>
 
-                                            <div th:case="CouponTypePercentVo">
-                                                <span th:text="'퍼센트 할인'" style="font-weight: bold"></span>
-                                                <h1 class="font-weight-bold pt-2 grad-text" style="font-size: 40px;"
-                                                    th:text="${policy.couponTypeResponse.rate} + '% 할인'"></h1>
-
+                                            <div th:case="CouponTypePercentVo" style="text-align: center">
+                                                <p th:text="${#numbers.formatInteger(policy.couponTypeResponse.minimumOrderPrice, 0, 'COMMA')} + '원 이상 주문 시, '
+                                                +' 최대 ' + ${#numbers.formatInteger(policy.couponTypeResponse.maximumDiscountAmount, 0, 'COMMA')} + '원 할인'"></p>
+                                                <h2 class="font-weight-bold pt-2 grad-text" style="font-size: 35px;"
+                                                    th:text="${policy.couponTypeResponse.rate} + '% 할인'"></h2>
                                                 <div style="height: 60px;">
-                                                    <p th:text="'사용 가능 기간: ' + ${policy.usagePeriod} + '일 후 까지'"></p>
-                                                    <p th:text="'최소 ' + ${policy.couponTypeResponse.minimumOrderPrice} + '원 부터 적용'
-                                                    + ' (최대 ' + ${policy.couponTypeResponse.maximumDiscountAmount} + '원 까지)'"></p>
+                                                    <p th:text="${policy.usagePeriod} + '일 후 까지 사용 가능'"></p>
                                                 </div>
                                             </div>
-
                                             <input type="hidden" name="couponPolicyId"
                                                    th:value="${policy.couponPolicyId}">
                                         </div>

@@ -31,4 +31,9 @@ public class RefreshToken {
     public ParsedRefreshToken parse() {
         return JwtResolver.resolveRefreshToken(this.rawRefreshToken);
     }
+
+    @Override
+    public String toString() {
+        return this.rawRefreshToken;
+    }
 }

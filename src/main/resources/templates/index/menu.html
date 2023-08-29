@@ -57,10 +57,10 @@
                     </div>
                     <div class="card">
                         <div class="ml-3 mt-3">
-                            <div class="row" th:each="optionGroup, i:${optionGroups}">
+                            <div class="row" th:each="optionGroup, i:${optionGroups}" th:if="${#lists.contains(menu.optionGroups, optionGroup.id)}">
                                 <h3 class="font-weight-bold" th:text="${optionGroup.name}"></h3>
-                                <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}"></input>
-                                <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}"></input>
+                                <input hidden="hidden" th:value="${optionGroup.getMinSelectCount()}" th:id="optionGroupMin + ${optionGroup.id}">
+                                <input hidden="hidden" th:value="${optionGroup.getMaxSelectCount()}" th:id="optionGroupMax + ${optionGroup.id}">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-check d-flex justify-content-between pr-3"
@@ -272,13 +272,18 @@
         updateTotal();
     }
 
-    function showSuccessModal() {
-        Swal.fire({
-            icon: 'success',
-            title: '장바구니에 성공적으로 담겼습니다!',
-            showConfirmButton: false,
-            timer: 1000
-        });
+    const cartStoreId = [[${cartStoreId}]];
+    const storeId = [[${storeId}]];
+
+    if (cartStoreId === storeId) {
+        function showSuccessModal() {
+            Swal.fire({
+                icon: 'success',
+                title: '장바구니에 성공적으로 담겼습니다!',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
     }
 </script>
 </body>

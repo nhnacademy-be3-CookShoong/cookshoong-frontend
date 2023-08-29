@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import store.cookshoong.www.cookshoongfrontend.auth.filter.DormancyAccountFilter;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.ForbiddenAccessHandler;
 import store.cookshoong.www.cookshoongfrontend.auth.hanlder.LoginFailureHandler;
@@ -55,7 +58,12 @@ public class WebSecurityConfig {
     private final DormancyAccountFilter dormancyAccountFilter = new DormancyAccountFilter();
     private static final String[] PERMIT_ALL_PATTERNS = {"/health-check/**", "/login-page", "/sign-up",
         "/sign-up-choice", "/", "/search/page/distance", "/config", "/fragments", "/fragments-admin", "/images/**",
-        "/sign-up-oauth2", "/logout", "/proxy/**", "/error*/**", "/delivery", "/swagger/**", "/swagger-ui/**"};
+        "/sign-up-oauth2", "/logout", "/proxy/**", "/error*/**", "/delivery", "/swagger/**", "/swagger-ui/**",
+        "/management/logger", "/actuator/loggers/**"};
+    private static final RequestMatcher logoutRequestMatcher = new OrRequestMatcher(
+        new AntPathRequestMatcher("/logout", "POST"),
+        new AntPathRequestMatcher("/logout", "GET")
+    );
 
     /**
      * 시큐리티 필터 체인 설정빈.
@@ -91,10 +99,12 @@ public class WebSecurityConfig {
             .failureHandler(oAuth2AccountNotFoundHandler);
 
         http.logout()
+            .logoutSuccessUrl("/login-page")
+            .logoutRequestMatcher(logoutRequestMatcher)
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .deleteCookies("SESSION", RefreshTokenManager.REFRESH_TOKEN_COOKIE_NAME)
-            .logoutSuccessHandler(tokenInvalidationHandler);
+            .addLogoutHandler(tokenInvalidationHandler);
 
         http.sessionManagement()
             .sessionFixation()
@@ -103,7 +113,7 @@ public class WebSecurityConfig {
         http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
         http.csrf()
-            .ignoringAntMatchers("/delivery");
+            .ignoringAntMatchers("/delivery", "/actuator/loggers/**");
 
         http.exceptionHandling()
             .accessDeniedHandler(forbiddenAccessHandler);

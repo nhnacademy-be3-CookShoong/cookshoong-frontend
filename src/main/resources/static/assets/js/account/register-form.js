@@ -6,6 +6,7 @@ function setup() {
     setCriterionDay();
 
     const errorMsg = document.getElementById("login-duplicate-msg");
+    const successMsg = document.getElementById("login-success-msg");
     const $isDuplicated = document.getElementById("loginId")
     const passwordInput = document.getElementById("password");
     const passwordCheckInput = document.getElementById("password-check");
@@ -14,10 +15,10 @@ function setup() {
     for (const input of needValidationInputs) {
         input.addEventListener('keyup', () => {
             if (input.id === "loginId") {
-                deactivateSignUpBtn()
                 setBorderColor(input, 'red');
                 $isDuplicated.dataset.checked = 'false';
                 errorMsg.style.display = 'none';
+                successMsg.style.display = 'none';
             } else if (input.id === "password") {
                 checkPasswordEqual(input, passwordCheckInput);
             } else if (input.id === "password-check") {
@@ -33,10 +34,10 @@ function setup() {
 function checkPasswordEqual(focusedPasswordInput, otherPasswordInput) {
     const focusedPassword = focusedPasswordInput.value;
     const otherPassword = otherPasswordInput.value;
-    if (focusedPassword === otherPassword && !isEmpty(focusedPassword) && !isEmpty(otherPassword)) {
+    if (focusedPassword === otherPassword && !isEmpty(focusedPassword) && !isEmpty(otherPassword)
+        && checkPasswordPattern(focusedPasswordInput)) {
         setBorderColor(focusedPasswordInput, LIGHT_GREEN);
         setBorderColor(otherPasswordInput, LIGHT_GREEN);
-        checkPasswordPattern(focusedPasswordInput);
         return true;
     }
     setBorderColor(focusedPasswordInput, 'red');
@@ -48,8 +49,8 @@ function checkPasswordPattern(focusedPasswordInput) {
     const pwdRegex = getRegex("password");
     const infoMsg = getElementById("password-info-msg");
     infoMsg.style.display = pwdRegex.test(pwd) ? 'none' : 'block';
+    return pwdRegex.test(pwd);
 }
-
 
 function checkExists() {
     const loginIdInput = document.getElementById("loginId");
@@ -65,23 +66,27 @@ function checkExists() {
             'X-LOGIN-ID': loginIdInput.value
         },
         success: function (result) {
-            $isDuplicated.dataset.checked = (!result).toString();
             if (result === true) {
+                $isDuplicated.dataset.checked = 'false';
                 setBorderColor(loginIdInput, 'red');
                 errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
             } else if (result === false) {
+                $isDuplicated.dataset.checked = 'true';
                 setBorderColor(loginIdInput, LIGHT_GREEN);
+                errorMsg.style.display = 'none';
                 successMsg.style.display = 'block';
             } else {
+                $isDuplicated.dataset.checked = 'false'
                 setBorderColor(loginIdInput, 'red');
                 loginIdInputStyle.borderColor = 'red';
                 errorMsg.textContent = result;
                 errorMsg.style.display = 'block';
                 successMsg.style.display = 'none';
             }
+            validateAll() ? activateSignUpBtn() : deactivateSignUpBtn()
         }
     })
-    validateAll() ? activateSignUpBtn() : deactivateSignUpBtn();
 }
 
 function getAllNeedValidationInputs() {
@@ -89,7 +94,7 @@ function getAllNeedValidationInputs() {
 }
 
 function validateAll() {
-    const duplicateCheck = document.getElementById('loginId').dataset.checked;
+    const duplicateCheck = document.getElementById('loginId').dataset.checked === 'true';
     const passwordCheck = findAndCheckIsSamePassword();
     return duplicateCheck && passwordCheck && executeAllRegexTest();
 }
@@ -126,7 +131,6 @@ function findAndCheckIsSamePassword() {
     }
     return passwordInput.value === passwordCheckInput.value;
 }
-
 
 function activateSignUpBtn() {
     const signUpBtn = document.getElementById("sign-up-btn");

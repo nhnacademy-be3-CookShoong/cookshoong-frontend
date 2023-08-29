@@ -1,14 +1,12 @@
 package store.cookshoong.www.cookshoongfrontend.auth.hanlder;
 
-import java.io.IOException;
-import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
-import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementService;
+import store.cookshoong.www.cookshoongfrontend.auth.adapter.AuthApiAdapter;
 
 /**
  * 로그아웃시 동작들을 정의해줄 핸들러.
@@ -20,19 +18,11 @@ import store.cookshoong.www.cookshoongfrontend.auth.service.TokenManagementServi
  */
 @Component
 @RequiredArgsConstructor
-public class TokenInvalidationHandler implements LogoutSuccessHandler {
-    private final TokenManagementService tokenManagementService;
+public class TokenInvalidationHandler implements LogoutHandler {
+    private final AuthApiAdapter authApiAdapter;
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-        throws IOException {
-        if (Objects.isNull(authentication)) {
-            response.sendRedirect("/login-page");
-            return;
-        }
-
-        String accessToken = authentication.getName();
-        tokenManagementService.invalidate(response, accessToken);
-        response.sendRedirect("/login-page");
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        authApiAdapter.executeTokenInvalidated();
     }
 }

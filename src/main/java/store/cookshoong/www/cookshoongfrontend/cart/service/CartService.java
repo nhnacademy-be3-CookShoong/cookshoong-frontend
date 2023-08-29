@@ -1,7 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.cart.service;
 
 import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.CART;
-import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.NO_MENU;
+import static store.cookshoong.www.cookshoongfrontend.cart.utils.CartConstant.EMPTY_CART;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -166,6 +166,6 @@ public class CartService {
      * @return              빈 장바구니 여부에 따라 true, false 반환
      */
     public boolean isCartIsEmpty(String cartKey) {
-        return existMenuInCartRedis(cartKey, NO_MENU);
+        return existMenuInCartRedis(cartKey, EMPTY_CART);
     }
 }
