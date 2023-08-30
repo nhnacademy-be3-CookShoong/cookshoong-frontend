@@ -228,7 +228,7 @@
                                                name="detailPlace"
                                                th:field="*{detailPlace}"
                                                th:value="${updateStoreInfoRequestDto.detailPlace}" placeholder="서브 주소"
-                                               pattern="^[가-힣a-zA-Z0-9\-\/\\\&\~\(\)\s]+$" required>
+                                               pattern="^[가-힣a-zA-Z0-9\-\,\/\\\&\~\(\)\s]+$" required>
 
                                         <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}"
                                                th:value="${updateStoreInfoRequestDto.latitude}">
