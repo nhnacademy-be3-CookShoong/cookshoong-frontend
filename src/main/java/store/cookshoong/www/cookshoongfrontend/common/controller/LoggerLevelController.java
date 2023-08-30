@@ -1,10 +1,7 @@
 package store.cookshoong.www.cookshoongfrontend.common.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringJoiner;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.StringBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
