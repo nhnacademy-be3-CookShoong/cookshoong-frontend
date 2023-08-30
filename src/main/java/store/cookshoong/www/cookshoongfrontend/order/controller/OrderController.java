@@ -104,10 +104,11 @@ public class OrderController {
      * @return the coupon in order
      */
     @GetMapping("/{storeId}/coupon")
-    public String getCouponInOrder(@PathVariable Long storeId, @RequestParam Integer totalPrice, Model model) {
+    public String getCouponInOrder(@PathVariable Long storeId, @RequestParam Integer totalPrice, Model model,
+                                   Pageable pageable) {
 
         Page<SelectOwnCouponResponseDto> ownCoupons =
-            couponManageService.selectOwnCoupons(accountIdAware.getAccountId(), Pageable.ofSize(20),
+            couponManageService.selectOwnCoupons(accountIdAware.getAccountId(), pageable,
                 true, storeId);
 
         model.addAttribute("buttonNumber", 5);

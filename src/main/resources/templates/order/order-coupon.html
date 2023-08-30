@@ -74,25 +74,25 @@
                 th:with="start=${(ownCoupons.pageable.pageNumber/buttonNumber)*buttonNumber + 1},
                             last=(${start + (buttonNumber - 1) < ownCoupons.totalPages ? start + (buttonNumber - 1) : ownCoupons.totalPages})">
                 <li>
-                    <a th:href="@{|/order/${storeId}/coupon|(page=1, size=${ownCoupons.size})}" aria-label="First">
+                    <a th:href="@{|/order/${storeId}/coupon|(totalPrice=${totalPrice}, page=1, size=${ownCoupons.size})}" aria-label="First">
                         <span aria-hidden="true">First</span>
                     </a>
                 </li>
                 <li th:class="${ownCoupons.first} ? 'disabled'">
-                    <a th:href="${ownCoupons.first} ? '#' :@{|/order/${storeId}/coupon|(page=${ownCoupons.number}, size=${ownCoupons.size})}" aria-label="Previous">
+                    <a th:href="${ownCoupons.first} ? '#' :@{|/order/${storeId}/coupon|(totalPrice=${totalPrice}, page=${ownCoupons.number}, size=${ownCoupons.size})}" aria-label="Previous">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == ownCoupons.number + 1} ? 'active'">
-                    <a th:text="${page}" th:href="@{|/order/${storeId}/coupon|(page=${page}, size=${ownCoupons.size})}"></a>
+                    <a th:text="${page}" th:href="@{|/order/${storeId}/coupon|(totalPrice=${totalPrice}, page=${page}, size=${ownCoupons.size})}"></a>
                 </li>
                 <li th:class="${ownCoupons.last} ? 'disabled'">
-                    <a th:href="${ownCoupons.last} ? '#' :@{|/order/${storeId}/coupon|(page=${ownCoupons.number + 2}, size=${ownCoupons.size})}">
+                    <a th:href="${ownCoupons.last} ? '#' :@{|/order/${storeId}/coupon|(totalPrice=${totalPrice}, page=${ownCoupons.number + 2}, size=${ownCoupons.size})}">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{|/order/${storeId}/coupon|(page=${ownCoupons.totalPages}, size=${ownCoupons.size})}" aria-label="Last">
+                    <a th:href="@{|/order/${storeId}/coupon|(totalPrice=${totalPrice}, page=${ownCoupons.totalPages}, size=${ownCoupons.size})}" aria-label="Last">
                         <span aria-hidden="true">Last</span>
                     </a>
                 </li>
