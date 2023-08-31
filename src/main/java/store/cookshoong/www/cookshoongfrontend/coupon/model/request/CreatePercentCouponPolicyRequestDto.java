@@ -41,7 +41,7 @@ public class CreatePercentCouponPolicyRequestDto {
 
     @NotNull
     @Min(value = 0)
-    @Max(value = 20_000)
+    @Max(value = 50_000)
     private Integer minimumOrderPrice;
 
     @NotNull
