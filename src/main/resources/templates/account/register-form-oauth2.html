@@ -14,7 +14,7 @@
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55b38bb80852c12b35f14456e76868a9&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="/assets/js/account/address-api.js"></script>
-    <script defer src="/assets/js/account/oauth-register-form.js"></script>
+    <script defer src="/assets/js/account/oauth-register-form.js?20230831"></script>
     <script defer src="/assets/js/account/registration-validator.js?20230830"></script>
 </head>
 
@@ -33,12 +33,13 @@
                         <h6 class="font-weight-light">30초 회원가입</h6>
                         <h4 class="font-weight-light">with <span th:text="${oAuth2SignUpRequestDto.provider}"/></h4>
                         <form class="pt-3 needs-validation" id="sign-up-form" th:action="@{/sign-up-oauth2}"
+                              onsubmit="return checkAllAndShowSuccess()"
                               th:object="${oAuth2SignUpRequestDto.signUpRequestDto}" method="post">
                             <div class="form-group">
                                 <div class="oauth-info-element-div">
                                     <label for="name">* 본인식별을 위해 필요해요</label>
                                     <input type="text" oninput="makeLetterOnly('name')"
-                                           class="form-control form-control-lg oauth-info-element" id="name"
+                                           class="form-control form-control-lg oauth-info-element need-validation-input" id="name"
                                            pattern="^[a-zA-Z가-힇]{2,30}$" title="온전한 글자를 입력해주세요."
                                            th:field="*{name}" placeholder="이름 (한글, 영어)" required>
                                     <p class="error-message" th:if="${#fields.hasErrors('name')}"
@@ -46,7 +47,7 @@
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="nickname">* 다른사람들에게 보여질 이름이에요</label>
-                                    <input type="text" class="form-control form-control-lg oauth-info-element"
+                                    <input type="text" class="form-control form-control-lg oauth-info-element need-validation-input"
                                            id="nickname" minlength="1" maxlength="30"
                                            th:field="*{nickname}" placeholder="닉네임 (공백없이 30글자 이내)" required>
                                     <p class="error-message" th:if="${#fields.hasErrors('nickname')}"
@@ -54,7 +55,7 @@
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="email">* 매장소식을 전해드리기 위해 필요해요</label>
-                                    <input type="email" class="form-control form-control-lg oauth-info-element"
+                                    <input type="email" class="form-control form-control-lg oauth-info-element need-validation-input"
                                            id="email" name="email" th:field="*{email}" placeholder="you@example.com"
                                            required>
                                     <p class="error-message" th:if="${#fields.hasErrors('email')}"
@@ -62,7 +63,7 @@
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="birthday">* 생일쿠폰 지급을 위해 필요해요</label>
-                                    <input type="date" class="form-control form-control-lg oauth-info-element"
+                                    <input type="date" class="form-control form-control-lg oauth-info-element need-validation-input"
                                            id="birthday" name="birthday" th:field="*{birthday}" placeholder="생년월일"
                                            required>
                                     <p class="error-message" th:if="${#fields.hasErrors('birthday')}"
@@ -70,7 +71,7 @@
                                 </div>
                                 <div class="oauth-info-element-div">
                                     <label for="phoneNumber">* 주문현황을 알려드리기 위해 필요해요</label>
-                                    <input type="text" class="form-control form-control-lg oauth-info-element"
+                                    <input type="text" class="form-control form-control-lg oauth-info-element need-validation-input"
                                            id="phoneNumber"
                                            name="phoneNumber" th:field="*{phoneNumber}" th:value="*{phoneNumber}"
                                            minlength="11" maxlength="11" pattern="^010[0-9]{8}$"
@@ -83,7 +84,7 @@
                             <div class="form-group">
                                 <label for="mainPlace">* 주변 매장을 검색하기 위해 필요해요</label>
                                 <div class="flex-container">
-                                    <input type="text" class="form-control form-control-lg flex-1 oauth-info-element"
+                                    <input type="text" class="form-control form-control-lg flex-1 oauth-info-element need-validation-input"
                                            id="mainPlace" name="createAccountAddressRequestDto.mainPlace"
                                            th:field="*{createAccountAddressRequestDto.mainPlace}"
                                            th:value="*{createAccountAddressRequestDto.mainPlace}" placeholder="메인 주소"
@@ -97,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control form-control-lg oauth-info-element" type="text"
+                                <input class="form-control form-control-lg oauth-info-element need-validation-input" type="text"
                                        id="detailPlace"
                                        name="createAccountAddressRequestDto.detailPlace"
                                        th:field="*{createAccountAddressRequestDto.detailPlace}"
@@ -108,7 +109,7 @@
                                    th:errors="*{createAccountAddressRequestDto.detailPlace}"></p>
                             </div>
                             <div class="form-group">
-                                <input class="form-control form-control-lg oauth-info-element" type="text" id="alias"
+                                <input class="form-control form-control-lg oauth-info-element need-validation-input" type="text" id="alias"
                                        name="createAccountAddressRequestDto.alias"
                                        th:field="*{createAccountAddressRequestDto.alias}"
                                        th:value="*{createAccountAddressRequestDto.alias}" placeholder="별칭" required>
