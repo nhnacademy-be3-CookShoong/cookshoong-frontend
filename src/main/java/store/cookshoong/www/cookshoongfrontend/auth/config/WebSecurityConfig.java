@@ -113,7 +113,7 @@ public class WebSecurityConfig {
         http.addFilterAfter(dormancyAccountFilter, SwitchUserFilter.class);
 
         http.csrf()
-            .ignoringAntMatchers("/delivery", "/actuator/loggers/**");
+            .ignoringAntMatchers("/delivery", "/actuator/loggers/**", "/logout");
 
         http.exceptionHandling()
             .accessDeniedHandler(forbiddenAccessHandler);
