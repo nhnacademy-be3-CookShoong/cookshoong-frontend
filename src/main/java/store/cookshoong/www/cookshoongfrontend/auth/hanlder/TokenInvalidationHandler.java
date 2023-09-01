@@ -1,5 +1,6 @@
 package store.cookshoong.www.cookshoongfrontend.auth.hanlder;
 
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,13 @@ public class TokenInvalidationHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        if (isAlreadyLogout(request)) {
+            return;
+        }
         authApiAdapter.executeTokenInvalidated();
+    }
+
+    public boolean isAlreadyLogout(HttpServletRequest request) {
+        return Objects.isNull(request.getUserPrincipal()) || Objects.isNull(request.getUserPrincipal().getName());
     }
 }
