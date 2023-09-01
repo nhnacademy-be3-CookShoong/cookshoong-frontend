@@ -52,6 +52,7 @@ public class PaycoOAuth2UserService implements OAuth2UserService<OAuth2UserReque
             .getProviderDetails()
             .getUserInfoEndpoint()
             .getUri();
+        log.info("======== Payco AccessToken : {} ========", accessToken);
 
         RequestEntity<Void> request = RequestEntity.post(userInfoRequestUrl)
             .header("client_id", clientId)
